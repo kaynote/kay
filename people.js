@@ -2027,6 +2027,21 @@ const people = [
 
 const container = document.getElementById("peopleContainer");
 
+function createPhoto(person){
+
+    const photoDiv = document.createElement("div");
+    photoDiv.className = "photo";
+
+    if (person.image) {
+        const img = document.createElement("img");
+        img.src = person.image;
+        img.alt = person.name || "photo";
+        photoDiv.appendChild(img);
+    }
+
+    return photoDiv;
+}
+
 function renderPeople(list){
 
     container.innerHTML = "";
@@ -2036,40 +2051,40 @@ function renderPeople(list){
         const card = document.createElement("div");
         card.className = "card";
 
-        // 🔥 image 안전 처리
-        const imageHTML = person.image
-            ? `<img class="photo" src="${person.image}">`
-            : `<div class="photo"></div>`;
+        // ✅ photo (안전 구조)
+        const photo = createPhoto(person);
 
-        // 🔥 tags 안전 처리 (핵심 수정)
-        const tagsHTML = (person.tags || [])
-            .map(tag => `<span class="tag">${tag}</span>`)
-            .join("");
+        const info = document.createElement("div");
+        info.className = "info";
 
-        card.innerHTML = `
+        const name = document.createElement("div");
+        name.className = "name";
+        name.textContent = `${index + 1}. ${person.name || ""}`;
 
-            ${imageHTML}
+        const meta = document.createElement("div");
+        meta.className = "meta";
+        meta.textContent = person.meta || "";
 
-            <div class="info">
+        const desc = document.createElement("div");
+        desc.className = "desc";
+        desc.textContent = person.desc || "";
 
-                <div class="name">
-                    ${index + 1}. ${person.name || ""}
-                </div>
+        const tagsWrap = document.createElement("div");
 
-                <div class="meta">
-                    ${person.meta || ""}
-                </div>
+        (person.tags || []).forEach(tag => {
+            const span = document.createElement("span");
+            span.className = "tag";
+            span.textContent = tag;
+            tagsWrap.appendChild(span);
+        });
 
-                <div class="desc">
-                    ${person.desc || ""}
-                </div>
+        info.appendChild(name);
+        info.appendChild(meta);
+        info.appendChild(desc);
+        info.appendChild(tagsWrap);
 
-                <div>
-                    ${tagsHTML}
-                </div>
-
-            </div>
-        `;
+        card.appendChild(photo);
+        card.appendChild(info);
 
         container.appendChild(card);
     });
@@ -2077,8 +2092,8 @@ function renderPeople(list){
 
 renderPeople(people);
 
-document
-.getElementById("searchBox")
+// 🔍 검색
+document.getElementById("searchBox")
 .addEventListener("input", function(){
 
     const keyword = this.value.toLowerCase();
@@ -2086,13 +2101,9 @@ document
     const filtered = people.filter(person => {
 
         return (
-
             (person.name || "").toLowerCase().includes(keyword) ||
-
             (person.meta || "").toLowerCase().includes(keyword) ||
-
             (person.desc || "").toLowerCase().includes(keyword) ||
-
             ((person.tags || []).join(" ")).toLowerCase().includes(keyword)
         );
     });
