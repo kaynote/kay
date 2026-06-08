@@ -1,0 +1,75 @@
+body{
+    margin:0;
+    padding:20px;
+    background:#f3f3f3;
+    font-family:"Malgun Gothic", sans-serif;
+}
+
+header{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:20px;
+}
+
+#searchBox{
+    width:100%;
+    padding:12px;
+    font-size:16px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    box-sizing:border-box;
+}
+
+#peopleContainer{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+}
+
+.card{
+    display:flex;
+    gap:16px;
+    background:white;
+    padding:16px;
+    border-radius:12px;
+}
+
+.photo{
+    width:120px;
+    height:120px;
+    object-fit:cover;
+    border-radius:10px;
+    background:#ddd;
+    flex-shrink:0;
+}
+
+.info{
+    flex:1;
+}
+
+.name{
+    font-size:22px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.meta{
+    color:#666;
+    margin-bottom:10px;
+}
+
+.desc{
+    line-height:1.6;
+    white-space:pre-line;
+}
+
+.tag{
+    display:inline-block;
+    background:#eee;
+    border-radius:999px;
+    padding:4px 10px;
+    margin-right:6px;
+    margin-bottom:6px;
+    font-size:13px;
+}
