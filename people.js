@@ -2034,14 +2034,15 @@ function renderPeople(list){
     list.forEach((person, index) => {
 
         const card = document.createElement("div");
-
         card.className = "card";
 
+        // 🔥 image 안전 처리
         const imageHTML = person.image
             ? `<img class="photo" src="${person.image}">`
             : `<div class="photo"></div>`;
 
-        const tagsHTML = person.tags
+        // 🔥 tags 안전 처리 (핵심 수정)
+        const tagsHTML = (person.tags || [])
             .map(tag => `<span class="tag">${tag}</span>`)
             .join("");
 
@@ -2052,15 +2053,15 @@ function renderPeople(list){
             <div class="info">
 
                 <div class="name">
-                    ${index + 1}. ${person.name}
+                    ${index + 1}. ${person.name || ""}
                 </div>
 
                 <div class="meta">
-                    ${person.meta}
+                    ${person.meta || ""}
                 </div>
 
                 <div class="desc">
-                    ${person.desc}
+                    ${person.desc || ""}
                 </div>
 
                 <div>
@@ -2086,13 +2087,13 @@ document
 
         return (
 
-            person.name.toLowerCase().includes(keyword) ||
+            (person.name || "").toLowerCase().includes(keyword) ||
 
-            person.meta.toLowerCase().includes(keyword) ||
+            (person.meta || "").toLowerCase().includes(keyword) ||
 
-            person.desc.toLowerCase().includes(keyword) ||
+            (person.desc || "").toLowerCase().includes(keyword) ||
 
-            person.tags.join(" ").toLowerCase().includes(keyword)
+            ((person.tags || []).join(" ")).toLowerCase().includes(keyword)
         );
     });
 
