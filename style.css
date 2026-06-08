@@ -35,10 +35,12 @@ header{
     border-radius:12px;
 }
 
+/* ✅ 핵심 수정 (3:4 비율 유지) */
 .photo{
     width:120px;
-    height:auto;
-    object-fit:cover;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    object-position: center;
     border-radius:10px;
     background:#ddd;
     flex-shrink:0;
