@@ -1,0 +1,6 @@
+kaynotes/
+ ├─ index.html
+ ├─ names.txt
+ ├─ people.js
+ ├─ style.css
+ └─ images/
