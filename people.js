@@ -438,7 +438,7 @@ const people = [
 },
 {
     name: "Crystal Joy V. Accad 크리스탈 조이 V. 아카드",
-    image: "",
+    image: "images/Crystal_Joy_V._Accad.jpg",
     meta: "",
     desc: `실라마리의 첫째 여동생이자 코리아 빌딩 공부방 소속 학생이자 선생님, 정주행 2021.11.10 가정방문 2부 10:53, 생일은 2월 1일, 2025.02.01 05:28`,
     tags: []
