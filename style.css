@@ -22,7 +22,7 @@ header{
 }
 
 /* =========================
-   GRID 핵심 변경
+   GRID (그대로 유지)
 ========================= */
 #peopleContainer{
     display:grid;
@@ -33,7 +33,7 @@ header{
 }
 
 /* =========================
-   CARD (세로형으로 변경)
+   CARD (그대로 유지)
 ========================= */
 .card{
     display:flex;
@@ -44,13 +44,16 @@ header{
 }
 
 /* =========================
-   IMAGE
+   🔥 PHOTO ONLY CHANGE
 ========================= */
 .photo{
     width:100%;
     aspect-ratio: 3 / 4;
-    background:#ddd;
+
+    /* 🔥 핵심: 더 작게 보이게 */
+    max-height: 220px;   /* 기존보다 줄어든 핵심 포인트 */
     overflow:hidden;
+    background:#ddd;
 }
 
 .photo img{
@@ -65,7 +68,7 @@ header{
 }
 
 /* =========================
-   TEXT
+   TEXT (그대로 유지)
 ========================= */
 .info{
     padding:10px 12px;
@@ -90,7 +93,7 @@ header{
 }
 
 /* =========================
-   TAG
+   TAG (그대로 유지)
 ========================= */
 .tag{
     display:inline-block;
