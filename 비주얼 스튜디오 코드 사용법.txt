@@ -1,0 +1,72 @@
+핵심 원리
+현재 TXT:
+
+1. Adeline Orabao 아델린 오라바오 (설명)
+2. Aeshee ...
+↓
+
+자동 변환 후:
+
+{
+  name:"Adeline Orabao 아델린 오라바오",
+  image:"",
+  meta:"",
+  desc:`설명`,
+  tags:[]
+},
+형태 생성.
+
+제일 쉬운 현실적 방법
+VSCode 사용 (추천)
+1단계
+VSCode 설치:
+Visual Studio Code
+
+2단계
+names.txt 열기.
+
+3단계
+찾기/바꾸기 사용:
+
+Ctrl + H
+4단계
+정규식(.*) 버튼 켜기.
+
+5단계
+찾기:
+
+^\d+\.\s(.+?)\s\((.+)\)$
+6단계
+바꾸기:
+
+{
+    name: "$1",
+    image: "",
+    meta: "",
+    desc: `$2`,
+    tags: []
+},
+결과
+자동으로:
+
+{
+    name: "Adeline Orabao 아델린 오라바오",
+    image: "",
+    meta: "",
+    desc: `프린세스의 엄마...`,
+    tags: []
+},
+286개 생성됩니다.
+
+마지막 단계
+맨 위에 추가:
+
+const people = [
+맨 아래 추가:
+
+];
+그러면 완성
+그 파일명을:
+
+people.js
+로 저장 후 GitHub에 덮어쓰기.
