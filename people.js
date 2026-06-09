@@ -1718,4 +1718,3 @@ window.people = [
     "image": null
   }
 ];
-export default people;
