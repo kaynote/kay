@@ -54,7 +54,7 @@ function createCard(p) {
   photo.className = "photo";
 
   const img = document.createElement("img");
-  img.src = p.image ? "images/" + p.image : "images/placeholder.jpg";
+  img.src = p.image ? "images/" + p.image : "images/no-image.jpg";
   img.loading = "eager"; // 🔥 lazy 제거 (깜빡임 방지)
   img.decoding = "async";
 
