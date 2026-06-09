@@ -25,6 +25,8 @@ header{
     display:flex;
     flex-direction:column;
     gap:16px;
+   
+    contain: layout paint;
 }
 
 .card{
