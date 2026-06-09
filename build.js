@@ -9,15 +9,25 @@ const imagesDir = path.join(__dirname, "images");
 const outputPath = path.join(__dirname, "people.js");
 
 /* =========================
-   normalize (핵심)
+   normalize
+   🔥 언더바(_), 점(.), 대시(-) 전부 처리
 ========================= */
 function normalize(str) {
   return str
+    .normalize("NFKC")                 // 유니코드 정규화
     .toLowerCase()
-    .replace(/\.[^/.]+$/, "")       // 확장자 제거
-    .replace(/[_\-]/g, " ")         // _ - → 공백
-    .replace(/[^a-z0-9가-힣\s]/g, "") // 특수문자 제거
-    .replace(/\s+/g, " ")           // 공백 정리
+
+    // 확장자 제거
+    .replace(/\.(jpg|jpeg|png|webp)$/i, "")
+
+    // _, -, . → 공백
+    .replace(/[_\-.]+/g, " ")
+
+    // 특수문자 제거
+    .replace(/[^a-z0-9가-힣\s]/g, "")
+
+    // 공백 정리
+    .replace(/\s+/g, " ")
     .trim();
 }
 
@@ -29,13 +39,23 @@ const raw = fs.readFileSync(txtPath, "utf-8");
 const images = fs.readdirSync(imagesDir)
   .filter(f => /\.(png|jpg|jpeg|webp)$/i.test(f));
 
+console.log("📂 images 폴더 파일 수:", images.length);
+
 /* =========================
-   image map (파일명 → 실제파일)
+   image map
 ========================= */
 const imageMap = new Map();
 
 for (const img of images) {
-  imageMap.set(normalize(img), img);
+
+  const normalized = normalize(img);
+
+  imageMap.set(normalized, img);
+
+  // 디버그 출력
+  console.log("🖼️ image:");
+  console.log("   원본 =", img);
+  console.log("   key  =", normalized);
 }
 
 /* =========================
@@ -51,28 +71,92 @@ const lines = raw
 ========================= */
 const people = lines.map(line => {
 
-  // 1. 번호 제거
+  // 번호 제거
   line = line.replace(/^\d+\.\s*/, "");
 
-  // 2. note 추출
+  // note 추출
   const match = line.match(/\((.*?)\)/);
   const note = match ? match[1] : "";
 
-  // 3. 괄호 제거
-  const withoutParen = line.replace(/\(.*?\)/, "").trim();
+  // 괄호 제거
+  const withoutParen = line
+    .replace(/\(.*?\)/, "")
+    .trim();
 
-  // 4. 이름 분리
-  const parts = withoutParen.split(" ");
+  // 이름 분리
+  const parts = withoutParen.split(/\s+/);
+
+  // 한글 시작 위치
   const koStartIndex = parts.findIndex(p => /[가-힣]/.test(p));
 
-  const name = parts.slice(0, koStartIndex).join(" ").trim();
-  const ko = parts.slice(koStartIndex).join(" ").trim();
+  let name = "";
+  let ko = "";
 
   /* =========================
-     🔥 핵심 매칭 로직
+     이름 처리
   ========================= */
+
+  // 한글 이름이 없는 경우
+  if (koStartIndex === -1) {
+
+    name = withoutParen;
+    ko = "";
+
+  } else {
+
+    name = parts
+      .slice(0, koStartIndex)
+      .join(" ")
+      .trim();
+
+    ko = parts
+      .slice(koStartIndex)
+      .join(" ")
+      .trim();
+  }
+
+  /* =========================
+     image matching
+  ========================= */
+
   const key = normalize(name);
-  const matchedImage = imageMap.get(key);
+
+  let matchedImage = imageMap.get(key);
+
+  /* =========================
+     🔥 fallback fuzzy search
+     일부 이름 차이 허용
+  ========================= */
+  if (!matchedImage) {
+
+    for (const [imgKey, imgFile] of imageMap.entries()) {
+
+      // 포함 관계 허용
+      if (
+        imgKey.includes(key) ||
+        key.includes(imgKey)
+      ) {
+        matchedImage = imgFile;
+        break;
+      }
+    }
+  }
+
+  /* =========================
+     debug
+  ========================= */
+  if (!matchedImage) {
+
+    console.log("❌ 이미지 없음");
+    console.log("   name =", name);
+    console.log("   key  =", key);
+
+  } else {
+
+    console.log("✅ 매칭 성공");
+    console.log("   name =", name);
+    console.log("   file =", matchedImage);
+  }
 
   return {
     name,
@@ -80,6 +164,7 @@ const people = lines.map(line => {
     note,
     image: matchedImage || null
   };
+
 });
 
 /* =========================
@@ -93,4 +178,11 @@ export default people;
 
 fs.writeFileSync(outputPath, output, "utf-8");
 
-console.log("✅ build 완료 (파일명 fuzzy 매칭 방식)");
+/* =========================
+   done
+========================= */
+console.log("");
+console.log("✅ build 완료");
+console.log(`👥 people 수 : ${people.length}`);
+console.log(`🖼️ image 수  : ${images.length}`);
+console.log(`📄 output     : people.js`);
