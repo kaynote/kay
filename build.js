@@ -120,6 +120,11 @@ const people = lines.map(line => {
       .trim();
   }
 
+  /* 화면 표시용 이름 */
+  const displayName = ko
+    ? `${name}\n${ko}`
+    : name;
+
   /* 파일명 기반 매칭 */
   const key = normalize(name);
 
@@ -145,6 +150,7 @@ const people = lines.map(line => {
   return {
     name,
     ko,
+    displayName,
     note,
     image: matchedImage
   };
