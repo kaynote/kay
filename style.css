@@ -62,9 +62,8 @@ header{
 .photo img{
     width:100%;
     height:100%;
-    object-fit:cover;       /* 잘림 허용하면서 꽉 채움 */
+    object-fit:cover;
     object-position:center;
-
     display:block;
 }
 
@@ -79,6 +78,10 @@ header{
     font-size:14px;
     font-weight:bold;
     margin-bottom:6px;
+
+    /* 🔥 줄바꿈 적용 */
+    white-space:pre-line;
+    line-height:1.5;
 }
 
 .meta{

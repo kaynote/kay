@@ -31,7 +31,7 @@ const container = document.getElementById("peopleContainer");
 const searchBox = document.getElementById("searchBox");
 
 let data = [];
-let renderedMap = new Map(); // 🔥 핵심: DOM 재사용용
+let renderedMap = new Map();
 
 /* =========================
    INIT
@@ -44,30 +44,65 @@ function init() {
 }
 
 /* =========================
-   CREATE CARD (한 번만 생성)
+   CREATE CARD
 ========================= */
 function createCard(p) {
+
   const card = document.createElement("div");
   card.className = "card";
 
+  /* =========================
+     PHOTO
+  ========================= */
   const photo = document.createElement("div");
   photo.className = "photo";
 
   const img = document.createElement("img");
-  img.src = p.image ? "images/" + p.image : "images/no-image.jpg";
-  img.loading = "eager"; // 🔥 lazy 제거 (깜빡임 방지)
+
+  img.src = p.image
+    ? "images/" + p.image
+    : "images/no-image.jpg";
+
+  img.loading = "eager";
   img.decoding = "async";
 
   photo.appendChild(img);
 
+  /* =========================
+     INFO
+  ========================= */
   const info = document.createElement("div");
   info.className = "info";
 
-  info.innerHTML = `
-    <div class="name">${p.name} / ${p.ko || ""}</div>
-    <div class="meta">${p.tags ? p.tags.join(" · ") : ""}</div>
-    <div class="desc">${p.note || ""}</div>
-  `;
+  /* 이름 */
+  const nameEl = document.createElement("div");
+  nameEl.className = "name";
+
+  // 🔥 핵심: 줄바꿈 표시용
+  nameEl.textContent =
+    p.displayName ||
+    `${p.name}\n${p.ko || ""}`.trim();
+
+  /* 메타 */
+  const metaEl = document.createElement("div");
+  metaEl.className = "meta";
+
+  metaEl.textContent =
+    p.tags
+      ? p.tags.join(" · ")
+      : "";
+
+  /* 설명 */
+  const descEl = document.createElement("div");
+  descEl.className = "desc";
+
+  descEl.textContent =
+    p.note || "";
+
+  /* append */
+  info.appendChild(nameEl);
+  info.appendChild(metaEl);
+  info.appendChild(descEl);
 
   card.appendChild(photo);
   card.appendChild(info);
@@ -76,7 +111,7 @@ function createCard(p) {
 }
 
 /* =========================
-   RENDER (🔥 DOM 재사용 핵심)
+   RENDER
 ========================= */
 function render(list) {
 
@@ -84,12 +119,18 @@ function render(list) {
 
   list.forEach(p => {
 
-    // 기존 DOM 있으면 재사용
     if (renderedMap.has(p.name)) {
-      fragment.appendChild(renderedMap.get(p.name));
+
+      fragment.appendChild(
+        renderedMap.get(p.name)
+      );
+
     } else {
+
       const card = createCard(p);
+
       renderedMap.set(p.name, card);
+
       fragment.appendChild(card);
     }
 
@@ -99,26 +140,48 @@ function render(list) {
 }
 
 /* =========================
-   SEARCH (debounce)
+   SEARCH
 ========================= */
 function debounce(fn, delay = 150) {
+
   let t;
+
   return (...args) => {
+
     clearTimeout(t);
-    t = setTimeout(() => fn(...args), delay);
+
+    t = setTimeout(
+      () => fn(...args),
+      delay
+    );
   };
 }
 
 const handleSearch = debounce((value) => {
+
   const k = value.toLowerCase();
 
   const filtered = data.filter(p =>
-    (p.name || "").toLowerCase().includes(k) ||
-    (p.ko || "").toLowerCase().includes(k) ||
-    (p.note || "").toLowerCase().includes(k)
+
+    (p.name || "")
+      .toLowerCase()
+      .includes(k)
+
+    ||
+
+    (p.ko || "")
+      .toLowerCase()
+      .includes(k)
+
+    ||
+
+    (p.note || "")
+      .toLowerCase()
+      .includes(k)
   );
 
   render(filtered);
+
 }, 150);
 
 searchBox.addEventListener("input", e => {
