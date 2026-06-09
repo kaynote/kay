@@ -1,6 +1,16 @@
 const fs = require("fs");
 const path = require("path");
 
+function normalize(str) {
+  return str
+    .toLowerCase()
+    .replace(/\.[^/.]+$/, "")
+    .replace(/[_\-]/g, " ")
+    .replace(/\s+/g, " ")
+    .replace(/[^a-z0-9가-힣\s]/g, "")
+    .trim();
+}
+
 const txtPath = path.join(__dirname, "names.txt");
 const imagesDir = path.join(__dirname, "images");
 const outputPath = path.join(__dirname, "people.js");
