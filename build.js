@@ -10,11 +10,10 @@ const outputPath = path.join(__dirname, "people.js");
 
 /* =========================
    normalize
-   🔥 언더바(_), 점(.), 대시(-) 전부 처리
 ========================= */
 function normalize(str) {
   return str
-    .normalize("NFKC")                 // 유니코드 정규화
+    .normalize("NFKC")
     .toLowerCase()
 
     // 확장자 제거
@@ -32,75 +31,81 @@ function normalize(str) {
 }
 
 /* =========================
-   read files
+   read names
 ========================= */
-const raw = fs.readFileSync(txtPath, "utf-8");
+const raw = fs.readFileSync(txtPath, "utf8");
 
-const images = fs.readdirSync(imagesDir)
-  .filter(f => /\.(png|jpg|jpeg|webp)$/i.test(f));
+const lines = raw
+  .split(/\r?\n/)
+  .map(v => v.trim())
+  .filter(Boolean);
 
-console.log("📂 images 폴더 파일 수:", images.length);
+/* =========================
+   read images
+========================= */
+const imageFiles = fs
+  .readdirSync(imagesDir)
+  .filter(f => /\.(jpg|jpeg|png|webp)$/i.test(f));
+
+console.log("");
+console.log("📂 image files:", imageFiles.length);
 
 /* =========================
    image map
 ========================= */
 const imageMap = new Map();
 
-for (const img of images) {
+for (const file of imageFiles) {
 
-  const normalized = normalize(img);
+  const key = normalize(file);
 
-  imageMap.set(normalized, img);
+  if (imageMap.has(key)) {
 
-  // 디버그 출력
-  console.log("🖼️ image:");
-  console.log("   원본 =", img);
-  console.log("   key  =", normalized);
+    console.log("");
+    console.log("⚠️ 중복 key 발견");
+    console.log("key =", key);
+    console.log("old =", imageMap.get(key));
+    console.log("new =", file);
+  }
+
+  imageMap.set(key, file);
+
+  console.log("🖼️", file, "→", key);
 }
 
 /* =========================
-   parse lines
-========================= */
-const lines = raw
-  .split(/\r?\n/)
-  .map(l => l.trim())
-  .filter(Boolean);
-
-/* =========================
-   build people array
+   build people
 ========================= */
 const people = lines.map(line => {
 
-  // 번호 제거
+  /* 번호 제거 */
   line = line.replace(/^\d+\.\s*/, "");
 
-  // note 추출
-  const match = line.match(/\((.*?)\)/);
-  const note = match ? match[1] : "";
+  /* note 추출 */
+  const noteMatch = line.match(/\((.*?)\)/);
 
-  // 괄호 제거
-  const withoutParen = line
+  const note = noteMatch
+    ? noteMatch[1].trim()
+    : "";
+
+  /* 괄호 제거 */
+  const cleanLine = line
     .replace(/\(.*?\)/, "")
     .trim();
 
-  // 이름 분리
-  const parts = withoutParen.split(/\s+/);
+  /* 이름 / 한글 분리 */
+  const parts = cleanLine.split(/\s+/);
 
-  // 한글 시작 위치
-  const koStartIndex = parts.findIndex(p => /[가-힣]/.test(p));
+  const koStartIndex = parts.findIndex(p =>
+    /[가-힣]/.test(p)
+  );
 
   let name = "";
   let ko = "";
 
-  /* =========================
-     이름 처리
-  ========================= */
-
-  // 한글 이름이 없는 경우
   if (koStartIndex === -1) {
 
-    name = withoutParen;
-    ko = "";
+    name = cleanLine;
 
   } else {
 
@@ -115,74 +120,61 @@ const people = lines.map(line => {
       .trim();
   }
 
-  /* =========================
-     image matching
-  ========================= */
-
+  /* 파일명 기반 매칭 */
   const key = normalize(name);
 
-  let matchedImage = imageMap.get(key);
+  const matchedImage = imageMap.get(key) || null;
 
-  /* =========================
-     🔥 fallback fuzzy search
-     일부 이름 차이 허용
-  ========================= */
-  if (!matchedImage) {
+  /* debug */
+  if (matchedImage) {
 
-    for (const [imgKey, imgFile] of imageMap.entries()) {
-
-      // 포함 관계 허용
-      if (
-        imgKey.includes(key) ||
-        key.includes(imgKey)
-      ) {
-        matchedImage = imgFile;
-        break;
-      }
-    }
-  }
-
-  /* =========================
-     debug
-  ========================= */
-  if (!matchedImage) {
-
-    console.log("❌ 이미지 없음");
-    console.log("   name =", name);
-    console.log("   key  =", key);
+    console.log("");
+    console.log("✅ MATCH");
+    console.log("name =", name);
+    console.log("key  =", key);
+    console.log("file =", matchedImage);
 
   } else {
 
-    console.log("✅ 매칭 성공");
-    console.log("   name =", name);
-    console.log("   file =", matchedImage);
+    console.log("");
+    console.log("❌ NO IMAGE");
+    console.log("name =", name);
+    console.log("key  =", key);
   }
 
   return {
     name,
     ko,
     note,
-    image: matchedImage || null
+    image: matchedImage
   };
 
 });
 
 /* =========================
-   write output
+   output
 ========================= */
-const output = `
-// Auto-generated from names.txt
-const people = ${JSON.stringify(people, null, 2)};
-export default people;
-`;
+const output =
+  "// Auto-generated from names.txt\n\n" +
+  "const people = " +
+  JSON.stringify(people, null, 2) +
+  ";\n\n" +
+  "export default people;\n";
 
-fs.writeFileSync(outputPath, output, "utf-8");
+/* =========================
+   write file
+========================= */
+fs.writeFileSync(
+  outputPath,
+  output,
+  "utf8"
+);
 
 /* =========================
    done
 ========================= */
 console.log("");
 console.log("✅ build 완료");
-console.log(`👥 people 수 : ${people.length}`);
-console.log(`🖼️ image 수  : ${images.length}`);
-console.log(`📄 output     : people.js`);
+console.log("👥 people :", people.length);
+console.log("🖼️ images :", imageFiles.length);
+console.log("📄 output :", outputPath);
