@@ -53,6 +53,10 @@ header{
     object-fit:cover;
     object-position:center;
     display:block;
+
+    /* 🔥 이미지 강제 안정화 */
+    background:#ddd;
+    will-change: transform;
 }
 
 .info{
