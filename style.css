@@ -14,20 +14,24 @@ header{
 
 #searchBox{
     width:100%;
-    padding:12px;
-    font-size:16px;
+    padding:14px;
+    font-size:18px;
     border:1px solid #ccc;
-    border-radius:8px;
+    border-radius:10px;
     box-sizing:border-box;
 }
 
 /* =========================
    GRID
+   🔥 카드 크기 키워서 8개 정도 나오게
 ========================= */
 #peopleContainer{
     display:grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap:12px;
+
+    /* 기존 180 → 220 */
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+
+    gap:16px;
 
     contain: layout paint;
 }
@@ -39,25 +43,30 @@ header{
     display:flex;
     flex-direction:column;
     background:white;
-    border-radius:12px;
+    border-radius:14px;
     overflow:hidden;
+
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+    transition:transform 0.15s ease;
+}
+
+.card:hover{
+    transform:translateY(-2px);
 }
 
 /* =========================
-   PHOTO (🔥 3:4 완전 고정)
+   PHOTO (3:4 고정)
 ========================= */
 .photo{
     width:100%;
-
-    /* 🔥 핵심: 가로 3 / 세로 4 */
-    aspect-ratio: 3 / 4;
+    aspect-ratio:3 / 4;
 
     background:#ddd;
     overflow:hidden;
 }
 
 /* =========================
-   IMAGE (비율 절대 고정)
+   IMAGE
 ========================= */
 .photo img{
     width:100%;
@@ -71,28 +80,33 @@ header{
    TEXT
 ========================= */
 .info{
-    padding:10px 12px;
+    padding:14px;
 }
 
+/* 🔥 이름 크게 + 한 줄 유지 */
 .name{
-    font-size:14px;
-    font-weight:bold;
-    margin-bottom:6px;
-
-    /* 🔥 줄바꿈 적용 */
-    white-space:pre-line;
-    line-height:1.5;
-}
-
-.meta{
-    font-size:11px;
-    color:#666;
+    font-size:18px;
+    font-weight:700;
     margin-bottom:8px;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+
+    line-height:1.4;
 }
 
+/* 🔥 메타 조금 키움 */
+.meta{
+    font-size:13px;
+    color:#666;
+    margin-bottom:10px;
+}
+
+/* 🔥 설명 글씨 크게 */
 .desc{
-    font-size:12px;
-    line-height:1.4;
+    font-size:14px;
+    line-height:1.6;
     white-space:pre-line;
 }
 
@@ -103,8 +117,10 @@ header{
     display:inline-block;
     background:#eee;
     border-radius:999px;
-    padding:4px 8px;
+
+    padding:5px 10px;
     margin-right:6px;
     margin-bottom:6px;
-    font-size:11px;
+
+    font-size:12px;
 }
