@@ -71,7 +71,7 @@ const people = [
     "name": "Andrea",
     "ko": "안드레아",
     "note": "친언니인 알렉사의 카메라를 향해 \"하이, 대디!\"라 말하며 미래의 한국 아빠를 꿈꿨으나 정작 한국 아빠가 생긴 것은 여동생 아우라, 정주행 2020.08.15 10:41",
-    "image": null
+    "image": "Andrea.jpg"
   },
   {
     "name": "Andrei",
@@ -167,7 +167,7 @@ const people = [
     "name": "Ate Julie",
     "ko": "아떼 줄리",
     "note": "카시의 엄마, 2025.12.24 55:35",
-    "image": null
+    "image": "Ate_Julie.jpg"
   },
   {
     "name": "Ate Lana",
@@ -221,7 +221,7 @@ const people = [
     "name": "Ate Tintin",
     "ko": "아떼 띤띤",
     "note": "제임스의 엄마이자 니콜의 이모, 2025.06.22 1:32.22",
-    "image": null
+    "image": "Ate_Tintin.jpg"
   },
   {
     "name": "Ate Yunila",
@@ -287,7 +287,7 @@ const people = [
     "name": "Carla Mae Valencia",
     "ko": "까를라 미 발렌시아",
     "note": "2020년 초2, 정주행 2020.09.29 02:37",
-    "image": null
+    "image": "Carla_Mae_Valencia.jpg"
   },
   {
     "name": "Cassandra G. Taguinod",
@@ -341,7 +341,7 @@ const people = [
     "name": "Christine Kate",
     "ko": "크리스틴 케이트",
     "note": "2023년 크리스마스 댄스 경연대회에서 1등 수상, 2023.12.16 1:34:15, 생일은 12월 5일, 2024.11.30 채팅 17:12, 2024년 크리스마스 댄스 경연대회에서 1등 수상, 2024.12.14 1:37:24",
-    "image": null
+    "image": "Christine_Kate.jpg"
   },
   {
     "name": "Cipriano F. Nuñez",
@@ -419,7 +419,7 @@ const people = [
     "name": "DJ Bryle",
     "ko": "디제이 브라일",
     "note": "두 눈을 감고 인사하는 남자아이, 2023.05.21 14:51, 2024.12.14 56:12",
-    "image": null
+    "image": "DJ_Bryle.jpg"
   },
   {
     "name": "Dolores Villasan",
@@ -479,7 +479,7 @@ const people = [
     "name": "Empay Mendoza",
     "ko": "엠빠이 멘도자",
     "note": "2026년 8세, 돈맛을 알아버린 멍멍이 타잔의 주인, 2024.08.17 1:16:50, 2024.12.14 05:03",
-    "image": null
+    "image": "Empay_Mendoza.jpg"
   },
   {
     "name": "Erich Khate S. De Jesus",
@@ -503,13 +503,13 @@ const people = [
     "name": "Eviana",
     "ko": "이비아나",
     "note": "리안의 여동생, 필리핀 발음은 '에'를 '이'라고도 발음하기 때문에 제리님이 이비아나라고 발음하시지만 리안의 한국 아빠인 딸기아빠님이 에비아나라고 발음하므로 이름이 Iviana보다 Eviana일 확률이 더 높다, @cineart7_딸기아빠: 이제 걷나보네요. 에비아나, 2025.03.02 채팅 43:47",
-    "image": null
+    "image": "Eviana.jpg"
   },
   {
     "name": "Gail",
     "ko": "게일",
     "note": "단발머리 소녀, 2025.02.01 25:52, 명찰 목걸이, 2024.12.14 1:02:37",
-    "image": null
+    "image": "Gail.jpg"
   },
   {
     "name": "Gerald N. Villaruel",
@@ -629,7 +629,7 @@ const people = [
     "name": "Jassvina",
     "ko": "자스비나",
     "note": "손제이의 누나, 2022년 9세 초4, 정주행 2022.09.20 04:19, 2024년 11세이고 생일은 4월 8일, 정주행 2024.04.06 08:08",
-    "image": null
+    "image": "Jassvina.jpg"
   },
   {
     "name": "Jayson",
@@ -665,7 +665,7 @@ const people = [
     "name": "Jerebel",
     "ko": "제레벨",
     "note": "메리 안의 언니, 정주행 2024.03.14 01:49",
-    "image": null
+    "image": "Jerebel.jpg"
   },
   {
     "name": "Jericho",
@@ -719,7 +719,7 @@ const people = [
     "name": "Jhara Mae Manatad",
     "ko": "자라 미 마나타드",
     "note": "코리아 빌딩의 선생님들 중에서 가장 힘이 세어 궂은 일을 도맡아 했던 선생님, 정주행 2021.06.24 00:37",
-    "image": null
+    "image": "Jhara_Mae_Manatad.jpg"
   },
   {
     "name": "Jill Casil",
@@ -749,7 +749,7 @@ const people = [
     "name": "Jingjing",
     "ko": "징징",
     "note": "머시 라브로의 딸, 제리님에게 아빠라 부른다, 정주행 2020.01.29 03:40",
-    "image": null
+    "image": "Jingjing.jpg"
   },
   {
     "name": "Jinjin",
@@ -899,7 +899,7 @@ const people = [
     "name": "Kiandra",
     "ko": "키안드라",
     "note": "별명 '댄싱퀸', 2024.12.14 51:44",
-    "image": null
+    "image": "Kiandra.jpg"
   },
   {
     "name": "Kikay",
@@ -935,7 +935,7 @@ const people = [
     "name": "Kristal Mae Sanchez",
     "ko": "크리스탈 미 산체스",
     "note": "라이카의 여동생, 정주행 2020.06.18 11:39",
-    "image": null
+    "image": "Kristal_Mae_Sanchez.jpg"
   },
   {
     "name": "Kutang",
@@ -965,7 +965,7 @@ const people = [
     "name": "Kuya Marvin",
     "ko": "꾸야 마빈",
     "note": "마리안과 이보이의 아빠, 정주행 2021.12.30 17:46",
-    "image": null
+    "image": "Kuya_Marvin.jpg"
   },
   {
     "name": "Lara",
@@ -1133,7 +1133,7 @@ const people = [
     "name": "Migi",
     "ko": "미기",
     "note": "미구엘의 쌍둥이 첫째 아들, 2024.03.16 44:42",
-    "image": null
+    "image": "Migi.jpg"
   },
   {
     "name": "Miguel",
@@ -1193,7 +1193,7 @@ const people = [
     "name": "Negra",
     "ko": "네그라",
     "note": "엠빠이의 여동생이자 돈맛을 알아버린 멍멍이 타잔의 주인, 2024.08.17 1:16:50, 2025.06.21 08:19",
-    "image": null
+    "image": "Negra.jpg"
   },
   {
     "name": "Nicole Kate N. Mora",
@@ -1343,7 +1343,7 @@ const people = [
     "name": "Recca Cajipo",
     "ko": "리카 카지포",
     "note": "코리아 빌딩의 막내, 2023년 크리스마스 댄스 경연대회에서 2등 수상, 2023.12.16 1:35:00",
-    "image": null
+    "image": "Recca_Cajipo.jpg"
   },
   {
     "name": "Reina",
@@ -1373,7 +1373,7 @@ const people = [
     "name": "Rhian Murcia Rey",
     "ko": "리안 무르시아 레이",
     "note": "일명 'GengGeng' 겡겡, 'Rhian'은 웨일스어로 '처녀', 'Murcia'는 스페인어로 '과수원', 'Rey'는 스페인어로 '왕'을 의미, 정주행 2023.01.24 02:18, 생일은 5월 18일, 2025.05.18 슈퍼챗 28:56",
-    "image": null
+    "image": "Rhian_Murcia_Rey.jpg"
   },
   {
     "name": "Rica Lyn",
@@ -1415,13 +1415,13 @@ const people = [
     "name": "Rochelle",
     "ko": "로쉘",
     "note": "샐러드를 파는 소녀, 2026.02.07 38:16, 2026년 12세, 2026.03.28 25:07",
-    "image": null
+    "image": "Rochelle.jpg"
   },
   {
     "name": "Rodes",
     "ko": "로데스",
     "note": "제트릴의 여동생, 2024년 만 15세 중3, 정주행 2024.03.15 0:34",
-    "image": null
+    "image": "Rodes.jpg"
   },
   {
     "name": "Rogelio Cruz Lim",
@@ -1469,7 +1469,7 @@ const people = [
     "name": "Sabrina",
     "ko": "사브리나",
     "note": "자키루네 집에서 함께 사는 자키루의 오빠의 여자친구의 조카, 2023년 크리스마스 댄스 경연대회에서 2등 수상, 2023.12.16 1:35:00",
-    "image": null
+    "image": "Sabrina.jpg"
   },
   {
     "name": "Sarah",
@@ -1523,7 +1523,7 @@ const people = [
     "name": "Sherlyn",
     "ko": "셜린 선생님",
     "note": "샤이카의 여동생이자 코리아 빌딩 공부방의 선생님, 2024.03.16 채팅 1:17:15",
-    "image": null
+    "image": "Sherlyn.jpg"
   },
   {
     "name": "Shiela Mae Quirao Ordista",
@@ -1655,7 +1655,7 @@ const people = [
     "name": "Tyron",
     "ko": "타이런",
     "note": "바랑가이 157에 사는 남자아이, 정주행 2024.12.28 03:21",
-    "image": null
+    "image": "Tyron.jpg"
   },
   {
     "name": "Unknown Bakla",
