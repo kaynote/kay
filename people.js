@@ -1,6 +1,6 @@
 
 // Auto-generated from names.txt
-const people = [
+window.people = [
   {
     "name": "Adeline Orabao",
     "ko": "아델린 오라바오",
