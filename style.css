@@ -33,7 +33,7 @@ header{
 }
 
 /* =========================
-   CARD (그대로 유지)
+   CARD
 ========================= */
 .card{
     display:flex;
@@ -44,31 +44,35 @@ header{
 }
 
 /* =========================
-   🔥 PHOTO ONLY CHANGE
+   🔥 PHOTO (300x400 비율 고정 핵심)
 ========================= */
 .photo{
     width:100%;
+
+    /* 🔥 핵심: 300:400 = 3:4 */
     aspect-ratio: 3 / 4;
 
-    /* 🔥 핵심: 더 작게 보이게 */
-    max-height: 220px;   /* 기존보다 줄어든 핵심 포인트 */
+    background:#ddd;
     overflow:hidden;
-    background:#ddd;
-}
-
-.photo img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-
-    background:#ddd;
-    will-change: transform;
-    transform: translateZ(0);
+    position:relative;
 }
 
 /* =========================
-   TEXT (그대로 유지)
+   IMAGE (비율 완전 고정)
+========================= */
+.photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;       /* 꽉 채우기 */
+    object-position:center; /* 중앙 기준 */
+
+    display:block;
+
+    background:#ddd;
+}
+
+/* =========================
+   TEXT
 ========================= */
 .info{
     padding:10px 12px;
@@ -93,7 +97,7 @@ header{
 }
 
 /* =========================
-   TAG (그대로 유지)
+   TAG
 ========================= */
 .tag{
     display:inline-block;
