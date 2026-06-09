@@ -1,110 +1,49 @@
-body{
-    margin:0;
-    padding:20px;
-    background:#f3f3f3;
-    font-family:"Malgun Gothic", sans-serif;
-}
-
-header{
-    background:white;
-    padding:20px;
-    border-radius:12px;
-    margin-bottom:20px;
-}
-
-#searchBox{
-    width:100%;
-    padding:12px;
-    font-size:16px;
-    border:1px solid #ccc;
-    border-radius:8px;
-    box-sizing:border-box;
-}
-
-/* =========================
-   GRID (그대로 유지)
-========================= */
 #peopleContainer{
     display:grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap:12px;
-
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap:8px;
     contain: layout paint;
 }
 
-/* =========================
-   CARD
-========================= */
 .card{
     display:flex;
     flex-direction:column;
     background:white;
-    border-radius:12px;
+    border-radius:10px;
     overflow:hidden;
+    padding:8px;
 }
 
-/* =========================
-   🔥 PHOTO (300x400 비율 고정 핵심)
-========================= */
 .photo{
     width:100%;
-
-    /* 🔥 핵심: 300:400 = 3:4 */
     aspect-ratio: 3 / 4;
-
+    max-height:180px;
     background:#ddd;
     overflow:hidden;
-    position:relative;
 }
 
-/* =========================
-   IMAGE (비율 완전 고정)
-========================= */
 .photo img{
     width:100%;
     height:100%;
-    object-fit:cover;       /* 꽉 채우기 */
-    object-position:center; /* 중앙 기준 */
-
+    object-fit:cover;
     display:block;
-
-    background:#ddd;
 }
 
-/* =========================
-   TEXT
-========================= */
 .info{
-    padding:10px 12px;
+    padding:6px 6px;
 }
 
 .name{
-    font-size:16px;
+    font-size:13px;
     font-weight:bold;
-    margin-bottom:6px;
 }
 
 .meta{
-    font-size:12px;
+    font-size:11px;
     color:#666;
-    margin-bottom:8px;
 }
 
 .desc{
-    font-size:13px;
-    line-height:1.4;
-    white-space:pre-line;
-}
-
-/* =========================
-   TAG
-========================= */
-.tag{
-    display:inline-block;
-    background:#eee;
-    border-radius:999px;
-    padding:4px 8px;
-    margin-right:6px;
-    margin-bottom:6px;
-    font-size:12px;
+    font-size:11px;
+    line-height:1.3;
 }
