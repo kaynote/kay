@@ -47,7 +47,7 @@ const people = [
     "name": "Alfie",
     "ko": "알피",
     "displayName": "Alfie\n알피",
-    "note": "메리 안의 형부, 정주행 2021.02.02 02:07",
+    "note": "메리안의 형부, 정주행 2021.02.02 02:07",
     "image": null
   },
   {
@@ -775,7 +775,7 @@ const people = [
     "name": "Jerebel",
     "ko": "제레벨",
     "displayName": "Jerebel\n제레벨",
-    "note": "메리 안의 언니, 정주행 2024.03.14 01:49",
+    "note": "메리안의 언니, 정주행 2024.03.14 01:49",
     "image": "Jerebel.jpg"
   },
   {
@@ -1195,7 +1195,7 @@ const people = [
     "name": "Louis G",
     "ko": "루이 지",
     "displayName": "Louis G\n루이 지",
-    "note": "메리 안의 남동생, 대학교를 졸업하고 초등학교 교사와 결혼하였다, 정주행 2021.01.28 15:57",
+    "note": "메리안의 남동생, 대학교를 졸업하고 초등학교 교사와 결혼하였다, 정주행 2021.01.28 15:57",
     "image": null
   },
   {
