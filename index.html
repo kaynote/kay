@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kay Notes Archive</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+#peopleContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  padding: 16px;
+}
+
+.card {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 8px;
+  background: white;
+}
+
+.card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  background: #f2f2f2;
+}
+
+.name {
+  margin-top: 6px;
+  font-size: 14px;
+}
+
+#errorBox {
+  color: red;
+  padding: 10px;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+  <h1>Kay Notes Archive</h1>
+
+  <input
+    type="text"
+    id="searchBox"
+    placeholder="이름 / 별명 / 키워드 검색..."
+    disabled
+  >
+</header>
+
+<div id="errorBox"></div>
+<div id="peopleContainer"></div>
+
+<script src="people.js" defer></script>
+
+<script>
+/* =========================
+   🔥 안정 실행 시스템
+   (필수 조건 포함)
+========================= */
+
+const container = document.getElementById("peopleContainer");
+const searchBox = document.getElementById("searchBox");
+const errorBox = document.getElementById("errorBox");
+
+let data = [];
+
+/* =========================
+   1. 안전 로딩 체크
+========================= */
+window.addEventListener("DOMContentLoaded", () => {
+
+  setTimeout(() => {
+
+    if (!window.people) {
+      errorBox.innerText = "❌ people.js 로딩 실패";
+      return;
+    }
+
+    if (!Array.isArray(window.people)) {
+      errorBox.innerText = "❌ 데이터 형식 오류";
+      return;
+    }
+
+    // 🔥 데이터 정제 (필수 안전장치)
+    data = window.people.filter(p =>
+      p && typeof p === "object"
+    );
+
+    searchBox.disabled = false;
+
+    render(data);
+
+  }, 100); // GitHub Pages 로딩 지연 대비
+});
+
+
+/* =========================
+   2. 렌더링
+========================= */
+function render(list) {
+  container.innerHTML = "";
+
+  if (!list.length) {
+    container.innerHTML = "<p>결과 없음</p>";
+    return;
+  }
+
+  list.forEach(p => {
+
+    const name = p.name || "이름 없음";
+    const image = p.image || "images/placeholder.jpg";
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <img src="${image}" 
+           onerror="this.src='images/placeholder.jpg'">
+      <div class="name">${name}</div>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+
+/* =========================
+   3. 검색 (완전 안전 버전)
+========================= */
+searchBox.addEventListener("input", (e) => {
+
+  const keyword = (e.target.value || "").toLowerCase();
+
+  const filtered = data.filter(p => {
+
+    const name = (p.name || "").toLowerCase();
+    const desc = (p.desc || "").toLowerCase();
+    const meta = (p.meta || "").toLowerCase();
+
+    return name.includes(keyword) ||
+           desc.includes(keyword) ||
+           meta.includes(keyword);
+  });
+
+  render(filtered);
+});
+
+</script>
+
+</body>
+</html>
