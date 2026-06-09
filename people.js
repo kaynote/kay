@@ -2004,27 +2004,40 @@ const people = [
 ]
 
 const container = document.getElementById("peopleContainer");
+const searchBox = document.getElementById("searchBox");
+
+// 안전 장치
+if (!container) {
+    console.error("peopleContainer가 HTML에 없습니다.");
+}
+
+if (!searchBox) {
+    console.error("searchBox가 HTML에 없습니다.");
+}
 
 function renderPeople(list){
+
+    if (!container) return;
 
     container.innerHTML = "";
 
     list.forEach((person, index) => {
 
         const card = document.createElement("div");
-
         card.className = "card";
 
         const imageHTML = person.image
             ? `<img class="photo" src="${person.image}">`
             : `<div class="photo"></div>`;
 
-        const tagsHTML = person.tags
+        const tagsHTML = (person.tags || [])
             .map(tag => `<span class="tag">${tag}</span>`)
             .join("");
 
-        card.innerHTML = `
+        const meta = person.meta || "";
+        const desc = person.desc || "";
 
+        card.innerHTML = `
             ${imageHTML}
 
             <div class="info">
@@ -2034,11 +2047,11 @@ function renderPeople(list){
                 </div>
 
                 <div class="meta">
-                    ${person.meta}
+                    ${meta}
                 </div>
 
                 <div class="desc">
-                    ${person.desc}
+                    ${desc}
                 </div>
 
                 <div>
@@ -2052,27 +2065,34 @@ function renderPeople(list){
     });
 }
 
-renderPeople(people);
+// people 존재 체크
+if (typeof people !== "undefined") {
+    renderPeople(people);
+} else {
+    console.error("people 배열이 정의되지 않았습니다.");
+}
 
-document
-.getElementById("searchBox")
-.addEventListener("input", function(){
+// 검색
+if (searchBox) {
+    searchBox.addEventListener("input", function(){
 
-    const keyword = this.value.toLowerCase();
+        const keyword = this.value.toLowerCase();
 
-    const filtered = people.filter(person => {
+        const filtered = people.filter(person => {
 
-        return (
+            const name = (person.name || "").toLowerCase();
+            const meta = (person.meta || "").toLowerCase();
+            const desc = (person.desc || "").toLowerCase();
+            const tags = (person.tags || []).join(" ").toLowerCase();
 
-            person.name.toLowerCase().includes(keyword) ||
+            return (
+                name.includes(keyword) ||
+                meta.includes(keyword) ||
+                desc.includes(keyword) ||
+                tags.includes(keyword)
+            );
+        });
 
-            person.meta.toLowerCase().includes(keyword) ||
-
-            person.desc.toLowerCase().includes(keyword) ||
-
-            person.tags.join(" ").toLowerCase().includes(keyword)
-        );
+        renderPeople(filtered);
     });
-
-    renderPeople(filtered);
-});
+}
