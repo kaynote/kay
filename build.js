@@ -2,24 +2,24 @@ const fs = require("fs");
 const path = require("path");
 
 /* =========================
-   normalize (공통 함수)
-========================= */
-function normalize(str) {
-  return str
-    .toLowerCase()
-    .replace(/\.[^/.]+$/, "")     // 확장자 제거
-    .replace(/[_\-]/g, " ")       // _ - → 공백
-    .replace(/\s+/g, " ")         // 중복 공백 제거
-    .replace(/[^a-z0-9가-힣\s]/g, "") // 특수문자 제거
-    .trim();
-}
-
-/* =========================
    paths
 ========================= */
 const txtPath = path.join(__dirname, "names.txt");
 const imagesDir = path.join(__dirname, "images");
 const outputPath = path.join(__dirname, "people.js");
+
+/* =========================
+   normalize (핵심)
+========================= */
+function normalize(str) {
+  return str
+    .toLowerCase()
+    .replace(/\.[^/.]+$/, "")       // 확장자 제거
+    .replace(/[_\-]/g, " ")         // _ - → 공백
+    .replace(/[^a-z0-9가-힣\s]/g, "") // 특수문자 제거
+    .replace(/\s+/g, " ")           // 공백 정리
+    .trim();
+}
 
 /* =========================
    read files
@@ -30,13 +30,12 @@ const images = fs.readdirSync(imagesDir)
   .filter(f => /\.(png|jpg|jpeg|webp)$/i.test(f));
 
 /* =========================
-   image map 생성
+   image map (파일명 → 실제파일)
 ========================= */
 const imageMap = new Map();
 
 for (const img of images) {
-  const key = normalize(img);
-  imageMap.set(key, img);
+  imageMap.set(normalize(img), img);
 }
 
 /* =========================
@@ -69,7 +68,9 @@ const people = lines.map(line => {
   const name = parts.slice(0, koStartIndex).join(" ").trim();
   const ko = parts.slice(koStartIndex).join(" ").trim();
 
-  // 5. 이미지 매칭 (핵심)
+  /* =========================
+     🔥 핵심 매칭 로직
+  ========================= */
   const key = normalize(name);
   const matchedImage = imageMap.get(key);
 
@@ -77,7 +78,7 @@ const people = lines.map(line => {
     name,
     ko,
     note,
-    image: matchedImage ? matchedImage : null
+    image: matchedImage || null
   };
 });
 
@@ -92,4 +93,4 @@ export default people;
 
 fs.writeFileSync(outputPath, output, "utf-8");
 
-console.log("✅ build 완료 (파일명 기반 이미지 매칭)");
+console.log("✅ build 완료 (파일명 fuzzy 매칭 방식)");

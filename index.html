@@ -31,15 +31,11 @@ const container = document.getElementById("peopleContainer");
 const searchBox = document.getElementById("searchBox");
 
 let data = [];
-let initialized = false;
 
 /* =========================
    INIT
 ========================= */
 function init() {
-  if (initialized) return;
-  initialized = true;
-
   if (!Array.isArray(people)) return;
 
   data = people;
@@ -47,11 +43,9 @@ function init() {
 }
 
 /* =========================
-   RENDER (🔥 안정 + 경로 처리)
+   RENDER (🔥 안정 버전)
 ========================= */
 function render(list) {
-  container.replaceChildren();
-
   container.innerHTML = list.map(p => `
     <div class="card">
 
@@ -59,7 +53,6 @@ function render(list) {
         <img
           src="${p.image ? 'images/' + p.image : 'images/placeholder.jpg'}"
           loading="lazy"
-          style="display:block"
           onerror="this.src='images/placeholder.jpg'">
       </div>
 
