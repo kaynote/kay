@@ -8,11 +8,32 @@
 <link rel="stylesheet" href="style.css">
 
 <style>
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+header {
+  padding: 12px 16px;
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 10;
+}
+
+#searchBox {
+  width: 100%;
+  padding: 8px;
+  margin-top: 8px;
+}
+
 #peopleContainer {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 12px;
   padding: 16px;
+  contain: layout paint;
 }
 
 .card {
@@ -20,7 +41,8 @@
   padding: 10px;
   border-radius: 8px;
   background: white;
-  transition: 0.2s;
+  transition: transform 0.2s;
+  min-height: 260px;
 }
 
 .card:hover {
@@ -31,6 +53,7 @@
   width: 100%;
   height: 140px;
   object-fit: cover;
+  display: block;
   background: #f2f2f2;
   border-radius: 6px;
 }
@@ -44,7 +67,8 @@
 .note {
   font-size: 12px;
   color: #666;
-  margin-top: 2px;
+  margin-top: 4px;
+  line-height: 1.4;
 }
 
 #errorBox {
@@ -64,7 +88,6 @@
 <div id="errorBox"></div>
 <div id="peopleContainer"></div>
 
-<!-- ✅ 핵심: ES Module로 변경 -->
 <script type="module">
 import people from "./people.js";
 
@@ -78,43 +101,44 @@ let data = [];
    초기화
 ========================= */
 function init() {
-
   if (!Array.isArray(people)) {
-    errorBox.innerText =
-      "❌ people.js 형식이 올바르지 않습니다 (export default people 확인)";
+    errorBox.innerText = "❌ people.js export 오류";
     return;
   }
 
   data = people;
-
   render(data);
 }
 
 /* =========================
-   렌더
+   렌더 (DOM 1번만 갱신)
 ========================= */
 function render(list) {
-  container.innerHTML = "";
-
-  list.forEach(p => {
-    const card = document.createElement("div");
-    card.className = "card";
-
-    card.innerHTML = `
+  container.innerHTML = list.map(p => `
+    <div class="card">
       <img src="${p.image}" onerror="this.src='images/placeholder.jpg'">
       <div class="name">${p.name} / ${p.ko || ""}</div>
       <div class="note">${p.note || ""}</div>
-    `;
+    </div>
+  `).join("");
+}
 
-    container.appendChild(card);
-  });
+/* =========================
+   debounce (핵심 안정장치)
+========================= */
+function debounce(fn, delay = 200) {
+  let t;
+  return (...args) => {
+    clearTimeout(t);
+    t = setTimeout(() => fn(...args), delay);
+  };
 }
 
 /* =========================
    검색
 ========================= */
-searchBox.addEventListener("input", (e) => {
-  const k = e.target.value.toLowerCase();
+const handleSearch = debounce((value) => {
+  const k = value.toLowerCase();
 
   const filtered = data.filter(p =>
     (p.name || "").toLowerCase().includes(k) ||
@@ -123,6 +147,10 @@ searchBox.addEventListener("input", (e) => {
   );
 
   render(filtered);
+}, 200);
+
+searchBox.addEventListener("input", (e) => {
+  handleSearch(e.target.value);
 });
 
 /* =========================
