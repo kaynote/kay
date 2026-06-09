@@ -1,5 +1,5 @@
-
 // Auto-generated from names.txt
+
 const people = [
   {
     "name": "Adeline Orabao",
@@ -161,7 +161,7 @@ const people = [
     "name": "Ate Inday",
     "ko": "아떼 인다이",
     "note": "마리안과 이보이의 엄마, 정주행 2021.12.30 17:50",
-    "image": "Inday.jpg"
+    "image": null
   },
   {
     "name": "Ate Julie",
@@ -743,7 +743,7 @@ const people = [
     "name": "Jillian",
     "ko": "질리언",
     "note": "먹깨비 질리언과 이름만 같은 꼬마 여자아이, 산체스배 댄스 콘테스트에 참가 신청했으나 순번을 놓쳐 대회 포기, 2026.06.05 36:29",
-    "image": "Jillian_D._Gilbero.jpg"
+    "image": null
   },
   {
     "name": "Jingjing",
@@ -995,7 +995,7 @@ const people = [
     "name": "Lia",
     "ko": "리아",
     "note": "김세훈 씨가 사진을 붙여 선물 박스를 보내준 여자아이, 2024.11.02 59:16",
-    "image": "Jillian_D._Gilbero.jpg"
+    "image": null
   },
   {
     "name": "Lily",
@@ -1145,7 +1145,7 @@ const people = [
     "name": "Miguela",
     "ko": "미겔라",
     "note": "멜리사와 자매지간, 2010.10.15 18:22, 혹은 Michelle 미셸, 정주행 2021.05.04 19:59",
-    "image": "Miguel.jpg"
+    "image": null
   },
   {
     "name": "Mikay",
@@ -1625,7 +1625,7 @@ const people = [
     "name": "Thea",
     "ko": "테아",
     "note": "마리안의 여동생, 2025.07.05 10:34",
-    "image": "Althea_Nicole_N._Reyes.jpg"
+    "image": null
   },
   {
     "name": "Tiger",
@@ -1709,7 +1709,7 @@ const people = [
     "name": "Zaira",
     "ko": "자이라",
     "note": "형부가 메리안의 친척이라 소개를 받아 제리님의 숙식 제공 가사도우미로 채용되었으나 의처증이 심한 남편 때문에 일을 그만두게 되었다, 2023년 23세, 정주행 2023.06.28",
-    "image": "Zaira_Mae.jpg"
+    "image": null
   },
   {
     "name": "Zyra Mae",
@@ -1718,4 +1718,5 @@ const people = [
     "image": "Zyra_Mae.jpg"
   }
 ];
+
 export default people;
