@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="style.css">
 
 <style>
-/* 🔥 1. layout 안정화 */
 #peopleContainer {
   contain: layout paint;
 }
@@ -32,12 +31,11 @@ const container = document.getElementById("peopleContainer");
 const searchBox = document.getElementById("searchBox");
 
 let data = [];
-
-/* =========================
-   init (중복 방지 포함)
-========================= */
 let initialized = false;
 
+/* =========================
+   INIT
+========================= */
 function init() {
   if (initialized) return;
   initialized = true;
@@ -49,11 +47,9 @@ function init() {
 }
 
 /* =========================
-   render (🔥 완전 안정형)
+   RENDER (🔥 안정 + 경로 처리)
 ========================= */
 function render(list) {
-
-  // 🔥 2. DOM 완전 초기화 (중복/덜덜 방지 핵심)
   container.replaceChildren();
 
   container.innerHTML = list.map(p => `
@@ -61,7 +57,7 @@ function render(list) {
 
       <div class="photo">
         <img
-          src="${p.image}"
+          src="${p.image ? 'images/' + p.image : 'images/placeholder.jpg'}"
           loading="lazy"
           style="display:block"
           onerror="this.src='images/placeholder.jpg'">
@@ -84,7 +80,7 @@ function render(list) {
 }
 
 /* =========================
-   debounce search (안정)
+   SEARCH (debounce)
 ========================= */
 function debounce(fn, delay = 150) {
   let t;
@@ -111,7 +107,7 @@ searchBox.addEventListener("input", e => {
 });
 
 /* =========================
-   start
+   START
 ========================= */
 init();
 
