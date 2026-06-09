@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="style.css">
 
 <style>
-/* 🔥 최소 안전 스타일 (JS 안 떠도 화면 안 깨짐) */
 #peopleContainer {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -20,6 +19,7 @@
   border: 1px solid #ddd;
   padding: 10px;
   border-radius: 8px;
+  background: white;
 }
 
 .card img {
@@ -29,8 +29,14 @@
   background: #f2f2f2;
 }
 
-.hidden {
-  display: none;
+.name {
+  margin-top: 6px;
+  font-size: 14px;
+}
+
+#errorBox {
+  color: red;
+  padding: 10px;
 }
 </style>
 
@@ -45,59 +51,108 @@
     type="text"
     id="searchBox"
     placeholder="이름 / 별명 / 키워드 검색..."
+    disabled
   >
 </header>
 
+<div id="errorBox"></div>
 <div id="peopleContainer"></div>
 
-<script src="people.js"></script>
+<script src="people.js" defer></script>
 
 <script>
 /* =========================
-   🔥 안전 렌더링 시스템
+   🔥 안정 실행 시스템
+   (필수 조건 포함)
 ========================= */
 
 const container = document.getElementById("peopleContainer");
 const searchBox = document.getElementById("searchBox");
+const errorBox = document.getElementById("errorBox");
 
-// people.js 로딩 체크
-if (!Array.isArray(window.people)) {
-  console.error("❌ people.js 로딩 실패 또는 데이터 깨짐");
-  container.innerHTML = "<p>데이터를 불러올 수 없습니다.</p>";
-} else {
-  renderPeople(window.people);
-}
+let data = [];
 
-// 렌더 함수
-function renderPeople(list) {
+/* =========================
+   1. 안전 로딩 체크
+========================= */
+window.addEventListener("DOMContentLoaded", () => {
+
+  setTimeout(() => {
+
+    if (!window.people) {
+      errorBox.innerText = "❌ people.js 로딩 실패";
+      return;
+    }
+
+    if (!Array.isArray(window.people)) {
+      errorBox.innerText = "❌ 데이터 형식 오류";
+      return;
+    }
+
+    // 🔥 데이터 정제 (필수 안전장치)
+    data = window.people.filter(p =>
+      p && typeof p === "object"
+    );
+
+    searchBox.disabled = false;
+
+    render(data);
+
+  }, 100); // GitHub Pages 로딩 지연 대비
+});
+
+
+/* =========================
+   2. 렌더링
+========================= */
+function render(list) {
   container.innerHTML = "";
 
+  if (!list.length) {
+    container.innerHTML = "<p>결과 없음</p>";
+    return;
+  }
+
   list.forEach(p => {
+
+    const name = p.name || "이름 없음";
+    const image = p.image || "images/placeholder.jpg";
+
     const card = document.createElement("div");
     card.className = "card";
 
     card.innerHTML = `
-      <img src="${p.image}" alt="${p.name}"
+      <img src="${image}" 
            onerror="this.src='images/placeholder.jpg'">
-      <div class="name">${p.name}</div>
+      <div class="name">${name}</div>
     `;
 
     container.appendChild(card);
   });
 }
 
-// 🔥 검색 기능 (안전 버전)
+
+/* =========================
+   3. 검색 (완전 안전 버전)
+========================= */
 searchBox.addEventListener("input", (e) => {
-  const keyword = e.target.value.toLowerCase();
 
-  const filtered = window.people.filter(p =>
-    (p.name || "").toLowerCase().includes(keyword) ||
-    (p.desc || "").toLowerCase().includes(keyword) ||
-    (p.meta || "").toLowerCase().includes(keyword)
-  );
+  const keyword = (e.target.value || "").toLowerCase();
 
-  renderPeople(filtered);
+  const filtered = data.filter(p => {
+
+    const name = (p.name || "").toLowerCase();
+    const desc = (p.desc || "").toLowerCase();
+    const meta = (p.meta || "").toLowerCase();
+
+    return name.includes(keyword) ||
+           desc.includes(keyword) ||
+           meta.includes(keyword);
+  });
+
+  render(filtered);
 });
+
 </script>
 
 </body>
