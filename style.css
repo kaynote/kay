@@ -22,11 +22,11 @@ header{
 }
 
 /* =========================
-   GRID (그대로 유지)
+   GRID
 ========================= */
 #peopleContainer{
     display:grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap:12px;
 
     contain: layout paint;
@@ -44,55 +44,51 @@ header{
 }
 
 /* =========================
-   PHOTO (🔥 2/3 축소 적용)
+   PHOTO (🔥 3:4 완전 고정)
 ========================= */
 .photo{
     width:100%;
-    aspect-ratio: 3 / 4;
 
-    /* 🔥 핵심: 사진만 줄이기 (약 2/3 크기) */
-    max-height: 170px;
+    /* 🔥 핵심: 가로 3 / 세로 4 */
+    aspect-ratio: 3 / 4;
 
     background:#ddd;
     overflow:hidden;
-    position:relative;
 }
 
 /* =========================
-   IMAGE (비율 유지)
+   IMAGE (비율 절대 고정)
 ========================= */
 .photo img{
     width:100%;
     height:100%;
-    object-fit:cover;
+    object-fit:cover;       /* 잘림 허용하면서 꽉 채움 */
     object-position:center;
 
     display:block;
-
-    background:#ddd;
 }
 
 /* =========================
-   TEXT (변경 없음)
+   TEXT
 ========================= */
 .info{
     padding:10px 12px;
 }
 
 .name{
-    font-size:16px;
+    font-size:14px;
     font-weight:bold;
     margin-bottom:6px;
 }
 
 .meta{
-    font-size:12px;
+    font-size:11px;
     color:#666;
     margin-bottom:8px;
 }
 
 .desc{
-    font-size:13px;
+    font-size:12px;
     line-height:1.4;
     white-space:pre-line;
 }
@@ -107,5 +103,5 @@ header{
     padding:4px 8px;
     margin-right:6px;
     margin-bottom:6px;
-    font-size:12px;
+    font-size:11px;
 }
