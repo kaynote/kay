@@ -11,7 +11,7 @@ const people = [
     "name": "Aeshee Cartagena Lozano",
     "ko": "에이시 카르타헤나 로자노",
     "note": "일명 '크라잉 에이시', '안경 큰 거 쓴 애'로 불린다, 정주행 2025.11.21 22:49",
-    "image": "images/Aeshee_Cartagena_Lozano.jpg"
+    "image": "Aeshee_Cartagena_Lozano.jpg"
   },
   {
     "name": "Akisha",
@@ -191,7 +191,7 @@ const people = [
     "name": "Ate Lucy",
     "ko": "아떼 루시",
     "note": "아날루스의 엄마이자 닉녹의 외할머니, 정주행 2021.09.07 15:46, 생일은 4월 13일, 2025.04.12 채팅 09:07",
-    "image": "images/Ate_Lucy.jpg"
+    "image": "Ate_Lucy.jpg"
   },
   {
     "name": "Ate Marie",
@@ -257,7 +257,7 @@ const people = [
     "name": "Bam Bam",
     "ko": "뱀뱀",
     "note": "릴리의 바나나마을 친구, 정주행 2024.12.28 05:24",
-    "image": "images/Bam_Bam.jpg"
+    "image": "Bam_Bam.jpg"
   },
   {
     "name": "Bambam",
@@ -275,7 +275,7 @@ const people = [
     "name": "Bambi",
     "ko": "밤비",
     "note": "동근이의 막내 동생, 남자로 태어났지만 여자처럼 살고 있다, 2026.06.05 40:36",
-    "image": "images/Bambi.jpg"
+    "image": "Bambi.jpg"
   },
   {
     "name": "Bayang",
@@ -311,7 +311,7 @@ const people = [
     "name": "Cesca",
     "ko": "세스카",
     "note": "11남매 중 셋째, 2025년 11세, 2023년 크리스마스 댄스 경연대회 3등 수상, 2023.12.16 1:32:21, 2024년 크리스마스 댄스 경연대회 2등 수상, 2024.12.14 1:37:13, Cesca는 Francesca의 줄임말인 듯.",
-    "image": "images/Cesca.jpg"
+    "image": "Cesca.jpg"
   },
   {
     "name": "Charmaine",
@@ -389,7 +389,7 @@ const people = [
     "name": "Dali",
     "ko": "달리",
     "note": "무마이의 할머니, 정주행 2020.02.22 15:58",
-    "image": "images/Dali.jpg"
+    "image": "Dali.jpg"
   },
   {
     "name": "Dang",
@@ -557,7 +557,7 @@ const people = [
     "name": "Jack Baccay",
     "ko": "작 바카이",
     "note": "제리님의 최고의 조력자, 성실하고 부지런하며 맡은 바 일에 최선을 다하는 스타일, 생일은 12월 1일, 2024.12.01 09:19",
-    "image": "images/Jack_Baccay.jpg"
+    "image": "Jack_Baccay.jpg"
   },
   {
     "name": "Jackielou Cabintoy",
@@ -701,13 +701,13 @@ const people = [
     "name": "Jessie Azul",
     "ko": "제시 아줄",
     "note": "쉐인과 샨텔의 외할머니이며 2023년 53세, 2023.04.02 15:39, 가끔 라이브 채팅에 글을 남긴다, @JessieAzul-d9o: ​​thank you sir jerry,to give food and money to my grand child shane & shantel GOD BLESS YOU more. 저희 손주 쉐인과 샨텔에게 음식과 돈을 주셔서 감사합니다, 제리님. 하나님의 더 큰 축복이 함께하시길 바랍니다, 2026.01.10 채팅 36:10",
-    "image": "images/Jessie_Azul.jpg"
+    "image": "Jessie_Azul.jpg"
   },
   {
     "name": "Jetreil Renomeron",
     "ko": "제트릴 리노메론",
     "note": "'제트릴'을 줄여서 '젯'이라고 부른다, 생일은 6월 30일, 2023.07.16 42:09, 정주행 2023.07.18 메리안 고향방문기 1편 19:14, 2025.01.19 40:31",
-    "image": "images/Jetreil_Renomeron.jpg"
+    "image": "Jetreil_Renomeron.jpg"
   },
   {
     "name": "Jewel",
@@ -929,7 +929,7 @@ const people = [
     "name": "Krisel Samson",
     "ko": "크리셀 삼손",
     "note": "예명은 'Kekay' 께까이, 2026.04.18 14:55",
-    "image": "images/Krisel_Samson.jpg"
+    "image": "Krisel_Samson.jpg"
   },
   {
     "name": "Kristal Mae Sanchez",
@@ -1115,7 +1115,7 @@ const people = [
     "name": "Merie Ann Cauba",
     "ko": "메리 안 카우바",
     "note": "제리님의 매니저이자 통역가이자 핫도그 가게 사장님, 생일은 5월 17일, 2024.05.18 채팅 20:02",
-    "image": "images/Merie_Ann_Cauba.jpg"
+    "image": "Merie_Ann_Cauba.jpg"
   },
   {
     "name": "Meyamesi",
@@ -1217,7 +1217,7 @@ const people = [
     "name": "Patricia",
     "ko": "파트리샤",
     "note": "릴리의 바나나마을 친구, 2025.02.01 21:08, 2026년 7세, 2026.03.01 38:09",
-    "image": "images/Patricia.jpg"
+    "image": "Patricia.jpg"
   },
   {
     "name": "Paulo",
@@ -1295,25 +1295,25 @@ const people = [
     "name": "Princess",
     "ko": "프린세스",
     "note": "겡겡의 사촌 여동생, 2023년 크리스마스 댄스 경연대회에서 1등 수상, 2023.12.16 1:34:15, 2024년 크리스마스 댄스 경연대회에서 1등 수상, 2024.12.14 1:37:24",
-    "image": "images/Princess.jpg"
+    "image": "Princess.jpg"
   },
   {
     "name": "Princess",
     "ko": "프린세스",
     "note": "릴리의 바나나마을 친구, 2025.02.01 21:08",
-    "image": "images/Princess.jpg"
+    "image": "Princess.jpg"
   },
   {
     "name": "Princess",
     "ko": "프린세스",
     "note": "릴리의 바랑가이 157 친구, 2025.12.27 29:07",
-    "image": "images/Princess.jpg"
+    "image": "Princess.jpg"
   },
   {
     "name": "Princess",
     "ko": "프린세스",
     "note": "표정이 재미있는 여자아이, 정주행 2020.06.27 21:21, 2025.11.22 1:25:58",
-    "image": "images/Princess.jpg"
+    "image": "Princess.jpg"
   },
   {
     "name": "Rachel Ann M. Tegerero",
@@ -1367,7 +1367,7 @@ const people = [
     "name": "Rhian Besana",
     "ko": "리안 베사나",
     "note": "예전에 사용한 이름은 Rhian Ricohermoso 리안 리코헤르모소, 'Rhian'은 Welsh 웨일스어로 '소녀, 아가씨, 젊은 처녀', 'Rico'는 스페인어로 '부유한, 풍요로운, 멋진', 'Hermoso'는 스페인어로 '아름다운'이라는 뜻, 줄곧 아버지의 성을 따르다가 현재는 어머니의 성을 따라 Rhian Besana를 사용한다, 2026.03.21 채팅 52:35",
-    "image": "images/Rhian_Besana.jpg"
+    "image": "Rhian_Besana.jpg"
   },
   {
     "name": "Rhian Murcia Rey",
@@ -1379,7 +1379,7 @@ const people = [
     "name": "Rica Lyn",
     "ko": "리카 린",
     "note": "바나나마을에 사는 여자아이로 제리님이 만날 때마다 하이파이브를 하는 편이다, 2024.10.13 2부 채팅 30:07",
-    "image": "images/Rica_Lyn.jpg"
+    "image": "Rica_Lyn.jpg"
   },
   {
     "name": "Rihanna",
@@ -1499,7 +1499,7 @@ const people = [
     "name": "Shaina Mae Quirao Ordista",
     "ko": "샤이나 미 키라오 오르디스타",
     "note": "'Shaina'는 히브리어로 '아름답다'는 뜻, 정주행 2020.07.11 09:57",
-    "image": "images/Shaina_Mae_Quirao_Ordista.jpg"
+    "image": "Shaina_Mae_Quirao_Ordista.jpg"
   },
   {
     "name": "Shane Maven A. Esteves",
@@ -1517,7 +1517,7 @@ const people = [
     "name": "Sherelyn Tagudan",
     "ko": "셰렐린 타구단",
     "note": "손제이의 엄마, 가끔 라이브 채팅에 글을 남긴다, @sherelyntagudan: ​​thank you always sir Jerry Godbless 🙏 watching always❤ 항상 감사해요, 제리 선생님. 하나님께서 축복하시길.. 늘 시청하고 있어요. 2023.03.04 18:13, 다른 아이디는 SonjayvinaGeruela, @SonjayvinaGeruela: ​​hello sir jery and korean friends always watching godbless🤗 안녕하세요. 제리님과 한국 친구들, 늘 시청하고 있어요. 하나님의 축복이 함께하시길 바랍니다. 2024.09.21 채팅 07:50",
-    "image": "images/Sherelyn_Tagudan.jpg"
+    "image": "Sherelyn_Tagudan.jpg"
   },
   {
     "name": "Sherlyn",
@@ -1529,7 +1529,7 @@ const people = [
     "name": "Shiela Mae Quirao Ordista",
     "ko": "실라 미 키라오 오르디스타",
     "note": "제리님이 코리아 빌딩의 여신 'Goddess', 아프로디테 오브 코리아 빌딩 'Aphrodite of Korea Building'이라고 말한 적이 있다, 2024.05.04 03:30, 생일은 5월 12일, 2024.05.11 11:14",
-    "image": "images/Shiela_Mae_Quirao_Ordista.jpg"
+    "image": "Shiela_Mae_Quirao_Ordista.jpg"
   },
   {
     "name": "Shiela Marie Accad",
@@ -1703,7 +1703,7 @@ const people = [
     "name": "Zaira Mae",
     "ko": "자이라 미",
     "note": "산체스배 댄스 콘테스트에 엠빠이와 함께 팀을 이뤄 참가한 여자아이, 2026.06.05 16:59",
-    "image": "images/Zaira_Mae.jpg"
+    "image": "Zaira_Mae.jpg"
   },
   {
     "name": "Zaira",
@@ -1715,7 +1715,7 @@ const people = [
     "name": "Zyra Mae",
     "ko": "자일라 미",
     "note": "리안의 베스트 프렌드, 2025.01.18 1:07:32",
-    "image": "images/Zyra_Mae.jpg"
+    "image": "Zyra_Mae.jpg"
   }
 ];
 export default people;
