@@ -45,14 +45,14 @@
 
 <header>
   <h1>Kay Notes Archive</h1>
-
   <input type="text" id="searchBox" placeholder="검색..." disabled>
 </header>
 
 <div id="errorBox"></div>
 <div id="peopleContainer"></div>
 
-<script src="people.js"></script>
+<!-- 핵심: 상대경로 + defer -->
+<script src="./people.js" defer></script>
 
 <script>
 const container = document.getElementById("peopleContainer");
@@ -62,12 +62,13 @@ const errorBox = document.getElementById("errorBox");
 let data = [];
 
 /* =========================
-   초기 로딩
+   안전 초기화
 ========================= */
 function init() {
 
   if (!window.people) {
-    errorBox.innerText = "❌ people.js 로딩 실패";
+    errorBox.innerText =
+      "❌ people.js는 로딩됐지만 window.people이 없습니다. (export 확인 필요)";
     return;
   }
 
@@ -111,7 +112,12 @@ searchBox.addEventListener("input", (e) => {
   render(filtered);
 });
 
-init();
+/* =========================
+   로딩 보장 (핵심)
+========================= */
+window.addEventListener("load", () => {
+  init();
+});
 </script>
 
 </body>
