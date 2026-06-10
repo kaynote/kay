@@ -15,17 +15,9 @@ function normalize(str) {
   return str
     .normalize("NFKC")
     .toLowerCase()
-
-    // 확장자 제거
     .replace(/\.(jpg|jpeg|png|webp)$/i, "")
-
-    // _, -, . → 공백
     .replace(/[_\-.]+/g, " ")
-
-    // 특수문자 제거
     .replace(/[^a-z0-9가-힣\s]/g, "")
-
-    // 공백 정리
     .replace(/\s+/g, " ")
     .trim();
 }
@@ -57,6 +49,10 @@ const imageMap = new Map();
 
 for (const file of imageFiles) {
 
+  if (normalize(file) === "no image") {
+    continue;
+  }
+
   const key = normalize(file);
 
   if (imageMap.has(key)) {
@@ -66,6 +62,7 @@ for (const file of imageFiles) {
     console.log("key =", key);
     console.log("old =", imageMap.get(key));
     console.log("new =", file);
+    console.log("➡️ 최신 파일로 덮어쓰기");
   }
 
   imageMap.set(key, file);
@@ -78,22 +75,18 @@ for (const file of imageFiles) {
 ========================= */
 const people = lines.map(line => {
 
-  /* 번호 제거 */
   line = line.replace(/^\d+\.\s*/, "");
 
-  /* note 추출 */
   const noteMatch = line.match(/\((.*?)\)/);
 
   const note = noteMatch
     ? noteMatch[1].trim()
     : "";
 
-  /* 괄호 제거 */
   const cleanLine = line
     .replace(/\(.*?\)/, "")
     .trim();
 
-  /* 이름 / 한글 분리 */
   const parts = cleanLine.split(/\s+/);
 
   const koStartIndex = parts.findIndex(p =>
@@ -120,18 +113,19 @@ const people = lines.map(line => {
       .trim();
   }
 
-  /* 화면 표시용 이름 */
   const displayName = ko
-    ? `${name}\n${ko}`
+    ? name + "\n" + ko
     : name;
 
-  /* 파일명 기반 매칭 */
   const key = normalize(name);
 
-  const matchedImage = imageMap.get(key) || null;
+  let matchedImage = imageMap.get(key);
 
-  /* debug */
-  if (matchedImage) {
+  if (!matchedImage) {
+    matchedImage = "no-image.jpg";
+  }
+
+  if (matchedImage !== "no-image.jpg") {
 
     console.log("");
     console.log("✅ MATCH");
@@ -145,6 +139,7 @@ const people = lines.map(line => {
     console.log("❌ NO IMAGE");
     console.log("name =", name);
     console.log("key  =", key);
+    console.log("➡️ no-image.jpg 사용");
   }
 
   return {
