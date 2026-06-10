@@ -98,17 +98,6 @@ function createCard(p, index){
     info.className = "info";
 
     /* =========================
-       NUMBER
-    ========================= */
-    const numEl =
-        document.createElement("div");
-
-    numEl.className = "num";
-
-    numEl.textContent =
-        "#" + (p.no || (index + 1));
-
-    /* =========================
        NAME
     ========================= */
     const nameEl =
@@ -123,7 +112,9 @@ function createCard(p, index){
     enEl.className = "en";
 
     enEl.textContent =
-        p.name || "";
+        "#" + (p.no || (index + 1))
+        + " "
+        + (p.name || "");
 
     /* 한글 이름 */
     const koEl =
@@ -167,7 +158,6 @@ function createCard(p, index){
     /* =========================
        APPEND
     ========================= */
-    info.appendChild(numEl);
     info.appendChild(nameEl);
     info.appendChild(metaEl);
     info.appendChild(descEl);
@@ -276,6 +266,7 @@ searchBox.addEventListener(
 init();
 
 </script>
+
 ```
 
 
