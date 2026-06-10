@@ -30,17 +30,17 @@ const people = [
     "image": "no-image.jpg"
   },
   {
-    "name": "Alexa Mae",
-    "ko": "알렉사 미",
-    "displayName": "Alexa Mae\n알렉사 미",
-    "note": "크리스틴 케이트의 여동생, 2024년 크리스마스 댄스 경연대회에서 1등 수상, 2024.12.14 1:37:24",
-    "image": "no-image.jpg"
-  },
-  {
     "name": "Alexa",
     "ko": "알렉사 선생님",
     "displayName": "Alexa\n알렉사 선생님",
     "note": "아우라의 첫째 언니, 2020년 17세로 11학년, 먹방여신 혹은 먹방요정이라 불린다, 정주행 2020.08.15 00:15",
+    "image": "no-image.jpg"
+  },
+  {
+    "name": "Alexa Mae",
+    "ko": "알렉사 미",
+    "displayName": "Alexa Mae\n알렉사 미",
+    "note": "크리스틴 케이트의 여동생, 2024년 크리스마스 댄스 경연대회에서 1등 수상, 2024.12.14 1:37:24",
     "image": "no-image.jpg"
   },
   {
@@ -72,18 +72,18 @@ const people = [
     "image": "Althea_Nicole_N._Reyes.jpg"
   },
   {
-    "name": "Andrea Mae Robles",
-    "ko": "안드레아 미 로블레스",
-    "displayName": "Andrea Mae Robles\n안드레아 미 로블레스",
-    "note": "이름을 줄여서 '안딩'이라 불리며 별명은 'magagandang chopsticks' 마간당 찹스틱스 = 예쁜 젓가락, 생일은 10월 5일, 2024.10.05 09:27",
-    "image": "Andrea_Mae_Robles.jpg"
-  },
-  {
     "name": "Andrea",
     "ko": "안드레아",
     "displayName": "Andrea\n안드레아",
     "note": "친언니인 알렉사의 카메라를 향해 \"하이, 대디!\"라 말하며 미래의 한국 아빠를 꿈꿨으나 정작 한국 아빠가 생긴 것은 여동생 아우라, 정주행 2020.08.15 10:41",
     "image": "Andrea.jpg"
+  },
+  {
+    "name": "Andrea Mae Robles",
+    "ko": "안드레아 미 로블레스",
+    "displayName": "Andrea Mae Robles\n안드레아 미 로블레스",
+    "note": "이름을 줄여서 '안딩'이라 불리며 별명은 'magagandang chopsticks' 마간당 찹스틱스 = 예쁜 젓가락, 생일은 10월 5일, 2024.10.05 09:27",
+    "image": "Andrea_Mae_Robles.jpg"
   },
   {
     "name": "Andrei",
@@ -482,7 +482,7 @@ const people = [
     "ko": "다이아나",
     "displayName": "Diana\n다이아나",
     "note": "일명 '말하지 않는 신기한 아이', 2026년 4세, 2026.03.01 57:41",
-    "image": "no-image.jpg"
+    "image": "Diana.jpg"
   },
   {
     "name": "DJ Bryle",
@@ -520,18 +520,18 @@ const people = [
     "image": "Eddie_Boy_A._Boticario.jpg"
   },
   {
-    "name": "Ella C. Roja",
-    "ko": "엘라 C. 로하",
-    "displayName": "Ella C. Roja\n엘라 C. 로하",
-    "note": "윙크공주, 정주행 2020.10.22 10:49",
-    "image": "Ella_C._Roja.jpg"
-  },
-  {
     "name": "Ella",
     "ko": "엘라",
     "displayName": "Ella\n엘라",
     "note": "프린세스의 여동생, 2025.07.05 10:15",
     "image": "Ella.jpg"
+  },
+  {
+    "name": "Ella C. Roja",
+    "ko": "엘라 C. 로하",
+    "displayName": "Ella C. Roja\n엘라 C. 로하",
+    "note": "윙크공주, 정주행 2020.10.22 10:49",
+    "image": "Ella_C._Roja.jpg"
   },
   {
     "name": "Elliana Mae Besana",
@@ -849,6 +849,13 @@ const people = [
     "image": "no-image.jpg"
   },
   {
+    "name": "Jillian",
+    "ko": "질리언",
+    "displayName": "Jillian\n질리언",
+    "note": "먹깨비 질리언과 이름만 같은 꼬마 여자아이, 산체스배 댄스 콘테스트에 참가 신청했으나 순번을 놓쳐 대회 포기, 2026.06.05 36:29",
+    "image": "no-image.jpg"
+  },
+  {
     "name": "Jillian D. Gilbero",
     "ko": "질리언 D. 길베로",
     "displayName": "Jillian D. Gilbero\n질리언 D. 길베로",
@@ -861,13 +868,6 @@ const people = [
     "displayName": "Jillian Rose C. Llano\n질리언 로즈 C. 라노",
     "note": "아나 킴의 여동생, 2020년 초2, 정주행 2020.09.15 07:23",
     "image": "Jillian_Rose_C._Llano.jpg"
-  },
-  {
-    "name": "Jillian",
-    "ko": "질리언",
-    "displayName": "Jillian\n질리언",
-    "note": "먹깨비 질리언과 이름만 같은 꼬마 여자아이, 산체스배 댄스 콘테스트에 참가 신청했으나 순번을 놓쳐 대회 포기, 2026.06.05 36:29",
-    "image": "no-image.jpg"
   },
   {
     "name": "Jingjing",
@@ -1224,14 +1224,14 @@ const people = [
     "ko": "마이마이",
     "displayName": "Maimai\n마이마이",
     "note": "2020년 22세이고 두 살짜리 아들 카일의 엄마이자 엠빠이의 엄마, 정주행 2020.05.19 06:00",
-    "image": "no-image.jpg"
+    "image": "Maimai.jpg"
   },
   {
     "name": "Maimai",
     "ko": "마이마이",
     "displayName": "Maimai\n마이마이",
     "note": "꾸야 작의 와이프, 정주행 2020.12.08 01:00",
-    "image": "no-image.jpg"
+    "image": "Maimai.jpg"
   },
   {
     "name": "Majorie",
@@ -1493,20 +1493,6 @@ const people = [
     "image": "Prince_Noegie_G._Quidol.jpg"
   },
   {
-    "name": "Princess Alliah V. Lopos",
-    "ko": "프린세스 알리야 V. 로포스",
-    "displayName": "Princess Alliah V. Lopos\n프린세스 알리야 V. 로포스",
-    "note": "일명 'Alliah' 알리야로 불리는 아다나의 친언니, 정주행 2021.11.10 가정방문 2부 10:53",
-    "image": "Princess_Alliah_V._Lopos.jpg"
-  },
-  {
-    "name": "Princess Rhian O. Calso",
-    "ko": "프린세스 리안 O. 칼소",
-    "displayName": "Princess Rhian O. Calso\n프린세스 리안 O. 칼소",
-    "note": "어릴 때부터 동생들을 돌보느라 힘들었던 코리아 빌딩 공부방 소속의 여학생이며 줄여서 '프린이'라고 부른다, 정주행 2021.11.10 가정방문 2부 23:42, 2024년 크리스마스 댄스 경연대회에서 1등 수상, 2024.12.14 1:37:24",
-    "image": "Princess_Rhian_O._Calso.jpg"
-  },
-  {
     "name": "Princess",
     "ko": "프린세스",
     "displayName": "Princess\n프린세스",
@@ -1533,6 +1519,20 @@ const people = [
     "displayName": "Princess\n프린세스",
     "note": "표정이 재미있는 여자아이, 정주행 2020.06.27 21:21, 2025.11.22 1:25:58",
     "image": "Princess.jpg"
+  },
+  {
+    "name": "Princess Alliah V. Lopos",
+    "ko": "프린세스 알리야 V. 로포스",
+    "displayName": "Princess Alliah V. Lopos\n프린세스 알리야 V. 로포스",
+    "note": "일명 'Alliah' 알리야로 불리는 아다나의 친언니, 정주행 2021.11.10 가정방문 2부 10:53",
+    "image": "Princess_Alliah_V._Lopos.jpg"
+  },
+  {
+    "name": "Princess Rhian O. Calso",
+    "ko": "프린세스 리안 O. 칼소",
+    "displayName": "Princess Rhian O. Calso\n프린세스 리안 O. 칼소",
+    "note": "어릴 때부터 동생들을 돌보느라 힘들었던 코리아 빌딩 공부방 소속의 여학생이며 줄여서 '프린이'라고 부른다, 정주행 2021.11.10 가정방문 2부 23:42, 2024년 크리스마스 댄스 경연대회에서 1등 수상, 2024.12.14 1:37:24",
+    "image": "Princess_Rhian_O._Calso.jpg"
   },
   {
     "name": "Rachel Ann M. Tegerero",
@@ -1616,7 +1616,7 @@ const people = [
     "ko": "리아나",
     "displayName": "Rihanna\n리아나",
     "note": "니콜의 사촌 작은언니, 2026.03.14 58:43",
-    "image": "no-image.jpg"
+    "image": "Rihanna.jpg"
   },
   {
     "name": "Rinalyn P. Cajontoy, LPT",
@@ -1983,18 +1983,18 @@ const people = [
     "image": "no-image.jpg"
   },
   {
-    "name": "Zaira Mae",
-    "ko": "자이라 미",
-    "displayName": "Zaira Mae\n자이라 미",
-    "note": "산체스배 댄스 콘테스트에 엠빠이와 함께 팀을 이뤄 참가한 여자아이, 2026.06.05 16:59",
-    "image": "Zaira_Mae.jpg"
-  },
-  {
     "name": "Zaira",
     "ko": "자이라",
     "displayName": "Zaira\n자이라",
     "note": "형부가 메리안의 친척이라 소개를 받아 제리님의 숙식 제공 가사도우미로 채용되었으나 의처증이 심한 남편 때문에 일을 그만두게 되었다, 2023년 23세, 정주행 2023.06.28",
     "image": "Zaira.jpg"
+  },
+  {
+    "name": "Zaira Mae",
+    "ko": "자이라 미",
+    "displayName": "Zaira Mae\n자이라 미",
+    "note": "산체스배 댄스 콘테스트에 엠빠이와 함께 팀을 이뤄 참가한 여자아이, 2026.06.05 16:59",
+    "image": "Zaira_Mae.jpg"
   },
   {
     "name": "Zyra Mae",

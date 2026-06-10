@@ -25,6 +25,11 @@ function normalize(str) {
 /* =========================
    read names
 ========================= */
+if (!fs.existsSync(txtPath)) {
+  console.log("❌ names.txt 없음");
+  process.exit(1);
+}
+
 const raw = fs.readFileSync(txtPath, "utf8");
 
 const lines = raw
@@ -32,9 +37,17 @@ const lines = raw
   .map(v => v.trim())
   .filter(Boolean);
 
+console.log("");
+console.log("📄 names:", lines.length);
+
 /* =========================
    read images
 ========================= */
+if (!fs.existsSync(imagesDir)) {
+  console.log("❌ images 폴더 없음");
+  process.exit(1);
+}
+
 const imageFiles = fs
   .readdirSync(imagesDir)
   .filter(f => /\.(jpg|jpeg|png|webp)$/i.test(f));
@@ -75,18 +88,26 @@ for (const file of imageFiles) {
 ========================= */
 const people = lines.map(line => {
 
+  /* 번호 제거
+     ex) 1. Maria Santos
+  */
   line = line.replace(/^\d+\.\s*/, "");
 
+  /* note 추출
+     ex) (VIP)
+  */
   const noteMatch = line.match(/\((.*?)\)/);
 
   const note = noteMatch
     ? noteMatch[1].trim()
     : "";
 
+  /* note 제거 */
   const cleanLine = line
     .replace(/\(.*?\)/, "")
     .trim();
 
+  /* 영어 / 한글 분리 */
   const parts = cleanLine.split(/\s+/);
 
   const koStartIndex = parts.findIndex(p =>
@@ -113,10 +134,12 @@ const people = lines.map(line => {
       .trim();
   }
 
+  /* 표시용 이름 */
   const displayName = ko
     ? name + "\n" + ko
     : name;
 
+  /* 이미지 매칭 */
   const key = normalize(name);
 
   let matchedImage = imageMap.get(key);
@@ -125,6 +148,7 @@ const people = lines.map(line => {
     matchedImage = "no-image.jpg";
   }
 
+  /* 로그 */
   if (matchedImage !== "no-image.jpg") {
 
     console.log("");
@@ -153,6 +177,13 @@ const people = lines.map(line => {
 });
 
 /* =========================
+   sort
+========================= */
+people.sort((a, b) =>
+  a.name.localeCompare(b.name)
+);
+
+/* =========================
    output
 ========================= */
 const output =
@@ -161,6 +192,24 @@ const output =
   JSON.stringify(people, null, 2) +
   ";\n\n" +
   "export default people;\n";
+
+/* =========================
+   backup old file
+========================= */
+if (fs.existsSync(outputPath)) {
+
+  const backupPath =
+    outputPath + ".backup";
+
+  fs.copyFileSync(
+    outputPath,
+    backupPath
+  );
+
+  console.log("");
+  console.log("💾 backup 생성");
+  console.log("📄", backupPath);
+}
 
 /* =========================
    write file
