@@ -296,24 +296,24 @@ const people = [
     "image": "no-image.jpg"
   },
   {
-    "name": "Bam Bam",
-    "ko": "뱀뱀",
-    "displayName": "Bam Bam\n뱀뱀",
-    "note": "릴리의 바나나마을 친구, 정주행 2024.12.28 05:24",
-    "image": "no-image.jpg"
-  },
-  {
-    "name": "Bambam",
-    "ko": "밤밤",
-    "displayName": "Bambam\n밤밤",
-    "note": "제리님 동네에 사는 여자아이, 2026.03.14 04:14",
-    "image": "no-image.jpg"
-  },
-  {
     "name": "Bambam",
     "ko": "뱀뱀",
     "displayName": "Bambam\n뱀뱀",
     "note": "프린세스의 친구, 2023년 크리스마스 댄스 경연대회에서 1등 수상, 2023.12.16 1:34:15, 2024년 크리스마스 댄스 경연대회에서 1등 수상, 2024.12.14 1:37:24, 2024년 1월 기준 초4, 2024.01.13 49:04",
+    "image": "Bambam.jpg"
+  },
+  {
+    "name": "Bambam-2",
+    "ko": "뱀뱀",
+    "displayName": "Bambam\n뱀뱀",
+    "note": "릴리의 바나나마을 친구, 정주행 2024.12.28 05:24",
+    "image": "Bambam-2.jpg"
+  },
+  {
+    "name": "Bambam-3",
+    "ko": "밤밤",
+    "displayName": "Bambam\n밤밤",
+    "note": "제리님 동네에 사는 여자아이, 2026.03.14 04:14",
     "image": "no-image.jpg"
   },
   {
@@ -412,14 +412,14 @@ const people = [
     "ko": "씨제이",
     "displayName": "CJ\n씨제이",
     "note": "께까이의 오빠, 2025.05.18 1:00:16",
-    "image": "no-image.jpg"
+    "image": "CJ.jpg"
   },
   {
-    "name": "CJ",
+    "name": "CJ-2",
     "ko": "씨제이",
     "displayName": "CJ\n씨제이",
     "note": "여자 애쉴리의 남동생, 2021년 어린이 크리스마스 파티 댄스 경연대회 1등 수상, 상금은 1등 3500페소 / 2등 2500페소 / 3등 1500페소 / 참가상 500페소, 정주행 2021.12.22 19:51, 2024.05.04 채팅 40:38",
-    "image": "no-image.jpg"
+    "image": "CJ-2.jpg"
   },
   {
     "name": "Colin N. mora",
@@ -740,14 +740,14 @@ const people = [
     "name": "Jayson",
     "ko": "제이슨",
     "displayName": "Jayson\n제이슨",
-    "note": "바랑가이 157에 사는 남자아이, 2024.12.14 1:21:56",
-    "image": "no-image.jpg"
+    "note": "코리아 빌딩 공부방 소속 남학생이며 다니카와 같은 학급이다, 정주행 2020.10.10 04:44",
+    "image": "Jayson.jpg"
   },
   {
-    "name": "Jayson",
+    "name": "Jayson-2",
     "ko": "제이슨",
     "displayName": "Jayson\n제이슨",
-    "note": "코리아 빌딩 공부방 소속 남학생이며 다니카와 같은 학급이다, 정주행 2020.10.10 04:44",
+    "note": "바랑가이 157에 사는 남자아이, 2024.12.14 1:21:56",
     "image": "no-image.jpg"
   },
   {
@@ -783,10 +783,10 @@ const people = [
     "ko": "제리코",
     "displayName": "Jericho\n제리코",
     "note": "자라의 둘째 남동생, 알키샤 이전에 제리님의 베스트 프렌드였다, 정주행 2020.02.13 07:46",
-    "image": "no-image.jpg"
+    "image": "Jericho.jpg"
   },
   {
-    "name": "Jericho",
+    "name": "Jericho-2",
     "ko": "제리코",
     "displayName": "Jericho\n제리코",
     "note": "작 바카이의 둘째 아들, 2021.06.19 51:23",
@@ -800,7 +800,7 @@ const people = [
     "image": "no-image.jpg"
   },
   {
-    "name": "Jerome",
+    "name": "Jerome-2",
     "ko": "제롬",
     "displayName": "Jerome\n제롬",
     "note": "신애의 사촌 오빠, 정주행 2025.11.14 12:16",
@@ -1223,15 +1223,15 @@ const people = [
     "name": "Maimai",
     "ko": "마이마이",
     "displayName": "Maimai\n마이마이",
-    "note": "2020년 22세이고 두 살짜리 아들 카일의 엄마이자 엠빠이의 엄마, 정주행 2020.05.19 06:00",
-    "image": "no-image.jpg"
+    "note": "꾸야 작의 와이프, 정주행 2020.12.08 01:00",
+    "image": "Maimai.jpg"
   },
   {
-    "name": "Maimai",
+    "name": "Maimai-2",
     "ko": "마이마이",
     "displayName": "Maimai\n마이마이",
-    "note": "꾸야 작의 와이프, 정주행 2020.12.08 01:00",
-    "image": "no-image.jpg"
+    "note": "2020년 22세이고 두 살짜리 아들 카일의 엄마이자 엠빠이의 엄마, 정주행 2020.05.19 06:00",
+    "image": "Maimai-2.jpg"
   },
   {
     "name": "Majorie",
@@ -1497,28 +1497,7 @@ const people = [
     "ko": "프린세스",
     "displayName": "Princess\n프린세스",
     "note": "겡겡의 사촌 여동생, 2023년 크리스마스 댄스 경연대회에서 1등 수상, 2023.12.16 1:34:15, 2024년 크리스마스 댄스 경연대회에서 1등 수상, 2024.12.14 1:37:24",
-    "image": "no-image.jpg"
-  },
-  {
-    "name": "Princess",
-    "ko": "프린세스",
-    "displayName": "Princess\n프린세스",
-    "note": "릴리의 바나나마을 친구, 2025.02.01 21:08",
-    "image": "no-image.jpg"
-  },
-  {
-    "name": "Princess",
-    "ko": "프린세스",
-    "displayName": "Princess\n프린세스",
-    "note": "릴리의 바랑가이 157 친구, 2025.12.27 29:07",
-    "image": "no-image.jpg"
-  },
-  {
-    "name": "Princess",
-    "ko": "프린세스",
-    "displayName": "Princess\n프린세스",
-    "note": "표정이 재미있는 여자아이, 정주행 2020.06.27 21:21, 2025.11.22 1:25:58",
-    "image": "no-image.jpg"
+    "image": "Princess.jpg"
   },
   {
     "name": "Princess Alliah V. Lopos",
@@ -1533,6 +1512,27 @@ const people = [
     "displayName": "Princess Rhian O. Calso\n프린세스 리안 O. 칼소",
     "note": "어릴 때부터 동생들을 돌보느라 힘들었던 코리아 빌딩 공부방 소속의 여학생이며 줄여서 '프린이'라고 부른다, 정주행 2021.11.10 가정방문 2부 23:42, 2024년 크리스마스 댄스 경연대회에서 1등 수상, 2024.12.14 1:37:24",
     "image": "Princess_Rhian_O._Calso.jpg"
+  },
+  {
+    "name": "Princess-2",
+    "ko": "프린세스",
+    "displayName": "Princess\n프린세스",
+    "note": "릴리의 바나나마을 친구, 2025.02.01 21:08",
+    "image": "Princess-2.jpg"
+  },
+  {
+    "name": "Princess-3",
+    "ko": "프린세스",
+    "displayName": "Princess\n프린세스",
+    "note": "릴리의 바랑가이 157 친구, 2025.12.27 29:07",
+    "image": "Princess-3.jpg"
+  },
+  {
+    "name": "Princess-4",
+    "ko": "프린세스",
+    "displayName": "Princess\n프린세스",
+    "note": "표정이 재미있는 여자아이, 정주행 2020.06.27 21:21, 2025.11.22 1:25:58",
+    "image": "Princess-4.jpg"
   },
   {
     "name": "Rachel Ann M. Tegerero",
