@@ -160,7 +160,7 @@ const people = [
     "ko": "아떼 아날린",
     "displayName": "Ate Analyn\n아떼 아날린",
     "note": "베나의 엄마이자 자라의 이모, 정주행 2021.06.08 16:45, 정주행 2021.07.27 06:43, 바랑가이 157에서 근무하지만 제리님의 스펠링 Jerry를 Gerry로 오표기, 2025.11.29 1부 37:12, 2025.12.06 41:52",
-    "image": null
+    "image": "Ate_Analyn.jpg"
   },
   {
     "name": "Ate Dada",
@@ -174,7 +174,7 @@ const people = [
     "ko": "아떼 엘사",
     "displayName": "Ate Elsa\n아떼 엘사",
     "note": "싱잉 콘테스트에서 참가번호 6번으로 나와 챔피언이 된 여자아이의 엄마, 정주행 2021.08.03 07:21",
-    "image": null
+    "image": "Ate_Elsa.jpg"
   },
   {
     "name": "Ate Fe",
@@ -251,7 +251,7 @@ const people = [
     "ko": "아떼 네네",
     "displayName": "Ate Nene\n아떼 네네",
     "note": "실라미의 엄마, 본명은 'Roselyn A. Quirao' 로즐린 A. 키라오, 정주행 2022.03.02 0:44",
-    "image": null
+    "image": "Ate_Nene.jpg"
   },
   {
     "name": "Ate Tintin",
@@ -265,7 +265,7 @@ const people = [
     "ko": "아떼 유닐라",
     "displayName": "Ate Yunila\n아떼 유닐라",
     "note": "본명은 'Leonila Baliluya Tañote' 레오닐라 발릴루야 타뇨테, 메리 제인 타뇨테 림의 친엄마이자 가라의 할머니, 정주행 2020.07.07 03:16",
-    "image": null
+    "image": "Ate_Yunila.jpg"
   },
   {
     "name": "Audrey Roja",
@@ -412,14 +412,14 @@ const people = [
     "ko": "씨제이",
     "displayName": "CJ\n씨제이",
     "note": "께까이의 오빠, 2025.05.18 1:00:16",
-    "image": null
+    "image": "CJ.jpg"
   },
   {
     "name": "CJ",
     "ko": "씨제이",
     "displayName": "CJ\n씨제이",
     "note": "여자 애쉴리의 남동생, 2021년 어린이 크리스마스 파티 댄스 경연대회 1등 수상, 상금은 1등 3500페소 / 2등 2500페소 / 3등 1500페소 / 참가상 500페소, 정주행 2021.12.22 19:51, 2024.05.04 채팅 40:38",
-    "image": null
+    "image": "CJ.jpg"
   },
   {
     "name": "Colin N. mora",
@@ -503,7 +503,7 @@ const people = [
     "ko": "도밍고 G. 가빈",
     "displayName": "Domingo G. Garvin\n도밍고 G. 가빈",
     "note": "자존심이 강한 오른팔이 없는 외팔이 빠작 기사, 1968년 9월 8일생, 평소에 신장이 안 좋고 당뇨로 다리가 부었는데 매일 술을 마시다 2026년 3월 14일 갑자기 사망, 2026.03.14 29:42",
-    "image": null
+    "image": "Domingo_G._Garvin.jpg"
   },
   {
     "name": "Dongmin",
@@ -531,7 +531,7 @@ const people = [
     "ko": "엘라",
     "displayName": "Ella\n엘라",
     "note": "프린세스의 여동생, 2025.07.05 10:15",
-    "image": null
+    "image": "Ella.jpg"
   },
   {
     "name": "Elliana Mae Besana",
@@ -664,7 +664,7 @@ const people = [
     "ko": "자클린 암팔라요한",
     "displayName": "Jackielyn Ampalayohan\n자클린 암팔라요한",
     "note": "그림을 잘 그리는 크루, 2019년 31세, 정주행 동영상 2019.12.03 댓글 참고, @Jackyampalayohan926이라는 아이디로 2020년 12월 17일 정주행 동영상에 댓글을 달았다, Jackielyn은 프랑스어 Jacqueline을 현대식으로 변형한 이름으로 줄여서 Jacky라 부른다, 정주행 2021.12.27 06:41",
-    "image": null
+    "image": "Jackielyn_Ampalayohan.jpg"
   },
   {
     "name": "James",
@@ -1098,7 +1098,7 @@ const people = [
     "ko": "꼬땅",
     "displayName": "Kutang\n꼬땅",
     "note": "일명 쪽쪽이, 필리핀 발음은 쿠탕, 실라미의 사촌 여동생이며 생일은 5월 6일, 2024.05.04 35:59, 2026년 6세, 2026.03.01 44:18",
-    "image": null
+    "image": "Kutang.jpg"
   },
   {
     "name": "Kuya Ijing",
@@ -1119,7 +1119,7 @@ const people = [
     "ko": "꾸야 루이",
     "displayName": "Kuya Louie\n꾸야 루이",
     "note": "꾸야 작의 장인어른이자 마이마이의 아버지, 정주행 2021.12.30 19:28",
-    "image": null
+    "image": "Kuya_Louie.jpg"
   },
   {
     "name": "Kuya Marvin",
@@ -1140,7 +1140,7 @@ const people = [
     "ko": "라우라",
     "displayName": "Laura\n라우라",
     "note": "샨텔의 외할아버지의 조카로 샨텔에게는 이모뻘, 2023년 15세, 정주행 2023.03.14 11:52",
-    "image": null
+    "image": "Laura.jpg"
   },
   {
     "name": "Leonora D. Lopos",
@@ -1203,7 +1203,7 @@ const people = [
     "ko": "러블리 마리아 카빈토이",
     "displayName": "Lovely Ma. Cabintoy\n러블리 마리아 카빈토이",
     "note": "자키루의 엄마, 정주행 2022.03.02 0:30",
-    "image": null
+    "image": "Lovely_Ma._Cabintoy.jpg"
   },
   {
     "name": "Lucas",
@@ -1217,7 +1217,7 @@ const people = [
     "ko": "라이카 C. 델라 크루즈",
     "displayName": "Lyka C. Dela cruz\n라이카 C. 델라 크루즈",
     "note": "코리아 빌딩 공부방 소속의 여학생이자 크리스탈 미와 자매지간, 정주행 2020.06.18 14:53, 생일은 4월 9일, 2023.04.02 46:54, 2026년 16세, 2026.02.15 33:55",
-    "image": null
+    "image": "Lyka_C._Dela_cruz.jpg"
   },
   {
     "name": "Maimai",
@@ -1357,7 +1357,7 @@ const people = [
     "ko": "밀라그로스 루비스",
     "displayName": "Milagros Rubis\n밀라그로스 루비스",
     "note": "라이사의 친할머니, 'Milagros'는 스페인어로 '기적'이라는 뜻, 정주행 2019.12.20 07:26",
-    "image": null
+    "image": "Milagros_Rubis.jpg"
   },
   {
     "name": "MJ",
@@ -1399,7 +1399,7 @@ const people = [
     "ko": "니콜 케이트 N. 모라",
     "displayName": "Nicole Kate N. Mora\n니콜 케이트 N. 모라",
     "note": "니콜 패밀리 6인 완전체의 중심 인물, 2020.11.21 공부방 시험 2부 18:07, 생일은 6월 30일, 2022.06.30",
-    "image": null
+    "image": "Nicole_Kate_N._Mora.jpg"
   },
   {
     "name": "Niko",
@@ -1581,14 +1581,14 @@ const people = [
     "ko": "레닐린 카빈토이",
     "displayName": "Renelyn Cabintoy\n레닐린 카빈토이",
     "note": "자키루의 친언니, 2021.04.24 2부_졸리비 1:04:20, 2023년 5월에 딸을 출산했다, 정주행 2023.03.21 07:04",
-    "image": null
+    "image": "Renelyn_Cabintoy.jpg"
   },
   {
     "name": "Reynaldo P. Flores",
     "ko": "레이날도 P. 플로레스",
     "displayName": "Reynaldo P. Flores\n레이날도 P. 플로레스",
     "note": "바랑가이 157의 캡틴, 별명은' Rene' 레네, 정주행 2023.11.01 05:12, 생일은 2월 1일, 2025.02.01 08:39",
-    "image": null
+    "image": "Reynaldo_P._Flores.jpg"
   },
   {
     "name": "Rhian Besana",
@@ -1728,7 +1728,7 @@ const people = [
     "ko": "시니어 회장님",
     "displayName": "Senior President\n시니어 회장님",
     "note": "만 60세 이상의 바랑가이 157 노인분들에게 피딩 프로그램 행사 때마다 제리님을 대신하여 밥과 치킨을 나눠 주신다, 정주행 2021.09.08 18:11",
-    "image": null
+    "image": "Senior_President.jpg"
   },
   {
     "name": "Sexy",
@@ -1763,7 +1763,7 @@ const people = [
     "ko": "샨텔 A. 에스테베스",
     "displayName": "Shantel A. Esteves\n샨텔 A. 에스테베스",
     "note": "제리님이 자주 '넘버원 마간다 샨텔'이라 말하고 바랑가이 157 방문자들이 뽑은 가장 예쁜 아이, 2025.12.13 42:31",
-    "image": null
+    "image": "Shantel A. Esteves.jpg"
   },
   {
     "name": "Sherelyn Tagudan",
@@ -1896,7 +1896,7 @@ const people = [
     "ko": "테아",
     "displayName": "Thea\n테아",
     "note": "마리안의 여동생, 2025.07.05 10:34",
-    "image": null
+    "image": "Thea.jpg"
   },
   {
     "name": "Tiger",
@@ -1994,7 +1994,7 @@ const people = [
     "ko": "자이라",
     "displayName": "Zaira\n자이라",
     "note": "형부가 메리안의 친척이라 소개를 받아 제리님의 숙식 제공 가사도우미로 채용되었으나 의처증이 심한 남편 때문에 일을 그만두게 되었다, 2023년 23세, 정주행 2023.06.28",
-    "image": null
+    "image": "Zaira.jpg"
   },
   {
     "name": "Zyra Mae",
