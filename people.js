@@ -62,7 +62,7 @@ const people = [
     "ko": "알렌",
     "displayName": "Allen\n알렌",
     "note": "낫낫의 둘째 남동생, 2026년 4세, 2026.03.15 31:23, 2024년 크리스마스 파티에서 ALDEN이라는 명찰 목걸이를 달고 있었지만 본명은 '알렌'인 듯하다, 2024.12.14 20:30, 2026.04.25 17:56",
-    "image": "no-image.jpg"
+    "image": "Allen.jpg"
   },
   {
     "name": "Althea Nicole N. Reyes",
@@ -300,21 +300,21 @@ const people = [
     "ko": "뱀뱀",
     "displayName": "Bam Bam\n뱀뱀",
     "note": "릴리의 바나나마을 친구, 정주행 2024.12.28 05:24",
-    "image": "Bam_Bam.jpg"
+    "image": "no-image.jpg"
   },
   {
     "name": "Bambam",
     "ko": "밤밤",
     "displayName": "Bambam\n밤밤",
     "note": "제리님 동네에 사는 여자아이, 2026.03.14 04:14",
-    "image": "Bambam.jpg"
+    "image": "no-image.jpg"
   },
   {
     "name": "Bambam",
     "ko": "뱀뱀",
     "displayName": "Bambam\n뱀뱀",
     "note": "프린세스의 친구, 2023년 크리스마스 댄스 경연대회에서 1등 수상, 2023.12.16 1:34:15, 2024년 크리스마스 댄스 경연대회에서 1등 수상, 2024.12.14 1:37:24, 2024년 1월 기준 초4, 2024.01.13 49:04",
-    "image": "Bambam.jpg"
+    "image": "no-image.jpg"
   },
   {
     "name": "Bambi",
@@ -412,14 +412,14 @@ const people = [
     "ko": "씨제이",
     "displayName": "CJ\n씨제이",
     "note": "께까이의 오빠, 2025.05.18 1:00:16",
-    "image": "CJ.jpg"
+    "image": "no-image.jpg"
   },
   {
     "name": "CJ",
     "ko": "씨제이",
     "displayName": "CJ\n씨제이",
     "note": "여자 애쉴리의 남동생, 2021년 어린이 크리스마스 파티 댄스 경연대회 1등 수상, 상금은 1등 3500페소 / 2등 2500페소 / 3등 1500페소 / 참가상 500페소, 정주행 2021.12.22 19:51, 2024.05.04 채팅 40:38",
-    "image": "CJ.jpg"
+    "image": "no-image.jpg"
   },
   {
     "name": "Colin N. mora",
@@ -636,7 +636,7 @@ const people = [
     "ko": "아이반",
     "displayName": "Ivan\n아이반",
     "note": "께까이의 첫째 남동생, 제리님에게 'Daddy' 다디라고 부른다, 2025.03.08 44:30",
-    "image": "no-image.jpg"
+    "image": "Ivan.jpg"
   },
   {
     "name": "Iverson H. Longcop",
@@ -741,14 +741,14 @@ const people = [
     "ko": "제이슨",
     "displayName": "Jayson\n제이슨",
     "note": "바랑가이 157에 사는 남자아이, 2024.12.14 1:21:56",
-    "image": "Jayson.jpg"
+    "image": "no-image.jpg"
   },
   {
     "name": "Jayson",
     "ko": "제이슨",
     "displayName": "Jayson\n제이슨",
     "note": "코리아 빌딩 공부방 소속 남학생이며 다니카와 같은 학급이다, 정주행 2020.10.10 04:44",
-    "image": "Jayson.jpg"
+    "image": "no-image.jpg"
   },
   {
     "name": "Je C. Roja",
@@ -783,14 +783,14 @@ const people = [
     "ko": "제리코",
     "displayName": "Jericho\n제리코",
     "note": "자라의 둘째 남동생, 알키샤 이전에 제리님의 베스트 프렌드였다, 정주행 2020.02.13 07:46",
-    "image": "Jericho.jpg"
+    "image": "no-image.jpg"
   },
   {
     "name": "Jericho",
     "ko": "제리코",
     "displayName": "Jericho\n제리코",
     "note": "작 바카이의 둘째 아들, 2021.06.19 51:23",
-    "image": "Jericho.jpg"
+    "image": "no-image.jpg"
   },
   {
     "name": "Jerome",
@@ -853,7 +853,7 @@ const people = [
     "ko": "질리언",
     "displayName": "Jillian\n질리언",
     "note": "먹깨비 질리언과 이름만 같은 꼬마 여자아이, 산체스배 댄스 콘테스트에 참가 신청했으나 순번을 놓쳐 대회 포기, 2026.06.05 36:29",
-    "image": "no-image.jpg"
+    "image": "Jillian.jpg"
   },
   {
     "name": "Jillian D. Gilbero",
@@ -881,7 +881,7 @@ const people = [
     "ko": "진진",
     "displayName": "Jinjin\n진진",
     "note": "산체스배 댄스 콘테스트에 테아와 한 팀으로 참가한 여자아이, 2026.06.05 25:14",
-    "image": "no-image.jpg"
+    "image": "Jinjin.jpg"
   },
   {
     "name": "Joan H. Flores",
@@ -1210,7 +1210,7 @@ const people = [
     "ko": "루카스",
     "displayName": "Lucas\n루카스",
     "note": "산체스배 댄스 콘테스트에 참가한 남자아이, 2026.06.05 08:19",
-    "image": "no-image.jpg"
+    "image": "Lucas.jpg"
   },
   {
     "name": "Lyka C. Dela cruz",
@@ -1224,14 +1224,14 @@ const people = [
     "ko": "마이마이",
     "displayName": "Maimai\n마이마이",
     "note": "2020년 22세이고 두 살짜리 아들 카일의 엄마이자 엠빠이의 엄마, 정주행 2020.05.19 06:00",
-    "image": "Maimai.jpg"
+    "image": "no-image.jpg"
   },
   {
     "name": "Maimai",
     "ko": "마이마이",
     "displayName": "Maimai\n마이마이",
     "note": "꾸야 작의 와이프, 정주행 2020.12.08 01:00",
-    "image": "Maimai.jpg"
+    "image": "no-image.jpg"
   },
   {
     "name": "Majorie",
@@ -1497,28 +1497,28 @@ const people = [
     "ko": "프린세스",
     "displayName": "Princess\n프린세스",
     "note": "겡겡의 사촌 여동생, 2023년 크리스마스 댄스 경연대회에서 1등 수상, 2023.12.16 1:34:15, 2024년 크리스마스 댄스 경연대회에서 1등 수상, 2024.12.14 1:37:24",
-    "image": "Princess.jpg"
+    "image": "no-image.jpg"
   },
   {
     "name": "Princess",
     "ko": "프린세스",
     "displayName": "Princess\n프린세스",
     "note": "릴리의 바나나마을 친구, 2025.02.01 21:08",
-    "image": "Princess.jpg"
+    "image": "no-image.jpg"
   },
   {
     "name": "Princess",
     "ko": "프린세스",
     "displayName": "Princess\n프린세스",
     "note": "릴리의 바랑가이 157 친구, 2025.12.27 29:07",
-    "image": "Princess.jpg"
+    "image": "no-image.jpg"
   },
   {
     "name": "Princess",
     "ko": "프린세스",
     "displayName": "Princess\n프린세스",
     "note": "표정이 재미있는 여자아이, 정주행 2020.06.27 21:21, 2025.11.22 1:25:58",
-    "image": "Princess.jpg"
+    "image": "no-image.jpg"
   },
   {
     "name": "Princess Alliah V. Lopos",
@@ -1980,7 +1980,7 @@ const people = [
     "ko": "싹",
     "displayName": "Zack\n싹",
     "note": "낫낫의 첫째 남동생, 2025.01.05 20:12, 2026년 7세, 2026.03.01 46:06",
-    "image": "no-image.jpg"
+    "image": "Zack.jpg"
   },
   {
     "name": "Zaira",
