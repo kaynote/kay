@@ -62,7 +62,10 @@ const imageMap = new Map();
 
 for (const file of imageFiles) {
 
-  if (normalize(file) === "no image") {
+  /* no-image 제외 */
+  if (
+    normalize(file) === "no image"
+  ) {
     continue;
   }
 
@@ -86,7 +89,7 @@ for (const file of imageFiles) {
 /* =========================
    build people
 ========================= */
-const people = lines.map(line => {
+let people = lines.map(line => {
 
   /* 번호 제거
      ex) 1. Maria Santos
@@ -96,7 +99,8 @@ const people = lines.map(line => {
   /* note 추출
      ex) (VIP)
   */
-  const noteMatch = line.match(/\((.*?)\)/);
+  const noteMatch =
+    line.match(/\((.*?)\)/);
 
   const note = noteMatch
     ? noteMatch[1].trim()
@@ -110,9 +114,10 @@ const people = lines.map(line => {
   /* 영어 / 한글 분리 */
   const parts = cleanLine.split(/\s+/);
 
-  const koStartIndex = parts.findIndex(p =>
-    /[가-힣]/.test(p)
-  );
+  const koStartIndex =
+    parts.findIndex(p =>
+      /[가-힣]/.test(p)
+    );
 
   let name = "";
   let ko = "";
@@ -145,7 +150,8 @@ const people = lines.map(line => {
   /* 이미지 매칭 */
   const key = normalize(name);
 
-  let matchedImage = imageMap.get(key);   
+  let matchedImage =
+    imageMap.get(key);
 
   if (!matchedImage) {
     matchedImage = "no-image.jpg";
@@ -183,10 +189,23 @@ const people = lines.map(line => {
    sort alphabetically
 ========================= */
 people.sort((a, b) =>
-  a.name.localeCompare(b.name, "en", {
-    sensitivity: "base"
-  })
+  a.name.localeCompare(
+    b.name,
+    "en",
+    {
+      sensitivity: "base",
+      numeric: true
+    }
+  )
 );
+
+/* =========================
+   add sequence number
+========================= */
+people = people.map((person, index) => ({
+  no: index + 1,
+  ...person
+}));
 
 /* =========================
    output
