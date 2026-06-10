@@ -135,14 +135,17 @@ const people = lines.map(line => {
   }
 
   /* 표시용 이름 */
+  const visibleName =
+    name.replace(/[_-]\d+$/, "");
+
   const displayName = ko
-    ? name + "\n" + ko
-    : name;
+    ? visibleName + "\n" + ko
+    : visibleName;
 
   /* 이미지 매칭 */
   const key = normalize(name);
 
-  let matchedImage = imageMap.get(key);
+  let matchedImage = imageMap.get(key);   
 
   if (!matchedImage) {
     matchedImage = "no-image.jpg";
@@ -177,10 +180,12 @@ const people = lines.map(line => {
 });
 
 /* =========================
-   sort
+   sort alphabetically
 ========================= */
 people.sort((a, b) =>
-  a.name.localeCompare(b.name)
+  a.name.localeCompare(b.name, "en", {
+    sensitivity: "base"
+  })
 );
 
 /* =========================
