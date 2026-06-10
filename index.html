@@ -112,8 +112,8 @@ function createCard(p, index){
     enEl.className = "en";
 
     enEl.textContent =
-        "#" + (p.no || (index + 1))
-        + " "
+        (p.no || (index + 1))
+        + ". "
         + (p.name || "");
 
     /* 한글 이름 */
