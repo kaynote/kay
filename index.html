@@ -31,6 +31,7 @@
 
 <div id="peopleContainer"></div>
 
+```html
 <script type="module">
 
 import people from "./people.js";
@@ -60,7 +61,7 @@ function init(){
 /* =========================
    CREATE CARD
 ========================= */
-function createCard(p){
+function createCard(p, index){
 
     const card =
         document.createElement("div");
@@ -95,6 +96,17 @@ function createCard(p){
         document.createElement("div");
 
     info.className = "info";
+
+    /* =========================
+       NUMBER
+    ========================= */
+    const numEl =
+        document.createElement("div");
+
+    numEl.className = "num";
+
+    numEl.textContent =
+        "#" + (p.no || (index + 1));
 
     /* =========================
        NAME
@@ -155,6 +167,7 @@ function createCard(p){
     /* =========================
        APPEND
     ========================= */
+    info.appendChild(numEl);
     info.appendChild(nameEl);
     info.appendChild(metaEl);
     info.appendChild(descEl);
@@ -173,21 +186,24 @@ function render(list){
     const fragment =
         document.createDocumentFragment();
 
-    list.forEach(p => {
+    list.forEach((p, index) => {
 
-        if(renderedMap.has(p.name)){
+        const key =
+            (p.no || index) + "_" + p.name;
+
+        if(renderedMap.has(key)){
 
             fragment.appendChild(
-                renderedMap.get(p.name)
+                renderedMap.get(key)
             );
 
         }else{
 
             const card =
-                createCard(p);
+                createCard(p, index);
 
             renderedMap.set(
-                p.name,
+                key,
                 card
             );
 
@@ -260,6 +276,8 @@ searchBox.addEventListener(
 init();
 
 </script>
+```
+
 
 </body>
 </html>

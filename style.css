@@ -185,3 +185,14 @@ header{
 
     font-size:11px;
 }
+
+/* =========================
+   NUMBER
+========================= */
+.num{
+    font-size:12px;
+    color:#999;
+    font-weight:700;
+
+    margin-bottom:6px;
+}
