@@ -27,10 +27,10 @@ header{
 #peopleContainer{
     display:grid;
 
-    /* 카드 약간 넓힘 */
-    grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
+    /* 한 줄 최대 6명 정도 */
+    grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
 
-    gap:16px;
+    gap:18px;
 
     contain:layout paint;
 }
@@ -87,16 +87,16 @@ header{
    INFO
 ========================= */
 .info{
-    padding:13px;
+    padding:14px;
 }
 
 /* =========================
    NAME
 ========================= */
 .name{
-    margin-bottom:7px;
+    margin-bottom:8px;
 
-    line-height:1.35;
+    line-height:1.38;
 
     overflow:visible !important;
     text-overflow:clip !important;
@@ -114,7 +114,7 @@ header{
     font-size:16px;
     font-weight:700;
 
-    line-height:1.25;
+    line-height:1.3;
 
     white-space:normal !important;
     overflow:visible !important;
@@ -129,12 +129,12 @@ header{
 .name .ko{
     display:block;
 
-    margin-top:3px;
+    margin-top:4px;
 
     font-size:13px;
     color:#666;
 
-    line-height:1.3;
+    line-height:1.35;
 
     white-space:normal !important;
     overflow:visible !important;
@@ -150,9 +150,9 @@ header{
     font-size:13px;
     color:#666;
 
-    margin-bottom:9px;
+    margin-bottom:10px;
 
-    line-height:1.4;
+    line-height:1.45;
 }
 
 /* =========================
@@ -161,7 +161,7 @@ header{
 .desc{
     font-size:13px;
 
-    line-height:1.55;
+    line-height:1.6;
 
     white-space:pre-line;
 
@@ -184,4 +184,17 @@ header{
     margin-bottom:5px;
 
     font-size:11px;
+}
+
+/* =========================
+   NUMBER STYLE
+========================= */
+.number{
+    display:inline-block;
+
+    margin-right:6px;
+
+    color:#888;
+
+    font-weight:700;
 }
