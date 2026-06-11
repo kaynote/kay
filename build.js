@@ -23,22 +23,13 @@ function normalize(str) {
 }
 
 /* =========================
-   timestamp formatter (FIXED)
+   timestamp formatter
 ========================= */
 function formatNote(note) {
   if (!note) return "";
 
   let result = note;
 
-  /**
-   * ✅ 핵심 FIX:
-   * "정주행", "채팅", 기타 텍스트가 중간에 있어도
-   * 날짜 + 시간 전체를 하나로 감싼다
-   *
-   * 예:
-   * 정주행 2024.01.01 뭐시기 12:30
-   * → 통째로 span 처리
-   */
   result = result.replace(
     /(정주행|채팅|라이브|클립)?\s*(\d{4}\.\d{1,2}\.\d{1,2})([\s\S]*?)(\d{1,2}:\d{2}(?::\d{2})?)/g,
     (m, label, date, middle, time) => {
@@ -46,6 +37,9 @@ function formatNote(note) {
       return `<span class="timestamp">${text}</span>`;
     }
   );
+
+  // ✅ 최종 콤마 공백 정리 (핵심)
+  result = result.replace(/\s*,\s*/g, ", ");
 
   return result;
 }
@@ -87,22 +81,21 @@ console.log("📂 images:", imageFiles.length);
 const imageMap = new Map();
 
 for (const file of imageFiles) {
-  if (normalize(file) === "no image") continue;
-  imageMap.set(normalize(file), file);
+  const key = normalize(file);
+  if (key === "no image") continue;
+  imageMap.set(key, file);
 }
 
 /* =========================
    build people
 ========================= */
 let people = lines.map((line, index) => {
-
   line = line.replace(/^\d+\.\s*/, "");
 
   const noteMatch = line.match(/\((.*?)\)/);
   const note = noteMatch ? noteMatch[1].trim() : "";
 
   const cleanLine = line.replace(/\(.*?\)/, "").trim();
-
   const parts = cleanLine.split(/\s+/);
 
   const koStartIndex = parts.findIndex(p => /[가-힣]/.test(p));
