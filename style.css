@@ -22,15 +22,13 @@ header{
 }
 
 /* =========================
-   GRID (핵심 수정)
+   GRID
 ========================= */
 #peopleContainer{
     display:grid;
 
-    /* 고정 카드 폭 → 비율 안정 */
-    grid-template-columns:repeat(auto-fill, 260px);
-
-    justify-content:center;
+    /* 한 줄 최대 6명 정도 */
+    grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
 
     gap:18px;
 
@@ -43,8 +41,6 @@ header{
 .card{
     display:flex;
     flex-direction:column;
-
-    width:260px;
 
     background:white;
 
@@ -62,7 +58,7 @@ header{
 }
 
 /* =========================
-   PHOTO (3:4 핵심)
+   PHOTO
 ========================= */
 .photo{
     width:100%;
@@ -121,8 +117,13 @@ header{
     font-weight:700;
 
     line-height:1.3;
+
+    white-space:normal !important;
+    overflow:visible !important;
+    text-overflow:clip !important;
 }
 
+/* 번호 */
 .name .en .num{
     flex:none;
 
@@ -135,6 +136,7 @@ header{
     font-weight:700;
 }
 
+/* 영어 이름 텍스트 */
 .name .en .txt{
     flex:1;
 
@@ -149,12 +151,17 @@ header{
 
     margin-top:4px;
 
+    /* 번호 영역 + gap 맞춤 */
     padding-left:50px;
 
-    font-size:14px;
-    color:#999;
+    font-size:13px;
+    color:#666;
 
     line-height:1.35;
+
+    white-space:normal !important;
+    overflow:visible !important;
+    text-overflow:clip !important;
 
     word-break:keep-all;
 }
@@ -163,7 +170,7 @@ header{
    META
 ========================= */
 .meta{
-    font-size:15px;
+    font-size:13px;
     color:#666;
 
     margin-bottom:10px;
@@ -175,7 +182,7 @@ header{
    DESC
 ========================= */
 .desc{
-    font-size:15px;
+    font-size:13px;
 
     line-height:1.6;
 
@@ -201,11 +208,7 @@ header{
 
     font-size:11px;
 }
-
-/* =========================
-   TIMESTAMP
-========================= */
 .timestamp {
-    color: #999;
-    font-size: 0.85em;
+  color: #999;
+  font-size: 0.85em;
 }
