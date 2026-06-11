@@ -311,7 +311,7 @@ const people = [
     "ko": "오드리 로하",
     "displayName": "Audrey Roja 오드리 로하",
     "note": "제이의 이복 누나, 2026년 1월 기준 15세 고1,<span class=\"timestamp\">2026.01.03 18:59</span>,<span class=\"timestamp\">2026.01.04 58:36</span>",
-    "image": "no-image.jpg"
+    "image": "Audrey Roja.jpg"
   },
   {
     "no": 40,
@@ -967,7 +967,7 @@ const people = [
     "ko": "질 카실",
     "displayName": "Jill Casil 질 카실",
     "note": "아이디는 ynachelle,<span class=\"timestamp\">2025.03.08 09:09</span>",
-    "image": "no-image.jpg"
+    "image": "Jill Casil.jpg"
   },
   {
     "no": 122,
@@ -1207,7 +1207,7 @@ const people = [
     "ko": "끼께",
     "displayName": "Kikay 끼께",
     "note": "제이의 사촌 여동생, Kikay는 스페인식 이름 Francisca 프란시스카가 Kika를 거쳐 Kikay로 변한 애칭,<span class=\"timestamp\">2024.03.16 1:16:03</span>",
-    "image": "no-image.jpg"
+    "image": "Kikay.jpg"
   },
   {
     "no": 152,
@@ -1215,7 +1215,7 @@ const people = [
     "ko": "끼꼬",
     "displayName": "Kiko 끼꼬",
     "note": "제이의 사촌 남동생, Kiko는 스페인식 이름 Francisco 프란시스코의 애칭,<span class=\"timestamp\">2024.03.16 1:16:03</span>",
-    "image": "no-image.jpg"
+    "image": "Kiko.jpg"
   },
   {
     "no": 153,
