@@ -311,7 +311,7 @@ const people = [
     "ko": "오드리 로하",
     "displayName": "Audrey Roja 오드리 로하",
     "note": "제이의 이복 누나, 2026년 1월 기준 15세 고1,<span class=\"timestamp\">2026.01.03 18:59</span>,<span class=\"timestamp\">2026.01.04 58:36</span>",
-    "image": "no-image.jpg"
+    "image": "Audrey Roja.jpg"
   },
   {
     "no": 40,
@@ -335,7 +335,7 @@ const people = [
     "ko": "에일라",
     "displayName": "Ayla 에일라",
     "note": "시니어 회장님의 손녀 혹은 증손녀로 추정되는 꼬땅의 친구, 2026년 6세,<span class=\"timestamp\">2026.03.01 44:51</span>",
-    "image": "no-image.jpg"
+    "image": "Ayla.jpg"
   },
   {
     "no": 43,
@@ -487,7 +487,7 @@ const people = [
     "ko": "콜린 N. 모라",
     "displayName": "Colin N. mora 콜린 N. 모라",
     "note": "니콜의 첫째 여동생,<span class=\"timestamp\">2026.02.15 48:13</span>, 생일은 1월 6일,<span class=\"timestamp\">2026.06.07 48:25</span>",
-    "image": "no-image.jpg"
+    "image": "Colin N. mora.jpg"
   },
   {
     "no": 62,
@@ -951,7 +951,7 @@ const people = [
     "ko": "즈웰",
     "displayName": "Jewel 즈웰",
     "note": "니콜의 사촌 큰언니,<span class=\"timestamp\">2024.05.05 35:31</span>",
-    "image": "no-image.jpg"
+    "image": "Jewel.jpg"
   },
   {
     "no": 120,
@@ -967,7 +967,7 @@ const people = [
     "ko": "질 카실",
     "displayName": "Jill Casil 질 카실",
     "note": "아이디는 ynachelle,<span class=\"timestamp\">2025.03.08 09:09</span>",
-    "image": "no-image.jpg"
+    "image": "Jill Casil.jpg"
   },
   {
     "no": 122,
@@ -1207,7 +1207,7 @@ const people = [
     "ko": "끼께",
     "displayName": "Kikay 끼께",
     "note": "제이의 사촌 여동생, Kikay는 스페인식 이름 Francisca 프란시스카가 Kika를 거쳐 Kikay로 변한 애칭,<span class=\"timestamp\">2024.03.16 1:16:03</span>",
-    "image": "no-image.jpg"
+    "image": "Kikay.jpg"
   },
   {
     "no": 152,
@@ -1215,7 +1215,7 @@ const people = [
     "ko": "끼꼬",
     "displayName": "Kiko 끼꼬",
     "note": "제이의 사촌 남동생, Kiko는 스페인식 이름 Francisco 프란시스코의 애칭,<span class=\"timestamp\">2024.03.16 1:16:03</span>",
-    "image": "no-image.jpg"
+    "image": "Kiko.jpg"
   },
   {
     "no": 153,
@@ -1343,7 +1343,7 @@ const people = [
     "ko": "엘제이",
     "displayName": "LJ 엘제이",
     "note": "김세훈 씨가 사진을 붙여 선물 박스를 보내준 통통한 여자아이,<span class=\"timestamp\">2024.11.02 1:07:49</span>",
-    "image": "no-image.jpg"
+    "image": "LJ.jpg"
   },
   {
     "no": 169,
