@@ -23,23 +23,6 @@ function normalize(str) {
 }
 
 /* =========================
-   timestamp highlight ⭐ 추가
-========================= */
-function formatNote(note) {
-  if (!note) return "";
-
-  // "정주행 2021.11.10 23:42"
-  // "2024.03.03 채팅 24:55"
-  const regex =
-  /(정주행\s*)?\d{4}\.\d{2}\.\d{2}(?:\s*[가-힣A-Za-z0-9\s]*)?\s*\d{1,2}:\d{2}(?::\d{2})?/g;
-
-  return note.replace(
-    regex,
-    (match) => `<span class="timestamp">${match}</span>`
-  );
-}
-
-/* =========================
    read names
 ========================= */
 if (!fs.existsSync(txtPath)) {
@@ -78,11 +61,18 @@ console.log("📂 image files:", imageFiles.length);
 const imageMap = new Map();
 
 for (const file of imageFiles) {
-  if (normalize(file) === "no image") continue;
+
+  /* no-image 제외 */
+  if (
+    normalize(file) === "no image"
+  ) {
+    continue;
+  }
 
   const key = normalize(file);
 
   if (imageMap.has(key)) {
+
     console.log("");
     console.log("⚠️ 중복 key 발견");
     console.log("key =", key);
@@ -92,68 +82,125 @@ for (const file of imageFiles) {
   }
 
   imageMap.set(key, file);
+
+  console.log("🖼️", file, "→", key);
 }
 
 /* =========================
    build people
 ========================= */
 let people = lines.map(line => {
+
+  /* 번호 제거
+     ex) 1. Maria Santos
+  */
   line = line.replace(/^\d+\.\s*/, "");
 
-  const noteMatch = line.match(/\((.*?)\)/);
-  const note = noteMatch ? noteMatch[1].trim() : "";
+  /* note 추출
+     ex) (VIP)
+  */
+  const noteMatch =
+    line.match(/\((.*?)\)/);
 
-  const cleanLine = line.replace(/\(.*?\)/, "").trim();
+  const note = noteMatch
+    ? noteMatch[1].trim()
+    : "";
 
+  /* note 제거 */
+  const cleanLine = line
+    .replace(/\(.*?\)/, "")
+    .trim();
+
+  /* 영어 / 한글 분리 */
   const parts = cleanLine.split(/\s+/);
 
-  const koStartIndex = parts.findIndex(p => /[가-힣]/.test(p));
+  const koStartIndex =
+    parts.findIndex(p =>
+      /[가-힣]/.test(p)
+    );
 
   let name = "";
   let ko = "";
 
   if (koStartIndex === -1) {
+
     name = cleanLine;
+
   } else {
-    name = parts.slice(0, koStartIndex).join(" ").trim();
-    ko = parts.slice(koStartIndex).join(" ").trim();
+
+    name = parts
+      .slice(0, koStartIndex)
+      .join(" ")
+      .trim();
+
+    ko = parts
+      .slice(koStartIndex)
+      .join(" ")
+      .trim();
   }
 
-  const visibleName = name.replace(/[_-]\d+$/, "");
+  /* 표시용 이름 */
+  const visibleName =
+    name.replace(/[_-]\d+$/, "");
 
   const displayName = ko
     ? visibleName + "\n" + ko
     : visibleName;
 
+  /* 이미지 매칭 */
   const key = normalize(name);
 
-  let matchedImage = imageMap.get(key);
-  if (!matchedImage) matchedImage = "no-image.jpg";
+  let matchedImage =
+    imageMap.get(key);
+
+  if (!matchedImage) {
+    matchedImage = "no-image.jpg";
+  }
+
+  /* 로그 */
+  if (matchedImage !== "no-image.jpg") {
+
+    console.log("");
+    console.log("✅ MATCH");
+    console.log("name =", name);
+    console.log("key  =", key);
+    console.log("file =", matchedImage);
+
+  } else {
+
+    console.log("");
+    console.log("❌ NO IMAGE");
+    console.log("name =", name);
+    console.log("key  =", key);
+    console.log("➡️ no-image.jpg 사용");
+  }
 
   return {
     name,
     ko,
     displayName,
-
-    // ⭐ 여기 핵심
-    note: formatNote(note),
-
+    note,
     image: matchedImage
   };
+
 });
 
 /* =========================
-   sort
+   sort alphabetically
 ========================= */
 people.sort((a, b) =>
-  a.name.localeCompare(b.name, "en", {
-    sensitivity: "base",
-    numeric: true
-  })
+  a.name.localeCompare(
+    b.name,
+    "en",
+    {
+      sensitivity: "base",
+      numeric: true
+    }
+  )
 );
 
 /* =========================
-   numbering
+   add sequence number
 ========================= */
 people = people.map((person, index) => ({
   no: index + 1,
@@ -171,20 +218,31 @@ const output =
   "export default people;\n";
 
 /* =========================
-   backup
+   backup old file
 ========================= */
 if (fs.existsSync(outputPath)) {
-  const backupPath = outputPath + ".backup";
-  fs.copyFileSync(outputPath, backupPath);
+
+  const backupPath =
+    outputPath + ".backup";
+
+  fs.copyFileSync(
+    outputPath,
+    backupPath
+  );
 
   console.log("");
   console.log("💾 backup 생성");
+  console.log("📄", backupPath);
 }
 
 /* =========================
-   write
+   write file
 ========================= */
-fs.writeFileSync(outputPath, output, "utf8");
+fs.writeFileSync(
+  outputPath,
+  output,
+  "utf8"
+);
 
 /* =========================
    done
