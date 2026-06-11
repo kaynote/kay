@@ -23,7 +23,7 @@ function normalize(str) {
 }
 
 /* =========================
-   timestamp formatter (FINAL)
+   timestamp formatter (FIXED)
 ========================= */
 function formatNote(note) {
   if (!note) return "";
@@ -31,23 +31,19 @@ function formatNote(note) {
   let result = note;
 
   /**
-   * 🎯 핵심 1: 정주행 / 채팅 / 기타 키워드 포함 케이스
-   * YYYY.MM.DD + 한글 + HH:MM or HH:MM:SS
+   * ✅ 핵심 FIX:
+   * "정주행", "채팅", 기타 텍스트가 중간에 있어도
+   * 날짜 + 시간 전체를 하나로 감싼다
+   *
+   * 예:
+   * 정주행 2024.01.01 뭐시기 12:30
+   * → 통째로 span 처리
    */
   result = result.replace(
-    /(\d{4}\.\d{1,2}\.\d{1,2})([\s\S]*?)(\d{1,2}:\d{2}(?::\d{2})?)/g,
-    (m, date, middle, time) => {
-      return `<span class="timestamp">${date}${middle}${time}</span>`;
-    }
-  );
-
-  /**
-   * 🎯 핵심 2: 정주행 단독 케이스 보강 (선택 안전망)
-   */
-  result = result.replace(
-    /(정주행)\s+(\d{4}\.\d{1,2}\.\d{1,2})\s*(\d{1,2}:\d{2}(?::\d{2})?)/g,
-    (m, label, date, time) => {
-      return `<span class="timestamp">${label} ${date} ${time}</span>`;
+    /(정주행|채팅|라이브|클립)?\s*(\d{4}\.\d{1,2}\.\d{1,2})([\s\S]*?)(\d{1,2}:\d{2}(?::\d{2})?)/g,
+    (m, label, date, middle, time) => {
+      const text = `${label ? label + " " : ""}${date}${middle}${time}`;
+      return `<span class="timestamp">${text}</span>`;
     }
   );
 
