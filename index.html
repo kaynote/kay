@@ -10,17 +10,17 @@ const searchBox =
 
 let data = [];
 
+let renderedMap = new Map();
+
 /* =========================
-   TIMESTAMP COLORIZE
+   TIMESTAMP
 ========================= */
 function colorizeTimestamp(text){
 
     if(!text) return "";
 
     return text.replace(
-
         /(\d{4}\.\d{2}\.\d{2}\s+\d{1,2}:\d{2}(?::\d{2})?)/g,
-
         '<span class="timestamp">$1</span>'
     );
 }
@@ -30,9 +30,9 @@ function colorizeTimestamp(text){
 ========================= */
 function init(){
 
-    data = Array.isArray(people)
-        ? people
-        : [];
+    if(!Array.isArray(people)) return;
+
+    data = people;
 
     render(data);
 }
@@ -47,54 +47,102 @@ function createCard(p, index){
 
     card.className = "card";
 
+    /* =========================
+       PHOTO
+    ========================= */
+    const photo =
+        document.createElement("div");
+
+    photo.className = "photo";
+
+    const img =
+        document.createElement("img");
+
+    img.src = p.image
+        ? "images/" + p.image
+        : "images/no-image.jpg";
+
+    img.loading = "lazy";
+
+    img.decoding = "async";
+
+    photo.appendChild(img);
+
+    /* =========================
+       INFO
+    ========================= */
+    const info =
+        document.createElement("div");
+
+    info.className = "info";
+
+    /* =========================
+       NAME
+    ========================= */
+    const nameEl =
+        document.createElement("div");
+
+    nameEl.className = "name";
+
+    const enEl =
+        document.createElement("div");
+
+    enEl.className = "en";
+
     const no =
-        p.no || (index + 1);
+        (p.no || (index + 1));
 
-    card.innerHTML = `
+    enEl.innerHTML =
+        `<span class="num">${no}.</span>
+         <span class="txt">${p.name || ""}</span>`;
 
-        <div class="photo">
-            <img
-                src="${
-                    p.image
-                        ? "images/" + p.image
-                        : "images/no-image.jpg"
-                }"
-                loading="lazy"
-                decoding="async"
-            >
-        </div>
+    const koEl =
+        document.createElement("div");
 
-        <div class="info">
+    koEl.className = "ko";
 
-            <div class="name">
+    koEl.textContent =
+        p.ko || "";
 
-                <div class="en">
-                    <span class="num">${no}.</span>
-                    <span class="txt">${p.name || ""}</span>
-                </div>
+    nameEl.appendChild(enEl);
 
-                ${
-                    p.ko
-                    ? `<div class="ko">${p.ko}</div>`
-                    : ""
-                }
+    if(p.ko){
+        nameEl.appendChild(koEl);
+    }
 
-            </div>
+    /* =========================
+       META
+    ========================= */
+    const metaEl =
+        document.createElement("div");
 
-            <div class="meta">
-                ${
-                    p.tags
-                    ? p.tags.join(" · ")
-                    : ""
-                }
-            </div>
+    metaEl.className = "meta";
 
-            <div class="desc">
-                ${colorizeTimestamp(p.note || "")}
-            </div>
+    metaEl.textContent =
+        p.tags
+            ? p.tags.join(" · ")
+            : "";
 
-        </div>
-    `;
+    /* =========================
+       DESC
+    ========================= */
+    const descEl =
+        document.createElement("div");
+
+    descEl.className = "desc";
+
+    descEl.innerHTML =
+        colorizeTimestamp(p.note || "");
+
+    /* =========================
+       APPEND
+    ========================= */
+    info.appendChild(nameEl);
+    info.appendChild(metaEl);
+    info.appendChild(descEl);
+
+    card.appendChild(photo);
+    card.appendChild(info);
 
     return card;
 }
@@ -109,9 +157,27 @@ function render(list){
 
     list.forEach((p, index) => {
 
-        fragment.appendChild(
-            createCard(p, index)
-        );
+        const key =
+            (p.no || index) + "_" + p.name;
+
+        if(renderedMap.has(key)){
+
+            fragment.appendChild(
+                renderedMap.get(key)
+            );
+
+        }else{
+
+            const card =
+                createCard(p, index);
+
+            renderedMap.set(
+                key,
+                card
+            );
+
+            fragment.appendChild(card);
+        }
 
     });
 
@@ -123,13 +189,13 @@ function render(list){
 ========================= */
 function debounce(fn, delay = 150){
 
-    let timer;
+    let t;
 
     return (...args) => {
 
-        clearTimeout(timer);
+        clearTimeout(t);
 
-        timer = setTimeout(
+        t = setTimeout(
             () => fn(...args),
             delay
         );
@@ -137,39 +203,45 @@ function debounce(fn, delay = 150){
 }
 
 const handleSearch =
-    debounce(value => {
+    debounce((value) => {
 
-        const k =
-            value.toLowerCase();
+    const k =
+        value.toLowerCase();
 
-        render(
+    const filtered =
+        data.filter(p =>
 
-            data.filter(p =>
+            (p.name || "")
+                .toLowerCase()
+                .includes(k)
 
-                (p.name || "")
-                    .toLowerCase()
-                    .includes(k)
+            ||
 
-                ||
+            (p.ko || "")
+                .toLowerCase()
+                .includes(k)
 
-                (p.ko || "")
-                    .toLowerCase()
-                    .includes(k)
+            ||
 
-                ||
-
-                (p.note || "")
-                    .toLowerCase()
-                    .includes(k)
-            )
+            (p.note || "")
+                .toLowerCase()
+                .includes(k)
         );
 
-    });
+    render(filtered);
 
-searchBox.addEventListener(
-    "input",
-    e => handleSearch(e.target.value)
-);
+}, 150);
+
+if(searchBox){
+
+    searchBox.addEventListener(
+        "input",
+        e => {
+            handleSearch(e.target.value);
+        }
+    );
+
+}
 
 /* =========================
    START

@@ -26,8 +26,12 @@ header{
 ========================= */
 #peopleContainer{
     display:grid;
+
+    /* 한 줄 최대 6명 정도 */
     grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
+
     gap:18px;
+
     contain:layout paint;
 }
 
@@ -37,10 +41,15 @@ header{
 .card{
     display:flex;
     flex-direction:column;
+
     background:white;
+
     border-radius:14px;
+
     overflow:hidden;
+
     box-shadow:0 2px 8px rgba(0,0,0,0.08);
+
     transition:transform 0.15s ease;
 }
 
@@ -53,8 +62,11 @@ header{
 ========================= */
 .photo{
     width:100%;
+
     aspect-ratio:3 / 4;
+
     background:#ddd;
+
     overflow:hidden;
 }
 
@@ -64,8 +76,10 @@ header{
 .photo img{
     width:100%;
     height:100%;
+
     object-fit:cover;
     object-position:center;
+
     display:block;
 }
 
@@ -81,34 +95,51 @@ header{
 ========================= */
 .name{
     margin-bottom:8px;
+
     overflow:visible !important;
     text-overflow:clip !important;
     white-space:normal !important;
+
     word-break:keep-all;
 }
 
+/* =========================
+   ENGLISH NAME
+========================= */
 .name .en{
     display:flex;
+
     align-items:flex-start;
+
     gap:8px;
+
     font-size:16px;
     font-weight:700;
+
     line-height:1.3;
+
     white-space:normal !important;
     overflow:visible !important;
     text-overflow:clip !important;
 }
 
+/* 번호 */
 .name .en .num{
     flex:none;
+
     width:42px;
+
     text-align:right;
+
     color:#777;
+
     font-weight:700;
 }
 
+/* 영어 이름 텍스트 */
 .name .en .txt{
     flex:1;
+
     word-break:keep-all;
 }
 
@@ -117,24 +148,33 @@ header{
 ========================= */
 .name .ko{
     display:block;
+
     margin-top:4px;
+
+    /* 번호 영역 + gap 맞춤 */
     padding-left:50px;
+
     font-size:13px;
     color:#666;
+
     line-height:1.35;
+
     white-space:normal !important;
     overflow:visible !important;
     text-overflow:clip !important;
+
     word-break:keep-all;
 }
 
 /* =========================
-   META (타임스탬프)
+   META
 ========================= */
 .meta{
     font-size:13px;
-    color:#999;      /* 회색 */
+    color:#666;
+
     margin-bottom:10px;
+
     line-height:1.45;
 }
 
@@ -143,8 +183,11 @@ header{
 ========================= */
 .desc{
     font-size:13px;
+
     line-height:1.6;
+
     white-space:pre-line;
+
     overflow-wrap:break-word;
 }
 
@@ -153,17 +196,18 @@ header{
 ========================= */
 .tag{
     display:inline-block;
+
     background:#eee;
+
     border-radius:999px;
+
     padding:4px 9px;
+
     margin-right:5px;
     margin-bottom:5px;
+
     font-size:11px;
 }
-/* =========================
-   TIMESTAMP
-========================= */
 .timestamp{
     color:#999;
-    font-size:0.95em;
 }
