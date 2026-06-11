@@ -110,7 +110,7 @@ function createCard(p, index){
 
     const descEl = document.createElement("div");
     descEl.className = "desc";
-    descEl.textContent = p.note || "";
+    descEl.innerHTML = p.note || "";
 
     info.appendChild(nameEl);
     info.appendChild(metaEl);

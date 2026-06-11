@@ -133,7 +133,7 @@ let people = lines.map(line => {
   const visibleName = name.replace(/[_-]\d+$/, "");
 
   const displayName = ko
-    ? visibleName + "\n" + ko
+    ? visibleName + " " + ko
     : visibleName;
 
   const key = normalize(name);
@@ -162,7 +162,7 @@ let people = lines.map(line => {
     name,
     ko,
     displayName,
-    note: formatNote(note),
+    note: note,
     image: matchedImage
   };
 
