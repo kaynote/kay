@@ -758,7 +758,7 @@ const people = [
     "name": "Jackielyn Ampalayohan",
     "ko": "자클린 암팔라요한",
     "displayName": "Jackielyn Ampalayohan 자클린 암팔라요한",
-    "note": "그림을 잘 그리는 크루, 2019년 31세, 정주행 동영상<span class=\"timestamp\">2019.12.03 댓글 참고, @Jackyampalayohan926이라는 아이디로 2020년 12월 17일 정주행 동영상에 댓글을 달았다, Jackielyn은 프랑스어 Jacqueline을 현대식으로 변형한 이름으로 줄여서 Jacky라 부른다, 정주행 2021.12.27 06:41</span>",
+    "note": "그림을 잘 그리는 크루, 2019년 31세, 2019년 12월 03일 정주행 동영상에 댓글을 달았고, 2020년 12월 17일 정주행 동영상에도 댓글을 달았다, @Jackyampalayohan926: Thank you sir Jerry, it was really a good experience and we enjoyed it so much.Thank you everyone☺️. 제리 선생님 감사합니다. 정말 좋은 경험이었고 저희는 아주 즐겁게 보냈습니다. 모두에게 감사합니다, Jackielyn은 프랑스어 Jacqueline을 현대식으로 변형한 이름으로 줄여서 Jacky라 부른다, <span class=\"timestamp\">정주행 2021.12.27 06:41</span>",
     "image": "Jackielyn Ampalayohan.jpg"
   },
   {
