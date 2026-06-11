@@ -23,6 +23,21 @@ function normalize(str) {
 }
 
 /* =========================
+   timestamp checker
+========================= */
+function isDate(str) {
+  return /\d{4}\.\d{2}\.\d{2}/.test(str);
+}
+
+function isTime(str) {
+  return /\d{1,2}:\d{2}(:\d{2})?/.test(str);
+}
+
+function isTimeLine(str) {
+  return isDate(str) || isTime(str) || /정주행/.test(str);
+}
+
+/* =========================
    read names
 ========================= */
 if (!fs.existsSync(txtPath)) {
@@ -62,24 +77,9 @@ const imageMap = new Map();
 
 for (const file of imageFiles) {
 
-  /* no-image 제외 */
-  if (
-    normalize(file) === "no image"
-  ) {
-    continue;
-  }
+  if (normalize(file) === "no image") continue;
 
   const key = normalize(file);
-
-  if (imageMap.has(key)) {
-
-    console.log("");
-    console.log("⚠️ 중복 key 발견");
-    console.log("key =", key);
-    console.log("old =", imageMap.get(key));
-    console.log("new =", file);
-    console.log("➡️ 최신 파일로 덮어쓰기");
-  }
 
   imageMap.set(key, file);
 
@@ -91,88 +91,67 @@ for (const file of imageFiles) {
 ========================= */
 let people = lines.map(line => {
 
-  /* 번호 제거
-     ex) 1. Maria Santos
-  */
+  /* 번호 제거 */
   line = line.replace(/^\d+\.\s*/, "");
 
-  /* note 추출
-     ex) (VIP)
-  */
-  const noteMatch =
-    line.match(/\((.*?)\)/);
+  /* 괄호 note */
+  const noteMatch = line.match(/\((.*?)\)/);
+  const note = noteMatch ? noteMatch[1].trim() : "";
 
-  const note = noteMatch
-    ? noteMatch[1].trim()
-    : "";
+  const cleanLine = line.replace(/\(.*?\)/, "").trim();
 
-  /* note 제거 */
-  const cleanLine = line
-    .replace(/\(.*?\)/, "")
-    .trim();
-
-  /* 영어 / 한글 분리 */
   const parts = cleanLine.split(/\s+/);
 
-  const koStartIndex =
-    parts.findIndex(p =>
-      /[가-힣]/.test(p)
-    );
+  const koStartIndex = parts.findIndex(p => /[가-힣]/.test(p));
 
   let name = "";
   let ko = "";
 
   if (koStartIndex === -1) {
-
     name = cleanLine;
-
   } else {
-
-    name = parts
-      .slice(0, koStartIndex)
-      .join(" ")
-      .trim();
-
-    ko = parts
-      .slice(koStartIndex)
-      .join(" ")
-      .trim();
+    name = parts.slice(0, koStartIndex).join(" ").trim();
+    ko = parts.slice(koStartIndex).join(" ").trim();
   }
 
-  /* 표시용 이름 */
-  const visibleName =
-    name.replace(/[_-]\d+$/, "");
+  const visibleName = name.replace(/[_-]\d+$/, "");
+  const displayName = ko ? visibleName + "\n" + ko : visibleName;
 
-  const displayName = ko
-    ? visibleName + "\n" + ko
-    : visibleName;
-
-  /* 이미지 매칭 */
+  /* =========================
+     image match
+  ========================= */
   const key = normalize(name);
+  let matchedImage = imageMap.get(key) || "no-image.jpg";
 
-  let matchedImage =
-    imageMap.get(key);
+  /* =========================
+     TIMELINE PARSE
+  ========================= */
+  let timeline = [];
 
-  if (!matchedImage) {
-    matchedImage = "no-image.jpg";
-  }
+  const rest = cleanLine.replace(name, "").trim();
 
-  /* 로그 */
-  if (matchedImage !== "no-image.jpg") {
+  if (rest) {
 
-    console.log("");
-    console.log("✅ MATCH");
-    console.log("name =", name);
-    console.log("key  =", key);
-    console.log("file =", matchedImage);
+    // 문장 단위 or 날짜 기준 분리
+    const items = rest
+      .split(/(?=\d{4}\.\d{2}\.\d{2})|\s{2,}|(?=정주행)/g)
+      .map(v => v.trim())
+      .filter(Boolean);
 
-  } else {
+    for (const item of items) {
 
-    console.log("");
-    console.log("❌ NO IMAGE");
-    console.log("name =", name);
-    console.log("key  =", key);
-    console.log("➡️ no-image.jpg 사용");
+      if (isTimeLine(item)) {
+        timeline.push({
+          type: "time",
+          text: item
+        });
+      } else {
+        timeline.push({
+          type: "text",
+          text: item
+        });
+      }
+    }
   }
 
   return {
@@ -180,7 +159,8 @@ let people = lines.map(line => {
     ko,
     displayName,
     note,
-    image: matchedImage
+    image: matchedImage,
+    timeline
   };
 
 });
@@ -189,22 +169,18 @@ let people = lines.map(line => {
    sort alphabetically
 ========================= */
 people.sort((a, b) =>
-  a.name.localeCompare(
-    b.name,
-    "en",
-    {
-      sensitivity: "base",
-      numeric: true
-    }
-  )
+  a.name.localeCompare(b.name, "en", {
+    sensitivity: "base",
+    numeric: true
+  })
 );
 
 /* =========================
    add sequence number
 ========================= */
-people = people.map((person, index) => ({
-  no: index + 1,
-  ...person
+people = people.map((p, i) => ({
+  no: i + 1,
+  ...p
 }));
 
 /* =========================
@@ -218,35 +194,18 @@ const output =
   "export default people;\n";
 
 /* =========================
-   backup old file
+   backup
 ========================= */
 if (fs.existsSync(outputPath)) {
-
-  const backupPath =
-    outputPath + ".backup";
-
-  fs.copyFileSync(
-    outputPath,
-    backupPath
-  );
-
-  console.log("");
+  fs.copyFileSync(outputPath, outputPath + ".backup");
   console.log("💾 backup 생성");
-  console.log("📄", backupPath);
 }
 
 /* =========================
-   write file
+   write
 ========================= */
-fs.writeFileSync(
-  outputPath,
-  output,
-  "utf8"
-);
+fs.writeFileSync(outputPath, output, "utf8");
 
-/* =========================
-   done
-========================= */
 console.log("");
 console.log("✅ build 완료");
 console.log("👥 people :", people.length);
