@@ -2,12 +2,15 @@
 
 import people from "./people.js";
 
-const container =
-    document.getElementById("peopleContainer");
+/* =========================
+   DOM ELEMENTS (SAFE)
+========================= */
+const container = document.getElementById("peopleContainer");
+const searchBox = document.getElementById("searchBox");
 
-const searchBox =
-    document.getElementById("searchBox");
-
+/* =========================
+   STATE
+========================= */
 let data = [];
 let renderedMap = new Map();
 
@@ -16,6 +19,7 @@ let renderedMap = new Map();
 ========================= */
 function init(){
     if(!Array.isArray(people)) return;
+
     data = people;
     render(data);
 }
@@ -73,13 +77,11 @@ function createCard(p, index){
     /* META */
     const metaEl = document.createElement("div");
     metaEl.className = "meta";
-    metaEl.textContent =
-        p.tags ? p.tags.join(" · ") : "";
+    metaEl.textContent = p.tags ? p.tags.join(" · ") : "";
 
-    /* DESC (🔥 핵심 수정 부분) */
+    /* DESC */
     const descEl = document.createElement("div");
     descEl.className = "desc";
-
     descEl.innerHTML = p.note || "";
 
     /* APPEND */
@@ -97,6 +99,8 @@ function createCard(p, index){
    RENDER
 ========================= */
 function render(list){
+
+    if(!container) return; // 🔥 핵심 방어 코드
 
     const fragment = document.createDocumentFragment();
 
@@ -144,9 +148,16 @@ const handleSearch = debounce((value) => {
 
 }, 150);
 
-searchBox.addEventListener("input", e => {
-    handleSearch(e.target.value);
-});
+/* =========================
+   EVENT BINDING (SAFE)
+========================= */
+if(searchBox){
+    searchBox.addEventListener("input", e => {
+        handleSearch(e.target.value);
+    });
+} else {
+    console.warn("[WARN] searchBox not found - check HTML id='searchBox'");
+}
 
 /* =========================
    START
