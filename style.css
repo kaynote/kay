@@ -130,7 +130,7 @@ header{
 }
 
 /* =========================
-   TIMELINE (추가 핵심)
+   TIMELINE
 ========================= */
 .timeline{
     margin-top:10px;
@@ -138,14 +138,16 @@ header{
     line-height:1.5;
 }
 
-/* 일반 정보 */
-.timeline.text{
-    color:#111;
+/* 🔥 핵심: JS class 그대로 맞춤 */
+
+/* 시간 / 정주행 / 날짜 */
+.time{
+    color:#888;
 }
 
-/* 시간 / 날짜 / 정주행 */
-.timeline.time{
-    color:#888;
+/* 일반 텍스트 (생일 등) */
+.text{
+    color:#111;
 }
 
 /* =========================
