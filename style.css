@@ -135,5 +135,6 @@ header{
 
 /* TIMESTAMP (핵심) */
 .timestamp {
-  color: #999 !important;
+  color: #5a5a5a !important;
+  font-weight: 600;
 }
