@@ -1,150 +1,276 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kay Notes Archive</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+#peopleContainer{
+    contain:layout paint;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+    <h1>Kay Notes Archive</h1>
+
+    <input
+        type="text"
+        id="searchBox"
+        placeholder="검색..."
+    >
+</header>
+
+<div id="peopleContainer"></div>
+
+```html
 <script type="module">
 
 import people from "./people.js";
 
-let container = null;
-let searchBox = null;
+const container =
+    document.getElementById("peopleContainer");
+
+const searchBox =
+    document.getElementById("searchBox");
 
 let data = [];
 
-/* =========================
-   DOM INIT (강화 버전)
-========================= */
-function initDOM() {
-
-    container = document.getElementById("peopleContainer");
-    searchBox = document.getElementById("searchBox");
-
-    // 🔥 디버그 로그 (무조건 확인 가능)
-    console.log("container:", container);
-    console.log("searchBox:", searchBox);
-
-    if (!container) {
-        console.error("❌ peopleContainer 없음 → HTML에 <div id='peopleContainer'></div> 추가 필요");
-        return false;
-    }
-
-    if (!searchBox) {
-        console.error("❌ searchBox 없음 → HTML에 <input id='searchBox' /> 추가 필요");
-        return false;
-    }
-
-    return true;
-}
+let renderedMap = new Map();
 
 /* =========================
-   DATA INIT
+   INIT
 ========================= */
-function initData() {
+function init(){
 
-    if (!Array.isArray(people)) {
-        console.error("❌ people.js 데이터가 배열이 아님");
-        return;
-    }
+    if(!Array.isArray(people)) return;
 
     data = people;
-
-    console.log("✅ 데이터 로드 완료:", data.length);
 
     render(data);
 }
 
 /* =========================
-   RENDER (강화 안정형)
+   CREATE CARD
 ========================= */
-function render(list) {
+function createCard(p, index){
 
-    if (!container) {
-        console.error("❌ container 없음 (렌더 중단)");
-        return;
+    const card =
+        document.createElement("div");
+
+    card.className = "card";
+
+    /* =========================
+       PHOTO
+    ========================= */
+    const photo =
+        document.createElement("div");
+
+    photo.className = "photo";
+
+    const img =
+        document.createElement("img");
+
+    img.src = p.image
+        ? "images/" + p.image
+        : "images/no-image.jpg";
+
+    img.loading = "lazy";
+
+    img.decoding = "async";
+
+    photo.appendChild(img);
+
+    /* =========================
+       INFO
+    ========================= */
+    const info =
+        document.createElement("div");
+
+    info.className = "info";
+
+    /* =========================
+       NAME
+    ========================= */
+    const nameEl =
+        document.createElement("div");
+
+    nameEl.className = "name";
+
+    /* 영어 이름 */
+    const enEl =
+        document.createElement("div");
+
+    enEl.className = "en";
+
+    const no =
+        (p.no || (index + 1));
+
+    enEl.innerHTML =
+        `<span class="num">${no}.</span>
+         <span class="txt">${p.name || ""}</span>`;
+
+    /* 한글 이름 */
+    const koEl =
+        document.createElement("div");
+
+    koEl.className = "ko";
+
+    koEl.textContent =
+        p.ko || "";
+
+    nameEl.appendChild(enEl);
+
+    if(p.ko){
+        nameEl.appendChild(koEl);
     }
 
-    // 빈 데이터 처리
-    if (!list || list.length === 0) {
-        container.innerHTML = "<p>데이터 없음</p>";
-        return;
-    }
+    /* =========================
+       META
+    ========================= */
+    const metaEl =
+        document.createElement("div");
 
-    const fragment = document.createDocumentFragment();
+    metaEl.className = "meta";
+
+    metaEl.textContent =
+        p.tags
+            ? p.tags.join(" · ")
+            : "";
+
+    /* =========================
+       DESC
+    ========================= */
+    const descEl =
+        document.createElement("div");
+
+    descEl.className = "desc";
+
+    descEl.textContent =
+        p.note || "";
+
+    /* =========================
+       APPEND
+    ========================= */
+    info.appendChild(nameEl);
+    info.appendChild(metaEl);
+    info.appendChild(descEl);
+
+    card.appendChild(photo);
+    card.appendChild(info);
+
+    return card;
+}
+
+/* =========================
+   RENDER
+========================= */
+function render(list){
+
+    const fragment =
+        document.createDocumentFragment();
 
     list.forEach((p, index) => {
 
-        const card = document.createElement("div");
-        card.className = "card";
+        const key =
+            (p.no || index) + "_" + p.name;
 
-        const photo = document.createElement("div");
-        photo.className = "photo";
+        if(renderedMap.has(key)){
 
-        const img = document.createElement("img");
+            fragment.appendChild(
+                renderedMap.get(key)
+            );
 
-        img.src = p.image
-            ? "images/" + p.image
-            : "images/no-image.jpg";
+        }else{
 
-        img.loading = "lazy";
+            const card =
+                createCard(p, index);
 
-        photo.appendChild(img);
+            renderedMap.set(
+                key,
+                card
+            );
 
-        const info = document.createElement("div");
-        info.className = "info";
+            fragment.appendChild(card);
+        }
 
-        const nameEl = document.createElement("div");
-        nameEl.className = "name";
-
-        nameEl.innerHTML =
-            `<span class="num">${p.no || index + 1}.</span>
-             <span class="txt">${p.name || ""}</span>`;
-
-        const descEl = document.createElement("div");
-        descEl.className = "desc";
-
-        descEl.innerHTML = p.displayName || p.note || "";
-
-        info.appendChild(nameEl);
-        info.appendChild(descEl);
-
-        card.appendChild(photo);
-        card.appendChild(info);
-
-        fragment.appendChild(card);
     });
 
     container.replaceChildren(fragment);
-
-    console.log("🎨 렌더 완료:", list.length);
 }
 
 /* =========================
    SEARCH
 ========================= */
-function handleSearch(value) {
+function debounce(fn, delay = 150){
 
-    const k = (value || "").toLowerCase();
+    let t;
 
-    const filtered = data.filter(p =>
-        (p.name || "").toLowerCase().includes(k) ||
-        (p.ko || "").toLowerCase().includes(k) ||
-        (p.note || "").toLowerCase().includes(k)
-    );
+    return (...args) => {
 
-    render(filtered);
+        clearTimeout(t);
+
+        t = setTimeout(
+            () => fn(...args),
+            delay
+        );
+    };
 }
 
-/* =========================
-   BOOT
-========================= */
-document.addEventListener("DOMContentLoaded", () => {
+const handleSearch =
+    debounce((value) => {
 
-    console.log("🚀 DOM Loaded");
+    const k =
+        value.toLowerCase();
 
-    const ok = initDOM();
-    if (!ok) return;
+    const filtered =
+        data.filter(p =>
 
-    searchBox.addEventListener("input", (e) => {
+            (p.name || "")
+                .toLowerCase()
+                .includes(k)
+
+            ||
+
+            (p.ko || "")
+                .toLowerCase()
+                .includes(k)
+
+            ||
+
+            (p.note || "")
+                .toLowerCase()
+                .includes(k)
+        );
+
+    render(filtered);
+
+}, 150);
+
+searchBox.addEventListener(
+    "input",
+    e => {
         handleSearch(e.target.value);
-    });
+    }
+);
 
-    initData();
-});
+/* =========================
+   START
+========================= */
+init();
 
 </script>
+
+```
+
+
+</body>
+</html>

@@ -9,38 +9,17 @@ const imagesDir = path.join(__dirname, "images");
 const outputPath = path.join(__dirname, "people.js");
 
 /* =========================
-   normalize (강화 버전)
+   normalize
 ========================= */
 function normalize(str) {
   return str
     .normalize("NFKC")
     .toLowerCase()
     .replace(/\.(jpg|jpeg|png|webp)$/i, "")
-    .replace(/[_\-.]+/g, " ")          // 구분자 유지 완화
-    .replace(/[^a-z0-9가-힣\s]/g, "")  // 특수문자 제거
+    .replace(/[_\-.]+/g, " ")
+    .replace(/[^a-z0-9가-힣\s]/g, "")
     .replace(/\s+/g, " ")
     .trim();
-}
-
-/* =========================
-   timestamp style
-========================= */
-function styleTimestamp(text) {
-  if (!text) return text;
-
-  return text
-    .replace(
-      /\d{4}\.\d{2}\.\d{2}\s\d{1,2}:\d{2}(?::\d{2})?/g,
-      m => `<span class="ts">${m}</span>`
-    )
-    .replace(
-      /\d{4}\.\d{2}\.\d{2}/g,
-      m => `<span class="ts">${m}</span>`
-    )
-    .replace(
-      /정주행/g,
-      `<span class="ts">정주행</span>`
-    );
 }
 
 /* =========================
@@ -58,6 +37,7 @@ const lines = raw
   .map(v => v.trim())
   .filter(Boolean);
 
+console.log("");
 console.log("📄 names:", lines.length);
 
 /* =========================
@@ -72,31 +52,38 @@ const imageFiles = fs
   .readdirSync(imagesDir)
   .filter(f => /\.(jpg|jpeg|png|webp)$/i.test(f));
 
+console.log("");
 console.log("📂 image files:", imageFiles.length);
 
 /* =========================
-   image map (multi-key fallback)
+   image map
 ========================= */
 const imageMap = new Map();
 
 for (const file of imageFiles) {
 
-  const base = normalize(file);
-
-  // 여러 키로 저장 (매칭률 증가)
-  const keys = new Set([
-    base,
-    base.replace(/\s+/g, ""),          // 공백 제거 버전
-  ]);
-
-  for (const key of keys) {
-
-    if (imageMap.has(key)) {
-      console.log("⚠️ 중복 key:", key);
-    }
-
-    imageMap.set(key, file);
+  /* no-image 제외 */
+  if (
+    normalize(file) === "no image"
+  ) {
+    continue;
   }
+
+  const key = normalize(file);
+
+  if (imageMap.has(key)) {
+
+    console.log("");
+    console.log("⚠️ 중복 key 발견");
+    console.log("key =", key);
+    console.log("old =", imageMap.get(key));
+    console.log("new =", file);
+    console.log("➡️ 최신 파일로 덮어쓰기");
+  }
+
+  imageMap.set(key, file);
+
+  console.log("🖼️", file, "→", key);
 }
 
 /* =========================
@@ -104,48 +91,88 @@ for (const file of imageFiles) {
 ========================= */
 let people = lines.map(line => {
 
+  /* 번호 제거
+     ex) 1. Maria Santos
+  */
   line = line.replace(/^\d+\.\s*/, "");
 
-  const noteMatch = line.match(/\((.*?)\)/);
-  const note = noteMatch ? noteMatch[1].trim() : "";
+  /* note 추출
+     ex) (VIP)
+  */
+  const noteMatch =
+    line.match(/\((.*?)\)/);
 
-  const cleanLine = line.replace(/\(.*?\)/, "").trim();
+  const note = noteMatch
+    ? noteMatch[1].trim()
+    : "";
 
+  /* note 제거 */
+  const cleanLine = line
+    .replace(/\(.*?\)/, "")
+    .trim();
+
+  /* 영어 / 한글 분리 */
   const parts = cleanLine.split(/\s+/);
 
-  const koStartIndex = parts.findIndex(p => /[가-힣]/.test(p));
+  const koStartIndex =
+    parts.findIndex(p =>
+      /[가-힣]/.test(p)
+    );
 
   let name = "";
   let ko = "";
 
   if (koStartIndex === -1) {
+
     name = cleanLine;
+
   } else {
-    name = parts.slice(0, koStartIndex).join(" ").trim();
-    ko = parts.slice(koStartIndex).join(" ").trim();
+
+    name = parts
+      .slice(0, koStartIndex)
+      .join(" ")
+      .trim();
+
+    ko = parts
+      .slice(koStartIndex)
+      .join(" ")
+      .trim();
   }
 
-  const visibleName = name.replace(/[_-]\d+$/, "");
+  /* 표시용 이름 */
+  const visibleName =
+    name.replace(/[_-]\d+$/, "");
 
-  const displayNameRaw = ko
+  const displayName = ko
     ? visibleName + "\n" + ko
     : visibleName;
 
-  const displayName = styleTimestamp(displayNameRaw);
-
+  /* 이미지 매칭 */
   const key = normalize(name);
 
-  /* =========================
-     image matching (fallback 강화)
-  ========================= */
   let matchedImage =
-    imageMap.get(key) ||
-    imageMap.get(key.replace(/\s+/g, "")) ||
-    imageMap.get(name.toLowerCase()) ||
-    "no-image.jpg";
+    imageMap.get(key);
 
-  if (matchedImage === "no-image.jpg") {
-    console.log("🖼️ 이미지 못 찾음:", name);
+  if (!matchedImage) {
+    matchedImage = "no-image.jpg";
+  }
+
+  /* 로그 */
+  if (matchedImage !== "no-image.jpg") {
+
+    console.log("");
+    console.log("✅ MATCH");
+    console.log("name =", name);
+    console.log("key  =", key);
+    console.log("file =", matchedImage);
+
+  } else {
+
+    console.log("");
+    console.log("❌ NO IMAGE");
+    console.log("name =", name);
+    console.log("key  =", key);
+    console.log("➡️ no-image.jpg 사용");
   }
 
   return {
@@ -155,14 +182,15 @@ let people = lines.map(line => {
     note,
     image: matchedImage
   };
+
 });
 
 /* =========================
-   sort (stable)
+   sort alphabetically
 ========================= */
 people.sort((a, b) =>
-  (a.name || "").localeCompare(
-    (b.name || ""),
+  a.name.localeCompare(
+    b.name,
     "en",
     {
       sensitivity: "base",
@@ -174,9 +202,9 @@ people.sort((a, b) =>
 /* =========================
    add sequence number
 ========================= */
-people = people.map((p, i) => ({
-  no: i + 1,
-  ...p
+people = people.map((person, index) => ({
+  no: index + 1,
+  ...person
 }));
 
 /* =========================
@@ -190,20 +218,37 @@ const output =
   "export default people;\n";
 
 /* =========================
-   backup
+   backup old file
 ========================= */
 if (fs.existsSync(outputPath)) {
-  fs.copyFileSync(outputPath, outputPath + ".backup");
+
+  const backupPath =
+    outputPath + ".backup";
+
+  fs.copyFileSync(
+    outputPath,
+    backupPath
+  );
+
+  console.log("");
+  console.log("💾 backup 생성");
+  console.log("📄", backupPath);
 }
 
 /* =========================
    write file
 ========================= */
-fs.writeFileSync(outputPath, output, "utf8");
+fs.writeFileSync(
+  outputPath,
+  output,
+  "utf8"
+);
 
 /* =========================
    done
 ========================= */
+console.log("");
 console.log("✅ build 완료");
 console.log("👥 people :", people.length);
+console.log("🖼️ images :", imageFiles.length);
 console.log("📄 output :", outputPath);
