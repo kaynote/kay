@@ -1615,7 +1615,7 @@ const people = [
     "ko": "올리브",
     "displayName": "Olive\n올리브",
     "note": "지프니 터미널의 대표, <span class=\"timestamp\">정주행 2019.12.17 0:47</span>",
-    "image": "no-image.jpg"
+    "image": "Olive.jpg"
   },
   {
     "no": 203,
