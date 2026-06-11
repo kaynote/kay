@@ -46,7 +46,7 @@ const people = [
     "name": "Alexa Mae",
     "ko": "알렉사 미",
     "displayName": "Alexa Mae\n알렉사 미",
-    "note": "크리스틴 케이트의 여동생, 2024년 크리스마스 댄스 경연대회에서 1등 수상, 2024.12.14 1:37:24",
+    "note": "크리스틴 케이트의 여동생, 2024년 크리스마스 댄스 경연대회에서 1등 수상, <span class=\"timestamp\">2024.12.14 1:37:24</span>",
     "image": "no-image.jpg"
   },
   {
@@ -126,7 +126,7 @@ const people = [
     "name": "Anna Mae",
     "ko": "아나 미",
     "displayName": "Anna Mae\n아나 미",
-    "note": "애칭은 'Anamay' 아나미 선생님, 아버지가 다른 리안의 언니, 필리핀의 서울대급으로 불리는 Tytana 타이타나 간호대학교의 고등학교 간호학과 과정에 편입 입학하였으나 집안사정으로 인해 그만둔 듯하다, 정주행 2022.03.02 0:46",
+    "note": "애칭은 'Anamay' 아나미 선생님, 아버지가 다른 리안의 언니, 필리핀의 서울대급으로 불리는 Tytana 타이타나 간호대학교의 고등학교 간호학과 과정에 편입 입학하였으나 집안사정으로 인해 그만둔 듯하다, <span class=\"timestamp\">정주행 2022.03.02 00:46</span>",
     "image": "Anna_Mae.jpg"
   },
   {
@@ -166,7 +166,7 @@ const people = [
     "name": "Ashley O. Noble",
     "ko": "애쉴리 O. 노블",
     "displayName": "Ashley O. Noble\n애쉴리 O. 노블",
-    "note": "여자 애쉴리, <span class=\"timestamp\">정주행 2020.07.11 10:52</span>, 생일은 9월 19일, 2024.09.14 1:05:57",
+    "note": "여자 애쉴리, <span class=\"timestamp\">정주행 2020.07.11 10:52</span>, 생일은 9월 19일, <span class=\"timestamp\">2024.09.14 1:05:57</span>",
     "image": "Ashley_O._Noble.jpg"
   },
   {
@@ -270,7 +270,7 @@ const people = [
     "name": "Ate Marivic",
     "ko": "아떼 마리빅",
     "displayName": "Ate Marivic\n아떼 마리빅",
-    "note": "민지 선생님의 엄마, 본명은 'Marivic Historillo' 마리빅 히스토리요, 정주행 2022.03.02 0:28",
+    "note": "민지 선생님의 엄마, 본명은 'Marivic Historillo' 마리빅 히스토리요, <span class=\"timestamp\">정주행 2022.03.02 0:28</span>",
     "image": "Ate_Marivic.jpg"
   },
   {
@@ -286,7 +286,7 @@ const people = [
     "name": "Ate Nene",
     "ko": "아떼 네네",
     "displayName": "Ate Nene\n아떼 네네",
-    "note": "실라미의 엄마, 본명은 'Roselyn A. Quirao' 로즐린 A. 키라오, 정주행 2022.03.02 0:44",
+    "note": "실라미의 엄마, 본명은 'Roselyn A. Quirao' 로즐린 A. 키라오, <span class=\"timestamp\">정주행 2022.03.02 0:44</span>",
     "image": "Ate_Nene.jpg"
   },
   {
@@ -294,7 +294,7 @@ const people = [
     "name": "Ate Tintin",
     "ko": "아떼 띤띤",
     "displayName": "Ate Tintin\n아떼 띤띤",
-    "note": "제임스의 엄마이자 니콜의 이모, 2025.06.22 1:32.22",
+    "note": "제임스의 엄마이자 니콜의 이모, <span class=\"timestamp\">2025.06.22 1:32</span>.22",
     "image": "Ate_Tintin.jpg"
   },
   {
@@ -342,7 +342,7 @@ const people = [
     "name": "Bambam",
     "ko": "뱀뱀",
     "displayName": "Bambam\n뱀뱀",
-    "note": "프린세스의 친구, 2023년 크리스마스 댄스 경연대회에서 1등 수상, 2023.12.16 1:34:15, 2024년 크리스마스 댄스 경연대회에서 1등 수상, 2024.12.14 1:37:24, 2024년 1월 기준 초4, <span class=\"timestamp\">2024.01.13 49:04</span>",
+    "note": "프린세스의 친구, 2023년 크리스마스 댄스 경연대회에서 1등 수상, <span class=\"timestamp\">2023.12.16 1:34:15</span>, 2024년 크리스마스 댄스 경연대회에서 1등 수상, <span class=\"timestamp\">2024.12.14 1:37:24</span>, 2024년 1월 기준 초4, <span class=\"timestamp\">2024.01.13 49:04</span>",
     "image": "Bambam.jpg"
   },
   {
@@ -390,7 +390,7 @@ const people = [
     "name": "Cassandra G. Taguinod",
     "ko": "카산드라 G. 타기노드",
     "displayName": "Cassandra G. Taguinod\n카산드라 G. 타기노드",
-    "note": "애칭은 'Cassie' 카시, 코리아 빌딩 공부방 소속 먹깨비 2호, 생일은 4월 10일, <span class=\"timestamp\">2023.04.02 37:23</span>, 2024년 크리스마스 댄스 경연대회에서 1등 수상, 2024.12.14 1:37:24",
+    "note": "애칭은 'Cassie' 카시, 코리아 빌딩 공부방 소속 먹깨비 2호, 생일은 4월 10일, <span class=\"timestamp\">2023.04.02 37:23</span>, 2024년 크리스마스 댄스 경연대회에서 1등 수상, <span class=\"timestamp\">2024.12.14 1:37:24</span>",
     "image": "Cassandra_G._Taguinod.jpg"
   },
   {
@@ -414,7 +414,7 @@ const people = [
     "name": "Cesca",
     "ko": "세스카",
     "displayName": "Cesca\n세스카",
-    "note": "11남매 중 셋째, 2025년 11세, 2023년 크리스마스 댄스 경연대회 3등 수상, 2023.12.16 1:32:21, 2024년 크리스마스 댄스 경연대회 2등 수상, 2024.12.14 1:37:13, Cesca는 Francesca의 줄임말인 듯.",
+    "note": "11남매 중 셋째, 2025년 11세, 2023년 크리스마스 댄스 경연대회 3등 수상, <span class=\"timestamp\">2023.12.16 1:32:21</span>, 2024년 크리스마스 댄스 경연대회 2등 수상, <span class=\"timestamp\">2024.12.14 1:37:13</span>, Cesca는 Francesca의 줄임말인 듯.",
     "image": "Cesca.jpg"
   },
   {
@@ -454,7 +454,7 @@ const people = [
     "name": "Christine Kate",
     "ko": "크리스틴 케이트",
     "displayName": "Christine Kate\n크리스틴 케이트",
-    "note": "2023년 크리스마스 댄스 경연대회에서 1등 수상, 2023.12.16 1:34:15, 생일은 12월 5일, <span class=\"timestamp\">2024.11.30 채팅 17:12</span>, 2024년 크리스마스 댄스 경연대회에서 1등 수상, 2024.12.14 1:37:24",
+    "note": "2023년 크리스마스 댄스 경연대회에서 1등 수상, <span class=\"timestamp\">2023.12.16 1:34:15</span>, 생일은 12월 5일, <span class=\"timestamp\">2024.11.30 채팅 17:12</span>, 2024년 크리스마스 댄스 경연대회에서 1등 수상, <span class=\"timestamp\">2024.12.14 1:37:24</span>",
     "image": "Christine_Kate.jpg"
   },
   {
@@ -470,7 +470,7 @@ const people = [
     "name": "CJ",
     "ko": "씨제이",
     "displayName": "CJ\n씨제이",
-    "note": "께까이의 오빠, 2025.05.18 1:00:16",
+    "note": "께까이의 오빠, <span class=\"timestamp\">2025.05.18 1:00:16</span>",
     "image": "CJ.jpg"
   },
   {
@@ -638,7 +638,7 @@ const people = [
     "name": "Empay Mendoza",
     "ko": "엠빠이 멘도자",
     "displayName": "Empay Mendoza\n엠빠이 멘도자",
-    "note": "2026년 8세, 돈맛을 알아버린 멍멍이 타잔의 주인, 2024.08.17 1:16:50, <span class=\"timestamp\">2024.12.14 05:03</span>",
+    "note": "2026년 8세, 돈맛을 알아버린 멍멍이 타잔의 주인, <span class=\"timestamp\">2024.08.17 1:16:50</span>, <span class=\"timestamp\">2024.12.14 05:03</span>",
     "image": "Empay_Mendoza.jpg"
   },
   {
@@ -678,7 +678,7 @@ const people = [
     "name": "Gail",
     "ko": "게일",
     "displayName": "Gail\n게일",
-    "note": "단발머리 소녀, <span class=\"timestamp\">2025.02.01 25:52</span>, 명찰 목걸이, 2024.12.14 1:02:37",
+    "note": "단발머리 소녀, <span class=\"timestamp\">2025.02.01 25:52</span>, 명찰 목걸이, <span class=\"timestamp\">2024.12.14 1:02:37</span>",
     "image": "Gail.jpg"
   },
   {
@@ -790,7 +790,7 @@ const people = [
     "name": "Jane Pearl A. Daclan",
     "ko": "제인 펄 A. 다클란",
     "displayName": "Jane Pearl A. Daclan\n제인 펄 A. 다클란",
-    "note": "자나이카의 언니, 생일은 12월 14일, 2024.12.14 1:03:06, 2024년 크리스마스 댄스 경연대회에서 1등 수상, 2024.12.14 1:37:24",
+    "note": "자나이카의 언니, 생일은 12월 14일, <span class=\"timestamp\">2024.12.14 1:03:06</span>, 2024년 크리스마스 댄스 경연대회에서 1등 수상, <span class=\"timestamp\">2024.12.14 1:37:24</span>",
     "image": "Jane_Pearl_A._Daclan.jpg"
   },
   {
@@ -854,7 +854,7 @@ const people = [
     "name": "Jayson-2",
     "ko": "제이슨",
     "displayName": "Jayson\n제이슨",
-    "note": "바랑가이 157에 사는 남자아이, 2024.12.14 1:21:56",
+    "note": "바랑가이 157에 사는 남자아이, <span class=\"timestamp\">2024.12.14 1:21:56</span>",
     "image": "no-image.jpg"
   },
   {
@@ -1038,7 +1038,7 @@ const people = [
     "name": "Johan",
     "ko": "요한",
     "displayName": "Johan\n요한",
-    "note": "동근이 네이탄의 첫째 남동생, 2024.12.01 1:10:26",
+    "note": "동근이 네이탄의 첫째 남동생, <span class=\"timestamp\">2024.12.01 1:10:26</span>",
     "image": "no-image.jpg"
   },
   {
@@ -1078,7 +1078,7 @@ const people = [
     "name": "JR",
     "ko": "제이알",
     "displayName": "JR\n제이알",
-    "note": "징징의 아들, 2024.07.13 1:44:36",
+    "note": "징징의 아들, <span class=\"timestamp\">2024.07.13 1:44:36</span>",
     "image": "no-image.jpg"
   },
   {
@@ -1190,7 +1190,7 @@ const people = [
     "name": "Khenik",
     "ko": "케닉",
     "displayName": "Khenik\n케닉",
-    "note": "샤이카의 남동생, <span class=\"timestamp\">정주행 2021.11.10 가정방문 1부 13:54</span>, 2024.12.14 1:33:15",
+    "note": "샤이카의 남동생, <span class=\"timestamp\">정주행 2021.11.10 가정방문 1부 13:54</span>, <span class=\"timestamp\">2024.12.14 1:33:15</span>",
     "image": "Khenik.jpg"
   },
   {
@@ -1206,7 +1206,7 @@ const people = [
     "name": "Kikay",
     "ko": "끼께",
     "displayName": "Kikay\n끼께",
-    "note": "제이의 사촌 여동생, Kikay는 스페인식 이름 Francisca 프란시스카가 Kika를 거쳐 Kikay로 변한 애칭, 2024.03.16 1:16:03",
+    "note": "제이의 사촌 여동생, Kikay는 스페인식 이름 Francisca 프란시스카가 Kika를 거쳐 Kikay로 변한 애칭, <span class=\"timestamp\">2024.03.16 1:16:03</span>",
     "image": "no-image.jpg"
   },
   {
@@ -1214,7 +1214,7 @@ const people = [
     "name": "Kiko",
     "ko": "끼꼬",
     "displayName": "Kiko\n끼꼬",
-    "note": "제이의 사촌 남동생, Kiko는 스페인식 이름 Francisco 프란시스코의 애칭, 2024.03.16 1:16:03",
+    "note": "제이의 사촌 남동생, Kiko는 스페인식 이름 Francisco 프란시스코의 애칭, <span class=\"timestamp\">2024.03.16 1:16:03</span>",
     "image": "no-image.jpg"
   },
   {
@@ -1222,7 +1222,7 @@ const people = [
     "name": "Kimberley Audrey",
     "ko": "킴벌리 오드리",
     "displayName": "Kimberley Audrey\n킴벌리 오드리",
-    "note": "일명 킴, 'Audrey'는 '고귀한 힘'이라는 뜻, 2021.07.31 1:17:29",
+    "note": "일명 킴, 'Audrey'는 '고귀한 힘'이라는 뜻, <span class=\"timestamp\">2021.07.31 1:17:29</span>",
     "image": "Kimberley_Audrey.jpg"
   },
   {
@@ -1262,7 +1262,7 @@ const people = [
     "name": "Kuya Ijing",
     "ko": "꾸야 이징",
     "displayName": "Kuya Ijing\n꾸야 이징",
-    "note": "당뇨로 왼쪽다리를 잃어 의족 착용, 교원 자격증을 취득한 리날린 P. 카존토이의 아버지, 정주행 2022.10.25 0:50",
+    "note": "당뇨로 왼쪽다리를 잃어 의족 착용, 교원 자격증을 취득한 리날린 P. 카존토이의 아버지, <span class=\"timestamp\">정주행 2022.10.25 0:50</span>",
     "image": "no-image.jpg"
   },
   {
@@ -1342,7 +1342,7 @@ const people = [
     "name": "LJ",
     "ko": "엘제이",
     "displayName": "LJ\n엘제이",
-    "note": "김세훈 씨가 사진을 붙여 선물 박스를 보내준 통통한 여자아이, 2024.11.02 1:07:49",
+    "note": "김세훈 씨가 사진을 붙여 선물 박스를 보내준 통통한 여자아이, <span class=\"timestamp\">2024.11.02 1:07:49</span>",
     "image": "no-image.jpg"
   },
   {
@@ -1374,7 +1374,7 @@ const people = [
     "name": "Lovely Ma. Cabintoy",
     "ko": "러블리 마리아 카빈토이",
     "displayName": "Lovely Ma. Cabintoy\n러블리 마리아 카빈토이",
-    "note": "자키루의 엄마, 정주행 2022.03.02 0:30",
+    "note": "자키루의 엄마, <span class=\"timestamp\">정주행 2022.03.02 0:30</span>",
     "image": "Lovely_Ma._Cabintoy.jpg"
   },
   {
@@ -1478,7 +1478,7 @@ const people = [
     "name": "Melria Mhae Q. Mahusay",
     "ko": "멜리아 미 Q. 마우사이",
     "displayName": "Melria Mhae Q. Mahusay\n멜리아 미 Q. 마우사이",
-    "note": "일명 마리아, 별명은 양양, Mhvsay는 Mahusay의 오타인 듯, <span class=\"timestamp\">정주행 2020.07.11 09:22</span>, 2024년 크리스마스 댄스 경연대회에서 1등 수상, 2024.12.14 1:37:24",
+    "note": "일명 마리아, 별명은 양양, Mhvsay는 Mahusay의 오타인 듯, <span class=\"timestamp\">정주행 2020.07.11 09:22</span>, 2024년 크리스마스 댄스 경연대회에서 1등 수상, <span class=\"timestamp\">2024.12.14 1:37:24</span>",
     "image": "Melria_Mhae_Q._Mahusay.jpg"
   },
   {
@@ -1590,7 +1590,7 @@ const people = [
     "name": "Negra",
     "ko": "네그라",
     "displayName": "Negra\n네그라",
-    "note": "엠빠이의 여동생이자 돈맛을 알아버린 멍멍이 타잔의 주인, 2024.08.17 1:16:50, <span class=\"timestamp\">2025.06.21 08:19</span>",
+    "note": "엠빠이의 여동생이자 돈맛을 알아버린 멍멍이 타잔의 주인, <span class=\"timestamp\">2024.08.17 1:16:50</span>, <span class=\"timestamp\">2025.06.21 08:19</span>",
     "image": "Negra.jpg"
   },
   {
@@ -1614,7 +1614,7 @@ const people = [
     "name": "Olive",
     "ko": "올리브",
     "displayName": "Olive\n올리브",
-    "note": "지프니 터미널의 대표, 정주행 2019.12.17 0:47",
+    "note": "지프니 터미널의 대표, <span class=\"timestamp\">정주행 2019.12.17 0:47</span>",
     "image": "no-image.jpg"
   },
   {
@@ -1662,7 +1662,7 @@ const people = [
     "name": "Ppeonppeoni",
     "ko": "뻔뻔이",
     "displayName": "Ppeonppeoni\n뻔뻔이",
-    "note": "코리아 빌딩에서 무전취식하는 수컷고양이로 나이가 많다, 2020.11.08 1:13:00",
+    "note": "코리아 빌딩에서 무전취식하는 수컷고양이로 나이가 많다, <span class=\"timestamp\">2020.11.08 1:13:00</span>",
     "image": "no-image.jpg"
   },
   {
@@ -1670,7 +1670,7 @@ const people = [
     "name": "Ppeonsuni",
     "ko": "뻔순이",
     "displayName": "Ppeonsuni\n뻔순이",
-    "note": "뻔뻔이의 짝꿍 암컷고양이로 코리아 빌딩에 거주하며 새끼까지 낳았다, 뻔순이라는 이름은 구독자 박세진님이 지어주었다, 2021.11.20 1:18:09",
+    "note": "뻔뻔이의 짝꿍 암컷고양이로 코리아 빌딩에 거주하며 새끼까지 낳았다, 뻔순이라는 이름은 구독자 박세진님이 지어주었다, <span class=\"timestamp\">2021.11.20 1:18:09</span>",
     "image": "no-image.jpg"
   },
   {
@@ -1710,7 +1710,7 @@ const people = [
     "name": "Princess",
     "ko": "프린세스",
     "displayName": "Princess\n프린세스",
-    "note": "겡겡의 사촌 여동생, 2023년 크리스마스 댄스 경연대회에서 1등 수상, 2023.12.16 1:34:15, 2024년 크리스마스 댄스 경연대회에서 1등 수상, 2024.12.14 1:37:24",
+    "note": "겡겡의 사촌 여동생, 2023년 크리스마스 댄스 경연대회에서 1등 수상, <span class=\"timestamp\">2023.12.16 1:34:15</span>, 2024년 크리스마스 댄스 경연대회에서 1등 수상, <span class=\"timestamp\">2024.12.14 1:37:24</span>",
     "image": "Princess.jpg"
   },
   {
@@ -1726,7 +1726,7 @@ const people = [
     "name": "Princess Rhian O. Calso",
     "ko": "프린세스 리안 O. 칼소",
     "displayName": "Princess Rhian O. Calso\n프린세스 리안 O. 칼소",
-    "note": "어릴 때부터 동생들을 돌보느라 힘들었던 코리아 빌딩 공부방 소속의 여학생이며 줄여서 '프린이'라고 부른다, <span class=\"timestamp\">정주행 2021.11.10 가정방문 2부 23:42</span>, 2024년 크리스마스 댄스 경연대회에서 1등 수상, 2024.12.14 1:37:24",
+    "note": "어릴 때부터 동생들을 돌보느라 힘들었던 코리아 빌딩 공부방 소속의 여학생이며 줄여서 '프린이'라고 부른다, <span class=\"timestamp\">정주행 2021.11.10 가정방문 2부 23:42</span>, 2024년 크리스마스 댄스 경연대회에서 1등 수상, <span class=\"timestamp\">2024.12.14 1:37:24</span>",
     "image": "Princess_Rhian_O._Calso.jpg"
   },
   {
@@ -1750,7 +1750,7 @@ const people = [
     "name": "Princess-4",
     "ko": "프린세스",
     "displayName": "Princess\n프린세스",
-    "note": "표정이 재미있는 여자아이, <span class=\"timestamp\">정주행 2020.06.27 21:21</span>, 2025.11.22 1:25:58",
+    "note": "표정이 재미있는 여자아이, <span class=\"timestamp\">정주행 2020.06.27 21:21</span>, <span class=\"timestamp\">2025.11.22 1:25:58</span>",
     "image": "Princess-4.jpg"
   },
   {
@@ -1790,7 +1790,7 @@ const people = [
     "name": "Recca Cajipo",
     "ko": "리카 카지포",
     "displayName": "Recca Cajipo\n리카 카지포",
-    "note": "코리아 빌딩의 막내, 2023년 크리스마스 댄스 경연대회에서 2등 수상, 2023.12.16 1:35:00",
+    "note": "코리아 빌딩의 막내, 2023년 크리스마스 댄스 경연대회에서 2등 수상, <span class=\"timestamp\">2023.12.16 1:35:00</span>",
     "image": "Recca_Cajipo.jpg"
   },
   {
@@ -1798,7 +1798,7 @@ const people = [
     "name": "Reina",
     "ko": "레이나",
     "displayName": "Reina\n레이나",
-    "note": "'Reina'는 스페인어로 '여왕', 2020년 8세, 정주행 2020.01.06 0:11",
+    "note": "'Reina'는 스페인어로 '여왕', 2020년 8세, <span class=\"timestamp\">정주행 2020.01.06 0:11</span>",
     "image": "no-image.jpg"
   },
   {
@@ -1862,7 +1862,7 @@ const people = [
     "name": "Ringo",
     "ko": "링고",
     "displayName": "Ringo\n링고",
-    "note": "피아의 전 남편, 2019년 20세, 정주행 2019.11.25 0:19",
+    "note": "피아의 전 남편, 2019년 20세, <span class=\"timestamp\">정주행 2019.11.25 0:19</span>",
     "image": "Ringo.jpg"
   },
   {
@@ -1894,7 +1894,7 @@ const people = [
     "name": "Rodes",
     "ko": "로데스",
     "displayName": "Rodes\n로데스",
-    "note": "제트릴의 여동생, 2024년 만 15세 중3, 정주행 2024.03.15 0:34",
+    "note": "제트릴의 여동생, 2024년 만 15세 중3, <span class=\"timestamp\">정주행 2024.03.15 0:34</span>",
     "image": "Rodes.jpg"
   },
   {
@@ -1958,7 +1958,7 @@ const people = [
     "name": "Sabrina",
     "ko": "사브리나",
     "displayName": "Sabrina\n사브리나",
-    "note": "자키루네 집에서 함께 사는 자키루의 오빠의 여자친구의 조카, 2023년 크리스마스 댄스 경연대회에서 2등 수상, 2023.12.16 1:35:00",
+    "note": "자키루네 집에서 함께 사는 자키루의 오빠의 여자친구의 조카, 2023년 크리스마스 댄스 경연대회에서 2등 수상, <span class=\"timestamp\">2023.12.16 1:35:00</span>",
     "image": "Sabrina.jpg"
   },
   {
@@ -2030,7 +2030,7 @@ const people = [
     "name": "Sherlyn",
     "ko": "셜린 선생님",
     "displayName": "Sherlyn\n셜린 선생님",
-    "note": "샤이카의 여동생이자 코리아 빌딩 공부방의 선생님, 2024.03.16 채팅 1:17:15",
+    "note": "샤이카의 여동생이자 코리아 빌딩 공부방의 선생님, <span class=\"timestamp\">2024.03.16 채팅 1:17:15</span>",
     "image": "Sherlyn.jpg"
   },
   {
@@ -2070,7 +2070,7 @@ const people = [
     "name": "Sir. Jerry",
     "ko": "남준현",
     "displayName": "Sir. Jerry\n남준현",
-    "note": "라이브 방송 도중에 음소거가 되어 채팅 메시지를 남기신 적이 있다, @jerryinmanila8609: ​​소리 나게 하려면 다시 시작해야 해요, 2025.03.22 채팅 1:29:34",
+    "note": "라이브 방송 도중에 음소거가 되어 채팅 메시지를 남기신 적이 있다, @jerryinmanila8609: ​​소리 나게 하려면 다시 시작해야 해요, <span class=\"timestamp\">2025.03.22 채팅 1:29:34</span>",
     "image": "Sir._Jerry.jpg"
   },
   {
@@ -2110,7 +2110,7 @@ const people = [
     "name": "SK Kagawad - J. Alegora",
     "ko": "청년의회 의원 J. 알레고라",
     "displayName": "SK Kagawad - J. Alegora\n청년의회 의원 J. 알레고라",
-    "note": "2021년 코리아 빌딩 창립행사에서 뽑기로 아이폰이 당첨되었고 남편은 선풍기가 당첨되었다, 별명은 'Kulot' 쿠롯인데 따갈로그어로 '곱슬머리'라는 뜻, 2021.10.10 1:21:21",
+    "note": "2021년 코리아 빌딩 창립행사에서 뽑기로 아이폰이 당첨되었고 남편은 선풍기가 당첨되었다, 별명은 'Kulot' 쿠롯인데 따갈로그어로 '곱슬머리'라는 뜻, <span class=\"timestamp\">2021.10.10 1:21:21</span>",
     "image": "SK_Kagawad_-_J._Alegora.jpg"
   },
   {
@@ -2198,7 +2198,7 @@ const people = [
     "name": "Trisha",
     "ko": "트리샤",
     "displayName": "Trisha\n트리샤",
-    "note": "존 다렐의 여동생, 별명은 'Arm Breaker' 암 브레이커, 놀다가 크리스탈 미를 깔고 앉았는데 크리스탈 미의 팔이 부러졌다, 2023년 크리스마스 댄스 경연대회에서 2등 수상, 2023.12.16 1:35:00",
+    "note": "존 다렐의 여동생, 별명은 'Arm Breaker' 암 브레이커, 놀다가 크리스탈 미를 깔고 앉았는데 크리스탈 미의 팔이 부러졌다, 2023년 크리스마스 댄스 경연대회에서 2등 수상, <span class=\"timestamp\">2023.12.16 1:35:00</span>",
     "image": "Trisha.jpg"
   },
   {
@@ -2238,7 +2238,7 @@ const people = [
     "name": "Yan Yan",
     "ko": "얀얀",
     "displayName": "Yan Yan\n얀얀",
-    "note": "김세훈 씨가 사진을 붙여 선물 박스를 보내준 여자아이로 리아의 사촌, 2024.11.02 1:03:39",
+    "note": "김세훈 씨가 사진을 붙여 선물 박스를 보내준 여자아이로 리아의 사촌, <span class=\"timestamp\">2024.11.02 1:03:39</span>",
     "image": "no-image.jpg"
   },
   {
@@ -2286,7 +2286,7 @@ const people = [
     "name": "Zyra Mae",
     "ko": "자일라 미",
     "displayName": "Zyra Mae\n자일라 미",
-    "note": "리안의 베스트 프렌드, 2025.01.18 1:07:32",
+    "note": "리안의 베스트 프렌드, <span class=\"timestamp\">2025.01.18 1:07:32</span>",
     "image": "Zyra_Mae.jpg"
   }
 ];
