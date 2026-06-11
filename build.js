@@ -9,15 +9,15 @@ const imagesDir = path.join(__dirname, "images");
 const outputPath = path.join(__dirname, "people.js");
 
 /* =========================
-   normalize
+   normalize (강화 버전)
 ========================= */
 function normalize(str) {
   return str
     .normalize("NFKC")
     .toLowerCase()
     .replace(/\.(jpg|jpeg|png|webp)$/i, "")
-    .replace(/[_\-.]+/g, " ")
-    .replace(/[^a-z0-9가-힣\s]/g, "")
+    .replace(/[_\-.]+/g, " ")          // 구분자 유지 완화
+    .replace(/[^a-z0-9가-힣\s]/g, "")  // 특수문자 제거
     .replace(/\s+/g, " ")
     .trim();
 }
@@ -75,21 +75,28 @@ const imageFiles = fs
 console.log("📂 image files:", imageFiles.length);
 
 /* =========================
-   image map
+   image map (multi-key fallback)
 ========================= */
 const imageMap = new Map();
 
 for (const file of imageFiles) {
 
-  if (normalize(file) === "no image") continue;
+  const base = normalize(file);
 
-  const key = normalize(file);
+  // 여러 키로 저장 (매칭률 증가)
+  const keys = new Set([
+    base,
+    base.replace(/\s+/g, ""),          // 공백 제거 버전
+  ]);
 
-  if (imageMap.has(key)) {
-    console.log("⚠️ 중복 key:", key);
+  for (const key of keys) {
+
+    if (imageMap.has(key)) {
+      console.log("⚠️ 중복 key:", key);
+    }
+
+    imageMap.set(key, file);
   }
-
-  imageMap.set(key, file);
 }
 
 /* =========================
@@ -128,10 +135,17 @@ let people = lines.map(line => {
 
   const key = normalize(name);
 
-  let matchedImage = imageMap.get(key);
+  /* =========================
+     image matching (fallback 강화)
+  ========================= */
+  let matchedImage =
+    imageMap.get(key) ||
+    imageMap.get(key.replace(/\s+/g, "")) ||
+    imageMap.get(name.toLowerCase()) ||
+    "no-image.jpg";
 
-  if (!matchedImage) {
-    matchedImage = "no-image.jpg";
+  if (matchedImage === "no-image.jpg") {
+    console.log("🖼️ 이미지 못 찾음:", name);
   }
 
   return {
@@ -144,7 +158,7 @@ let people = lines.map(line => {
 });
 
 /* =========================
-   ✅ FIXED SORT (여기가 핵심)
+   sort (stable)
 ========================= */
 people.sort((a, b) =>
   (a.name || "").localeCompare(
