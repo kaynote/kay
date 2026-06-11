@@ -1,3 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>People Archive</title>
+
+<style>
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#searchBox {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+#peopleContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+}
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.photo img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+}
+
+.info {
+    padding: 10px;
+}
+
+.name .en {
+    font-weight: bold;
+}
+
+.meta {
+    font-size: 12px;
+    color: #666;
+    margin-top: 4px;
+}
+
+.desc {
+    font-size: 12px;
+    margin-top: 6px;
+    color: #333;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>People Archive</h1>
+    <input id="searchBox" placeholder="검색..." />
+</header>
+
+<div id="peopleContainer"></div>
+
 <script type="module">
 
 import people from "./people.js";
@@ -22,7 +101,7 @@ function init(){
     }
 
     if(!searchBox){
-        console.warn("[WARN] searchBox not found - check HTML id='searchBox'");
+        console.warn("[WARN] searchBox not found");
     }
 
     if(!Array.isArray(people)) return;
@@ -31,7 +110,6 @@ function init(){
 
     render(data, container);
 
-    /* search binding */
     if(searchBox){
         searchBox.addEventListener("input", e => {
             handleSearch(e.target.value, container);
@@ -47,7 +125,6 @@ function createCard(p, index){
     const card = document.createElement("div");
     card.className = "card";
 
-    /* PHOTO */
     const photo = document.createElement("div");
     photo.className = "photo";
 
@@ -62,11 +139,9 @@ function createCard(p, index){
 
     photo.appendChild(img);
 
-    /* INFO */
     const info = document.createElement("div");
     info.className = "info";
 
-    /* NAME */
     const nameEl = document.createElement("div");
     nameEl.className = "name";
 
@@ -89,12 +164,10 @@ function createCard(p, index){
         nameEl.appendChild(koEl);
     }
 
-    /* META */
     const metaEl = document.createElement("div");
     metaEl.className = "meta";
     metaEl.textContent = p.tags ? p.tags.join(" · ") : "";
 
-    /* DESC */
     const descEl = document.createElement("div");
     descEl.className = "desc";
     descEl.innerHTML = p.note || "";
@@ -120,7 +193,7 @@ function render(list, container){
 
     list.forEach((p, index) => {
 
-        const key = (p.no || index) + "_" + p.name;
+        const key = `${p.no || index}_${p.name}`;
 
         if(renderedMap.has(key)){
             fragment.appendChild(renderedMap.get(key));
@@ -136,12 +209,10 @@ function render(list, container){
 }
 
 /* =========================
-   SEARCH (DEBOUNCE)
+   SEARCH
 ========================= */
 function debounce(fn, delay = 150){
-
     let t;
-
     return (...args) => {
         clearTimeout(t);
         t = setTimeout(() => fn(...args), delay);
@@ -163,8 +234,11 @@ const handleSearch = debounce((value, container) => {
 }, 150);
 
 /* =========================
-   START (DOM SAFE)
+   START
 ========================= */
 window.addEventListener("DOMContentLoaded", init);
 
 </script>
+
+</body>
+</html>
