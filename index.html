@@ -3,12 +3,6 @@
 import people from "./people.js";
 
 /* =========================
-   DOM ELEMENTS (SAFE)
-========================= */
-const container = document.getElementById("peopleContainer");
-const searchBox = document.getElementById("searchBox");
-
-/* =========================
    STATE
 ========================= */
 let data = [];
@@ -18,10 +12,31 @@ let renderedMap = new Map();
    INIT
 ========================= */
 function init(){
+
+    const container = document.getElementById("peopleContainer");
+    const searchBox = document.getElementById("searchBox");
+
+    if(!container){
+        console.warn("[WARN] peopleContainer not found");
+        return;
+    }
+
+    if(!searchBox){
+        console.warn("[WARN] searchBox not found - check HTML id='searchBox'");
+    }
+
     if(!Array.isArray(people)) return;
 
     data = people;
-    render(data);
+
+    render(data, container);
+
+    /* search binding */
+    if(searchBox){
+        searchBox.addEventListener("input", e => {
+            handleSearch(e.target.value, container);
+        });
+    }
 }
 
 /* =========================
@@ -84,7 +99,6 @@ function createCard(p, index){
     descEl.className = "desc";
     descEl.innerHTML = p.note || "";
 
-    /* APPEND */
     info.appendChild(nameEl);
     info.appendChild(metaEl);
     info.appendChild(descEl);
@@ -98,9 +112,9 @@ function createCard(p, index){
 /* =========================
    RENDER
 ========================= */
-function render(list){
+function render(list, container){
 
-    if(!container) return; // 🔥 핵심 방어 코드
+    if(!container) return;
 
     const fragment = document.createDocumentFragment();
 
@@ -122,7 +136,7 @@ function render(list){
 }
 
 /* =========================
-   SEARCH
+   SEARCH (DEBOUNCE)
 ========================= */
 function debounce(fn, delay = 150){
 
@@ -134,7 +148,7 @@ function debounce(fn, delay = 150){
     };
 }
 
-const handleSearch = debounce((value) => {
+const handleSearch = debounce((value, container) => {
 
     const k = value.toLowerCase();
 
@@ -144,24 +158,13 @@ const handleSearch = debounce((value) => {
         (p.note || "").toLowerCase().includes(k)
     );
 
-    render(filtered);
+    render(filtered, container);
 
 }, 150);
 
 /* =========================
-   EVENT BINDING (SAFE)
+   START (DOM SAFE)
 ========================= */
-if(searchBox){
-    searchBox.addEventListener("input", e => {
-        handleSearch(e.target.value);
-    });
-} else {
-    console.warn("[WARN] searchBox not found - check HTML id='searchBox'");
-}
-
-/* =========================
-   START
-========================= */
-init();
+window.addEventListener("DOMContentLoaded", init);
 
 </script>
