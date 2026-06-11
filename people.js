@@ -527,7 +527,7 @@ const people = [
     "ko": "당",
     "displayName": "Dang\n당",
     "note": "Barangay Secretary 바랑가이의 행정 담당 서기, 2020.02.11 08:57",
-    "image": "no-image.jpg"
+    "image": "Dang.jpg"
   },
   {
     "no": 67,
@@ -543,7 +543,7 @@ const people = [
     "ko": "데이브",
     "displayName": "Dave\n데이브",
     "note": "시험문제 빵점 맞아 코리아 빌딩 학생이 되지 못한 아떼 마리의 아들, 정주행 2020.06.27 13:56",
-    "image": "no-image.jpg"
+    "image": "Dave.jpg"
   },
   {
     "no": 69,
@@ -823,7 +823,7 @@ const people = [
     "ko": "자스민",
     "displayName": "Jasmine\n자스민",
     "note": "사리사리 스토어에서 밤에는 장사하고 아침에는 자는 소녀, 2021.04.18 06:48",
-    "image": "no-image.jpg"
+    "image": "Jasmine.jpg"
   },
   {
     "no": 104,
@@ -927,7 +927,7 @@ const people = [
     "ko": "제싸",
     "displayName": "Jessa\n제싸",
     "note": "한국인과 결혼한 필리핀 유튜버이자 아이들에게 인기가 많은 바랑가이 157의 1일 나눔 봉사자, 정주행 2020.03.03 01:46",
-    "image": "no-image.jpg"
+    "image": "Jessa.jpg"
   },
   {
     "no": 117,
@@ -1015,7 +1015,7 @@ const people = [
     "ko": "조안 H. 플로레스",
     "displayName": "Joan H. Flores\n조안 H. 플로레스",
     "note": "바랑가이 157 캡틴의 부인, 인정이 많아 피딩 프로그램에서 남은 음식을 PWD 장애인에게 나눠주고 그래도 남으면 국가로부터 도움을 전혀 받지 못하는 무허가 도로변 건물에 사는 사람들과 바나나마을이라 불리는 곳에 사는 사람들에게 나눠주지만 마약판매 단속 강화에 앙심을 품은 사람이 쏜 총에 가슴과 머리를 맞아 2020년 11월 30일 사망, 정주행 2020.12.03 01:10",
-    "image": "no-image.jpg"
+    "image": "Joan H. Flores.jpg"
   },
   {
     "no": 128,
@@ -1063,7 +1063,7 @@ const people = [
     "ko": "조와",
     "displayName": "Jowa\n조와",
     "note": "2026년 4월 8일 기준 9.88만 명의 구독자를 보유한 '조와부부 필리핀 JOWATV' 채널을 운영하는 유튜버, 바랑가이 157의 1일 나눔 봉사자, 정주행 2020.03.03 01:46",
-    "image": "no-image.jpg"
+    "image": "Jowa.jpg"
   },
   {
     "no": 134,
@@ -1151,7 +1151,7 @@ const people = [
     "ko": "까가왓 빌마 O. 오도넬",
     "displayName": "Kagawad - Vilma O. Odonel\n까가왓 빌마 O. 오도넬",
     "note": "넘버투 까가왓, 약을 파는 범죄자들과의 마찰로 마약 판매 조직에서 척살령이 내려져 아무도 모르는 곳에서 숨어 산다, 2021.06.19 48:30",
-    "image": "no-image.jpg"
+    "image": "Kagawad - Vilma O. Odonel.jpg"
   },
   {
     "no": 145,
@@ -1471,7 +1471,7 @@ const people = [
     "ko": "멜리사",
     "displayName": "Melissa\n멜리사",
     "note": "미겔라와 자매지간, 2010.10.15 18:22, 혹은 Michelle 미셸, 정주행 2021.05.04 19:59",
-    "image": "no-image.jpg"
+    "image": "Melissa.jpg"
   },
   {
     "no": 185,
@@ -1503,7 +1503,7 @@ const people = [
     "ko": "미카엘라 퀸테라 몬테스",
     "displayName": "Michaela Quintera Montes\n미카엘라 퀸테라 몬테스",
     "note": "통통한 여자아이, 정주행 2020.06.18 15:24",
-    "image": "no-image.jpg"
+    "image": "Michaela Quintera Montes.jpg"
   },
   {
     "no": 189,
