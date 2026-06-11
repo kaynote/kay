@@ -335,7 +335,7 @@ const people = [
     "ko": "에일라",
     "displayName": "Ayla 에일라",
     "note": "시니어 회장님의 손녀 혹은 증손녀로 추정되는 꼬땅의 친구, 2026년 6세,<span class=\"timestamp\">2026.03.01 44:51</span>",
-    "image": "no-image.jpg"
+    "image": "Ayla.jpg"
   },
   {
     "no": 43,
@@ -487,7 +487,7 @@ const people = [
     "ko": "콜린 N. 모라",
     "displayName": "Colin N. mora 콜린 N. 모라",
     "note": "니콜의 첫째 여동생,<span class=\"timestamp\">2026.02.15 48:13</span>, 생일은 1월 6일,<span class=\"timestamp\">2026.06.07 48:25</span>",
-    "image": "no-image.jpg"
+    "image": "Colin N. mora.jpg"
   },
   {
     "no": 62,
@@ -951,7 +951,7 @@ const people = [
     "ko": "즈웰",
     "displayName": "Jewel 즈웰",
     "note": "니콜의 사촌 큰언니,<span class=\"timestamp\">2024.05.05 35:31</span>",
-    "image": "no-image.jpg"
+    "image": "Jewel.jpg"
   },
   {
     "no": 120,
@@ -1343,7 +1343,7 @@ const people = [
     "ko": "엘제이",
     "displayName": "LJ 엘제이",
     "note": "김세훈 씨가 사진을 붙여 선물 박스를 보내준 통통한 여자아이,<span class=\"timestamp\">2024.11.02 1:07:49</span>",
-    "image": "no-image.jpg"
+    "image": "LJ.jpg"
   },
   {
     "no": 169,
