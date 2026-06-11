@@ -151,8 +151,8 @@ header{
 
     padding-left:50px;
 
-    font-size:15px;
-    color:#666;
+    font-size:14px;
+    color:#999;
 
     line-height:1.35;
 
@@ -163,7 +163,7 @@ header{
    META
 ========================= */
 .meta{
-    font-size:13px;
+    font-size:15px;
     color:#666;
 
     margin-bottom:10px;
@@ -175,7 +175,7 @@ header{
    DESC
 ========================= */
 .desc{
-    font-size:13px;
+    font-size:15px;
 
     line-height:1.6;
 
