@@ -2,21 +2,40 @@
 
 import people from "./people.js";
 
-const container =
-    document.getElementById("peopleContainer");
-
-const searchBox =
-    document.getElementById("searchBox");
+let container = null;
+let searchBox = null;
 
 let data = [];
-let renderedMap = new Map();
 
 /* =========================
-   INIT
+   INIT DOM
 ========================= */
-function init() {
+function initDOM() {
+    container = document.getElementById("peopleContainer");
+    searchBox = document.getElementById("searchBox");
 
-    if (!Array.isArray(people)) return;
+    if (!container) {
+        console.error("❌ peopleContainer 없음 (HTML 확인 필요)");
+        return false;
+    }
+
+    if (!searchBox) {
+        console.error("❌ searchBox 없음 (HTML 확인 필요)");
+        return false;
+    }
+
+    return true;
+}
+
+/* =========================
+   INIT DATA
+========================= */
+function initData() {
+
+    if (!Array.isArray(people)) {
+        console.error("❌ people.js 데이터가 배열이 아님");
+        return;
+    }
 
     data = people;
     render(data);
@@ -97,13 +116,17 @@ function handleSearch(value) {
 ========================= */
 document.addEventListener("DOMContentLoaded", () => {
 
-    if (searchBox) {
-        searchBox.addEventListener("input", e => {
-            handleSearch(e.target.value);
-        });
-    }
+    // DOM 먼저 체크
+    const ok = initDOM();
+    if (!ok) return;
 
-    init();
+    // 이벤트 연결
+    searchBox.addEventListener("input", (e) => {
+        handleSearch(e.target.value);
+    });
+
+    // 데이터 초기화
+    initData();
 });
 
 </script>
