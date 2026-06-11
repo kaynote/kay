@@ -23,18 +23,34 @@ function normalize(str) {
 }
 
 /* =========================
-   timestamp formatter
+   timestamp formatter (FINAL)
+   - 쉼표 제외
+   - 정주행/채팅부터만 span
 ========================= */
 function formatNote(note) {
   if (!note) return "";
 
-  const timestampRegex =
-    /(\d{4}\.\d{1,2}\.\d{1,2}(?:\s*\d{1,2}:\d{2})?|\b\d{1,2}:\d{2}\b)/g;
+  let result = note;
 
-  return note.replace(
-    timestampRegex,
+  /**
+   * ✔ 케이스 1
+   * , 정주행 2020.08.15 00:15
+   */
+  result = result.replace(
+    /(,\s*)([가-힣]+\s*\d{4}\.\d{1,2}\.\d{1,2}(?:\s*\d{1,2}:\d{2})?)/g,
+    '$1<span class="timestamp">$2</span>'
+  );
+
+  /**
+   * ✔ 케이스 2
+   * 2025.04.12 채팅 09:07
+   */
+  result = result.replace(
+    /(\d{4}\.\d{1,2}\.\d{1,2}\s*[가-힣]+\s*\d{1,2}:\d{2})/g,
     '<span class="timestamp">$1</span>'
   );
+
+  return result;
 }
 
 /* =========================
@@ -66,7 +82,7 @@ const imageFiles = fs
   .readdirSync(imagesDir)
   .filter(f => /\.(jpg|jpeg|png|webp)$/i.test(f));
 
-console.log("📂 image files:", imageFiles.length);
+console.log("📂 images:", imageFiles.length);
 
 /* =========================
    image map
@@ -74,12 +90,8 @@ console.log("📂 image files:", imageFiles.length);
 const imageMap = new Map();
 
 for (const file of imageFiles) {
-
   if (normalize(file) === "no image") continue;
-
-  const key = normalize(file);
-
-  imageMap.set(key, file);
+  imageMap.set(normalize(file), file);
 }
 
 /* =========================
@@ -116,13 +128,13 @@ let people = lines.map((line) => {
 
   const key = normalize(name);
 
-  let matchedImage = imageMap.get(key) || "no-image.jpg";
+  const matchedImage = imageMap.get(key) || "no-image.jpg";
 
   return {
     name,
     ko,
     displayName,
-    note: formatNote(note),   // 🔥 핵심 수정
+    note: formatNote(note),   // 🔥 핵심
     image: matchedImage
   };
 });
