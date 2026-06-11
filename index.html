@@ -1,37 +1,3 @@
-<!DOCTYPE html>
-<html lang="ko">
-
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Kay Notes Archive</title>
-
-<link rel="stylesheet" href="style.css">
-
-<style>
-#peopleContainer{
-    contain:layout paint;
-}
-</style>
-
-</head>
-
-<body>
-
-<header>
-    <h1>Kay Notes Archive</h1>
-
-    <input
-        type="text"
-        id="searchBox"
-        placeholder="검색..."
-    >
-</header>
-
-<div id="peopleContainer"></div>
-
-```html
 <script type="module">
 
 import people from "./people.js";
@@ -44,16 +10,29 @@ const searchBox =
 
 let data = [];
 
-let renderedMap = new Map();
+/* =========================
+   TIMESTAMP COLORIZE
+========================= */
+function colorizeTimestamp(text){
+
+    if(!text) return "";
+
+    return text.replace(
+
+        /(\d{4}\.\d{2}\.\d{2}\s+\d{1,2}:\d{2}(?::\d{2})?)/g,
+
+        '<span class="timestamp">$1</span>'
+    );
+}
 
 /* =========================
    INIT
 ========================= */
 function init(){
 
-    if(!Array.isArray(people)) return;
-
-    data = people;
+    data = Array.isArray(people)
+        ? people
+        : [];
 
     render(data);
 }
@@ -68,104 +47,54 @@ function createCard(p, index){
 
     card.className = "card";
 
-    /* =========================
-       PHOTO
-    ========================= */
-    const photo =
-        document.createElement("div");
-
-    photo.className = "photo";
-
-    const img =
-        document.createElement("img");
-
-    img.src = p.image
-        ? "images/" + p.image
-        : "images/no-image.jpg";
-
-    img.loading = "lazy";
-
-    img.decoding = "async";
-
-    photo.appendChild(img);
-
-    /* =========================
-       INFO
-    ========================= */
-    const info =
-        document.createElement("div");
-
-    info.className = "info";
-
-    /* =========================
-       NAME
-    ========================= */
-    const nameEl =
-        document.createElement("div");
-
-    nameEl.className = "name";
-
-    /* 영어 이름 */
-    const enEl =
-        document.createElement("div");
-
-    enEl.className = "en";
-
     const no =
-        (p.no || (index + 1));
+        p.no || (index + 1);
 
-    enEl.innerHTML =
-        `<span class="num">${no}.</span>
-         <span class="txt">${p.name || ""}</span>`;
+    card.innerHTML = `
 
-    /* 한글 이름 */
-    const koEl =
-        document.createElement("div");
+        <div class="photo">
+            <img
+                src="${
+                    p.image
+                        ? "images/" + p.image
+                        : "images/no-image.jpg"
+                }"
+                loading="lazy"
+                decoding="async"
+            >
+        </div>
 
-    koEl.className = "ko";
+        <div class="info">
 
-    koEl.textContent =
-        p.ko || "";
+            <div class="name">
 
-    nameEl.appendChild(enEl);
+                <div class="en">
+                    <span class="num">${no}.</span>
+                    <span class="txt">${p.name || ""}</span>
+                </div>
 
-    if(p.ko){
-        nameEl.appendChild(koEl);
-    }
+                ${
+                    p.ko
+                    ? `<div class="ko">${p.ko}</div>`
+                    : ""
+                }
 
-    /* =========================
-       META
-    ========================= */
-    const metaEl =
-        document.createElement("div");
+            </div>
 
-    metaEl.className = "meta";
+            <div class="meta">
+                ${
+                    p.tags
+                    ? p.tags.join(" · ")
+                    : ""
+                }
+            </div>
 
-    metaEl.textContent =
-        p.tags
-            ? p.tags.join(" · ")
-            : "";
+            <div class="desc">
+                ${colorizeTimestamp(p.note || "")}
+            </div>
 
-    /* =========================
-       DESC
-    ========================= */
-    const descEl =
-        document.createElement("div");
-
-    descEl.className = "desc";
-
-    descEl.textContent =
-        p.note || "";
-
-    /* =========================
-       APPEND
-    ========================= */
-    info.appendChild(nameEl);
-    info.appendChild(metaEl);
-    info.appendChild(descEl);
-
-    card.appendChild(photo);
-    card.appendChild(info);
+        </div>
+    `;
 
     return card;
 }
@@ -180,27 +109,9 @@ function render(list){
 
     list.forEach((p, index) => {
 
-        const key =
-            (p.no || index) + "_" + p.name;
-
-        if(renderedMap.has(key)){
-
-            fragment.appendChild(
-                renderedMap.get(key)
-            );
-
-        }else{
-
-            const card =
-                createCard(p, index);
-
-            renderedMap.set(
-                key,
-                card
-            );
-
-            fragment.appendChild(card);
-        }
+        fragment.appendChild(
+            createCard(p, index)
+        );
 
     });
 
@@ -212,13 +123,13 @@ function render(list){
 ========================= */
 function debounce(fn, delay = 150){
 
-    let t;
+    let timer;
 
     return (...args) => {
 
-        clearTimeout(t);
+        clearTimeout(timer);
 
-        t = setTimeout(
+        timer = setTimeout(
             () => fn(...args),
             delay
         );
@@ -226,40 +137,38 @@ function debounce(fn, delay = 150){
 }
 
 const handleSearch =
-    debounce((value) => {
+    debounce(value => {
 
-    const k =
-        value.toLowerCase();
+        const k =
+            value.toLowerCase();
 
-    const filtered =
-        data.filter(p =>
+        render(
 
-            (p.name || "")
-                .toLowerCase()
-                .includes(k)
+            data.filter(p =>
 
-            ||
+                (p.name || "")
+                    .toLowerCase()
+                    .includes(k)
 
-            (p.ko || "")
-                .toLowerCase()
-                .includes(k)
+                ||
 
-            ||
+                (p.ko || "")
+                    .toLowerCase()
+                    .includes(k)
 
-            (p.note || "")
-                .toLowerCase()
-                .includes(k)
+                ||
+
+                (p.note || "")
+                    .toLowerCase()
+                    .includes(k)
+            )
         );
 
-    render(filtered);
-
-}, 150);
+    });
 
 searchBox.addEventListener(
     "input",
-    e => {
-        handleSearch(e.target.value);
-    }
+    e => handleSearch(e.target.value)
 );
 
 /* =========================
@@ -268,9 +177,3 @@ searchBox.addEventListener(
 init();
 
 </script>
-
-```
-
-
-</body>
-</html>

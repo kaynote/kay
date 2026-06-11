@@ -160,3 +160,10 @@ header{
     margin-bottom:5px;
     font-size:11px;
 }
+/* =========================
+   TIMESTAMP
+========================= */
+.timestamp{
+    color:#999;
+    font-size:0.95em;
+}
