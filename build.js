@@ -31,23 +31,23 @@ function formatNote(note) {
   let result = note;
 
   /**
-   * 🎯 1) 정주행 (예외: 앞 고정)
+   * 🎯 핵심 1: 정주행 / 채팅 / 기타 키워드 포함 케이스
+   * YYYY.MM.DD + 한글 + HH:MM or HH:MM:SS
    */
   result = result.replace(
-    /(정주행)\s+(\d{4}\.\d{1,2}\.\d{1,2})\s*(\d{1,2}:\d{2})/g,
-    (m, label, date, time) => {
-      return `<span class="timestamp">${label} ${date} ${time}</span>`;
+    /(\d{4}\.\d{1,2}\.\d{1,2})([\s\S]*?)(\d{1,2}:\d{2}(?::\d{2})?)/g,
+    (m, date, middle, time) => {
+      return `<span class="timestamp">${date}${middle}${time}</span>`;
     }
   );
 
   /**
-   * 🎯 2) 일반 케이스
-   * YYYY.MM.DD + (중간 아무 텍스트) + HH:MM
+   * 🎯 핵심 2: 정주행 단독 케이스 보강 (선택 안전망)
    */
   result = result.replace(
-    /(\d{4}\.\d{1,2}\.\d{1,2})([\s\S]*?)(\d{1,2}:\d{2})/g,
-    (m, date, middle, time) => {
-      return `<span class="timestamp">${date}${middle}${time}</span>`;
+    /(정주행)\s+(\d{4}\.\d{1,2}\.\d{1,2})\s*(\d{1,2}:\d{2}(?::\d{2})?)/g,
+    (m, label, date, time) => {
+      return `<span class="timestamp">${label} ${date} ${time}</span>`;
     }
   );
 
