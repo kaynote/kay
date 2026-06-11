@@ -4,38 +4,43 @@ import people from "./people.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    const container =
-        document.getElementById("peopleContainer");
-
-    const searchBox =
-        document.getElementById("searchBox");
+    const container = document.getElementById("peopleContainer");
+    const searchBox = document.getElementById("searchBox");
 
     /* =========================
-       🔥 안전장치 (핵심)
+       🔥 DOM 체크 (필수)
     ========================= */
-    if(!container){
-        console.error("❌ peopleContainer 없음");
+    if (!container) {
+        console.error("❌ peopleContainer 없음 (HTML 확인 필요)");
         return;
     }
 
-    if(!searchBox){
-        console.error("❌ searchBox 없음");
+    if (!searchBox) {
+        console.error("❌ searchBox 없음 (HTML 확인 필요)");
         return;
     }
 
+    /* =========================
+       🔥 데이터
+    ========================= */
     let data = [];
     let renderedMap = new Map();
 
-    function init(){
-        if(!Array.isArray(people)){
-            console.error("❌ people 데이터 없음");
+    function init() {
+        if (!Array.isArray(people)) {
+            console.error("❌ people 데이터가 배열이 아님");
             return;
         }
+
         data = people;
         render(data);
     }
 
-    function createCard(p, index){
+    /* =========================
+       🔥 카드 생성
+    ========================= */
+    function createCard(p, index) {
+
         const card = document.createElement("div");
         card.className = "card";
 
@@ -44,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const img = document.createElement("img");
 
-        img.src = p.image
+        img.src = p?.image
             ? "images/" + p.image
             : "images/no-image.jpg";
 
@@ -58,24 +63,24 @@ document.addEventListener("DOMContentLoaded", () => {
         const nameEl = document.createElement("div");
         nameEl.className = "name";
 
-        const no = (p.no || index + 1);
+        const no = p?.no ?? (index + 1);
 
         nameEl.innerHTML = `
             <div class="en">
                 <span class="num">${no}.</span>
-                <span class="txt">${p.name || ""}</span>
+                <span class="txt">${p?.name ?? ""}</span>
             </div>
         `;
 
         const koEl = document.createElement("div");
         koEl.className = "ko";
-        koEl.textContent = p.ko || "";
+        koEl.textContent = p?.ko ?? "";
 
-        if(p.ko) nameEl.appendChild(koEl);
+        if (p?.ko) nameEl.appendChild(koEl);
 
         const descEl = document.createElement("div");
         descEl.className = "desc";
-        descEl.textContent = p.note || "";
+        descEl.textContent = p?.note ?? "";
 
         /* =========================
            TIMELINE
@@ -83,13 +88,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const timelineEl = document.createElement("div");
         timelineEl.className = "timeline";
 
-        if(Array.isArray(p.timeline)){
+        if (Array.isArray(p?.timeline)) {
             p.timeline.forEach(t => {
+
                 const item = document.createElement("div");
 
-                /* 안전 처리 */
-                const type = t?.type || "text";
-                const text = t?.text || "";
+                const type = t?.type ?? "text";
+                const text = t?.text ?? "";
 
                 item.className = type;
                 item.textContent = text;
@@ -101,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
         info.appendChild(nameEl);
         info.appendChild(descEl);
 
-        if(p.timeline?.length){
+        if (p?.timeline?.length) {
             info.appendChild(timelineEl);
         }
 
@@ -111,57 +116,65 @@ document.addEventListener("DOMContentLoaded", () => {
         return card;
     }
 
-    function render(list){
+    /* =========================
+       🔥 렌더링
+    ========================= */
+    function render(list) {
 
         const fragment = document.createDocumentFragment();
 
         list.forEach((p, index) => {
 
-            const key =
-                (p.no || index) + "_" + (p.name || "");
+            const key = `${p?.no ?? index}_${p?.name ?? ""}`;
 
-            if(renderedMap.has(key)){
+            if (renderedMap.has(key)) {
                 fragment.appendChild(renderedMap.get(key));
-            }else{
+            } else {
                 const card = createCard(p, index);
                 renderedMap.set(key, card);
                 fragment.appendChild(card);
             }
-
         });
 
         container.replaceChildren(fragment);
     }
 
-    function debounce(fn, delay = 150){
+    /* =========================
+       🔥 debounce
+    ========================= */
+    function debounce(fn, delay = 150) {
         let t;
+
         return (...args) => {
             clearTimeout(t);
             t = setTimeout(() => fn(...args), delay);
         };
     }
 
+    /* =========================
+       🔥 검색
+    ========================= */
     const handleSearch = debounce((value) => {
 
-        const k = value.toLowerCase();
+        const k = (value || "").toLowerCase();
 
         const filtered = data.filter(p =>
-            (p.name || "").toLowerCase().includes(k) ||
-            (p.ko || "").toLowerCase().includes(k) ||
-            (p.note || "").toLowerCase().includes(k)
+            (p?.name ?? "").toLowerCase().includes(k) ||
+            (p?.ko ?? "").toLowerCase().includes(k) ||
+            (p?.note ?? "").toLowerCase().includes(k)
         );
 
         render(filtered);
 
     }, 150);
 
-    /* =========================
-       🔥 이벤트 안전 연결
-    ========================= */
-    searchBox?.addEventListener("input", e => {
+    searchBox.addEventListener("input", (e) => {
         handleSearch(e.target.value);
     });
 
+    /* =========================
+       🔥 시작
+    ========================= */
     init();
 
 });
