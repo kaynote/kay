@@ -1,37 +1,3 @@
-<!DOCTYPE html>
-<html lang="ko">
-
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Kay Notes Archive</title>
-
-<link rel="stylesheet" href="style.css">
-
-<style>
-#peopleContainer{
-    contain:layout paint;
-}
-</style>
-
-</head>
-
-<body>
-
-<header>
-    <h1>Kay Notes Archive</h1>
-
-    <input
-        type="text"
-        id="searchBox"
-        placeholder="검색..."
-    >
-</header>
-
-<div id="peopleContainer"></div>
-
-```html
 <script type="module">
 
 import people from "./people.js";
@@ -84,7 +50,6 @@ function createCard(p, index){
         : "images/no-image.jpg";
 
     img.loading = "lazy";
-
     img.decoding = "async";
 
     photo.appendChild(img);
@@ -105,7 +70,6 @@ function createCard(p, index){
 
     nameEl.className = "name";
 
-    /* 영어 이름 */
     const enEl =
         document.createElement("div");
 
@@ -118,7 +82,6 @@ function createCard(p, index){
         `<span class="num">${no}.</span>
          <span class="txt">${p.name || ""}</span>`;
 
-    /* 한글 이름 */
     const koEl =
         document.createElement("div");
 
@@ -147,14 +110,16 @@ function createCard(p, index){
             : "";
 
     /* =========================
-       DESC
+       DESC (🔥 핵심 변경)
     ========================= */
     const descEl =
         document.createElement("div");
 
     descEl.className = "desc";
 
-descEl.innerHTML = p.note || "";
+    /* 👉 여기 중요 */
+    descEl.innerHTML =
+        p.displayName || p.note || "";
 
     /* =========================
        APPEND
@@ -193,10 +158,7 @@ function render(list){
             const card =
                 createCard(p, index);
 
-            renderedMap.set(
-                key,
-                card
-            );
+            renderedMap.set(key, card);
 
             fragment.appendChild(card);
         }
@@ -256,9 +218,7 @@ const handleSearch =
 
 searchBox.addEventListener(
     "input",
-    e => {
-        handleSearch(e.target.value);
-    }
+    e => handleSearch(e.target.value)
 );
 
 /* =========================
@@ -267,9 +227,3 @@ searchBox.addEventListener(
 init();
 
 </script>
-
-```
-
-
-</body>
-</html>
