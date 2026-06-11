@@ -31,7 +31,8 @@ function formatNote(note) {
   // "정주행 2021.11.10 23:42"
   // "2024.03.03 채팅 24:55"
   const regex =
-    /(정주행\s*)?\d{4}\.\d{2}\.\d{2}(?:\s*[가-힣A-Za-z0-9\s]*)?\s*\d{2}:\d{2}/g;
+    const regex =
+  /(정주행\s*)?\d{4}\.\d{2}\.\d{2}(?:\s*[가-힣A-Za-z0-9\s]*)?\s*\d{1,2}:\d{2}(?::\d{2})?/g;
 
   return note.replace(
     regex,
