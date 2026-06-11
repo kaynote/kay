@@ -23,6 +23,30 @@ function normalize(str) {
 }
 
 /* =========================
+   timestamp formatter
+========================= */
+function formatNote(note) {
+  if (!note) return "";
+
+  /**
+   * 지원 패턴
+   * 1) 2021.11.10
+   * 2) 2021.11.10 23:42
+   * 3) 23:42 / 57:14 (타임코드)
+   *
+   * ❌ 제외: 2025년 3월 15일 (한글 날짜)
+   */
+
+  const timestampRegex =
+    /(\d{4}\.\d{1,2}\.\d{1,2}(?:\s*\d{1,2}:\d{2})?|\b\d{1,2}:\d{2}\b)/g;
+
+  return note.replace(
+    timestampRegex,
+    '<span class="timestamp">$1</span>'
+  );
+}
+
+/* =========================
    read names
 ========================= */
 if (!fs.existsSync(txtPath)) {
@@ -62,17 +86,11 @@ const imageMap = new Map();
 
 for (const file of imageFiles) {
 
-  /* no-image 제외 */
-  if (
-    normalize(file) === "no image"
-  ) {
-    continue;
-  }
+  if (normalize(file) === "no image") continue;
 
   const key = normalize(file);
 
   if (imageMap.has(key)) {
-
     console.log("");
     console.log("⚠️ 중복 key 발견");
     console.log("key =", key);
@@ -91,83 +109,48 @@ for (const file of imageFiles) {
 ========================= */
 let people = lines.map(line => {
 
-  /* 번호 제거
-     ex) 1. Maria Santos
-  */
   line = line.replace(/^\d+\.\s*/, "");
 
-  /* note 추출
-     ex) (VIP)
-  */
-  const noteMatch =
-    line.match(/\((.*?)\)/);
+  const noteMatch = line.match(/\((.*?)\)/);
+  const note = noteMatch ? noteMatch[1].trim() : "";
 
-  const note = noteMatch
-    ? noteMatch[1].trim()
-    : "";
+  const cleanLine = line.replace(/\(.*?\)/, "").trim();
 
-  /* note 제거 */
-  const cleanLine = line
-    .replace(/\(.*?\)/, "")
-    .trim();
-
-  /* 영어 / 한글 분리 */
   const parts = cleanLine.split(/\s+/);
 
-  const koStartIndex =
-    parts.findIndex(p =>
-      /[가-힣]/.test(p)
-    );
+  const koStartIndex = parts.findIndex(p => /[가-힣]/.test(p));
 
   let name = "";
   let ko = "";
 
   if (koStartIndex === -1) {
-
     name = cleanLine;
-
   } else {
-
-    name = parts
-      .slice(0, koStartIndex)
-      .join(" ")
-      .trim();
-
-    ko = parts
-      .slice(koStartIndex)
-      .join(" ")
-      .trim();
+    name = parts.slice(0, koStartIndex).join(" ").trim();
+    ko = parts.slice(koStartIndex).join(" ").trim();
   }
 
-  /* 표시용 이름 */
-  const visibleName =
-    name.replace(/[_-]\d+$/, "");
+  const visibleName = name.replace(/[_-]\d+$/, "");
 
   const displayName = ko
     ? visibleName + "\n" + ko
     : visibleName;
 
-  /* 이미지 매칭 */
   const key = normalize(name);
 
-  let matchedImage =
-    imageMap.get(key);
+  let matchedImage = imageMap.get(key);
 
   if (!matchedImage) {
     matchedImage = "no-image.jpg";
   }
 
-  /* 로그 */
   if (matchedImage !== "no-image.jpg") {
-
     console.log("");
     console.log("✅ MATCH");
     console.log("name =", name);
     console.log("key  =", key);
     console.log("file =", matchedImage);
-
   } else {
-
     console.log("");
     console.log("❌ NO IMAGE");
     console.log("name =", name);
@@ -179,7 +162,7 @@ let people = lines.map(line => {
     name,
     ko,
     displayName,
-    note,
+    note: formatNote(note),
     image: matchedImage
   };
 
@@ -189,14 +172,10 @@ let people = lines.map(line => {
    sort alphabetically
 ========================= */
 people.sort((a, b) =>
-  a.name.localeCompare(
-    b.name,
-    "en",
-    {
-      sensitivity: "base",
-      numeric: true
-    }
-  )
+  a.name.localeCompare(b.name, "en", {
+    sensitivity: "base",
+    numeric: true
+  })
 );
 
 /* =========================
@@ -221,14 +200,9 @@ const output =
    backup old file
 ========================= */
 if (fs.existsSync(outputPath)) {
+  const backupPath = outputPath + ".backup";
 
-  const backupPath =
-    outputPath + ".backup";
-
-  fs.copyFileSync(
-    outputPath,
-    backupPath
-  );
+  fs.copyFileSync(outputPath, backupPath);
 
   console.log("");
   console.log("💾 backup 생성");
@@ -238,11 +212,7 @@ if (fs.existsSync(outputPath)) {
 /* =========================
    write file
 ========================= */
-fs.writeFileSync(
-  outputPath,
-  output,
-  "utf8"
-);
+fs.writeFileSync(outputPath, output, "utf8");
 
 /* =========================
    done
