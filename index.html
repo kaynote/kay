@@ -154,8 +154,7 @@ function createCard(p, index){
 
     descEl.className = "desc";
 
-    descEl.textContent =
-        p.note || "";
+descEl.innerHTML = p.note || "";
 
     /* =========================
        APPEND
