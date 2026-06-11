@@ -28,15 +28,6 @@ function normalize(str) {
 function formatNote(note) {
   if (!note) return "";
 
-  /**
-   * 지원 패턴
-   * 1) 2021.11.10
-   * 2) 2021.11.10 23:42
-   * 3) 23:42 / 57:14 (타임코드)
-   *
-   * ❌ 제외: 2025년 3월 15일 (한글 날짜)
-   */
-
   const timestampRegex =
     /(\d{4}\.\d{1,2}\.\d{1,2}(?:\s*\d{1,2}:\d{2})?|\b\d{1,2}:\d{2}\b)/g;
 
@@ -61,7 +52,6 @@ const lines = raw
   .map(v => v.trim())
   .filter(Boolean);
 
-console.log("");
 console.log("📄 names:", lines.length);
 
 /* =========================
@@ -76,7 +66,6 @@ const imageFiles = fs
   .readdirSync(imagesDir)
   .filter(f => /\.(jpg|jpeg|png|webp)$/i.test(f));
 
-console.log("");
 console.log("📂 image files:", imageFiles.length);
 
 /* =========================
@@ -90,24 +79,13 @@ for (const file of imageFiles) {
 
   const key = normalize(file);
 
-  if (imageMap.has(key)) {
-    console.log("");
-    console.log("⚠️ 중복 key 발견");
-    console.log("key =", key);
-    console.log("old =", imageMap.get(key));
-    console.log("new =", file);
-    console.log("➡️ 최신 파일로 덮어쓰기");
-  }
-
   imageMap.set(key, file);
-
-  console.log("🖼️", file, "→", key);
 }
 
 /* =========================
    build people
 ========================= */
-let people = lines.map(line => {
+let people = lines.map((line) => {
 
   line = line.replace(/^\d+\.\s*/, "");
 
@@ -138,38 +116,19 @@ let people = lines.map(line => {
 
   const key = normalize(name);
 
-  let matchedImage = imageMap.get(key);
-
-  if (!matchedImage) {
-    matchedImage = "no-image.jpg";
-  }
-
-  if (matchedImage !== "no-image.jpg") {
-    console.log("");
-    console.log("✅ MATCH");
-    console.log("name =", name);
-    console.log("key  =", key);
-    console.log("file =", matchedImage);
-  } else {
-    console.log("");
-    console.log("❌ NO IMAGE");
-    console.log("name =", name);
-    console.log("key  =", key);
-    console.log("➡️ no-image.jpg 사용");
-  }
+  let matchedImage = imageMap.get(key) || "no-image.jpg";
 
   return {
     name,
     ko,
     displayName,
-    note: note,
+    note: formatNote(note),   // 🔥 핵심 수정
     image: matchedImage
   };
-
 });
 
 /* =========================
-   sort alphabetically
+   sort
 ========================= */
 people.sort((a, b) =>
   a.name.localeCompare(b.name, "en", {
@@ -179,11 +138,11 @@ people.sort((a, b) =>
 );
 
 /* =========================
-   add sequence number
+   numbering
 ========================= */
-people = people.map((person, index) => ({
-  no: index + 1,
-  ...person
+people = people.map((p, i) => ({
+  no: i + 1,
+  ...p
 }));
 
 /* =========================
@@ -197,28 +156,20 @@ const output =
   "export default people;\n";
 
 /* =========================
-   backup old file
+   backup
 ========================= */
 if (fs.existsSync(outputPath)) {
-  const backupPath = outputPath + ".backup";
-
-  fs.copyFileSync(outputPath, backupPath);
-
-  console.log("");
-  console.log("💾 backup 생성");
-  console.log("📄", backupPath);
+  fs.copyFileSync(outputPath, outputPath + ".backup");
 }
 
 /* =========================
-   write file
+   write
 ========================= */
 fs.writeFileSync(outputPath, output, "utf8");
 
 /* =========================
    done
 ========================= */
-console.log("");
 console.log("✅ build 완료");
 console.log("👥 people :", people.length);
-console.log("🖼️ images :", imageFiles.length);
 console.log("📄 output :", outputPath);
