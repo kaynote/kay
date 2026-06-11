@@ -1,3 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kay Notes Archive</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+#peopleContainer{
+    contain:layout paint;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+    <h1>Kay Notes Archive</h1>
+
+    <input
+        type="text"
+        id="searchBox"
+        placeholder="검색..."
+    >
+</header>
+
+<div id="peopleContainer"></div>
+
+```html
 <script type="module">
 
 import people from "./people.js";
@@ -11,19 +45,6 @@ const searchBox =
 let data = [];
 
 let renderedMap = new Map();
-
-/* =========================
-   TIMESTAMP
-========================= */
-function colorizeTimestamp(text){
-
-    if(!text) return "";
-
-    return text.replace(
-        /(\d{4}\.\d{2}\.\d{2}\s+\d{1,2}:\d{2}(?::\d{2})?)/g,
-        '<span class="timestamp">$1</span>'
-    );
-}
 
 /* =========================
    INIT
@@ -84,6 +105,7 @@ function createCard(p, index){
 
     nameEl.className = "name";
 
+    /* 영어 이름 */
     const enEl =
         document.createElement("div");
 
@@ -96,6 +118,7 @@ function createCard(p, index){
         `<span class="num">${no}.</span>
          <span class="txt">${p.name || ""}</span>`;
 
+    /* 한글 이름 */
     const koEl =
         document.createElement("div");
 
@@ -131,8 +154,8 @@ function createCard(p, index){
 
     descEl.className = "desc";
 
-    descEl.innerHTML =
-        colorizeTimestamp(p.note || "");
+    descEl.textContent =
+        p.note || "";
 
     /* =========================
        APPEND
@@ -232,16 +255,12 @@ const handleSearch =
 
 }, 150);
 
-if(searchBox){
-
-    searchBox.addEventListener(
-        "input",
-        e => {
-            handleSearch(e.target.value);
-        }
-    );
-
-}
+searchBox.addEventListener(
+    "input",
+    e => {
+        handleSearch(e.target.value);
+    }
+);
 
 /* =========================
    START
@@ -249,3 +268,9 @@ if(searchBox){
 init();
 
 </script>
+
+```
+
+
+</body>
+</html>
