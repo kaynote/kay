@@ -208,3 +208,7 @@ header{
 
     font-size:11px;
 }
+.timestamp {
+    color: #888;      /* 회색 */
+    font-size: 0.9em; /* 선택사항 */
+}
