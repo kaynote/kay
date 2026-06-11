@@ -1,37 +1,3 @@
-<!DOCTYPE html>
-<html lang="ko">
-
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Kay Notes Archive</title>
-
-<link rel="stylesheet" href="style.css">
-
-<style>
-#peopleContainer{
-    contain:layout paint;
-}
-</style>
-
-</head>
-
-<body>
-
-<header>
-    <h1>Kay Notes Archive</h1>
-
-    <input
-        type="text"
-        id="searchBox"
-        placeholder="검색..."
-    >
-</header>
-
-<div id="peopleContainer"></div>
-
-```html
 <script type="module">
 
 import people from "./people.js";
@@ -50,11 +16,8 @@ let renderedMap = new Map();
    INIT
 ========================= */
 function init(){
-
     if(!Array.isArray(people)) return;
-
     data = people;
-
     render(data);
 }
 
@@ -68,9 +31,7 @@ function createCard(p, index){
 
     card.className = "card";
 
-    /* =========================
-       PHOTO
-    ========================= */
+    /* PHOTO */
     const photo =
         document.createElement("div");
 
@@ -84,28 +45,22 @@ function createCard(p, index){
         : "images/no-image.jpg";
 
     img.loading = "lazy";
-
     img.decoding = "async";
 
     photo.appendChild(img);
 
-    /* =========================
-       INFO
-    ========================= */
+    /* INFO */
     const info =
         document.createElement("div");
 
     info.className = "info";
 
-    /* =========================
-       NAME
-    ========================= */
+    /* NAME */
     const nameEl =
         document.createElement("div");
 
     nameEl.className = "name";
 
-    /* 영어 이름 */
     const enEl =
         document.createElement("div");
 
@@ -118,51 +73,65 @@ function createCard(p, index){
         `<span class="num">${no}.</span>
          <span class="txt">${p.name || ""}</span>`;
 
-    /* 한글 이름 */
     const koEl =
         document.createElement("div");
 
     koEl.className = "ko";
-
-    koEl.textContent =
-        p.ko || "";
+    koEl.textContent = p.ko || "";
 
     nameEl.appendChild(enEl);
+    if(p.ko) nameEl.appendChild(koEl);
 
-    if(p.ko){
-        nameEl.appendChild(koEl);
-    }
-
-    /* =========================
-       META
-    ========================= */
+    /* META */
     const metaEl =
         document.createElement("div");
 
     metaEl.className = "meta";
 
     metaEl.textContent =
-        p.tags
-            ? p.tags.join(" · ")
-            : "";
+        p.tags ? p.tags.join(" · ") : "";
 
-    /* =========================
-       DESC
-    ========================= */
+    /* DESC */
     const descEl =
         document.createElement("div");
 
     descEl.className = "desc";
 
-    descEl.textContent =
-        p.note || "";
+    descEl.textContent = p.note || "";
 
     /* =========================
-       APPEND
+       🔥 TIMELINE 추가 (핵심)
     ========================= */
+    const timelineEl =
+        document.createElement("div");
+
+    timelineEl.className = "timeline";
+
+    if(Array.isArray(p.timeline)){
+
+        p.timeline.forEach(t => {
+
+            const item =
+                document.createElement("div");
+
+            item.className = t.type; 
+            // "time" or "text"
+
+            item.textContent = t.text;
+
+            timelineEl.appendChild(item);
+        });
+    }
+
+    /* APPEND */
     info.appendChild(nameEl);
     info.appendChild(metaEl);
     info.appendChild(descEl);
+
+    /* 👇 여기 추가 */
+    if(p.timeline && p.timeline.length){
+        info.appendChild(timelineEl);
+    }
 
     card.appendChild(photo);
     card.appendChild(info);
@@ -184,21 +153,12 @@ function render(list){
             (p.no || index) + "_" + p.name;
 
         if(renderedMap.has(key)){
-
-            fragment.appendChild(
-                renderedMap.get(key)
-            );
-
+            fragment.appendChild(renderedMap.get(key));
         }else{
-
             const card =
                 createCard(p, index);
 
-            renderedMap.set(
-                key,
-                card
-            );
-
+            renderedMap.set(key, card);
             fragment.appendChild(card);
         }
 
@@ -211,56 +171,32 @@ function render(list){
    SEARCH
 ========================= */
 function debounce(fn, delay = 150){
-
     let t;
-
     return (...args) => {
-
         clearTimeout(t);
-
-        t = setTimeout(
-            () => fn(...args),
-            delay
-        );
+        t = setTimeout(() => fn(...args), delay);
     };
 }
 
 const handleSearch =
     debounce((value) => {
 
-    const k =
-        value.toLowerCase();
+    const k = value.toLowerCase();
 
     const filtered =
         data.filter(p =>
-
-            (p.name || "")
-                .toLowerCase()
-                .includes(k)
-
-            ||
-
-            (p.ko || "")
-                .toLowerCase()
-                .includes(k)
-
-            ||
-
-            (p.note || "")
-                .toLowerCase()
-                .includes(k)
+            (p.name || "").toLowerCase().includes(k) ||
+            (p.ko || "").toLowerCase().includes(k) ||
+            (p.note || "").toLowerCase().includes(k)
         );
 
     render(filtered);
 
 }, 150);
 
-searchBox.addEventListener(
-    "input",
-    e => {
-        handleSearch(e.target.value);
-    }
-);
+searchBox.addEventListener("input", e => {
+    handleSearch(e.target.value);
+});
 
 /* =========================
    START
@@ -268,9 +204,3 @@ searchBox.addEventListener(
 init();
 
 </script>
-
-```
-
-
-</body>
-</html>
