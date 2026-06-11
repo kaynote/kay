@@ -24,8 +24,6 @@ function normalize(str) {
 
 /* =========================
    timestamp formatter (FINAL)
-   - 쉼표 제외
-   - 정주행/채팅부터만 span
 ========================= */
 function formatNote(note) {
   if (!note) return "";
@@ -33,21 +31,24 @@ function formatNote(note) {
   let result = note;
 
   /**
-   * ✔ 케이스 1
-   * , 정주행 2020.08.15 00:15
+   * 🎯 1) 정주행 (예외: 앞 고정)
    */
   result = result.replace(
-    /(,\s*)([가-힣]+\s*\d{4}\.\d{1,2}\.\d{1,2}(?:\s*\d{1,2}:\d{2})?)/g,
-    '$1<span class="timestamp">$2</span>'
+    /(정주행)\s+(\d{4}\.\d{1,2}\.\d{1,2})\s*(\d{1,2}:\d{2})/g,
+    (m, label, date, time) => {
+      return `<span class="timestamp">${label} ${date} ${time}</span>`;
+    }
   );
 
   /**
-   * ✔ 케이스 2
-   * 2025.04.12 채팅 09:07
+   * 🎯 2) 일반 케이스
+   * YYYY.MM.DD + (중간 아무 텍스트) + HH:MM
    */
   result = result.replace(
-    /(\d{4}\.\d{1,2}\.\d{1,2}\s*[가-힣]+\s*\d{1,2}:\d{2})/g,
-    '<span class="timestamp">$1</span>'
+    /(\d{4}\.\d{1,2}\.\d{1,2})([\s\S]*?)(\d{1,2}:\d{2})/g,
+    (m, date, middle, time) => {
+      return `<span class="timestamp">${date}${middle}${time}</span>`;
+    }
   );
 
   return result;
@@ -97,7 +98,7 @@ for (const file of imageFiles) {
 /* =========================
    build people
 ========================= */
-let people = lines.map((line) => {
+let people = lines.map((line, index) => {
 
   line = line.replace(/^\d+\.\s*/, "");
 
@@ -131,10 +132,11 @@ let people = lines.map((line) => {
   const matchedImage = imageMap.get(key) || "no-image.jpg";
 
   return {
+    no: index + 1,
     name,
     ko,
     displayName,
-    note: formatNote(note),   // 🔥 핵심
+    note: formatNote(note),
     image: matchedImage
   };
 });
@@ -150,11 +152,11 @@ people.sort((a, b) =>
 );
 
 /* =========================
-   numbering
+   re-number after sort
 ========================= */
 people = people.map((p, i) => ({
-  no: i + 1,
-  ...p
+  ...p,
+  no: i + 1
 }));
 
 /* =========================
