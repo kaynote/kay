@@ -25,7 +25,9 @@ import {
   setDoc
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-/* Firebase */
+/* =======================
+   Firebase
+======================= */
 const firebaseConfig = {
   apiKey: "AIzaSyCAZzJdAB_a65dkJaL-XLQqzImzlSI8Gmw",
   authDomain: "kay-gallery.firebaseapp.com",
@@ -39,73 +41,109 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-/* DOM SAFE GET */
-const container = document.getElementById("peopleContainer");
-const searchBox = document.getElementById("searchBox");
-const loginBtn = document.getElementById("loginBtn");
-const logoutBtn = document.getElementById("logoutBtn");
-const userBox = document.getElementById("userBox");
+/* =======================
+   Safe DOM
+======================= */
+const $ = (id) => document.getElementById(id);
+
+let container, searchBox, loginBtn, logoutBtn, userBox;
 
 let data = [];
 let renderedMap = new Map();
 let currentPersonNo = null;
 
-/* INIT */
-function init() {
-  if (!Array.isArray(people)) return;
+/* =======================
+   INIT SAFE
+======================= */
+document.addEventListener("DOMContentLoaded", () => {
+
+  container = $("peopleContainer");
+  searchBox = $("searchBox");
+  loginBtn = $("loginBtn");
+  logoutBtn = $("logoutBtn");
+  userBox = $("userBox");
+
+  if (!Array.isArray(people)) {
+    console.error("people.js 로딩 실패");
+    return;
+  }
+
   data = people;
   render(data);
+
+  bindEvents();
+});
+
+/* =======================
+   EVENTS
+======================= */
+function bindEvents() {
+
+  if (searchBox) {
+    searchBox.addEventListener("input", debounce(e => {
+      const k = e.target.value.toLowerCase();
+
+      render(
+        data.filter(p =>
+          (p.name || "").toLowerCase().includes(k) ||
+          (p.ko || "").toLowerCase().includes(k) ||
+          (p.note || "").toLowerCase().includes(k)
+        )
+      );
+    }, 150));
+  }
+
+  if (loginBtn) {
+    loginBtn.onclick = async () => {
+      try {
+        const provider = new GoogleAuthProvider();
+        await signInWithPopup(auth, provider);
+      } catch (e) {
+        alert("로그인 실패");
+        console.error(e);
+      }
+    };
+  }
+
+  if (logoutBtn) {
+    logoutBtn.onclick = () => signOut(auth);
+  }
+
+  onAuthStateChanged(auth, user => {
+    if (!loginBtn || !logoutBtn || !userBox) return;
+
+    loginBtn.hidden = !!user;
+    logoutBtn.hidden = !user;
+    userBox.textContent = user ? `👤 ${user.displayName}` : "";
+  });
+
+  const saveBtn = $("saveComment");
+  if (saveBtn) {
+    saveBtn.onclick = saveComment;
+  }
 }
 
-/* CARD */
+/* =======================
+   CARD
+======================= */
 function createCard(p, index) {
 
   const card = document.createElement("div");
   card.className = "card";
+
+  const no = p.no || index + 1;
 
   const photo = document.createElement("div");
   photo.className = "photo";
 
   const img = document.createElement("img");
   img.src = p.image ? "images/" + p.image : "images/no-image.jpg";
-  img.loading = "lazy";
-  img.decoding = "async";
   photo.appendChild(img);
 
   const info = document.createElement("div");
   info.className = "info";
 
-  const no = p.no || (index + 1);
-
-  const nameEl = document.createElement("div");
-  nameEl.className = "name";
-
-  nameEl.innerHTML = `
-    <div class="en">
-      <span class="num">${no}.</span>
-      <span class="txt">${p.name || ""}</span>
-    </div>
-  `;
-
-  if (p.ko) {
-    const koEl = document.createElement("div");
-    koEl.className = "ko";
-    koEl.textContent = p.ko;
-    nameEl.appendChild(koEl);
-  }
-
-  const metaEl = document.createElement("div");
-  metaEl.className = "meta";
-  metaEl.textContent = p.tags ? p.tags.join(" · ") : "";
-
-  const descEl = document.createElement("div");
-  descEl.className = "desc";
-  descEl.innerHTML = p.note || "";
-
-  /* ACTIONS */
   const actions = document.createElement("div");
-  actions.className = "actions";
-
   actions.innerHTML = `
     <button class="likeBtn">👍 0</button>
     <button class="viewLikesBtn">👥 추천자</button>
@@ -116,82 +154,60 @@ function createCard(p, index) {
   const viewLikesBtn = actions.querySelector(".viewLikesBtn");
   const commentBtn = actions.querySelector(".commentBtn");
 
-  likeBtn.style.transition = "0.2s";
-
-  /* LIKE COUNT */
-  async function loadLikeCount() {
-    if (!container) return;
-
-    const snap = await getDocs(
-      collection(db, "likes", String(no), "users")
-    );
-
-    likeBtn.textContent = `👍 ${snap.size}`;
+  /* LIKE */
+  async function loadLike() {
+    try {
+      const snap = await getDocs(collection(db, "likes", String(no), "users"));
+      likeBtn.textContent = `👍 ${snap.size}`;
+    } catch {}
   }
 
-  loadLikeCount();
+  loadLike();
 
-  /* LIKE TOGGLE */
-  likeBtn.addEventListener("click", async () => {
-
+  likeBtn.onclick = async () => {
     const user = auth.currentUser;
-    if (!user) return alert("로그인 후 추천 가능합니다.");
+    if (!user) return alert("로그인 필요");
 
-    const userRef = doc(db, "likes", String(no), "users", user.uid);
+    const ref = doc(db, "likes", String(no), "users", user.uid);
 
-    const userSnap = await getDoc(userRef);
+    const snap = await getDoc(ref);
 
-    if (userSnap.exists()) {
-      await deleteDoc(userRef);
+    if (snap.exists()) {
+      await deleteDoc(ref);
     } else {
-      await setDoc(userRef, {
+      await setDoc(ref, {
         name: user.displayName,
         createdAt: serverTimestamp()
       });
     }
 
-    await loadLikeCount();
-  });
+    await loadLike();
+  };
 
-  /* VIEW LIKES */
-  viewLikesBtn.addEventListener("click", async () => {
+  viewLikesBtn.onclick = async () => {
+    const snap = await getDocs(collection(db, "likes", String(no), "users"));
+    const names = snap.docs.map(d => d.data().name).filter(Boolean);
 
-    const snap = await getDocs(
-      collection(db, "likes", String(no), "users")
-    );
+    alert(names.length ? names.join("\n") : "없음");
+  };
 
-    const names = [];
-
-    snap.forEach(d => {
-      const data = d.data();
-      if (data.name) names.push(data.name);
-    });
-
-    alert(
-      names.length
-        ? "추천한 회원\n\n" + names.join("\n")
-        : "추천한 회원이 없습니다."
-    );
-  });
-
-  /* COMMENT */
-  commentBtn.addEventListener("click", async () => {
-
-    const modal = document.getElementById("commentModal");
-    const title = document.getElementById("modalTitle");
+  commentBtn.onclick = () => {
+    const modal = $("commentModal");
+    const title = $("modalTitle");
 
     if (!modal || !title) return;
 
     currentPersonNo = String(no);
-    title.textContent = p.name || "";
+    title.textContent = p.name;
     modal.style.display = "block";
 
-    await loadComments();
-  });
+    loadComments();
+  };
 
-  info.appendChild(nameEl);
-  info.appendChild(metaEl);
-  info.appendChild(descEl);
+  info.innerHTML = `
+    <div>${no}. ${p.name}</div>
+  `;
+
   info.appendChild(actions);
 
   card.appendChild(photo);
@@ -200,83 +216,38 @@ function createCard(p, index) {
   return card;
 }
 
-/* RENDER */
+/* =======================
+   RENDER
+======================= */
 function render(list) {
+  if (!container) return;
 
-  const fragment = document.createDocumentFragment();
+  const frag = document.createDocumentFragment();
 
-  list.forEach((p, index) => {
-
-    const key = (p.no || index) + "_" + p.name;
+  list.forEach((p, i) => {
+    const key = (p.no || i) + "_" + p.name;
 
     if (renderedMap.has(key)) {
-      fragment.appendChild(renderedMap.get(key));
+      frag.appendChild(renderedMap.get(key));
     } else {
-      const card = createCard(p, index);
-      renderedMap.set(key, card);
-      fragment.appendChild(card);
+      const el = createCard(p, i);
+      renderedMap.set(key, el);
+      frag.appendChild(el);
     }
   });
 
-  if (container) container.replaceChildren(fragment);
+  container.replaceChildren(frag);
 }
 
-/* SEARCH */
-function debounce(fn, delay = 150) {
-  let t;
-  return (...args) => {
-    clearTimeout(t);
-    t = setTimeout(() => fn(...args), delay);
-  };
-}
-
-if (searchBox) {
-  searchBox.addEventListener("input", debounce(e => {
-
-    const k = e.target.value.toLowerCase();
-
-    render(
-      data.filter(p =>
-        (p.name || "").toLowerCase().includes(k) ||
-        (p.ko || "").toLowerCase().includes(k) ||
-        (p.note || "").toLowerCase().includes(k)
-      )
-    );
-
-  }, 150));
-}
-
-/* AUTH */
-if (loginBtn) {
-  loginBtn.addEventListener("click", async () => {
-    const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
-  });
-}
-
-if (logoutBtn) {
-  logoutBtn.addEventListener("click", async () => {
-    await signOut(auth);
-  });
-}
-
-onAuthStateChanged(auth, user => {
-
-  if (loginBtn && logoutBtn && userBox) {
-
-    loginBtn.hidden = !!user;
-    logoutBtn.hidden = !user;
-    userBox.textContent = user ? `👤 ${user.displayName}` : "";
-  }
-});
-
-/* COMMENTS */
+/* =======================
+   COMMENTS
+======================= */
 async function loadComments() {
 
-  const commentList = document.getElementById("commentList");
-  if (!commentList) return;
+  const list = $("commentList");
+  if (!list) return;
 
-  commentList.innerHTML = "";
+  list.innerHTML = "";
 
   const q = query(
     collection(db, "comments", currentPersonNo, "items"),
@@ -285,68 +256,47 @@ async function loadComments() {
 
   const snap = await getDocs(q);
 
-  snap.forEach(commentDoc => {
-
-    const d = commentDoc.data();
-
+  snap.forEach(d => {
     const div = document.createElement("div");
-    div.style.padding = "8px 0";
-    div.style.borderBottom = "1px solid #eee";
+    div.textContent = `${d.data().user}: ${d.data().text}`;
+    list.appendChild(div);
+  });
+}
 
-    div.innerHTML = `<b>${d.user}</b><br>${d.text}`;
+async function saveComment() {
 
-    const user = auth.currentUser;
+  const user = auth.currentUser;
+  if (!user) return alert("로그인 필요");
 
-    if (user && (user.uid === d.uid)) {
+  const input = $("commentInput");
+  if (!input) return;
 
-      const delBtn = document.createElement("button");
-      delBtn.textContent = "삭제";
+  const text = input.value.trim();
+  if (!text) return;
 
-      delBtn.onclick = async () => {
-        await deleteDoc(
-          doc(db, "comments", currentPersonNo, "items", commentDoc.id)
-        );
-        await loadComments();
-      };
-
-      div.appendChild(delBtn);
+  await addDoc(
+    collection(db, "comments", currentPersonNo, "items"),
+    {
+      text,
+      user: user.displayName,
+      uid: user.uid,
+      createdAt: serverTimestamp()
     }
+  );
 
-    commentList.appendChild(div);
-  });
+  input.value = "";
+  await loadComments();
 }
 
-/* SAVE COMMENT */
-const saveBtn = document.getElementById("saveComment");
-
-if (saveBtn) {
-  saveBtn.addEventListener("click", async () => {
-
-    const user = auth.currentUser;
-    if (!user) return alert("로그인 후 작성 가능합니다.");
-
-    const input = document.getElementById("commentInput");
-    if (!input) return;
-
-    const text = input.value.trim();
-    if (!text) return;
-
-    await addDoc(
-      collection(db, "comments", currentPersonNo, "items"),
-      {
-        text,
-        user: user.displayName,
-        uid: user.uid,
-        createdAt: serverTimestamp()
-      }
-    );
-
-    input.value = "";
-    await loadComments();
-  });
+/* =======================
+   UTIL
+======================= */
+function debounce(fn, t) {
+  let id;
+  return (...args) => {
+    clearTimeout(id);
+    id = setTimeout(() => fn(...args), t);
+  };
 }
-
-/* START */
-init();
 
 </script>
