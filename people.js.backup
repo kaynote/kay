@@ -463,7 +463,7 @@ const people = [
     "ko": "시프리아노 F. 누녜스",
     "displayName": "Cipriano F. Nuñez 시프리아노 F. 누녜스",
     "note": "존 다렐의 할아버지이며 제리님과 출생 연도가 같다, <span class=\"timestamp\">정주행 2021.01.19 00:24</span>",
-    "image": "Cipriano F. Nuñez.jpg"
+    "image": "no-image.jpg"
   },
   {
     "no": 59,
@@ -623,7 +623,7 @@ const people = [
     "ko": "엘비스 라야 키돌",
     "displayName": "Elvis Raya Quidol 엘비스 라야 키돌",
     "note": "싱잉 콘테스트 챔피언의 아버지, <span class=\"timestamp\">정주행 2021.08.03 07:32</span>",
-    "image": "Elvis Raya Quidol.jpg"
+    "image": "no-image.jpg"
   },
   {
     "no": 79,
@@ -663,7 +663,7 @@ const people = [
     "ko": "얼리토 D. 루비스",
     "displayName": "Erlito D. Rubis 얼리토 D. 루비스",
     "note": "라이사의 둘째 큰아버지, 1972년 1월 17일생으로 2023년 10월 31일 심장마비로 사망, <span class=\"timestamp\">정주행 2023.11.02 01:33</span>",
-    "image": "Erlito D. Rubis.jpg"
+    "image": "no-image.jpg"
   },
   {
     "no": 84,
@@ -1455,7 +1455,7 @@ const people = [
     "ko": "메리 제인 타뇨테 림",
     "displayName": "Mary Jane Tañote Lim 메리 제인 타뇨테 림",
     "note": "직접 낳지는 않았으나 가라를 키워준 1976년 5월 3일생 엄마, 교도소에서 2020년 6월 23일 사망, <span class=\"timestamp\">정주행 2020.07.07 03:14</span>",
-    "image": "Mary Jane Tañote Lim.jpg"
+    "image": "no-image.jpg"
   },
   {
     "no": 183,
@@ -1631,7 +1631,7 @@ const people = [
     "ko": "파울로",
     "displayName": "Paulo 파울로",
     "note": "락다운 초기에 꾸야 작과 함께 제리님의 보디가드였으나 마약 조직 간의 관할 문제로 살해당했다, <span class=\"timestamp\">정주행 2021.07.15 01:19</span>",
-    "image": "Paulo.jpg"
+    "image": "no-image.jpg"
   },
   {
     "no": 205,
@@ -1639,7 +1639,7 @@ const people = [
     "ko": "펄리토 J. 루비스",
     "displayName": "Perlito J. Rubis 펄리토 J. 루비스",
     "note": "라이사의 친할아버지, 1944년 5월 23일생이며 2020년 5월 3일 사망, <span class=\"timestamp\">정주행 2020.05.07 03:49</span>",
-    "image": "Perlito J. Rubis.jpg"
+    "image": "no-image.jpg"
   },
   {
     "no": 206,
@@ -1903,7 +1903,7 @@ const people = [
     "ko": "로헤리오 크루즈 림",
     "displayName": "Rogelio Cruz Lim 로헤리오 크루즈 림",
     "note": "아떼 유닐라의 남편이자 메리 제인 타뇨테 림의 아버지, <span class=\"timestamp\">정주행 2020.07.07 03:20</span>",
-    "image": "Rogelio Cruz Lim.jpg"
+    "image": "no-image.jpg"
   },
   {
     "no": 239,
