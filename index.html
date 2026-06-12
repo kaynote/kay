@@ -299,14 +299,20 @@ const commentModal =
 const closeModal =
     document.getElementById("closeModal");
 
-closeModal.addEventListener("click", () => {
-    commentModal.style.display = "none";
-});
+if (closeModal) {
+
+    closeModal.addEventListener("click", () => {
+        commentModal.style.display = "none";
+    });
+
+}
 
 window.addEventListener("click", e => {
+
     if(e.target === commentModal){
         commentModal.style.display = "none";
     }
+
 });
 /* START */
 init();
