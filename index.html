@@ -68,6 +68,8 @@
 
 <script type="module">
 
+let currentPersonNo = null;
+
 /* 🔥 JS도 캐시 방지 */
 import people from "./people.js?v=3";
 import { initializeApp }
@@ -81,6 +83,18 @@ import {
   onAuthStateChanged
 }
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+  import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  orderBy,
+  serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyCAZzJdAB_a65dkJaL-XLQqzImzlSI8Gmw",
   authDomain: "kay-gallery.firebaseapp.com",
@@ -92,6 +106,8 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+
+const db = getFirestore(app);
 
 const container =
     document.getElementById("peopleContainer");
@@ -184,13 +200,17 @@ function createCard(p, index){
     const commentBtn =
         actions.querySelector(".commentBtn");
 
-    commentBtn.addEventListener("click", () => {
+    commentBtn.addEventListener("click", async () => {
+
+        currentPersonNo = String(no);
 
         document.getElementById("modalTitle")
             .textContent = p.name || "";
 
         document.getElementById("commentModal")
             .style.display = "block";
+
+        await loadComments();
 
     });
 
@@ -314,6 +334,88 @@ window.addEventListener("click", e => {
     }
 
 });
+async function loadComments(){
+
+    const commentList =
+        document.getElementById("commentList");
+
+    commentList.innerHTML = "";
+
+    const q = query(
+        collection(
+            db,
+            "comments",
+            currentPersonNo,
+            "items"
+        ),
+        orderBy("createdAt", "asc")
+    );
+
+    const snap = await getDocs(q);
+
+    snap.forEach(doc => {
+
+        const d = doc.data();
+
+        const div =
+            document.createElement("div");
+
+        div.style.padding = "8px 0";
+        div.style.borderBottom =
+            "1px solid #eee";
+
+        div.innerHTML = `
+            <b>${d.user}</b><br>
+            ${d.text}
+        `;
+
+        commentList.appendChild(div);
+
+    });
+
+}
+document
+.getElementById("saveComment")
+.addEventListener("click", async () => {
+
+    const user = auth.currentUser;
+
+    if(!user){
+
+        alert("로그인 후 작성 가능합니다.");
+
+        return;
+    }
+
+    const input =
+        document.getElementById("commentInput");
+
+    const text =
+        input.value.trim();
+
+    if(!text) return;
+
+    await addDoc(
+        collection(
+            db,
+            "comments",
+            currentPersonNo,
+            "items"
+        ),
+        {
+            text,
+            user: user.displayName,
+            uid: user.uid,
+            createdAt: serverTimestamp()
+        }
+    );
+
+    input.value = "";
+
+    await loadComments();
+
+});
+
 /* START */
 init();
 
