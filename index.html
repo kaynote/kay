@@ -42,6 +42,30 @@
 
 <div id="peopleContainer"></div>
 
+<!-- 댓글 팝업 -->
+<div id="commentModal" class="modal">
+
+  <div class="modal-content">
+
+    <button id="closeModal">✕</button>
+
+    <h2 id="modalTitle"></h2>
+
+    <div id="commentList"></div>
+
+    <textarea
+      id="commentInput"
+      placeholder="댓글을 입력하세요..."
+    ></textarea>
+
+    <button id="saveComment">
+      댓글 등록
+    </button>
+
+  </div>
+
+</div>
+
 <script type="module">
 
 /* 🔥 JS도 캐시 방지 */
@@ -142,9 +166,33 @@ function createCard(p, index){
     info.appendChild(nameEl);
     info.appendChild(metaEl);
     info.appendChild(descEl);
+     
+    const actions = document.createElement("div");
+
+    actions.className = "actions";
+
+    actions.innerHTML = `
+    <button class="likeBtn">👍 0</button>
+    <button class="commentBtn">💬 댓글</button>
+    `;
+
+    info.appendChild(actions);
 
     card.appendChild(photo);
     card.appendChild(info);
+
+    const commentBtn =
+        actions.querySelector(".commentBtn");
+
+    commentBtn.addEventListener("click", () => {
+
+        document.getElementById("modalTitle")
+            .textContent = p.name || "";
+
+        document.getElementById("commentModal")
+            .style.display = "block";
+
+    });
 
     return card;
 }
@@ -244,6 +292,21 @@ onAuthStateChanged(auth, user => {
 
   }
 
+});
+const commentModal =
+    document.getElementById("commentModal");
+
+const closeModal =
+    document.getElementById("closeModal");
+
+closeModal.addEventListener("click", () => {
+    commentModal.style.display = "none";
+});
+
+window.addEventListener("click", e => {
+    if(e.target === commentModal){
+        commentModal.style.display = "none";
+    }
 });
 /* START */
 init();
