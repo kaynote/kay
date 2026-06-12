@@ -39,7 +39,7 @@ const people = [
     "ko": "알렉사 선생님",
     "displayName": "Alexa 알렉사 선생님",
     "note": "아우라의 첫째 언니, 2020년 17세로 11학년, 먹방여신 혹은 먹방요정이라 불린다, <span class=\"timestamp\">정주행 2020.08.15 00:15</span>",
-    "image": "no-image.jpg"
+    "image": "Alexa.jpg"
   },
   {
     "no": 6,
@@ -55,7 +55,7 @@ const people = [
     "ko": "알피",
     "displayName": "Alfie 알피",
     "note": "메리안의 형부, <span class=\"timestamp\">정주행 2021.02.02 02:07</span>",
-    "image": "no-image.jpg"
+    "image": "Alfie.jpg"
   },
   {
     "no": 8,
@@ -63,7 +63,7 @@ const people = [
     "ko": "알리바이맨",
     "displayName": "Alibi Man 알리바이맨",
     "note": "'Alibi'는 라틴어에서 유래된 말이고 '범행 당시 그 자리에 없었다는 증거'를 의미한다, '샤'라는 애칭으로 불리며 제리님이 알리바이맨으로 이름을 바꾸라고 말한 적이 있는 가라의 조카, <span class=\"timestamp\">2024.06.01 14:52</span>, <span class=\"timestamp\">2024.06.01 15:55</span>",
-    "image": "no-image.jpg"
+    "image": "Alibi Man.jpg"
   },
   {
     "no": 9,
@@ -191,7 +191,7 @@ const people = [
     "ko": "아떼 다다",
     "displayName": "Ate Dada 아떼 다다",
     "note": "춤을 잘 추는 자라의 엄마, <span class=\"timestamp\">정주행 2022.05.31 06:28</span>",
-    "image": "no-image.jpg"
+    "image": "Ate Dada.jpg"
   },
   {
     "no": 25,
@@ -215,7 +215,7 @@ const people = [
     "ko": "아떼 인다이",
     "displayName": "Ate Inday 아떼 인다이",
     "note": "마리안과 이보이의 엄마, <span class=\"timestamp\">정주행 2021.12.30 17:50</span>",
-    "image": "no-image.jpg"
+    "image": "Ate Inday.jpg"
   },
   {
     "no": 28,
@@ -535,7 +535,7 @@ const people = [
     "ko": "다니카 S. 도길료",
     "displayName": "Danica S. Dogillo 다니카 S. 도길료",
     "note": "초창기 코리아 빌딩 공부방 소속 학생이었으나 이사 갔다, <span class=\"timestamp\">정주행 2020.07.11 11:02</span>",
-    "image": "no-image.jpg"
+    "image": "Danica S. Dogillo.jpg"
   },
   {
     "no": 68,
@@ -735,7 +735,7 @@ const people = [
     "ko": "아이버슨 H. 롱콥",
     "displayName": "Iverson H. Longcop 아이버슨 H. 롱콥",
     "note": "코리아 빌딩 공부방 소속 학생이자 크리스 알렘과 사촌지간이지만 이사 갔다, 생일은 5월 10일, <span class=\"timestamp\">2021.04.24 2부_졸리비 채팅 08:38</span>, <span class=\"timestamp\">정주행 2021.11.10 가정방문 2부 10:53</span>",
-    "image": "no-image.jpg"
+    "image": "Iverson H. Longcop.jpg"
   },
   {
     "no": 93,
@@ -831,7 +831,7 @@ const people = [
     "ko": "자스퍼",
     "displayName": "Jasper 자스퍼",
     "note": "자라의 첫째 남동생, <span class=\"timestamp\">정주행 2021.06.24 05:00</span>",
-    "image": "no-image.jpg"
+    "image": "Jasper.jpg"
   },
   {
     "no": 105,
@@ -903,7 +903,7 @@ const people = [
     "ko": "제리코",
     "displayName": "Jericho 제리코",
     "note": "작 바카이의 둘째 아들, <span class=\"timestamp\">2021.06.19 51:23</span>",
-    "image": "no-image.jpg"
+    "image": "Jericho-2.jpg"
   },
   {
     "no": 114,
@@ -1143,7 +1143,7 @@ const people = [
     "ko": "까가왓 또또",
     "displayName": "Kagawad - Toto 까가왓 또또",
     "note": "2023년과 2024년 크리스마스 시니어 파티 사회자, <span class=\"timestamp\">2024.12.15 00:02</span>",
-    "image": "no-image.jpg"
+    "image": "Kagawad - Toto.jpg"
   },
   {
     "no": 144,
@@ -1183,7 +1183,7 @@ const people = [
     "ko": "케빈",
     "displayName": "Kevin 케빈",
     "note": "라이카의 남동생이자 뱀뱀의 남자친구, <span class=\"timestamp\">2024.06.02 35:59</span>",
-    "image": "no-image.jpg"
+    "image": "Kevin.jpg"
   },
   {
     "no": 149,
@@ -1271,7 +1271,7 @@ const people = [
     "ko": "꾸야 제롬",
     "displayName": "Kuya Jerome 꾸야 제롬",
     "note": "민지 선생님의 아빠, <span class=\"timestamp\">정주행 2021.09.07 17:15</span>",
-    "image": "no-image.jpg"
+    "image": "Kuya Jerome.jpg"
   },
   {
     "no": 160,
@@ -1351,7 +1351,7 @@ const people = [
     "ko": "롤라 디다이",
     "displayName": "Lola Diday 롤라 디다이",
     "note": "항상 길가에 나와 앉아 계시던 할머니, <span class=\"timestamp\">정주행 2021.08.16 14:07</span>, 또는 Aling Diday 알링 디다이라 불린다, Aling은 아주머니나 이모 느낌의 존칭, <span class=\"timestamp\">정주행 2021.12.27 16:48</span>",
-    "image": "no-image.jpg"
+    "image": "Lola Diday.jpg"
   },
   {
     "no": 170,
@@ -1359,7 +1359,7 @@ const people = [
     "ko": "롤라 자라",
     "displayName": "Lola Jhara 롤라 자라",
     "note": "자라의 외할머니, 이름의 철자가 Jhara 선생님과 같은지는 불분명, <span class=\"timestamp\">정주행 2021.12.30 17:06</span>",
-    "image": "no-image.jpg"
+    "image": "Lola Jhara.jpg"
   },
   {
     "no": 171,
@@ -1463,7 +1463,7 @@ const people = [
     "ko": "메리 린 노블",
     "displayName": "Mary Lyn Noble 메리 린 노블",
     "note": "여자 애쉴리의 엄마, 라이브 채팅 메시지를 남긴 적이 있다, @MaryLynNoble: hello po sir jerry thank you po sa pa fedding sa mga bata sa apelo 안녕하세요 제리 선생님, 아펠로에서 아이들에게 먹을 것을 제공해 주셔서 감사합니다, <span class=\"timestamp\">2025.05.18 채팅 35:17</span>, @MaryLynNoble: yes po mama po ni ashley watching from vigan🥰 네, 저는 애쉴리 엄마예요. 비간에서 보고 있어요, <span class=\"timestamp\">2025.08.03 채팅 07:24</span>",
-    "image": "no-image.jpg"
+    "image": "Mary Lyn Noble.jpg"
   },
   {
     "no": 184,
@@ -1559,7 +1559,7 @@ const people = [
     "ko": "엠제이",
     "displayName": "MJ 엠제이",
     "note": "프린스 애쉴리의 여동생, <span class=\"timestamp\">2022.07.09 47:44</span>",
-    "image": "no-image.jpg"
+    "image": "MJ.jpg"
   },
   {
     "no": 196,
@@ -1767,7 +1767,7 @@ const people = [
     "ko": "레인마크",
     "displayName": "Rainmark 레인마크",
     "note": "척추결핵을 앓았던 소년, <span class=\"timestamp\">2025.02.01 52:43</span>",
-    "image": "no-image.jpg"
+    "image": "Rainmark.jpg"
   },
   {
     "no": 222,
@@ -1799,7 +1799,7 @@ const people = [
     "ko": "레이나",
     "displayName": "Reina 레이나",
     "note": "'Reina'는 스페인어로 '여왕', 2020년 8세, <span class=\"timestamp\">정주행 2020.01.06 0:11</span>",
-    "image": "no-image.jpg"
+    "image": "Reina.jpg"
   },
   {
     "no": 226,
@@ -2063,7 +2063,7 @@ const people = [
     "ko": "싱잉 콘테스트 챔피언",
     "displayName": "Singing Contest Champion 싱잉 콘테스트 챔피언",
     "note": "2019년 15세의 여자아이, 상금은 2등이 79.67점 500페소, 1등이 82점 1000페소, 챔피언이 87.33점 1500페소, <span class=\"timestamp\">정주행 2019.11.26 20:20</span>",
-    "image": "no-image.jpg"
+    "image": "Singing Contest Champion.jpg"
   },
   {
     "no": 259,
@@ -2215,7 +2215,7 @@ const people = [
     "ko": "이름모를 바클라",
     "displayName": "Unknown Bakla 이름모를 바클라",
     "note": "태어날 땐 남동생이었지만 현재는 까가왓 지나의 여동생으로 살고 있다, <span class=\"timestamp\">정주행 2021.08.03 02:23</span>",
-    "image": "no-image.jpg"
+    "image": "Unknown Bakla.jpg"
   },
   {
     "no": 278,
@@ -2255,7 +2255,7 @@ const people = [
     "ko": "요요이",
     "displayName": "Yoyoy 요요이",
     "note": "체격이 건장한 남자로 쌀을 옮기는 데 도움을 많이 줬다, <span class=\"timestamp\">정주행 2021.12.30 17:16</span>",
-    "image": "no-image.jpg"
+    "image": "Yoyoy.jpg"
   },
   {
     "no": 283,
