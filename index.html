@@ -3,7 +3,6 @@
 import people from "./people.js?v=3";
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-
 import {
   getAuth,
   GoogleAuthProvider,
@@ -40,10 +39,12 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-const ADMIN_EMAIL = "ektjttnfp5@gmail.com";
-
+/* DOM SAFE GET */
 const container = document.getElementById("peopleContainer");
 const searchBox = document.getElementById("searchBox");
+const loginBtn = document.getElementById("loginBtn");
+const logoutBtn = document.getElementById("logoutBtn");
+const userBox = document.getElementById("userBox");
 
 let data = [];
 let renderedMap = new Map();
@@ -74,10 +75,10 @@ function createCard(p, index) {
   const info = document.createElement("div");
   info.className = "info";
 
+  const no = p.no || (index + 1);
+
   const nameEl = document.createElement("div");
   nameEl.className = "name";
-
-  const no = (p.no || (index + 1));
 
   nameEl.innerHTML = `
     <div class="en">
@@ -119,6 +120,8 @@ function createCard(p, index) {
 
   /* LIKE COUNT */
   async function loadLikeCount() {
+    if (!container) return;
+
     const snap = await getDocs(
       collection(db, "likes", String(no), "users")
     );
@@ -174,10 +177,14 @@ function createCard(p, index) {
   /* COMMENT */
   commentBtn.addEventListener("click", async () => {
 
-    currentPersonNo = String(no);
+    const modal = document.getElementById("commentModal");
+    const title = document.getElementById("modalTitle");
 
-    document.getElementById("modalTitle").textContent = p.name || "";
-    document.getElementById("commentModal").style.display = "block";
+    if (!modal || !title) return;
+
+    currentPersonNo = String(no);
+    title.textContent = p.name || "";
+    modal.style.display = "block";
 
     await loadComments();
   });
@@ -211,7 +218,7 @@ function render(list) {
     }
   });
 
-  container.replaceChildren(fragment);
+  if (container) container.replaceChildren(fragment);
 }
 
 /* SEARCH */
@@ -223,46 +230,52 @@ function debounce(fn, delay = 150) {
   };
 }
 
-searchBox.addEventListener("input", debounce(e => {
+if (searchBox) {
+  searchBox.addEventListener("input", debounce(e => {
 
-  const k = e.target.value.toLowerCase();
+    const k = e.target.value.toLowerCase();
 
-  render(
-    data.filter(p =>
-      (p.name || "").toLowerCase().includes(k) ||
-      (p.ko || "").toLowerCase().includes(k) ||
-      (p.note || "").toLowerCase().includes(k)
-    )
-  );
+    render(
+      data.filter(p =>
+        (p.name || "").toLowerCase().includes(k) ||
+        (p.ko || "").toLowerCase().includes(k) ||
+        (p.note || "").toLowerCase().includes(k)
+      )
+    );
 
-}, 150));
+  }, 150));
+}
 
 /* AUTH */
-const loginBtn = document.getElementById("loginBtn");
-const logoutBtn = document.getElementById("logoutBtn");
-const userBox = document.getElementById("userBox");
+if (loginBtn) {
+  loginBtn.addEventListener("click", async () => {
+    const provider = new GoogleAuthProvider();
+    await signInWithPopup(auth, provider);
+  });
+}
 
-loginBtn.addEventListener("click", async () => {
-  const provider = new GoogleAuthProvider();
-  await signInWithPopup(auth, provider);
-});
-
-logoutBtn.addEventListener("click", async () => {
-  await signOut(auth);
-});
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", async () => {
+    await signOut(auth);
+  });
+}
 
 onAuthStateChanged(auth, user => {
 
-  loginBtn.hidden = !!user;
-  logoutBtn.hidden = !user;
+  if (loginBtn && logoutBtn && userBox) {
 
-  userBox.textContent = user ? `👤 ${user.displayName}` : "";
+    loginBtn.hidden = !!user;
+    logoutBtn.hidden = !user;
+    userBox.textContent = user ? `👤 ${user.displayName}` : "";
+  }
 });
 
 /* COMMENTS */
 async function loadComments() {
 
   const commentList = document.getElementById("commentList");
+  if (!commentList) return;
+
   commentList.innerHTML = "";
 
   const q = query(
@@ -284,7 +297,7 @@ async function loadComments() {
 
     const user = auth.currentUser;
 
-    if (user && (user.uid === d.uid || user.email === ADMIN_EMAIL)) {
+    if (user && (user.uid === d.uid)) {
 
       const delBtn = document.createElement("button");
       delBtn.textContent = "삭제";
@@ -304,28 +317,34 @@ async function loadComments() {
 }
 
 /* SAVE COMMENT */
-document.getElementById("saveComment").addEventListener("click", async () => {
+const saveBtn = document.getElementById("saveComment");
 
-  const user = auth.currentUser;
-  if (!user) return alert("로그인 후 작성 가능합니다.");
+if (saveBtn) {
+  saveBtn.addEventListener("click", async () => {
 
-  const input = document.getElementById("commentInput");
-  const text = input.value.trim();
-  if (!text) return;
+    const user = auth.currentUser;
+    if (!user) return alert("로그인 후 작성 가능합니다.");
 
-  await addDoc(
-    collection(db, "comments", currentPersonNo, "items"),
-    {
-      text,
-      user: user.displayName,
-      uid: user.uid,
-      createdAt: serverTimestamp()
-    }
-  );
+    const input = document.getElementById("commentInput");
+    if (!input) return;
 
-  input.value = "";
-  await loadComments();
-});
+    const text = input.value.trim();
+    if (!text) return;
+
+    await addDoc(
+      collection(db, "comments", currentPersonNo, "items"),
+      {
+        text,
+        user: user.displayName,
+        uid: user.uid,
+        createdAt: serverTimestamp()
+      }
+    );
+
+    input.value = "";
+    await loadComments();
+  });
+}
 
 /* START */
 init();
