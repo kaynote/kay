@@ -101,14 +101,14 @@ header{
     display:block;
     margin-top:4px;
     padding-left:50px;
-    font-size:13px;
+    font-size:14px;
     color:#666;
     line-height:1.35;
 }
 
 /* META */
 .meta{
-    font-size:13px;
+    font-size:14px;
     color:#666;
     margin-bottom:10px;
     line-height:1.45;
@@ -116,7 +116,7 @@ header{
 
 /* DESC */
 .desc{
-    font-size:13px;
+    font-size:14px;
     line-height:1.6;
     white-space:pre-line;
     overflow-wrap:break-word;
