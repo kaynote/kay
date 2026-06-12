@@ -33,6 +33,11 @@
         id="searchBox"
         placeholder="검색..."
     >
+    <div style="margin-top:15px">
+    <button id="loginBtn">Google 로그인</button>
+    <button id="logoutBtn" hidden>로그아웃</button>
+    <span id="userBox"></span>
+</div>
 </header>
 
 <div id="peopleContainer"></div>
@@ -41,6 +46,28 @@
 
 /* 🔥 JS도 캐시 방지 */
 import people from "./people.js?v=3";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+  onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+const firebaseConfig = {
+  apiKey: "AIzaSyCAZzJdAB_a65dkJaL-XLQqzImzlSI8Gmw",
+  authDomain: "kay-gallery.firebaseapp.com",
+  projectId: "kay-gallery",
+  storageBucket: "kay-gallery.firebasestorage.app",
+  messagingSenderId: "276470297982",
+  appId: "1:276470297982:web:838b8a57269b26cd3d6f2f"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
 const container =
     document.getElementById("peopleContainer");
@@ -170,6 +197,54 @@ searchBox.addEventListener("input", e => {
     handleSearch(e.target.value);
 });
 
+const loginBtn =
+  document.getElementById("loginBtn");
+
+const logoutBtn =
+  document.getElementById("logoutBtn");
+
+const userBox =
+  document.getElementById("userBox");
+
+loginBtn.addEventListener("click", async () => {
+
+  const provider =
+    new GoogleAuthProvider();
+
+  try {
+    await signInWithPopup(auth, provider);
+  }
+  catch(err){
+    console.error(err);
+    alert(err.message);
+  }
+
+});
+
+logoutBtn.addEventListener("click", async () => {
+  await signOut(auth);
+});
+
+onAuthStateChanged(auth, user => {
+
+  if(user){
+
+    loginBtn.hidden = true;
+    logoutBtn.hidden = false;
+
+    userBox.textContent =
+      `👤 ${user.displayName}`;
+
+  }else{
+
+    loginBtn.hidden = false;
+    logoutBtn.hidden = true;
+
+    userBox.textContent = "";
+
+  }
+
+});
 /* START */
 init();
 
