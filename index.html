@@ -85,17 +85,19 @@ import {
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
   import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  query,
-  orderBy,
-  serverTimestamp,
-  deleteDoc,
-  doc
-}
-from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs,
+    query,
+    orderBy,
+    serverTimestamp,
+    deleteDoc,
+    doc,
+    getDoc,
+    setDoc
+  }
+  from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCAZzJdAB_a65dkJaL-XLQqzImzlSI8Gmw",
@@ -133,6 +135,71 @@ function init(){
 
 /* CARD */
 function createCard(p, index){
+
+    async function loadLikeCount(){
+
+        const usersSnap =
+            await getDocs(
+                collection(
+                    db,
+                    "likes",
+                    String(no),
+                    "users"
+                )
+            );
+            
+            likeBtn.addEventListener(
+                "click",
+                async () => {
+
+                    const user =
+                        auth.currentUser;
+
+                    if(!user){
+
+                        alert("로그인 후 추천 가능합니다.");
+                        return;
+                    }
+
+                    const userLikeRef =
+                        doc(
+                            db,
+                            "likes",
+                            String(no),
+                            "users",
+                            user.uid
+                        );
+
+                    const snap =
+                        await getDoc(userLikeRef);
+
+                    if(snap.exists()){
+
+                        alert("이미 추천했습니다.");
+                        return;
+                    }
+
+                    await setDoc(
+                        userLikeRef,
+                        {
+                            name: user.displayName,
+                            createdAt: serverTimestamp()
+                        }
+                    );
+
+                    await loadLikeCount();
+
+                }
+            );
+
+        likeBtn.textContent =
+            `👍 ${usersSnap.size}`;
+    }
+
+    const likeBtn =
+    actions.querySelector(".likeBtn");
+    
+    loadLikeCount();
 
     const card = document.createElement("div");
     card.className = "card";
@@ -194,6 +261,7 @@ function createCard(p, index){
 
     actions.innerHTML = `
     <button class="likeBtn">👍 0</button>
+    <button class="viewLikesBtn">👥 추천자</button>
     <button class="commentBtn">💬 댓글</button>
     `;
 
@@ -201,7 +269,112 @@ function createCard(p, index){
 
     card.appendChild(photo);
     card.appendChild(info);
+    
+    const likeBtn =
+        actions.querySelector(".likeBtn");
+    
+    const viewLikesBtn =
+        actions.querySelector(".viewLikesBtn");    
 
+    loadLikeCount();
+
+    async function loadLikeCount(){
+
+        const likeRef =
+            doc(db, "likes", String(no));
+
+        const snap =
+            await getDoc(likeRef);
+
+        if(snap.exists()){
+
+            likeBtn.textContent =
+                `👍 ${snap.data().count || 0}`;
+        }
+    }
+
+    likeBtn.addEventListener(
+        "click",
+        async () => {
+
+            const user =
+                auth.currentUser;
+
+            if(!user){
+
+                alert("로그인 후 추천 가능합니다.");
+                return;
+            }
+
+            const likeRef =
+                doc(db, "likes", String(no));
+
+            const snap =
+                await getDoc(likeRef);
+
+            if(!snap.exists()){
+
+                await setDoc(
+                    likeRef,
+                    { count: 1 }
+                );
+
+            }else{
+
+                await updateDoc(
+                    likeRef,
+                    {
+                        count: increment(1)
+                    }
+                );
+            }
+
+            await loadLikeCount();
+
+        }
+    );
+    
+    viewLikesBtn.addEventListener(
+        "click",
+        async () => {
+
+            const snap =
+                await getDocs(
+                    collection(
+                        db,
+                        "likes",
+                        String(no),
+                        "users"
+                    )
+                );
+
+            let names = [];
+
+            snap.forEach(doc => {
+
+                const d = doc.data();
+
+                if(d.name){
+                    names.push(d.name);
+                }
+
+            });
+
+            if(names.length === 0){
+
+                alert("추천한 회원이 없습니다.");
+
+                return;
+            }
+
+            alert(
+                "추천한 회원\n\n" +
+                names.join("\n")
+            );
+
+        }
+    );
+      
     const commentBtn =
         actions.querySelector(".commentBtn");
 
