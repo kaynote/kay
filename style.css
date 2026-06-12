@@ -114,10 +114,10 @@ header{
     line-height:1.45;
 }
 
-/* DESC (한글 설명) */
+/* DESC */
 .desc{
-    font-size:16px;   /* 13px → 16px */
-    line-height:1.7;
+    font-size:13px;
+    line-height:1.6;
     white-space:pre-line;
     overflow-wrap:break-word;
 }
@@ -133,41 +133,7 @@ header{
     font-size:11px;
 }
 
-/* TIMESTAMP */
-.timestamp{
-    color:#707070 !important;
-}
-.actions{
-    margin-top:12px;
-    display:flex;
-    gap:8px;
-}
-
-.actions button{
-    cursor:pointer;
-}
-
-.modal{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.6);
-    z-index:9999;
-}
-
-.modal-content{
-    background:#fff;
-    width:min(700px,90%);
-    max-height:80vh;
-    overflow:auto;
-    margin:40px auto;
-    padding:20px;
-    border-radius:12px;
-}
-
-#commentInput{
-    width:100%;
-    min-height:100px;
-    margin-top:15px;
-    box-sizing:border-box;
+/* TIMESTAMP (핵심) */
+.timestamp {
+  color: #707070 !important;
 }
