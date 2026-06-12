@@ -399,7 +399,7 @@ const people = [
     "ko": "카트리오나 그레이",
     "displayName": "Catriona Gray 카트리오나 그레이",
     "note": "제리님이 '말하지 않는 신기한 아이'로 지목했으나 아니다, 샐러드를 파는 소녀 로쉘의 여동생, <span class=\"timestamp\">2026.03.01 30:14</span>",
-    "image": "no-image.jpg"
+    "image": "Catriona Gray.jpg"
   },
   {
     "no": 51,
@@ -511,7 +511,7 @@ const people = [
     "ko": "사이로스",
     "displayName": "Cyrus 사이로스",
     "note": "별명이 '떼쟁이'인 프린이의 첫째 남동생, 영어식 발음은 '사이러스'지만 필리핀식 발음은 '사이로스', <span class=\"timestamp\">2025.03.02 36:44</span>",
-    "image": "no-image.jpg"
+    "image": "Cyrus.jpg"
   },
   {
     "no": 65,
@@ -1423,7 +1423,7 @@ const people = [
     "ko": "마지 모랄레스",
     "displayName": "Margie Morales 마지 모랄레스",
     "note": "낫낫의 엄마, <span class=\"timestamp\">정주행 2024.06.22 26:00</span>, 생일은 5월 25일, <span class=\"timestamp\">2026.05.23 채팅 08:45</span>",
-    "image": "no-image.jpg"
+    "image": "Margie Morales.jpg"
   },
   {
     "no": 179,
@@ -1495,7 +1495,7 @@ const people = [
     "ko": "메야메시",
     "displayName": "Meyamesi 메야메시",
     "note": "2025년 11세 초6, <span class=\"timestamp\">2025.05.04 41:42</span>",
-    "image": "no-image.jpg"
+    "image": "Meyamesi.jpg"
   },
   {
     "no": 188,
@@ -1567,7 +1567,7 @@ const people = [
     "ko": "모리스",
     "displayName": "Moris 모리스",
     "note": "겡겡의 조카, <span class=\"timestamp\">2026.05.09 채팅 39:16</span>",
-    "image": "no-image.jpg"
+    "image": "Moris.jpg"
   },
   {
     "no": 197,
@@ -2151,7 +2151,7 @@ const people = [
     "ko": "타잔",
     "displayName": "Tarzan 타잔",
     "note": "돈맛을 알아버린 멍멍이 2호로 돈을 따라가면 먹을 것이 나온다는 것을 아는 영리한 멍멍이, 주인은 아떼 로데와 손녀 엠빠이, 나이가 많고 타이거와 형제인 듯하다, <span class=\"timestamp\">2026.05.02 18:42</span>",
-    "image": "no-image.jpg"
+    "image": "Tarzan.jpg"
   },
   {
     "no": 270,
