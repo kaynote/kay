@@ -25,17 +25,13 @@ from "./firebase.js";
 
 import people from "./people.js";
 
-const container =
-  document.getElementById("peopleContainer");
-  
-  const container =
-  document.getElementById("peopleContainer");
-
   console.log("container:", container);
-  console.log("people:", people);
-  
+  console.log("people:", people);  
   console.log("people length:", people.length);
   console.log("first item:", people[0]);
+
+const container =
+  document.getElementById("peopleContainer");
 
 const loginBtn =
   document.getElementById("loginBtn");
