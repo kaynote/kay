@@ -2214,7 +2214,7 @@ const people = [
     "name": "Tony",
     "ko": "토니",
     "displayName": "Tony 토니",
-    "note": "일명 댄싱킹, 시니어 부회장님, <span class=\"timestamp\">정주행 2021.12.30 17:12</span>",
+    "note": "일명 댄싱킹, <span class=\"timestamp\">정주행 2019.12.20 12:15</span>, 시니어 부회장님, <span class=\"timestamp\">정주행 2021.12.30 17:12</span>",
     "image": "Tony.jpg"
   },
   {
