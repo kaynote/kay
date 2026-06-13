@@ -583,7 +583,7 @@ const people = [
     "ko": "동민",
     "displayName": "Dongmin 동민",
     "note": "메리안이 길에서 주워온 치즈색 수컷고양이로 가라 후원자의 이름을 붙였다, <span class=\"timestamp\">정주행 2025.10.28 04:49</span>",
-    "image": "no-image.jpg"
+    "image": "Dongmin.jpg"
   },
   {
     "no": 74,
@@ -1103,7 +1103,7 @@ const people = [
     "ko": "쥬날린",
     "displayName": "Junalyn 쥬날린",
     "note": "눈이 예쁘고 인형 같은 외모의 여자아이, <span class=\"timestamp\">2023.10.07 39:18</span>",
-    "image": "no-image.jpg"
+    "image": "Junalyn.jpg"
   },
   {
     "no": 139,
@@ -1175,7 +1175,7 @@ const people = [
     "ko": "캐서린",
     "displayName": "Katherine 캐서린",
     "note": "실라미의 친구, 바랑가이 165에서 핫도그 나눔 행사를 할 때 헬퍼로 참여, <span class=\"timestamp\">정주행 2024.03.26 09:51</span>",
-    "image": "no-image.jpg"
+    "image": "Katherine.jpg"
   },
   {
     "no": 148,
@@ -1191,7 +1191,7 @@ const people = [
     "ko": "케리",
     "displayName": "Kerry 케리",
     "note": "메리안이 길에서 주워온 치즈색 수컷고양이로 리카 후원자의 이름을 붙였다, <span class=\"timestamp\">정주행 2025.10.28 08:53</span>",
-    "image": "no-image.jpg"
+    "image": "Kerry.jpg"
   },
   {
     "no": 150,
@@ -1343,7 +1343,7 @@ const people = [
     "ko": "리아",
     "displayName": "Lia 리아",
     "note": "김세훈 씨가 사진을 붙여 선물 박스를 보내준 여자아이, <span class=\"timestamp\">2024.11.02 59:16</span>",
-    "image": "no-image.jpg"
+    "image": "Lia.jpg"
   },
   {
     "no": 169,
@@ -2263,7 +2263,7 @@ const people = [
     "ko": "얀얀",
     "displayName": "Yan Yan 얀얀",
     "note": "김세훈 씨가 사진을 붙여 선물 박스를 보내준 여자아이로 리아의 사촌, <span class=\"timestamp\">2024.11.02 1:03:39</span>",
-    "image": "no-image.jpg"
+    "image": "Yan Yan.jpg"
   },
   {
     "no": 284,
@@ -2271,7 +2271,7 @@ const people = [
     "ko": "윤주웅",
     "displayName": "yoonjoowoong 윤주웅",
     "note": "메리안이 길에서 주워온 흰색의 암컷고양이로 제이 후원자의 이름을 붙였다, <span class=\"timestamp\">정주행 2025.10.28 11:51</span>",
-    "image": "no-image.jpg"
+    "image": "yoonjoowoong.jpg"
   },
   {
     "no": 285,
