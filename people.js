@@ -423,7 +423,7 @@ const people = [
     "ko": "샬메인",
     "displayName": "Charmaine 샬메인",
     "note": "피아의 사촌, 2019년 17세, 2018년 고1 때 아기를 낳고 고등학교 중퇴, <span class=\"timestamp\">정주행 2019.12.22 01:14</span>",
-    "image": "no-image.jpg"
+    "image": "Charmaine.jpg"
   },
   {
     "no": 54,
@@ -815,7 +815,7 @@ const people = [
     "ko": "자닌",
     "displayName": "Janine 자닌",
     "note": "댄싱 남매 중 여동생, <span class=\"timestamp\">정주행 2019.12.24 06:02</span>",
-    "image": "no-image.jpg"
+    "image": "Janine.jpg"
   },
   {
     "no": 103,
@@ -823,7 +823,7 @@ const people = [
     "ko": "자펫",
     "displayName": "Japhet 자펫",
     "note": "Siomai 시오마이를 파는 소년, 2020년 13세 중2, <span class=\"timestamp\">정주행 2020.01.19 01:26</span>",
-    "image": "no-image.jpg"
+    "image": "Japhet.jpg"
   },
   {
     "no": 104,
@@ -1631,7 +1631,7 @@ const people = [
     "ko": "니코",
     "displayName": "Niko 니코",
     "note": "댄싱 남매 중 오빠, <span class=\"timestamp\">정주행 2019.12.24 06:02</span>",
-    "image": "no-image.jpg"
+    "image": "Niko.jpg"
   },
   {
     "no": 205,
@@ -1679,7 +1679,7 @@ const people = [
     "ko": "폴마크",
     "displayName": "Polmarc 폴마크",
     "note": "샬메인의 남편, 2019년 20세, <span class=\"timestamp\">정주행 2019.12.22 01:20</span>",
-    "image": "no-image.jpg"
+    "image": "Polmarc.jpg"
   },
   {
     "no": 211,
