@@ -879,7 +879,7 @@ const people = [
     "ko": "제고",
     "displayName": "Jego 제고",
     "note": "질리언의 친오빠, 2026년 17세, <span class=\"timestamp\">2026.03.01 40:55</span>",
-    "image": "no-image.jpg"
+    "image": "Jego.jpg"
   },
   {
     "no": 111,
