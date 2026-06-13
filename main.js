@@ -7,6 +7,23 @@ import {
   onAuthStateChanged
 } from "./firebase.js";
 
+import {
+  db,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+  increment,
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where,
+  orderBy,
+  serverTimestamp
+}
+from "./firebase.js";
+
 import people from "./people.js";
 
 const container =
@@ -219,8 +236,353 @@ function createCard(p, index) {
   card.appendChild(photo);
   card.appendChild(info);
 
+  /* 카드 클릭 시 팝업 */
+card.addEventListener("click", () => {
+    openPersonModal(p);
+});
+
   return card;
 }
+
+```js
+/* ---------------------------
+   MODAL
+--------------------------- */
+
+let currentPerson = null;
+
+async function openPersonModal(person){
+
+  currentPerson = person;
+
+  let modal =
+    document.getElementById("modal");
+
+  if(!modal){
+
+    modal = document.createElement("div");
+
+    modal.id = "modal";
+
+    modal.innerHTML = `
+      <div id="modalOverlay"></div>
+
+      <div id="modalContent">
+
+        <button id="closeModal">
+          ✕
+        </button>
+
+        <div id="modalBody"></div>
+
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    document
+      .getElementById("closeModal")
+      .onclick = () => {
+
+      modal.remove();
+
+    };
+
+    document
+      .getElementById("modalOverlay")
+      .onclick = () => {
+
+      modal.remove();
+
+    };
+  }
+
+  const body =
+    document.getElementById("modalBody");
+
+  body.innerHTML = `
+
+    <h2>
+      ${person.name || ""}
+    </h2>
+
+    ${
+      person.ko
+      ? `<h3>${person.ko}</h3>`
+      : ""
+    }
+
+    <img
+      src="${
+        person.image
+          ? `images/${person.image}`
+          : "images/no-image.jpg"
+      }"
+      style="
+        max-width:300px;
+        width:100%;
+        border-radius:10px;
+      "
+    >
+
+    <div style="margin-top:15px">
+      ${person.note || ""}
+    </div>
+
+    <hr>
+
+    <button id="likeBtn">
+      👍 좋아요
+    </button>
+
+    <span id="likeCount">
+      0
+    </span>
+
+    <hr>
+
+    <h3>댓글</h3>
+
+    <div id="commentList"></div>
+
+    <textarea
+      id="commentText"
+      rows="3"
+      style="
+        width:100%;
+        margin-top:10px;
+      "
+    ></textarea>
+
+    <button
+      id="commentBtn">
+      댓글 등록
+    </button>
+  `;
+
+  setupLikeButton(person.name);
+
+  setupCommentButton(person.name);
+
+  loadLikes(person.name);
+
+  loadComments(person.name);
+}
+
+async function loadLikes(name){
+
+  const countEl =
+    document.getElementById(
+      "likeCount"
+    );
+
+  const ref =
+    doc(db,"likes",name);
+
+  const snap =
+    await getDoc(ref);
+
+  if(!snap.exists()){
+
+    await setDoc(ref,{
+      count:0
+    });
+
+    countEl.textContent = "0";
+
+    return;
+  }
+
+  countEl.textContent =
+    snap.data().count || 0;
+}
+
+async function setupLikeButton(name){
+
+  const btn =
+    document.getElementById(
+      "likeBtn"
+    );
+
+  btn.onclick = async ()=>{
+
+    if(!auth.currentUser){
+
+      alert(
+        "로그인 후 이용하세요."
+      );
+
+      return;
+    }
+
+    const uid =
+      auth.currentUser.uid;
+
+    const likeId =
+      uid + "_" + name;
+
+    const likeRef =
+      doc(
+        db,
+        "userLikes",
+        likeId
+      );
+
+    const liked =
+      await getDoc(
+        likeRef
+      );
+
+    if(liked.exists()){
+
+      alert(
+        "이미 좋아요를 눌렀습니다."
+      );
+
+      return;
+    }
+
+    await setDoc(
+      likeRef,
+      {
+        liked:true
+      }
+    );
+
+    const countRef =
+      doc(
+        db,
+        "likes",
+        name
+      );
+
+    await setDoc(
+      countRef,
+      {
+        count:0
+      },
+      {
+        merge:true
+      }
+    );
+
+    await updateDoc(
+      countRef,
+      {
+        count:increment(1)
+      }
+    );
+
+    loadLikes(name);
+  };
+}
+
+function setupCommentButton(name){
+
+  const btn =
+    document.getElementById(
+      "commentBtn"
+    );
+
+  btn.onclick = async ()=>{
+
+    if(!auth.currentUser){
+
+      alert(
+        "로그인 후 이용하세요."
+      );
+
+      return;
+    }
+
+    const text =
+      document
+      .getElementById(
+        "commentText"
+      )
+      .value
+      .trim();
+
+    if(!text){
+      return;
+    }
+
+    await addDoc(
+      collection(
+        db,
+        "comments"
+      ),
+      {
+        person:name,
+        uid:
+          auth.currentUser.uid,
+        name:
+          auth.currentUser.displayName,
+        text,
+        createdAt:
+          serverTimestamp()
+      }
+    );
+
+    document
+      .getElementById(
+        "commentText"
+      )
+      .value = "";
+
+    loadComments(name);
+  };
+}
+
+async function loadComments(name){
+
+  const list =
+    document.getElementById(
+      "commentList"
+    );
+
+  if(!list){
+    return;
+  }
+
+  list.innerHTML = "";
+
+  const q =
+    query(
+      collection(
+        db,
+        "comments"
+      ),
+      where(
+        "person",
+        "==",
+        name
+      )
+    );
+
+  const snap =
+    await getDocs(q);
+
+  snap.forEach(docSnap=>{
+
+    const c =
+      docSnap.data();
+
+    const div =
+      document.createElement(
+        "div"
+      );
+
+    div.style.marginBottom =
+      "8px";
+
+    div.innerHTML =
+      `<b>${c.name}</b><br>${c.text}`;
+
+    list.appendChild(div);
+  });
+}
+```
 
 /* ---------------------------
    RENDER
