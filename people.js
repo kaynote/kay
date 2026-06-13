@@ -582,7 +582,7 @@ const people = [
     "name": "Dongmin",
     "ko": "동민",
     "displayName": "Dongmin 동민",
-    "note": "메리안이 길에서 주워온 치즈색 수컷고양이로 가라 후원자의 이름을 붙였다, <span class=\"timestamp\">정주행 2025.10.28 04:49</span>",
+    "note": "메리안이 길에서 주워온 치즈색 수컷 고양이로 가라 후원자의 이름을 붙였다, <span class=\"timestamp\">정주행 2025.10.28 04:49</span>",
     "image": "Dongmin.jpg"
   },
   {
@@ -1190,7 +1190,7 @@ const people = [
     "name": "Kerry",
     "ko": "케리",
     "displayName": "Kerry 케리",
-    "note": "메리안이 길에서 주워온 치즈색 수컷고양이로 리카 후원자의 이름을 붙였다, <span class=\"timestamp\">정주행 2025.10.28 08:53</span>",
+    "note": "메리안이 길에서 주워온 치즈색 수컷 고양이로 리카 후원자의 이름을 붙였다, <span class=\"timestamp\">정주행 2025.10.28 08:53</span>",
     "image": "Kerry.jpg"
   },
   {
@@ -1686,7 +1686,7 @@ const people = [
     "name": "Ppeonppeoni",
     "ko": "뻔뻔이",
     "displayName": "Ppeonppeoni 뻔뻔이",
-    "note": "코리아 빌딩에서 무전취식하는 수컷고양이로 나이가 많다, <span class=\"timestamp\">2020.11.08 1:13:00</span>",
+    "note": "코리아 빌딩에서 무전취식하는 수컷 고양이로 나이가 많다, <span class=\"timestamp\">2020.11.08 1:13:00</span>",
     "image": "no-image.jpg"
   },
   {
@@ -1694,7 +1694,7 @@ const people = [
     "name": "Ppeonsuni",
     "ko": "뻔순이",
     "displayName": "Ppeonsuni 뻔순이",
-    "note": "뻔뻔이의 짝꿍 암컷고양이로 코리아 빌딩에 거주하며 새끼까지 낳았다, 뻔순이라는 이름은 구독자 박세진님이 지어주었다, <span class=\"timestamp\">2021.11.20 1:18:09</span>",
+    "note": "뻔뻔이의 짝꿍 암컷 고양이로 코리아 빌딩에 거주하며 새끼까지 낳았다, 뻔순이라는 이름은 구독자 박세진님이 지어주었다, <span class=\"timestamp\">2021.11.20 1:18:09</span>",
     "image": "no-image.jpg"
   },
   {
@@ -2270,7 +2270,7 @@ const people = [
     "name": "yoonjoowoong",
     "ko": "윤주웅",
     "displayName": "yoonjoowoong 윤주웅",
-    "note": "메리안이 길에서 주워온 흰색의 암컷고양이로 제이 후원자의 이름을 붙였다, <span class=\"timestamp\">정주행 2025.10.28 11:51</span>",
+    "note": "메리안이 길에서 주워온 흰색의 암컷 고양이로 제이 후원자의 이름을 붙였다, <span class=\"timestamp\">정주행 2025.10.28 11:51</span>",
     "image": "yoonjoowoong.jpg"
   },
   {
