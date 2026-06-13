@@ -1,4 +1,3 @@
-```js
 import {
   auth,
   provider,
@@ -28,6 +27,12 @@ import people from "./people.js";
 
 const container =
   document.getElementById("peopleContainer");
+  
+  const container =
+  document.getElementById("peopleContainer");
+
+  console.log("container:", container);
+  console.log("people:", people);
 
 const loginBtn =
   document.getElementById("loginBtn");
@@ -701,4 +706,3 @@ searchBox.addEventListener(
 --------------------------- */
 
 init();
-```
