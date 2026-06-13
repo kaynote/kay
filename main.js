@@ -33,6 +33,9 @@ const container =
 
   console.log("container:", container);
   console.log("people:", people);
+  
+  console.log("people length:", people.length);
+  console.log("first item:", people[0]);
 
 const loginBtn =
   document.getElementById("loginBtn");
