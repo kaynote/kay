@@ -1967,7 +1967,7 @@ const people = [
     "ko": "로지 L. 알바레스",
     "displayName": "Rosie L. Alvares 로지 L. 알바레스",
     "note": "딴시의 엄마, <span class=\"timestamp\">정주행 2021.11.10 15:48</span>, 1982년 11월 29일생이며 2026년 4월 23일 심장마비로 사망, <span class=\"timestamp\">2026.04.25 51:24</span>",
-    "image": "no-image.jpg"
+    "image": "Rosie L. Alvares.jpg"
   },
   {
     "no": 247,
