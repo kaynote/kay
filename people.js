@@ -119,7 +119,7 @@ const people = [
     "ko": "아니타 로하",
     "displayName": "Anita Roja 아니타 로하",
     "note": "제이와 엘라의 할머니, <span class=\"timestamp\">정주행 2021.11.10 23:42</span>",
-    "image": "no-image.jpg"
+    "image": "Anita Roja.jpg"
   },
   {
     "no": 16,
@@ -182,7 +182,7 @@ const people = [
     "name": "Ate Analyn",
     "ko": "아떼 아날린",
     "displayName": "Ate Analyn 아떼 아날린",
-    "note": "베나의 엄마이자 자라의 이모, <span class=\"timestamp\">정주행 2021.06.08 16:45</span>, <span class=\"timestamp\">정주행 2021.07.27 06:43</span>, 바랑가이 157에서 근무하지만 제리님의 스펠링 Jerry를 Gerry로 오표기, <span class=\"timestamp\">2025.11.29 1부 37:12</span>, <span class=\"timestamp\">2025.12.06 41:52</span>",
+    "note": "베나의 엄마이자 자라의 이모, <span class=\"timestamp\">정주행 2021.06.08 16:45</span>, <span class=\"timestamp\">정주행 2021.07.27 06:43</span>, 바랑가이 157 사무소에서 근무하지만 제리님의 스펠링 Jerry를 Gerry로 오표기, <span class=\"timestamp\">2025.11.29 1부 37:12</span>, <span class=\"timestamp\">2025.12.06 41:52</span>",
     "image": "Ate Analyn.jpg"
   },
   {
@@ -278,7 +278,7 @@ const people = [
     "name": "Ate Mercy",
     "ko": "아떼 머시",
     "displayName": "Ate Mercy 아떼 머시",
-    "note": "본명은 'Mercy Labro' 머시 라브로, 딴시의 외할머니, <span class=\"timestamp\">정주행 2021.12.30 19:08</span>",
+    "note": "본명은 'Mercy Labro' 머시 라브로, 딴시의 외할머니, 2020년 63세, <span class=\"timestamp\">정주행 2020.02.08 2부, 00:28</span>, <span class=\"timestamp\">정주행 2021.12.30 19:08</span>",
     "image": "Ate Mercy.jpg"
   },
   {
@@ -375,7 +375,7 @@ const people = [
     "ko": "빠양",
     "displayName": "Bayang 빠양",
     "note": "바랑가이 157 캡틴 레이날도 P. 플로레스의 아들, 2020년 19세 고3, <span class=\"timestamp\">2020.11.21 공부방 시험 2부 13:12</span>",
-    "image": "no-image.jpg"
+    "image": "Bayang.jpg"
   },
   {
     "no": 48,
@@ -407,7 +407,7 @@ const people = [
     "ko": "세드릭",
     "displayName": "Cedric 세드릭",
     "note": "30명의 스태프들이 회식을 할 때 같이 있었던 청년, <span class=\"timestamp\">정주행 2021.12.30 17:35</span>",
-    "image": "no-image.jpg"
+    "image": "Cedric.jpg"
   },
   {
     "no": 52,
@@ -1486,7 +1486,7 @@ const people = [
     "name": "Matilde Badeo",
     "ko": "마틸데 바데오",
     "displayName": "Matilde Badeo 마틸데 바데오",
-    "note": "바랑가이 157에서 근무, <span class=\"timestamp\">정주행 2019.12.19 07:16</span>",
+    "note": "바랑가이 157 사무소에서 근무, <span class=\"timestamp\">정주행 2019.12.19 07:16</span>",
     "image": "Matilde Badeo.jpg"
   },
   {
