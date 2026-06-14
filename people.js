@@ -1119,7 +1119,7 @@ const people = [
     "ko": "까가왓 디오스다도 F. 파벨라",
     "displayName": "Kagawad - Diosdado F. Fabella 까가왓 디오스다도 F. 파벨라",
     "note": "줄여서 Dado '다도'라고 하며 한국인에게는 '다두'로 들린다, 넘버원 까가왓, 미네랄 워터 가게 주인, <span class=\"timestamp\">정주행 2023.11.01 04:16</span>",
-    "image": "no-image.jpg"
+    "image": "Kagawad - Diosdado F. Fabella.jpg"
   },
   {
     "no": 141,
@@ -1383,7 +1383,7 @@ const people = [
     "ko": "루이 지",
     "displayName": "Louis G 루이 지",
     "note": "메리안의 남동생, 대학교를 졸업하고 초등학교 교사와 결혼하였다, <span class=\"timestamp\">정주행 2021.01.28 15:57</span>",
-    "image": "no-image.jpg"
+    "image": "Louis G.jpg"
   },
   {
     "no": 174,
@@ -1935,7 +1935,7 @@ const people = [
     "ko": "로나 알라피데",
     "displayName": "Rona Alapide 로나 알라피데",
     "note": "아야샤의 엄마, 킴벌리의 엄마와 자매지간, <span class=\"timestamp\">정주행 2020.09.15 11:40</span>",
-    "image": "no-image.jpg"
+    "image": "Rona Alapide.jpg"
   },
   {
     "no": 243,
