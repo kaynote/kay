@@ -1879,7 +1879,7 @@ const people = [
     "ko": "리날린 P. 카존토이, Licensed Professional Teacher",
     "displayName": "Rinalyn P. Cajontoy, LPT 리날린 P. 카존토이, Licensed Professional Teacher",
     "note": "꾸야 이징의 딸로, 정식 교사 자격증을 취득함, <span class=\"timestamp\">2023.01.21 41:37</span>",
-    "image": "no-image.jpg"
+    "image": "Rinalyn P. Cajontoy, LPT.jpg"
   },
   {
     "no": 236,
