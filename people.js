@@ -159,7 +159,7 @@ const people = [
     "ko": "아리아나 데 키로스",
     "displayName": "Arriana De Quiros 아리아나 데 키로스",
     "note": "초창기 코리아 빌딩 공부방 멤버, <span class=\"timestamp\">정주행 2021.04.06 19:39</span>",
-    "image": "no-image.jpg"
+    "image": "Arriana De Quiros.jpg"
   },
   {
     "no": 21,
@@ -231,7 +231,7 @@ const people = [
     "ko": "아떼 라나",
     "displayName": "Ate Lana 아떼 라나",
     "note": "손주들 도시락까지 챙기느라 바쁜 2020년 68세 할머니, '말하지 않는 신기한 아이' 다이아나의 할머니 또는 증조 할머니로 추정된다, <span class=\"timestamp\">정주행 2020.08.04 05:11</span>",
-    "image": "no-image.jpg"
+    "image": "Ate Lana.jpg"
   },
   {
     "no": 30,
@@ -887,7 +887,7 @@ const people = [
     "ko": "제나이",
     "displayName": "Jenai 제나이",
     "note": "일명 '먹고는 싶은데 키가 커서 슬픈 사슴'이라 불린다, <span class=\"timestamp\">정주행 2020.03.06 08:22</span>, 리카의 친언니, <span class=\"timestamp\">정주행 2021.12.23 14:18</span>",
-    "image": "no-image.jpg"
+    "image": "Jenai.jpg"
   },
   {
     "no": 112,
@@ -1183,7 +1183,7 @@ const people = [
     "ko": "켄지",
     "displayName": "Kenzie 켄지",
     "note": "실라미의 사촌 남동생, <span class=\"timestamp\">정주행 2020.08.22 09:45</span>",
-    "image": "no-image.jpg"
+    "image": "Kenzie.jpg"
   },
   {
     "no": 149,
@@ -1279,7 +1279,7 @@ const people = [
     "ko": "꾸야 이징",
     "displayName": "Kuya Ijing 꾸야 이징",
     "note": "당뇨로 왼쪽다리를 잃어 의족 착용, 교원 자격증을 취득한 리날린 P. 카존토이의 아버지, <span class=\"timestamp\">정주행 2022.10.25 0:50</span>",
-    "image": "no-image.jpg"
+    "image": "Kuya Ijing.jpg"
   },
   {
     "no": 161,
@@ -1567,7 +1567,7 @@ const people = [
     "ko": "미카 Q. 루녜스",
     "displayName": "Mikha Q. Ruñez 미카 Q. 루녜스",
     "note": "코리아 빌딩 공부방에서 시험을 보고 선물을 받아간 적이 있다, <span class=\"timestamp\">정주행 2020.06.18 02:24</span>, 2021년 크리스마스 댄스 경연대회에서 1등을 한 적이 있다, <span class=\"timestamp\">2021.12.19 3부 11:37</span>",
-    "image": "no-image.jpg"
+    "image": "Mikha Q. Ruñez.jpg"
   },
   {
     "no": 197,
@@ -1799,7 +1799,7 @@ const people = [
     "ko": "라넬",
     "displayName": "Ranell 라넬",
     "note": "실라미의 사촌 여동생, <span class=\"timestamp\">정주행 2020.08.22 09:58</span>",
-    "image": "no-image.jpg"
+    "image": "Ranell.jpg"
   },
   {
     "no": 226,
@@ -1807,7 +1807,7 @@ const people = [
     "ko": "레이몬드 살룻",
     "displayName": "Raymond Salut 레이몬드 살룻",
     "note": "일명 우또이, 2020년 32세, <span class=\"timestamp\">정주행 2020.05.03 03:56</span>",
-    "image": "no-image.jpg"
+    "image": "Raymond Salut.jpg"
   },
   {
     "no": 227,
