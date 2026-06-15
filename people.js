@@ -927,7 +927,7 @@ const people = [
     "ko": "제롬",
     "displayName": "Jerome 제롬",
     "note": "신애의 사촌 오빠, <span class=\"timestamp\">정주행 2025.11.14 12:16</span>",
-    "image": "no-image.jpg"
+    "image": "Jerome-2.jpg"
   },
   {
     "no": 117,
