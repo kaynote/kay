@@ -462,7 +462,7 @@ const people = [
     "name": "Cipriano F. Nuñez",
     "ko": "시프리아노 F. 누녜스",
     "displayName": "Cipriano F. Nuñez 시프리아노 F. 누녜스",
-    "note": "존 다렐의 할아버지이며 제리님과 출생 연도가 같다, <span class=\"timestamp\">정주행 2021.01.19 00:24</span>",
+    "note": "존 다렐의 할아버지, 1962년 8월 13일생으로 2021년 1월 16일 사망, <span class=\"timestamp\">정주행 2021.01.19 00:24</span>",
     "image": "Cipriano F. Nuñez.jpg"
   },
   {
