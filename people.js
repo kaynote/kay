@@ -863,7 +863,7 @@ const people = [
     "ko": "제이슨",
     "displayName": "Jayson 제이슨",
     "note": "바랑가이 157에 사는 남자아이, <span class=\"timestamp\">2024.12.14 1:21:56</span>",
-    "image": "no-image.jpg"
+    "image": "Jayson-2.jpg"
   },
   {
     "no": 109,
