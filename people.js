@@ -1694,7 +1694,7 @@ const people = [
     "name": "Ppeonsuni",
     "ko": "뻔순이",
     "displayName": "Ppeonsuni 뻔순이",
-    "note": "뻔뻔이의 짝꿍 암컷 고양이로 코리아 빌딩에 거주하며 새끼까지 낳았다, 뻔순이라는 이름은 구독자 박세진님이 지어주었다, <span class=\"timestamp\">2021.11.20 1:18:09</span>",
+    "note": "뻔뻔이의 짝꿍 암컷 고양이로 코리아 빌딩에 거주하며 새끼까지 낳았다, 뻔순이라는 이름은 구독자 박세진님이 지어주었다, <span class=\"timestamp\">2021.11.20 채팅 1:18:09</span>",
     "image": "Ppeonsuni.jpg"
   },
   {
@@ -2243,11 +2243,11 @@ const people = [
   },
   {
     "no": 281,
-    "name": "Venice",
+    "name": "Veniese",
     "ko": "베니스",
-    "displayName": "Venice 베니스",
+    "displayName": "Veniese 베니스",
     "note": "베나의 여동생, 2023년 7세, <span class=\"timestamp\">정주행 2023.02.21 03:57</span>",
-    "image": "no-image.jpg"
+    "image": "Veniese.jpg"
   },
   {
     "no": 282,
