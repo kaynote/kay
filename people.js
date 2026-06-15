@@ -31,7 +31,7 @@ const people = [
     "ko": "알렉스",
     "displayName": "Alex 알렉스",
     "note": "간식 나눔이나 피딩 프로그램의 도우미이자 PWD 장애인, <span class=\"timestamp\">2025.01.05 57:14</span>",
-    "image": "no-image.jpg"
+    "image": "Alex.jpg"
   },
   {
     "no": 5,
@@ -47,7 +47,7 @@ const people = [
     "ko": "알렉사 미",
     "displayName": "Alexa Mae 알렉사 미",
     "note": "크리스틴 케이트의 여동생, 2024년 크리스마스 댄스 경연대회에서 1등 수상, <span class=\"timestamp\">2024.12.14 1:37:24</span>",
-    "image": "no-image.jpg"
+    "image": "Alexa Mae.jpg"
   },
   {
     "no": 7,
@@ -239,7 +239,7 @@ const people = [
     "ko": "아떼 레야",
     "displayName": "Ate Leia 아떼 레야",
     "note": "겡겡의 엄마, <span class=\"timestamp\">정주행 2021.11.10 가정방문 1부 06:03</span>",
-    "image": "no-image.jpg"
+    "image": "Ate Leia.jpg"
   },
   {
     "no": 31,
@@ -359,7 +359,7 @@ const people = [
     "ko": "밤밤",
     "displayName": "Bambam 밤밤",
     "note": "제리님 동네에 사는 여자아이, <span class=\"timestamp\">2026.03.14 04:14</span>",
-    "image": "no-image.jpg"
+    "image": "Bambam-3.jpg"
   },
   {
     "no": 46,
@@ -431,7 +431,7 @@ const people = [
     "ko": "체스카 니콜",
     "displayName": "Chesca Nicole 체스카 니콜",
     "note": "세 자매 중에서 막내인 여자아이, <span class=\"timestamp\">2024.12.14 01:20</span>",
-    "image": "no-image.jpg"
+    "image": "Chesca Nicole.jpg"
   },
   {
     "no": 55,
@@ -567,7 +567,7 @@ const people = [
     "ko": "돌로레스 빌라산",
     "displayName": "Dolores Villasan 돌로레스 빌라산",
     "note": "조이의 할머니, <span class=\"timestamp\">정주행 2021.11.10 가정방문 2부 15:48</span>",
-    "image": "no-image.jpg"
+    "image": "Dolores Villasan.jpg"
   },
   {
     "no": 72,
@@ -711,7 +711,7 @@ const people = [
     "ko": "아이스크림 꾸야",
     "displayName": "Ice Cream Kuya 아이스크림 꾸야",
     "note": "이동식 아이스크림 통을 가지고 바랑가이 157에 와서 한 번에 200명~300명분을 파는 행운아, <span class=\"timestamp\">2025.05.03 00:51</span>",
-    "image": "no-image.jpg"
+    "image": "Ice Cream Kuya.jpg"
   },
   {
     "no": 90,
@@ -807,7 +807,7 @@ const people = [
     "ko": "자넬라",
     "displayName": "Janella 자넬라",
     "note": "2026년 중1, <span class=\"timestamp\">2026.03.28 34:58</span>",
-    "image": "no-image.jpg"
+    "image": "Janella.jpg"
   },
   {
     "no": 102,
@@ -919,7 +919,7 @@ const people = [
     "ko": "제롬",
     "displayName": "Jerome 제롬",
     "note": "로즈벳의 남편, <span class=\"timestamp\">정주행 2019.12.10 00:23</span>",
-    "image": "no-image.jpg"
+    "image": "Jerome.jpg"
   },
   {
     "no": 116,
@@ -1047,7 +1047,7 @@ const people = [
     "ko": "요한",
     "displayName": "Johan 요한",
     "note": "동근이 네이탄의 첫째 남동생, <span class=\"timestamp\">2024.12.01 1:10:26</span>",
-    "image": "no-image.jpg"
+    "image": "Johan.jpg"
   },
   {
     "no": 132,
@@ -1063,7 +1063,7 @@ const people = [
     "ko": "조슬린 마사마요르",
     "displayName": "Josileen Masamayor 조슬린 마사마요르",
     "note": "조알의 엄마, <span class=\"timestamp\">정주행 2021.11.10 가정방문 2부 23:42</span>",
-    "image": "no-image.jpg"
+    "image": "Josileen Masamayor.jpg"
   },
   {
     "no": 134,
@@ -1087,7 +1087,7 @@ const people = [
     "ko": "제이알",
     "displayName": "JR 제이알",
     "note": "징징의 아들, <span class=\"timestamp\">2024.07.13 1:44:36</span>",
-    "image": "no-image.jpg"
+    "image": "JR.jpg"
   },
   {
     "no": 137,
@@ -1311,7 +1311,7 @@ const people = [
     "ko": "라라",
     "displayName": "Lara 라라",
     "note": "코리아 빌딩 공부방 소속은 아니지만 2022년 크리스마스 댄스 경연대회에 나온 적이 있다, <span class=\"timestamp\">정주행 2022.12.15 06:21</span>",
-    "image": "no-image.jpg"
+    "image": "Lara.jpg"
   },
   {
     "no": 165,
@@ -1455,7 +1455,7 @@ const people = [
     "ko": "메리 그레이스 카르도나",
     "displayName": "Mary Grace Cardona 메리 그레이스 카르도나",
     "note": "미구엘의 어머니, 2023년 9월 28일 사망, <span class=\"timestamp\">2023.09.30 10:33</span>",
-    "image": "no-image.jpg"
+    "image": "Mary Grace Cardona.jpg"
   },
   {
     "no": 183,
@@ -1559,7 +1559,7 @@ const people = [
     "ko": "미까이",
     "displayName": "Mikay 미까이",
     "note": "제리님 동네에 사는 여자아이, <span class=\"timestamp\">2026.03.14 04:14</span>",
-    "image": "no-image.jpg"
+    "image": "Mikay.jpg"
   },
   {
     "no": 196,
@@ -1599,7 +1599,7 @@ const people = [
     "ko": "나오미 투링간",
     "displayName": "naomi turingan 나오미 투링간",
     "note": "카시의 친언니인 듯, 카시가 맹장수술을 받았을 때 제리님이 올린 영상에 댓글을 단 적이 있다, @naomituringan5352: salamat sayo sir jerry.dahil sayo at sa mga Sponsor marami kayong natutulungan na mga nangangailangan. LEGIT 제리님, 감사합니다. 당신과 후원자분들 덕분에 많은 어려운 사람들을 도울 수 있었습니다. 정말 훌륭합니다. 정주행 2022.09.07",
-    "image": "no-image.jpg"
+    "image": "naomi turingan.jpg"
   },
   {
     "no": 201,
@@ -1687,7 +1687,7 @@ const people = [
     "ko": "뻔뻔이",
     "displayName": "Ppeonppeoni 뻔뻔이",
     "note": "코리아 빌딩에서 무전취식하는 수컷 고양이로 나이가 많다, <span class=\"timestamp\">2020.11.08 1:13:00</span>",
-    "image": "no-image.jpg"
+    "image": "Ppeonppeoni.jpg"
   },
   {
     "no": 212,
@@ -1695,7 +1695,7 @@ const people = [
     "ko": "뻔순이",
     "displayName": "Ppeonsuni 뻔순이",
     "note": "뻔뻔이의 짝꿍 암컷 고양이로 코리아 빌딩에 거주하며 새끼까지 낳았다, 뻔순이라는 이름은 구독자 박세진님이 지어주었다, <span class=\"timestamp\">2021.11.20 1:18:09</span>",
-    "image": "no-image.jpg"
+    "image": "Ppeonsuni.jpg"
   },
   {
     "no": 213,
@@ -1711,7 +1711,7 @@ const people = [
     "ko": "프린스 아서 O. 칼소",
     "displayName": "Prince Arthur O. Calso 프린스 아서 O. 칼소",
     "note": "프린이의 남동생, 2025년 5월 18일생이지만 2026년 1월 29일 사망, <span class=\"timestamp\">2026.02.01 19:10</span>",
-    "image": "no-image.jpg"
+    "image": "Prince Arthur O. Calso.jpg"
   },
   {
     "no": 215,
@@ -1895,7 +1895,7 @@ const people = [
     "ko": "알제이",
     "displayName": "RJ 알제이",
     "note": "제리님이 '노엘'이라고 부르는 남자아이, <span class=\"timestamp\">2023.03.04 20:15</span>",
-    "image": "no-image.jpg"
+    "image": "RJ.jpg"
   },
   {
     "no": 238,
@@ -1903,7 +1903,7 @@ const people = [
     "ko": "로베르토 파벨라",
     "displayName": "Roberto Fabella 로베르토 파벨라",
     "note": "넘버원 까가왓 Diosdado F. Fabella와 성이 같은 것으로 보아 친형이나 사촌형으로 추정된다, <span class=\"timestamp\">정주행 2019.12.20 06:38</span>",
-    "image": "no-image.jpg"
+    "image": "Roberto Fabella.jpg"
   },
   {
     "no": 239,
@@ -2079,7 +2079,7 @@ const people = [
     "ko": "신애",
     "displayName": "Sinae 신애",
     "note": "바랑가이 157의 유일한 코피노 여자아이, 2025년 5세, 생일은 3월 1일, <span class=\"timestamp\">정주행 2025.11.14 12:16</span>",
-    "image": "no-image.jpg"
+    "image": "Sinae.jpg"
   },
   {
     "no": 261,
@@ -2103,7 +2103,7 @@ const people = [
     "ko": "시티 아이나",
     "displayName": "Sitti Aina 시티 아이나",
     "note": "'Sitti'는 아랍어로 '귀부인 / 여성/ 존경받는 여자'라는 뜻이고 'Aina'는 아랍어로 '은혜 / 보호'라는 뜻, 연한 하늘색 원피스를 입은 무슬림 여자아이, 2025년 12세, <span class=\"timestamp\">2025.12.13 27:30</span>",
-    "image": "no-image.jpg"
+    "image": "Sitti Aina.jpg"
   },
   {
     "no": 264,
@@ -2111,7 +2111,7 @@ const people = [
     "ko": "청년의회 의장 엠제이",
     "displayName": "SK Chairman - MJ 청년의회 의장 엠제이",
     "note": "꾸야 작이 대부, 2023년 크리스마스 댄스 경연대회 심사위원, <span class=\"timestamp\">2023.12.16 12:27</span>",
-    "image": "no-image.jpg"
+    "image": "SK Chairman - MJ.jpg"
   },
   {
     "no": 265,
@@ -2127,7 +2127,7 @@ const people = [
     "ko": "청년의회 의원 체일",
     "displayName": "SK Kagawad - Chael 청년의회 의원 체일",
     "note": "2023년 크리스마스 파티 사회자, <span class=\"timestamp\">2023.12.16 13:26</span>",
-    "image": "no-image.jpg"
+    "image": "SK Kagawad - Chael.jpg"
   },
   {
     "no": 267,
@@ -2159,7 +2159,7 @@ const people = [
     "ko": "스탄",
     "displayName": "Stan 스탄",
     "note": "네이탄의 친형, 댄싱보이, 2026년 15세, <span class=\"timestamp\">2026.03.01 48:16</span>",
-    "image": "no-image.jpg"
+    "image": "Stan.jpg"
   },
   {
     "no": 271,
@@ -2167,7 +2167,7 @@ const people = [
     "ko": "딴띤",
     "displayName": "Tantin 딴띤",
     "note": "코리아 빌딩 앞의 간이식당 kantin 깐띤의 주인, <span class=\"timestamp\">2024.11.17 01:19</span>",
-    "image": "no-image.jpg"
+    "image": "Tantin.jpg"
   },
   {
     "no": 272,
@@ -2207,7 +2207,7 @@ const people = [
     "ko": "통통",
     "displayName": "Tongtong 통통",
     "note": "제리님의 반려견으로 한국말만 알아듣는다, Shih Tzu mix 시츄 믹스로 귀여운 외모의 멍멍이, <span class=\"timestamp\">정주행 2019.11.17 08:44</span>, 2025년 11살, <span class=\"timestamp\">2025.11.29 14:23</span>",
-    "image": "no-image.jpg"
+    "image": "Tongtong.jpg"
   },
   {
     "no": 277,
