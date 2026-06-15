@@ -1031,7 +1031,7 @@ const people = [
     "ko": "호아킨",
     "displayName": "Joaquin 호아킨",
     "note": "가라가 친엄마가 살고 있는 필리핀 Eastern Visayas 동비사야스에 있는 Samar 사마르에서 채팅을 한 적이 있다, @Joaquin-u6l5u: ​​hi daddyjack 하이 다디 작, <span class=\"timestamp\">2025.05.17 44:21</span>",
-    "image": "no-image.jpg"
+    "image": "Joaquin.jpg"
   },
   {
     "no": 130,
