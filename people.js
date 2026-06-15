@@ -2199,7 +2199,7 @@ const people = [
     "ko": "타이거",
     "displayName": "Tiger 타이거",
     "note": "바랑가이 157 사무소 앞에서 기다렸다가 제리님이 오면 통행료 20페소를 받아 닭대가리를 사먹는 '돈맛을 알아버린 멍멍이 1호'지만 2022년 12월 15일 노환으로 사망, <span class=\"timestamp\">2022.12.17 3부 29:33</span>",
-    "image": "no-image.jpg"
+    "image": "Tiger.jpg"
   },
   {
     "no": 276,
