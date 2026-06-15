@@ -630,7 +630,7 @@ const people = [
     "name": "Elvis Raya Quidol",
     "ko": "엘비스 라야 키돌",
     "displayName": "Elvis Raya Quidol 엘비스 라야 키돌",
-    "note": "싱잉 콘테스트 챔피언의 아버지, <span class=\"timestamp\">정주행 2021.08.03 07:32</span>",
+    "note": "싱잉 콘테스트 챔피언의 아버지, 2021년 7월 29일 48세에 사망, <span class=\"timestamp\">정주행 2021.08.03 07:32</span>",
     "image": "Elvis Raya Quidol.jpg"
   },
   {
@@ -1079,7 +1079,7 @@ const people = [
     "ko": "조이 탐판",
     "displayName": "Joy Tampan 조이 탐판",
     "note": "꾸야 작의 2020년에 사망한 친구의 아내, <span class=\"timestamp\">정주행 2021.08.17 01:37</span>",
-    "image": "no-image.jpg"
+    "image": "Joy Tampan.jpg"
   },
   {
     "no": 136,
