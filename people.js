@@ -2007,7 +2007,7 @@ const people = [
     "ko": "섹시",
     "displayName": "Sexy 섹시",
     "note": "댄싱킹이자 시니어 부회장님인 토니의 반려견으로 제리님이 문 앞에서 부르면 나와서 반겨준다, <span class=\"timestamp\">2023.01.21 44:46</span>",
-    "image": "no-image.jpg"
+    "image": "Sexy.jpg"
   },
   {
     "no": 252,
