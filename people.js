@@ -622,8 +622,8 @@ const people = [
     "name": "Elliana Mae Besana",
     "ko": "엘리아나 미 베사나",
     "displayName": "Elliana Mae Besana 엘리아나 미 베사나",
-    "note": "리안의 친언니인 듯, 라이브 채팅 메시지를 남긴 적이 있다, @EllianamaeBesana: ​​annyeonghaseyo sir jerry~ 안녕하세요 제리님, <span class=\"timestamp\">2024.08.10 채팅 48:09</span>",
-    "image": "no-image.jpg"
+    "note": "리안의 친언니 혹은 아나미 본인인 듯, 유튜브 채널 이름이 Anamie Flores라고 써 있고 라이브 채팅 메시지를 남긴 적이 있다, @EllianamaeBesana: ​​annyeonghaseyo sir jerry~ 안녕하세요 제리님, <span class=\"timestamp\">2024.08.10 채팅 48:09</span>",
+    "image": "Elliana Mae Besana.jpg"
   },
   {
     "no": 79,
