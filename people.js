@@ -2118,7 +2118,7 @@ const people = [
     "name": "SK Chairwoman - Apple",
     "ko": "여성 청년의회 의장 애플",
     "displayName": "SK Chairwoman - Apple 여성 청년의회 의장 애플",
-    "note": "코리아 빌딩 댄스 페스티벌 심사위원, <span class=\"timestamp\">정주행 2020.12.19 02:00</span>, 본명은 'Apple Pelus' 애플 페루스, <span class=\"timestamp\">정주행 2023.11.01 04:48</span>",
+    "note": "코리아 빌딩 댄스 페스티벌 심사위원, <span class=\"timestamp\">2020.12.19 02:00</span>, 본명은 'Apple Pelus' 애플 페루스, <span class=\"timestamp\">정주행 2023.11.01 04:48</span>",
     "image": "SK Chairwoman - Apple.jpg"
   },
   {
