@@ -2102,7 +2102,7 @@ const people = [
     "name": "Sitti Aina",
     "ko": "시티 아이나",
     "displayName": "Sitti Aina 시티 아이나",
-    "note": "'Sitti'는 아랍어로 '귀부인 / 여성/ 존경받는 여자'라는 뜻이고 'Aina'는 아랍어로 '은혜 / 보호'라는 뜻, 연한 하늘색 원피스를 입은 무슬림 여자아이, 2025년 12세, <span class=\"timestamp\">2025.12.13 27:30</span>",
+    "note": "'Sitti'는 아랍어로 '귀부인 / 여성 / 존경받는 여자'라는 뜻이고 'Aina'는 아랍어로 '은혜 / 보호'라는 뜻, 연한 하늘색 원피스를 입은 무슬림 여자아이, 2025년 12세, <span class=\"timestamp\">2025.12.13 27:30</span>",
     "image": "Sitti Aina.jpg"
   },
   {
