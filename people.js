@@ -1046,7 +1046,7 @@ const people = [
     "name": "Johan",
     "ko": "요한",
     "displayName": "Johan 요한",
-    "note": "동근이 네이탄의 첫째 남동생, <span class=\"timestamp\">2024.12.01 1:10:26</span>",
+    "note": "스탄의 둘째 남동생, <span class=\"timestamp\">2024.12.01 1:10:26</span>",
     "image": "Johan.jpg"
   },
   {
