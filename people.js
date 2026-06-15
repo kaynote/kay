@@ -1078,7 +1078,7 @@ const people = [
     "name": "Joy Tampan",
     "ko": "조이 탐판",
     "displayName": "Joy Tampan 조이 탐판",
-    "note": "꾸야 작의 젊은 나이에 죽은 친구의 아내, <span class=\"timestamp\">정주행 2021.08.17 01:37</span>",
+    "note": "꾸야 작의 2020년에 사망한 친구의 아내, <span class=\"timestamp\">정주행 2021.08.17 01:37</span>",
     "image": "no-image.jpg"
   },
   {
