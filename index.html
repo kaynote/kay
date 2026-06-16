@@ -63,8 +63,7 @@
 
 <script type="module">
 
-import people
-from "./people.js?v=10";
+import people from "./people.js?v=10";
 
 import {
     db,
@@ -729,10 +728,16 @@ async function openModal(p){
                     }
                 `;
 
+                const ADMIN_UID =
+                "q8x2AbCdEF123456xyz";
+
                 if(
-                    auth.currentUser &&
-                    c.uid ===
-                    auth.currentUser.uid
+                  auth.currentUser &&
+                  (
+                    c.uid === auth.currentUser.uid
+                    ||
+                    auth.currentUser.uid === ADMIN_UID
+                  )
                 ){
 
                     const editBtn =
