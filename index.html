@@ -1,3 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kay Notes Archive</title>
+
+<link rel="stylesheet" href="style.css?v=10">
+
+<style>
+#peopleContainer{
+    contain:layout paint;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+    <h1>Kay Notes Archive</h1>
+
+    <div id="userInfo">로그인 안 됨</div>
+
+    <div class="authArea">
+        <button id="loginBtn">로그인</button>
+        <button id="logoutBtn">로그아웃</button>
+    </div>
+
+    <input type="text" id="searchBox" placeholder="검색...">
+</header>
+
+<div id="peopleContainer"></div>
+
+<!-- MODAL -->
+<div id="modal" class="modal hidden">
+    <div class="modal-content">
+        <button id="closeModal" class="closeBtn">✕</button>
+        <div id="modalBody"></div>
+    </div>
+</div>
+
 <script type="module">
 
 import people from "./people.js?v=10";
@@ -30,13 +74,6 @@ import {
 const ADMIN_EMAIL = "ektjttnfp5@gmail.com";
 
 /* =========================
-   STATE
-========================= */
-
-let data = [];
-let renderedMap = new Map();
-
-/* =========================
    DOM
 ========================= */
 
@@ -48,13 +85,13 @@ const closeModal = document.getElementById("closeModal");
 
 const loginBtn = document.getElementById("loginBtn");
 const logoutBtn = document.getElementById("logoutBtn");
-const closeModal = document.getElementById("closeModal");
 
-if(loginBtn) loginBtn.addEventListener("click", login);
-if(logoutBtn) logoutBtn.addEventListener("click", logout);
-if(closeModal) closeModal.addEventListener("click", () => {
-    modal.classList.add("hidden");
-});
+/* =========================
+   STATE
+========================= */
+
+let data = [];
+let renderedMap = new Map();
 
 /* =========================
    INIT
@@ -182,18 +219,10 @@ searchBox.addEventListener("input", e=>{
 });
 
 /* =========================
-   MODAL STATE
-========================= */
-
-let currentPerson = null;
-
-/* =========================
    MODAL
 ========================= */
 
 async function openModal(p){
-
-    currentPerson = p;
 
     modal.classList.remove("hidden");
 
@@ -224,46 +253,27 @@ async function openModal(p){
     const commentInput = modalBody.querySelector(".commentInput");
     const commentsDiv = modalBody.querySelector(".comments");
 
-    /* =========================
-       ADMIN UI (정상 위치)
-    ========================= */
+    /* =====================
+       SHOW LIKES (한 번만 등록)
+    ===================== */
 
-    function setAdminUI(){
-        const user = auth.currentUser;
-
-        showLikesBtn.style.display =
-            (user && user.email === ADMIN_EMAIL)
-            ? "inline-block"
-            : "none";
-    }
-
-    setAdminUI();
-
-    /* =========================
-       SHOW LIKES (중복 제거)
-    ========================= */
-
-    showLikesBtn.onclick = async () => {
-
+    showLikesBtn.addEventListener("click", async ()=>{
         const snap = await getDocs(
             collection(db, "people", p.name, "likes")
         );
 
-        const list = [...new Set(
-            snap.docs.map(d =>
-                d.data().name || d.data().email || "익명"
-            )
-        )];
+        const result = snap.docs
+            .map(d => d.data().name || "이름 없음")
+            .join("\n");
 
-        alert(list.length ? list.join("\n") : "추천 없음");
-    };
+        alert(result || "추천 없음");
+    });
 
-    /* =========================
+    /* =====================
        LOAD LIKES
-    ========================= */
+    ===================== */
 
     async function loadLikes(){
-
         const snap = await getDocs(
             collection(db, "people", p.name, "likes")
         );
@@ -271,11 +281,11 @@ async function openModal(p){
         likeCountEl.textContent = snap.size;
     }
 
-    /* =========================
+    /* =====================
        LIKE TOGGLE
-    ========================= */
+    ===================== */
 
-    likeBtn.onclick = async () => {
+    likeBtn.addEventListener("click", async ()=>{
 
         const user = auth.currentUser || await login();
 
@@ -288,21 +298,24 @@ async function openModal(p){
         } else {
             await setDoc(ref, {
                 uid: user.uid,
-                name: user.displayName || user.email || "익명",
-                email: user.email || "",
+                name: user.displayName,
+                photo: user.photoURL,
                 createdAt: Date.now()
             });
         }
 
+        if(auth.currentUser?.email === ADMIN_EMAIL){
+            showLikesBtn.style.display = "inline-block";
+        }
+
         loadLikes();
-        setAdminUI();
-    };
+    });
 
-    /* =========================
+    /* =====================
        COMMENTS
-    ========================= */
+    ===================== */
 
-    commentBtn.onclick = async () => {
+    commentBtn.addEventListener("click", async ()=>{
 
         const text = commentInput.value.trim();
         if(!text) return;
@@ -316,19 +329,19 @@ async function openModal(p){
 
         await addDoc(collection(db, "people", p.name, "comments"), {
             uid: user.uid,
-            name: user.displayName || user.email || "익명",
-            photo: user.photoURL || "",
+            name: user.displayName,
+            photo: user.photoURL,
             text,
             createdAt: Date.now()
         });
 
         commentInput.value = "";
         loadComments();
-    };
+    });
 
-    /* =========================
+    /* =====================
        LOAD COMMENTS
-    ========================= */
+    ===================== */
 
     async function loadComments(){
 
@@ -354,39 +367,81 @@ async function openModal(p){
                 </div>
 
                 <div class="commentText">${c.text}</div>
+
+                ${c.editedAt ? '<div class="edited">(수정됨)</div>' : ''}
             `;
+
+            if(
+                auth.currentUser &&
+                (c.uid === auth.currentUser.uid ||
+                 auth.currentUser.email === ADMIN_EMAIL)
+            ){
+
+                const editBtn = document.createElement("button");
+                editBtn.textContent = "수정";
+
+                editBtn.onclick = async ()=>{
+                    const newText = prompt("댓글 수정", c.text);
+                    if(!newText) return;
+
+                    await updateDoc(
+                        doc(db, "people", p.name, "comments", docSnap.id),
+                        {
+                            text: newText.trim(),
+                            editedAt: Date.now()
+                        }
+                    );
+
+                    loadComments();
+                };
+
+                const delBtn = document.createElement("button");
+                delBtn.textContent = "삭제";
+
+                delBtn.onclick = async ()=>{
+                    if(!confirm("삭제할까요?")) return;
+
+                    await deleteDoc(
+                        doc(db, "people", p.name, "comments", docSnap.id)
+                    );
+
+                    loadComments();
+                };
+
+                div.appendChild(editBtn);
+                div.appendChild(delBtn);
+            }
 
             commentsDiv.appendChild(div);
         });
     }
 
-    loadLikes();
-    loadComments();
+    await loadLikes();
+    await loadComments();
 }
 
 /* =========================
    CLOSE MODAL
 ========================= */
 
-closeModal.onclick = () => {
+closeModal.addEventListener("click", ()=>{
     modal.classList.add("hidden");
-};
+});
 
-modal.onclick = (e) => {
+modal.addEventListener("click", e=>{
     if(e.target === modal){
         modal.classList.add("hidden");
     }
-};
+});
 
 /* =========================
    AUTH
 ========================= */
 
-loginBtn.onclick = login;
-logoutBtn.onclick = logout;
+loginBtn.addEventListener("click", login);
+logoutBtn.addEventListener("click", logout);
 
-watchAuth(user => {
-
+watchAuth(user=>{
     const userInfo = document.getElementById("userInfo");
 
     if(!user){
@@ -408,3 +463,6 @@ watchAuth(user => {
 init();
 
 </script>
+
+</body>
+</html>
