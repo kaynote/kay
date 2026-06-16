@@ -31,11 +31,8 @@ function formatNote(note) {
   let result = note;
 
   result = result.replace(
-    /(정주행|채팅|라이브|클립)?\s*(\d{4}\.\d{1,2}\.\d{1,2})([\s\S]*?)(\d{1,2}:\d{2}(?::\d{2})?)/g,
-    (m, label, date, middle, time) => {
-      const text = `${label ? label + " " : ""}${date}${middle}${time}`;
-      return `<span class="timestamp">${text}</span>`;
-    }
+    /(정주행|채팅|라이브|클립)?\s*(\d{4}\.\d{1,2}\.\d{1,2})([\s\S]*?(\d{1,2}:\d{2}(?::\d{2})?))?/g,
+    (m) => `<span class="timestamp">${m}</span>`
   );
 
   // ✅ 최종 콤마 공백 정리 (핵심)
