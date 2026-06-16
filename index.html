@@ -1,47 +1,3 @@
-<!DOCTYPE html>
-<html lang="ko">
-
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Kay Notes Archive</title>
-
-<link rel="stylesheet" href="style.css?v=10">
-
-<style>
-#peopleContainer{
-    contain:layout paint;
-}
-</style>
-
-</head>
-
-<body>
-
-<header>
-    <h1>Kay Notes Archive</h1>
-
-    <div id="userInfo">로그인 안 됨</div>
-
-    <div class="authArea">
-        <button id="loginBtn">로그인</button>
-        <button id="logoutBtn">로그아웃</button>
-    </div>
-
-    <input type="text" id="searchBox" placeholder="검색...">
-</header>
-
-<div id="peopleContainer"></div>
-
-<!-- MODAL -->
-<div id="modal" class="modal hidden">
-    <div class="modal-content">
-        <button id="closeModal" class="closeBtn">✕</button>
-        <div id="modalBody"></div>
-    </div>
-</div>
-
 <script type="module">
 
 import people from "./people.js?v=10";
@@ -74,6 +30,13 @@ import {
 const ADMIN_EMAIL = "ektjttnfp5@gmail.com";
 
 /* =========================
+   STATE
+========================= */
+
+let data = [];
+let renderedMap = new Map();
+
+/* =========================
    DOM
 ========================= */
 
@@ -85,13 +48,6 @@ const closeModal = document.getElementById("closeModal");
 
 const loginBtn = document.getElementById("loginBtn");
 const logoutBtn = document.getElementById("logoutBtn");
-
-/* =========================
-   STATE
-========================= */
-
-let data = [];
-let renderedMap = new Map();
 
 /* =========================
    INIT
@@ -160,20 +116,6 @@ function createCard(p, index){
 
     card.appendChild(photo);
     card.appendChild(info);
-
-    function setAdminUI() {
-        const user = auth.currentUser;
-
-        const showLikesBtn = document.querySelector(".showLikesBtn");
-
-        if(!showLikesBtn) return;
-
-        if(user && user.email === ADMIN_EMAIL){
-            showLikesBtn.style.display = "inline-block";
-        } else {
-            showLikesBtn.style.display = "none";
-        }
-    }
 
     card.addEventListener("click", () => openModal(p));
 
@@ -262,43 +204,47 @@ async function openModal(p){
     const likeBtn = modalBody.querySelector(".likeBtn");
     const likeCountEl = modalBody.querySelector(".likeCount");
     const showLikesBtn = modalBody.querySelector(".showLikesBtn");
-    
-    showLikesBtn.onclick = async () => {
-
-    const snap = await getDocs(
-        collection(db, "people", p.name, "likes")
-    );
-
-    const list = snap.docs.map(d =>
-        d.data().name || d.data().email || "익명"
-    );
-
-    alert(list.length ? list.join("\n") : "추천 없음");
-};
 
     const commentBtn = modalBody.querySelector(".commentBtn");
     const commentInput = modalBody.querySelector(".commentInput");
     const commentsDiv = modalBody.querySelector(".comments");
 
-    /* =====================
-       SHOW LIKES (한 번만 등록)
-    ===================== */
+    /* =========================
+       ADMIN UI (핵심 수정)
+    ========================= */
 
-    showLikesBtn.addEventListener("click", async ()=>{
+    function setAdminUI(){
+        const user = auth.currentUser;
+
+        if(user && user.email === ADMIN_EMAIL){
+            showLikesBtn.style.display = "inline-block";
+        } else {
+            showLikesBtn.style.display = "none";
+        }
+    }
+
+    setAdminUI();
+
+    /* =========================
+       SHOW LIKES (중복 제거)
+    ========================= */
+
+    showLikesBtn.onclick = async () => {
+
         const snap = await getDocs(
             collection(db, "people", p.name, "likes")
         );
 
-        const result = snap.docs
-            .map(d => d.data().name || "이름 없음")
-            .join("\n");
+        const list = snap.docs.map(d =>
+            d.data().name || d.data().email || "익명"
+        );
 
-        alert(result || "추천 없음");
-    });
+        alert(list.length ? list.join("\n") : "추천 없음");
+    };
 
-    /* =====================
+    /* =========================
        LOAD LIKES
-    ===================== */
+    ========================= */
 
     async function loadLikes(){
         const snap = await getDocs(
@@ -308,9 +254,9 @@ async function openModal(p){
         likeCountEl.textContent = snap.size;
     }
 
-    /* =====================
+    /* =========================
        LIKE TOGGLE
-    ===================== */
+    ========================= */
 
     likeBtn.addEventListener("click", async ()=>{
 
@@ -325,22 +271,19 @@ async function openModal(p){
         } else {
             await setDoc(ref, {
                 uid: user.uid,
-                name: user.displayName,
-                photo: user.photoURL,
+                name: user.displayName || user.email || "익명",
+                email: user.email || "",
                 createdAt: Date.now()
             });
         }
 
-        if(auth.currentUser?.email === ADMIN_EMAIL){
-            showLikesBtn.style.display = "inline-block";
-        }
-
+        setAdminUI();
         loadLikes();
     });
 
-    /* =====================
+    /* =========================
        COMMENTS
-    ===================== */
+    ========================= */
 
     commentBtn.addEventListener("click", async ()=>{
 
@@ -356,8 +299,8 @@ async function openModal(p){
 
         await addDoc(collection(db, "people", p.name, "comments"), {
             uid: user.uid,
-            name: user.displayName,
-            photo: user.photoURL,
+            name: user.displayName || user.email || "익명",
+            photo: user.photoURL || "",
             text,
             createdAt: Date.now()
         });
@@ -366,9 +309,9 @@ async function openModal(p){
         loadComments();
     });
 
-    /* =====================
+    /* =========================
        LOAD COMMENTS
-    ===================== */
+    ========================= */
 
     async function loadComments(){
 
@@ -475,15 +418,12 @@ watchAuth(user=>{
         userInfo.textContent = "로그인 안 됨";
         loginBtn.style.display = "inline-block";
         logoutBtn.style.display = "none";
-        setAdminUI();
         return;
     }
 
     userInfo.textContent = user.email;
     loginBtn.style.display = "none";
     logoutBtn.style.display = "inline-block";
-
-    setAdminUI();
 });
 
 /* =========================
@@ -493,6 +433,3 @@ watchAuth(user=>{
 init();
 
 </script>
-
-</body>
-</html>
