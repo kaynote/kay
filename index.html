@@ -175,10 +175,18 @@ searchBox.addEventListener("input", e=>{
 });
 
 /* =========================
+   MODAL STATE
+========================= */
+
+let currentPerson = null;
+
+/* =========================
    MODAL
 ========================= */
 
 async function openModal(p){
+
+    currentPerson = p;
 
     modal.classList.remove("hidden");
 
@@ -210,17 +218,16 @@ async function openModal(p){
     const commentsDiv = modalBody.querySelector(".comments");
 
     /* =========================
-       ADMIN UI (핵심 수정)
+       ADMIN UI (정상 위치)
     ========================= */
 
     function setAdminUI(){
         const user = auth.currentUser;
 
-        if(user && user.email === ADMIN_EMAIL){
-            showLikesBtn.style.display = "inline-block";
-        } else {
-            showLikesBtn.style.display = "none";
-        }
+        showLikesBtn.style.display =
+            (user && user.email === ADMIN_EMAIL)
+            ? "inline-block"
+            : "none";
     }
 
     setAdminUI();
@@ -235,9 +242,11 @@ async function openModal(p){
             collection(db, "people", p.name, "likes")
         );
 
-        const list = snap.docs.map(d =>
-            d.data().name || d.data().email || "익명"
-        );
+        const list = [...new Set(
+            snap.docs.map(d =>
+                d.data().name || d.data().email || "익명"
+            )
+        )];
 
         alert(list.length ? list.join("\n") : "추천 없음");
     };
@@ -247,6 +256,7 @@ async function openModal(p){
     ========================= */
 
     async function loadLikes(){
+
         const snap = await getDocs(
             collection(db, "people", p.name, "likes")
         );
@@ -258,7 +268,7 @@ async function openModal(p){
        LIKE TOGGLE
     ========================= */
 
-    likeBtn.addEventListener("click", async ()=>{
+    likeBtn.onclick = async () => {
 
         const user = auth.currentUser || await login();
 
@@ -277,15 +287,15 @@ async function openModal(p){
             });
         }
 
-        setAdminUI();
         loadLikes();
-    });
+        setAdminUI();
+    };
 
     /* =========================
        COMMENTS
     ========================= */
 
-    commentBtn.addEventListener("click", async ()=>{
+    commentBtn.onclick = async () => {
 
         const text = commentInput.value.trim();
         if(!text) return;
@@ -307,7 +317,7 @@ async function openModal(p){
 
         commentInput.value = "";
         loadComments();
-    });
+    };
 
     /* =========================
        LOAD COMMENTS
@@ -337,81 +347,39 @@ async function openModal(p){
                 </div>
 
                 <div class="commentText">${c.text}</div>
-
-                ${c.editedAt ? '<div class="edited">(수정됨)</div>' : ''}
             `;
-
-            if(
-                auth.currentUser &&
-                (c.uid === auth.currentUser.uid ||
-                 auth.currentUser.email === ADMIN_EMAIL)
-            ){
-
-                const editBtn = document.createElement("button");
-                editBtn.textContent = "수정";
-
-                editBtn.onclick = async ()=>{
-                    const newText = prompt("댓글 수정", c.text);
-                    if(!newText) return;
-
-                    await updateDoc(
-                        doc(db, "people", p.name, "comments", docSnap.id),
-                        {
-                            text: newText.trim(),
-                            editedAt: Date.now()
-                        }
-                    );
-
-                    loadComments();
-                };
-
-                const delBtn = document.createElement("button");
-                delBtn.textContent = "삭제";
-
-                delBtn.onclick = async ()=>{
-                    if(!confirm("삭제할까요?")) return;
-
-                    await deleteDoc(
-                        doc(db, "people", p.name, "comments", docSnap.id)
-                    );
-
-                    loadComments();
-                };
-
-                div.appendChild(editBtn);
-                div.appendChild(delBtn);
-            }
 
             commentsDiv.appendChild(div);
         });
     }
 
-    await loadLikes();
-    await loadComments();
+    loadLikes();
+    loadComments();
 }
 
 /* =========================
    CLOSE MODAL
 ========================= */
 
-closeModal.addEventListener("click", ()=>{
+closeModal.onclick = () => {
     modal.classList.add("hidden");
-});
+};
 
-modal.addEventListener("click", e=>{
+modal.onclick = (e) => {
     if(e.target === modal){
         modal.classList.add("hidden");
     }
-});
+};
 
 /* =========================
    AUTH
 ========================= */
 
-loginBtn.addEventListener("click", login);
-logoutBtn.addEventListener("click", logout);
+loginBtn.onclick = login;
+logoutBtn.onclick = logout;
 
-watchAuth(user=>{
+watchAuth(user => {
+
     const userInfo = document.getElementById("userInfo");
 
     if(!user){
