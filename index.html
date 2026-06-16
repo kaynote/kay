@@ -161,6 +161,20 @@ function createCard(p, index){
     card.appendChild(photo);
     card.appendChild(info);
 
+    function setAdminUI() {
+        const user = auth.currentUser;
+
+        const showLikesBtn = document.querySelector(".showLikesBtn");
+
+        if(!showLikesBtn) return;
+
+        if(user && user.email === ADMIN_EMAIL){
+            showLikesBtn.style.display = "inline-block";
+        } else {
+            showLikesBtn.style.display = "none";
+        }
+    }
+
     card.addEventListener("click", () => openModal(p));
 
     return card;
@@ -248,6 +262,19 @@ async function openModal(p){
     const likeBtn = modalBody.querySelector(".likeBtn");
     const likeCountEl = modalBody.querySelector(".likeCount");
     const showLikesBtn = modalBody.querySelector(".showLikesBtn");
+    
+    showLikesBtn.onclick = async () => {
+
+    const snap = await getDocs(
+        collection(db, "people", p.name, "likes")
+    );
+
+    const list = snap.docs.map(d =>
+        d.data().name || d.data().email || "익명"
+    );
+
+    alert(list.length ? list.join("\n") : "추천 없음");
+};
 
     const commentBtn = modalBody.querySelector(".commentBtn");
     const commentInput = modalBody.querySelector(".commentInput");
@@ -448,12 +475,15 @@ watchAuth(user=>{
         userInfo.textContent = "로그인 안 됨";
         loginBtn.style.display = "inline-block";
         logoutBtn.style.display = "none";
+        setAdminUI();
         return;
     }
 
     userInfo.textContent = user.email;
     loginBtn.style.display = "none";
     logoutBtn.style.display = "inline-block";
+
+    setAdminUI();
 });
 
 /* =========================
