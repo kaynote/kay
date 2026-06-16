@@ -1,13 +1,14 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 
-import {
-  getFirestore
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+import { getFirestore }
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 import {
   getAuth,
-  signInAnonymously
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+  GoogleAuthProvider,
+  signInWithPopup
+}
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
  const firebaseConfig = {
     apiKey: "AIzaSyCAZzJdAB_a65dkJaL-XLQqzImzlSI8Gmw",
@@ -25,4 +26,19 @@ export const db = getFirestore(app);
 
 export const auth = getAuth(app);
 
-await signInAnonymously(auth);
+const provider =
+  new GoogleAuthProvider();
+
+export async function login(){
+
+  if(auth.currentUser)
+    return auth.currentUser;
+
+  const result =
+    await signInWithPopup(
+      auth,
+      provider
+    );
+
+  return result.user;
+}
