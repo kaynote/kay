@@ -249,6 +249,13 @@ async function openModal(p){
     const likeCountEl = modalBody.querySelector(".likeCount");
     const showLikesBtn = modalBody.querySelector(".showLikesBtn");
 
+    /* 🔥 여기 */
+    if(auth.currentUser?.email === ADMIN_EMAIL){
+        showLikesBtn.style.display = "inline-block";
+    } else {
+        showLikesBtn.style.display = "none";
+    }
+
     const commentBtn = modalBody.querySelector(".commentBtn");
     const commentInput = modalBody.querySelector(".commentInput");
     const commentsDiv = modalBody.querySelector(".comments");
