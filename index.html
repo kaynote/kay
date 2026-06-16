@@ -7,10 +7,6 @@
 
 <title>Kay Notes Archive</title>
 
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-
 <link rel="stylesheet" href="style.css?v=10">
 
 <style>
@@ -26,53 +22,24 @@
 <header>
     <h1>Kay Notes Archive</h1>
 
-    <div id="userInfo">
-        로그인 안 됨
-    </div>
+    <div id="userInfo">로그인 안 됨</div>
 
     <div class="authArea">
-
-      <button id="loginBtn">
-        로그인
-      </button>
-
-      <button id="logoutBtn">
-        로그아웃
-      </button>
-
+        <button id="loginBtn">로그인</button>
+        <button id="logoutBtn">로그아웃</button>
     </div>
 
-    <input
-        type="text"
-        id="searchBox"
-        placeholder="검색..."
-    >
+    <input type="text" id="searchBox" placeholder="검색...">
 </header>
 
 <div id="peopleContainer"></div>
 
-<!-- =========================
-     MODAL
-========================= -->
-
-<div
-    id="modal"
-    class="modal hidden"
->
-
+<!-- MODAL -->
+<div id="modal" class="modal hidden">
     <div class="modal-content">
-
-        <button
-            id="closeModal"
-            class="closeBtn"
-        >
-            ✕
-        </button>
-
+        <button id="closeModal" class="closeBtn">✕</button>
         <div id="modalBody"></div>
-
     </div>
-
 </div>
 
 <script type="module">
@@ -85,8 +52,7 @@ import {
     login,
     logout,
     watchAuth
-}
-from "./firebase.js";
+} from "./firebase.js";
 
 import {
     collection,
@@ -99,76 +65,41 @@ import {
     updateDoc,
     query,
     orderBy
-}
-from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-const ADMIN_EMAIL =
-    "ektjttnfp5@gmail.com";
-    
+/* =========================
+   CONFIG
+========================= */
+
+const ADMIN_EMAIL = "ektjttnfp5@gmail.com";
+
 /* =========================
    DOM
 ========================= */
 
-const container =
-    document.getElementById(
-        "peopleContainer"
-    );
+const container = document.getElementById("peopleContainer");
+const searchBox = document.getElementById("searchBox");
+const modal = document.getElementById("modal");
+const modalBody = document.getElementById("modalBody");
+const closeModal = document.getElementById("closeModal");
 
-const searchBox =
-    document.getElementById(
-        "searchBox"
-    );
-
-const modal =
-    document.getElementById(
-        "modal"
-    );
-
-const modalBody =
-    document.getElementById(
-        "modalBody"
-    );
-
-const closeModal =
-    document.getElementById(
-        "closeModal"
-    );
-    
-const loginBtn =
-    document.getElementById(
-        "loginBtn"
-    );
-
-const logoutBtn =
-    document.getElementById(
-        "logoutBtn"
-    );
+const loginBtn = document.getElementById("loginBtn");
+const logoutBtn = document.getElementById("logoutBtn");
 
 /* =========================
-   DATA
+   STATE
 ========================= */
 
 let data = [];
-
-let renderedMap =
-    new Map();
+let renderedMap = new Map();
 
 /* =========================
    INIT
 ========================= */
 
 function init(){
-
-    if(
-        !Array.isArray(
-            people
-        )
-    ){
-        return;
-    }
-
+    if(!Array.isArray(people)) return;
     data = people;
-
     render(data);
 }
 
@@ -176,157 +107,61 @@ function init(){
    CARD
 ========================= */
 
-function createCard(
-    p,
-    index
-){
+function createCard(p, index){
 
-    const card =
-        document.createElement(
-            "div"
-        );
+    const card = document.createElement("div");
+    card.className = "card";
 
-    card.className =
-        "card";
+    const img = document.createElement("img");
+    img.src = p.image ? "images/" + p.image : "images/no-image.jpg";
+    img.loading = "lazy";
+    img.decoding = "async";
 
-    const photo =
-        document.createElement(
-            "div"
-        );
+    const photo = document.createElement("div");
+    photo.className = "photo";
+    photo.appendChild(img);
 
-    photo.className =
-        "photo";
+    const info = document.createElement("div");
+    info.className = "info";
 
-    const img =
-        document.createElement(
-            "img"
-        );
+    const nameEl = document.createElement("div");
+    nameEl.className = "name";
 
-    img.src =
-        p.image
-        ? "images/" + p.image
-        : "images/no-image.jpg";
+    const enEl = document.createElement("div");
+    enEl.className = "en";
 
-    img.loading =
-        "lazy";
-
-    img.decoding =
-        "async";
-
-    photo.appendChild(
-        img
-    );
-
-    const info =
-        document.createElement(
-            "div"
-        );
-
-    info.className =
-        "info";
-
-    const nameEl =
-        document.createElement(
-            "div"
-        );
-
-    nameEl.className =
-        "name";
-
-    const enEl =
-        document.createElement(
-            "div"
-        );
-
-    enEl.className =
-        "en";
-
-    const no =
-        p.no ||
-        (index + 1);
+    const no = p.no || (index + 1);
 
     enEl.innerHTML = `
-        <span class="num">
-            ${no}.
-        </span>
-
-        <span class="txt">
-            ${p.name || ""}
-        </span>
+        <span class="num">${no}.</span>
+        <span class="txt">${p.name || ""}</span>
     `;
 
-    nameEl.appendChild(
-        enEl
-    );
+    nameEl.appendChild(enEl);
 
     if(p.ko){
-
-        const koEl =
-            document.createElement(
-                "div"
-            );
-
-        koEl.className =
-            "ko";
-
-        koEl.textContent =
-            p.ko;
-
-        nameEl.appendChild(
-            koEl
-        );
+        const koEl = document.createElement("div");
+        koEl.className = "ko";
+        koEl.textContent = p.ko;
+        nameEl.appendChild(koEl);
     }
 
-    const metaEl =
-        document.createElement(
-            "div"
-        );
+    const metaEl = document.createElement("div");
+    metaEl.className = "meta";
+    metaEl.textContent = p.tags ? p.tags.join(" · ") : "";
 
-    metaEl.className =
-        "meta";
+    const descEl = document.createElement("div");
+    descEl.className = "desc";
+    descEl.innerHTML = p.note || "";
 
-    metaEl.textContent =
-        p.tags
-        ? p.tags.join(" · ")
-        : "";
+    info.appendChild(nameEl);
+    info.appendChild(metaEl);
+    info.appendChild(descEl);
 
-    const descEl =
-        document.createElement(
-            "div"
-        );
+    card.appendChild(photo);
+    card.appendChild(info);
 
-    descEl.className =
-        "desc";
-
-    descEl.innerHTML =
-        p.note || "";
-
-    info.appendChild(
-        nameEl
-    );
-
-    info.appendChild(
-        metaEl
-    );
-
-    info.appendChild(
-        descEl
-    );
-
-    card.appendChild(
-        photo
-    );
-
-    card.appendChild(
-        info
-    );
-
-    card.addEventListener(
-        "click",
-        ()=>{
-            openModal(p);
-        }
-    );
+    card.addEventListener("click", () => openModal(p));
 
     return card;
 }
@@ -337,142 +172,51 @@ function createCard(
 
 function render(list){
 
-    const fragment =
-        document.createDocumentFragment();
+    const fragment = document.createDocumentFragment();
 
-    list.forEach(
-        (
-            p,
-            index
-        )=>{
+    list.forEach((p, index)=>{
 
-            const key =
-                (
-                    p.no ||
-                    index
-                )
-                +
-                "_"
-                +
-                p.name;
+        const key = (p.no || index) + "_" + p.name;
 
-            if(
-                renderedMap.has(
-                    key
-                )
-            ){
-
-                fragment.appendChild(
-                    renderedMap.get(
-                        key
-                    )
-                );
-
-            }else{
-
-                const card =
-                    createCard(
-                        p,
-                        index
-                    );
-
-                renderedMap.set(
-                    key,
-                    card
-                );
-
-                fragment.appendChild(
-                    card
-                );
-            }
-
+        if(renderedMap.has(key)){
+            fragment.appendChild(renderedMap.get(key));
+        } else {
+            const card = createCard(p, index);
+            renderedMap.set(key, card);
+            fragment.appendChild(card);
         }
-    );
+    });
 
-    container.replaceChildren(
-        fragment
-    );
+    container.replaceChildren(fragment);
 }
 
 /* =========================
    SEARCH
 ========================= */
 
-function debounce(
-    fn,
-    delay = 150
-){
-
+function debounce(fn, delay = 150){
     let t;
-
     return (...args)=>{
-
-        clearTimeout(
-            t
-        );
-
-        t =
-            setTimeout(
-                ()=>fn(...args),
-                delay
-            );
+        clearTimeout(t);
+        t = setTimeout(()=>fn(...args), delay);
     };
 }
 
-const handleSearch =
-    debounce(
-        value=>{
+const handleSearch = debounce(value=>{
+    const k = value.toLowerCase();
 
-            const k =
-                value.toLowerCase();
-
-            const filtered =
-                data.filter(
-                    p=>
-
-                    (
-                        p.name ||
-                        ""
-                    )
-                    .toLowerCase()
-                    .includes(k)
-
-                    ||
-
-                    (
-                        p.ko ||
-                        ""
-                    )
-                    .toLowerCase()
-                    .includes(k)
-
-                    ||
-
-                    (
-                        p.note ||
-                        ""
-                    )
-                    .toLowerCase()
-                    .includes(k)
-                );
-
-            render(
-                filtered
-            );
-
-        }
+    const filtered = data.filter(p =>
+        (p.name || "").toLowerCase().includes(k) ||
+        (p.ko || "").toLowerCase().includes(k) ||
+        (p.note || "").toLowerCase().includes(k)
     );
 
-searchBox.addEventListener(
-    "input",
-    e=>{
+    render(filtered);
+});
 
-        handleSearch(
-            e.target.value
-        );
-
-    }
-);
+searchBox.addEventListener("input", e=>{
+    handleSearch(e.target.value);
+});
 
 /* =========================
    MODAL
@@ -480,460 +224,199 @@ searchBox.addEventListener(
 
 async function openModal(p){
 
-    modal.classList.remove(
-        "hidden"
-    );
+    modal.classList.remove("hidden");
 
     modalBody.innerHTML = `
+        <img class="modal-photo" src="images/${p.image || 'no-image.jpg'}">
 
-        <img
-            class="modal-photo"
-            src="images/${p.image}"
-        >
-
-        <div class="modal-name">
-            ${p.displayName}
-        </div>
-
-        <div class="modal-desc">
-            ${p.note}
-        </div>
+        <div class="modal-name">${p.displayName || p.name}</div>
+        <div class="modal-desc">${p.note || ""}</div>
 
         <div class="likeArea">
-
-          <button class="likeBtn">
-            👍 좋아요
-          </button>
-
-          <span class="likeCount">
-            0
-          </span>
-
-          <button
-            class="showLikesBtn"
-            style="display:none;">
-            추천자 보기
-          </button>
-
+            <button class="likeBtn">👍 좋아요</button>
+            <span class="likeCount">0</span>
+            <button class="showLikesBtn" style="display:none;">추천자 보기</button>
         </div>
 
         <div class="commentArea">
-
-            <textarea
-                class="commentInput"
-                placeholder="댓글 입력 (최대 1000자)"
-            ></textarea>
-
-            <button
-                class="commentBtn"
-            >
-                등록
-            </button>
-
-            <div
-                class="comments"
-            ></div>
-
+            <textarea class="commentInput" placeholder="댓글 입력 (최대 1000자)"></textarea>
+            <button class="commentBtn">등록</button>
+            <div class="comments"></div>
         </div>
     `;
 
-    const likeBtn =
-        modalBody.querySelector(
-            ".likeBtn"
-        );
+    const likeBtn = modalBody.querySelector(".likeBtn");
+    const likeCountEl = modalBody.querySelector(".likeCount");
+    const showLikesBtn = modalBody.querySelector(".showLikesBtn");
 
-    const likeCountEl =
-        modalBody.querySelector(
-            ".likeCount"
-        );
-        
-    const showLikesBtn =
-        modalBody.querySelector(
-            ".showLikesBtn"
-        );    
-
-    const commentBtn =
-        modalBody.querySelector(
-            ".commentBtn"
-        );
-
-    const commentInput =
-        modalBody.querySelector(
-            ".commentInput"
-        );
-
-    const commentsDiv =
-        modalBody.querySelector(
-            ".comments"
-        );
+    const commentBtn = modalBody.querySelector(".commentBtn");
+    const commentInput = modalBody.querySelector(".commentInput");
+    const commentsDiv = modalBody.querySelector(".comments");
 
     /* =====================
-       LIKE
+       SHOW LIKES (한 번만 등록)
+    ===================== */
+
+    showLikesBtn.addEventListener("click", async ()=>{
+        const snap = await getDocs(
+            collection(db, "people", p.name, "likes")
+        );
+
+        const result = snap.docs
+            .map(d => d.data().name || "이름 없음")
+            .join("\n");
+
+        alert(result || "추천 없음");
+    });
+
+    /* =====================
+       LOAD LIKES
     ===================== */
 
     async function loadLikes(){
+        const snap = await getDocs(
+            collection(db, "people", p.name, "likes")
+        );
 
-        const snap =
-            await getDocs(
-                collection(
-                    db,
-                    "people",
-                    p.name,
-                    "likes"
-                )
-            );
-
-        likeCountEl.textContent =
-            snap.size;
+        likeCountEl.textContent = snap.size;
     }
 
-    likeBtn.addEventListener(
-        "click",
-        async ()=>{
-
-            const user =
-                auth.currentUser ||
-                await login();
-
-            const ref =
-                doc(
-                    db,
-                    "people",
-                    p.name,
-                    "likes",
-                    user.uid
-                );
-
-            const liked =
-                await getDoc(
-                    ref
-                );
-
-            if(
-                liked.exists()
-            ){
-
-                await deleteDoc(
-                    ref
-                );
-
-            }else{
-
-                await setDoc(
-                  ref,
-                  {
-                    uid: user.uid,
-                    name: user.displayName,
-                    photo: user.photoURL,
-                    createdAt: Date.now()
-                  }
-                );
-            }
-
-            if(
-                auth.currentUser &&
-                auth.currentUser.email ===
-                ADMIN_EMAIL
-            ){
-                showLikesBtn.style.display =
-                    "inline-block";
-            }
-
-            loadLikes();
-            
-            showLikesBtn.addEventListener(
-                "click",
-                async ()=>{
-
-                    const snap =
-                        await getDocs(
-                            collection(
-                                db,
-                                "people",
-                                p.name,
-                                "likes"
-                            )
-                        );
-
-                    let result = "";
-
-                    snap.forEach(docSnap=>{
-
-                        const d =
-                            docSnap.data();
-
-                        result +=
-                            (d.name || "이름 없음")
-                            + "\n";
-                    });
-
-                    alert(
-                        result || "추천 없음"
-                    );
-                }
-            );
-
     /* =====================
-       COMMENT WRITE
+       LIKE TOGGLE
     ===================== */
 
-    commentBtn.addEventListener(
-        "click",
-        async ()=>{
+    likeBtn.addEventListener("click", async ()=>{
 
-            const text =
-                commentInput.value
-                .trim();
+        const user = auth.currentUser || await login();
 
-            if(!text)
-                return;
+        const ref = doc(db, "people", p.name, "likes", user.uid);
 
-            if(
-                text.length > 1000
-            ){
-                alert(
-                    "댓글은 1000자 이하만 가능합니다."
-                );
-                return;
-            }
+        const liked = await getDoc(ref);
 
-            const user =
-                auth.currentUser ||
-                await login();
-
-            await addDoc(
-                collection(
-                    db,
-                    "people",
-                    p.name,
-                    "comments"
-                ),
-                {
-                    uid:
-                        user.uid,
-
-                    name:
-                        user.displayName,
-
-                    photo:
-                        user.photoURL,
-
-                    text:
-                        text,
-
-                    createdAt:
-                        Date.now()
-                }
-            );
-
-            commentInput.value =
-                "";
-
-            loadComments();
+        if(liked.exists()){
+            await deleteDoc(ref);
+        } else {
+            await setDoc(ref, {
+                uid: user.uid,
+                name: user.displayName,
+                photo: user.photoURL,
+                createdAt: Date.now()
+            });
         }
-    );
+
+        if(auth.currentUser?.email === ADMIN_EMAIL){
+            showLikesBtn.style.display = "inline-block";
+        }
+
+        loadLikes();
+    });
 
     /* =====================
-       COMMENT LOAD
+       COMMENTS
+    ===================== */
+
+    commentBtn.addEventListener("click", async ()=>{
+
+        const text = commentInput.value.trim();
+        if(!text) return;
+
+        if(text.length > 1000){
+            alert("댓글은 1000자 이하만 가능합니다.");
+            return;
+        }
+
+        const user = auth.currentUser || await login();
+
+        await addDoc(collection(db, "people", p.name, "comments"), {
+            uid: user.uid,
+            name: user.displayName,
+            photo: user.photoURL,
+            text,
+            createdAt: Date.now()
+        });
+
+        commentInput.value = "";
+        loadComments();
+    });
+
+    /* =====================
+       LOAD COMMENTS
     ===================== */
 
     async function loadComments(){
 
-        const q =
-            query(
-                collection(
-                    db,
-                    "people",
-                    p.name,
-                    "comments"
-                ),
-                orderBy(
-                    "createdAt",
-                    "desc"
-                )
-            );
-
-        const snap =
-            await getDocs(
-                q
-            );
-
-        commentsDiv.innerHTML =
-            "";
-
-        snap.forEach(
-            docSnap=>{
-
-                const c =
-                    docSnap.data();
-
-                const div =
-                    document.createElement(
-                        "div"
-                    );
-
-                div.className =
-                    "comment";
-
-                div.innerHTML = `
-                    <div class="commentHeader">
-
-                        <img
-                            src="${c.photo}"
-                        >
-
-                        <span
-                            class="commentName"
-                        >
-                            ${c.name}
-                        </span>
-
-                    </div>
-
-                    <div
-                        class="commentText"
-                    >
-                        ${c.text}
-                    </div>
-
-                    ${
-                        c.editedAt
-                        ?
-                        '<div class="edited">(수정됨)</div>'
-                        :
-                        ''
-                    }
-                `;
-
-                const ADMIN_UID =
-                "q8x2AbCdEF123456xyz";
-
-                if(
-                  auth.currentUser &&
-                  (
-                    c.uid === auth.currentUser.uid
-                    ||
-                    auth.currentUser.email ===
-                    "ektjttnfp5@gmail.com"
-                  )
-                ){
-
-                    const editBtn =
-                        document.createElement(
-                            "button"
-                        );
-
-                    editBtn.className =
-                        "editBtn";
-
-                    editBtn.textContent =
-                        "수정";
-
-                    editBtn.onclick =
-                        async ()=>{
-
-                            const newText =
-                                prompt(
-                                    "댓글 수정",
-                                    c.text
-                                );
-
-                            if(
-                                newText === null
-                            ){
-                                return;
-                            }
-
-                            const text =
-                                newText.trim();
-
-                            if(!text)
-                                return;
-
-                            if(
-                                text.length > 1000
-                            ){
-                                alert(
-                                    "댓글은 1000자 이하만 가능합니다."
-                                );
-                                return;
-                            }
-
-                            await updateDoc(
-                                doc(
-                                    db,
-                                    "people",
-                                    p.name,
-                                    "comments",
-                                    docSnap.id
-                                ),
-                                {
-                                    text:
-                                        text,
-
-                                    editedAt:
-                                        Date.now()
-                                }
-                            );
-
-                            loadComments();
-                        };
-
-                    div.appendChild(
-                        editBtn
-                    );
-
-                    const delBtn =
-                        document.createElement(
-                            "button"
-                        );
-
-                    delBtn.className =
-                        "deleteBtn";
-
-                    delBtn.textContent =
-                        "삭제";
-
-                    delBtn.onclick =
-                        async ()=>{
-
-                            if(
-                                !confirm(
-                                    "댓글을 삭제할까요?"
-                                )
-                            ){
-                                return;
-                            }
-
-                            await deleteDoc(
-                                doc(
-                                    db,
-                                    "people",
-                                    p.name,
-                                    "comments",
-                                    docSnap.id
-                                )
-                            );
-
-                            loadComments();
-                        };
-
-                    div.appendChild(
-                        delBtn
-                    );
-                }
-                
-                
-                
-                commentsDiv.appendChild(
-                    div
-                );
-            }
+        const q = query(
+            collection(db, "people", p.name, "comments"),
+            orderBy("createdAt", "desc")
         );
+
+        const snap = await getDocs(q);
+
+        commentsDiv.innerHTML = "";
+
+        snap.forEach(docSnap=>{
+            const c = docSnap.data();
+
+            const div = document.createElement("div");
+            div.className = "comment";
+
+            div.innerHTML = `
+                <div class="commentHeader">
+                    <img src="${c.photo || 'images/no-image.jpg'}">
+                    <span class="commentName">${c.name}</span>
+                </div>
+
+                <div class="commentText">${c.text}</div>
+
+                ${c.editedAt ? '<div class="edited">(수정됨)</div>' : ''}
+            `;
+
+            if(
+                auth.currentUser &&
+                (c.uid === auth.currentUser.uid ||
+                 auth.currentUser.email === ADMIN_EMAIL)
+            ){
+
+                const editBtn = document.createElement("button");
+                editBtn.textContent = "수정";
+
+                editBtn.onclick = async ()=>{
+                    const newText = prompt("댓글 수정", c.text);
+                    if(!newText) return;
+
+                    await updateDoc(
+                        doc(db, "people", p.name, "comments", docSnap.id),
+                        {
+                            text: newText.trim(),
+                            editedAt: Date.now()
+                        }
+                    );
+
+                    loadComments();
+                };
+
+                const delBtn = document.createElement("button");
+                delBtn.textContent = "삭제";
+
+                delBtn.onclick = async ()=>{
+                    if(!confirm("삭제할까요?")) return;
+
+                    await deleteDoc(
+                        doc(db, "people", p.name, "comments", docSnap.id)
+                    );
+
+                    loadComments();
+                };
+
+                div.appendChild(editBtn);
+                div.appendChild(delBtn);
+            }
+
+            commentsDiv.appendChild(div);
+        });
     }
 
     await loadLikes();
-
     await loadComments();
 }
 
@@ -941,77 +424,36 @@ async function openModal(p){
    CLOSE MODAL
 ========================= */
 
-closeModal.addEventListener(
-    "click",
-    ()=>{
+closeModal.addEventListener("click", ()=>{
+    modal.classList.add("hidden");
+});
 
-        modal.classList.add(
-            "hidden"
-        );
-
+modal.addEventListener("click", e=>{
+    if(e.target === modal){
+        modal.classList.add("hidden");
     }
-);
+});
 
-modal.addEventListener(
-    "click",
-    e=>{
+/* =========================
+   AUTH
+========================= */
 
-        if(
-            e.target === modal
-        ){
-
-            modal.classList.add(
-                "hidden"
-            );
-
-        }
-    }
-);
-
-loginBtn.addEventListener(
-    "click",
-    async ()=>{
-        await login();
-    }
-);
-
-logoutBtn.addEventListener(
-    "click",
-    async ()=>{
-        await logout();
-    }
-);
+loginBtn.addEventListener("click", login);
+logoutBtn.addEventListener("click", logout);
 
 watchAuth(user=>{
-
-    const userInfo =
-        document.getElementById(
-            "userInfo"
-        );
+    const userInfo = document.getElementById("userInfo");
 
     if(!user){
-
-        userInfo.textContent =
-            "로그인 안 됨";
-
-        loginBtn.style.display =
-            "inline-block";
-
-        logoutBtn.style.display =
-            "none";
-
+        userInfo.textContent = "로그인 안 됨";
+        loginBtn.style.display = "inline-block";
+        logoutBtn.style.display = "none";
         return;
     }
 
-    userInfo.textContent =
-        user.email;
-
-    loginBtn.style.display =
-        "none";
-
-    logoutBtn.style.display =
-        "inline-block";
-
+    userInfo.textContent = user.email;
+    loginBtn.style.display = "none";
+    logoutBtn.style.display = "inline-block";
 });
 
 /* =========================
