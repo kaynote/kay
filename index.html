@@ -42,20 +42,6 @@
 /* 🔥 JS도 캐시 방지 */
 import people from "./people.js?v=3";
 
-import { db, auth } from "./firebase.js";
-
-import {
-  doc,
-  setDoc,
-  deleteDoc,
-  getDocs,
-  collection,
-  addDoc,
-  query,
-  orderBy
-}
-from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
 const container =
     document.getElementById("peopleContainer");
 
@@ -75,12 +61,6 @@ function init(){
 
 /* CARD */
 function createCard(p, index){
-
-    const likeBtn =
-        actions.querySelector(".likeBtn");
-
-    const likeCountEl =
-        actions.querySelector(".likeCount");
 
     const card = document.createElement("div");
     card.className = "card";
@@ -135,21 +115,6 @@ function createCard(p, index){
     info.appendChild(nameEl);
     info.appendChild(metaEl);
     info.appendChild(descEl);
-    
-    const actions = document.createElement("div");
-    actions.className = "actions";
-
-    actions.innerHTML = `
-        <button class="likeBtn">
-            👍 좋아요
-        </button>
-
-        <span class="likeCount">
-            0
-        </span>
-    `;
-
-    info.appendChild(actions);
 
     card.appendChild(photo);
     card.appendChild(info);
