@@ -28,8 +28,6 @@
         <button id="loginBtn">로그인</button>
         <button id="logoutBtn">로그아웃</button>
     </div>
-    
-    <div id="toastContainer"></div>
 
     <input type="text" id="searchBox" placeholder="검색...">
 </header>
@@ -46,7 +44,7 @@
 
 <script type="module">
 
-<script type="module" src="people.js"></script>
+import people from "./people.js?v=10";
 
 import {
     db,
