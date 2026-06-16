@@ -452,3 +452,7 @@ header{
     font-size:14px;
     color:#555;
 }
+
+#toastContainer { ... }
+.toast { ... }
+@keyframes fadeIn { ... }
