@@ -103,7 +103,7 @@ const people = [
     "ko": "안드레이",
     "displayName": "Andrei 안드레이",
     "note": "무마이의 할머니인 달리의 손자, <span class=\"timestamp\">정주행 2020.02.22 16:04</span>",
-    "image": "no-image.jpg"
+    "image": "Andrei.jpg"
   },
   {
     "no": 14,
