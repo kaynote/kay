@@ -1331,9 +1331,9 @@ const people = [
   },
   {
     "no": 167,
-    "name": "Leriol Dungca",
-    "ko": "레리올 둥카",
-    "displayName": "Leriol Dungca 레리올 둥카",
+    "name": "Lerio L. Dungca",
+    "ko": "레리오 L. 둥카",
+    "displayName": "Lerio L. Dungca 레리오 L. 둥카",
     "note": "5월 3일생인 라이사의 친엄마, 라이브 채팅에 참여하여 번역기를 돌려 채팅 메시지를 남긴 적이 있다, ​​@lerioldungca9731: Jollibee에서 치료해 주셔서 감사합니다 Jery 선생님 ryzza의 생일을 위해 저는 ryzza의 엄마이기 때문에 ryzza를 후원해 주셔서 대단히 감사합니다, <span class=\"timestamp\">2025.05.04 41:41</span>",
     "image": "no-image.jpg"
   },
