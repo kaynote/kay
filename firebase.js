@@ -12,6 +12,10 @@ import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
+/* =========================
+   CONFIG
+========================= */
+
 const firebaseConfig = {
   apiKey: "AIzaSyCAZzJdAB_a65dkJaL-XLQqzImzlSI8Gmw",
   authDomain: "kay-gallery.firebaseapp.com",
@@ -22,41 +26,66 @@ const firebaseConfig = {
   measurementId: "G-E61XXMZCHM"
 };
 
+/* =========================
+   INIT
+========================= */
+
 const app = initializeApp(firebaseConfig);
 
 export const db = getFirestore(app);
-
 export const auth = getAuth(app);
 
-const provider =
-  new GoogleAuthProvider();
+const provider = new GoogleAuthProvider();
 
-/* 로그인 */
-export async function login(){
+/* =========================
+   USER NORMALIZER
+   👉 핵심 추가
+========================= */
 
-  if(auth.currentUser){
-    return auth.currentUser;
-  }
+function normalizeUser(user) {
+  if (!user) return null;
 
-  const result =
-    await signInWithPopup(
-      auth,
-      provider
-    );
-
-  return result.user;
+  return {
+    uid: user.uid || "",
+    email: user.email || "",
+    name:
+      user.displayName ||
+      user.email ||
+      "익명 사용자",
+    photo: user.photoURL || ""
+  };
 }
 
-/* 로그아웃 */
-export async function logout(){
+/* =========================
+   LOGIN
+========================= */
+
+export async function login() {
+
+  if (auth.currentUser) {
+    return normalizeUser(auth.currentUser);
+  }
+
+  const result = await signInWithPopup(auth, provider);
+
+  return normalizeUser(result.user);
+}
+
+/* =========================
+   LOGOUT
+========================= */
+
+export async function logout() {
   await signOut(auth);
 }
 
-/* 로그인 상태 감지 */
-export function watchAuth(callback){
+/* =========================
+   AUTH WATCHER
+========================= */
 
-  return onAuthStateChanged(
-    auth,
-    callback
-  );
+export function watchAuth(callback) {
+
+  return onAuthStateChanged(auth, (user) => {
+    callback(normalizeUser(user));
+  });
 }
