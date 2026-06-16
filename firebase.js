@@ -51,6 +51,7 @@ function normalizeUser(user) {
     name:
       user.displayName ||
       user.email ||
+      auth.currentUser?.providerData?.[0]?.displayName ||
       "익명 사용자",
     photo: user.photoURL || ""
   };
