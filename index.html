@@ -24,15 +24,17 @@
 <body>
 
 <header>
-
     <h1>Kay Notes Archive</h1>
+
+    <div id="userInfo">
+        로그인 안 됨
+    </div>
 
     <input
         type="text"
         id="searchBox"
         placeholder="검색..."
     >
-
 </header>
 
 <div id="peopleContainer"></div>
@@ -68,7 +70,8 @@ import people from "./people.js?v=10";
 import {
     db,
     auth,
-    login
+    login,
+    watchAuth
 }
 from "./firebase.js";
 
@@ -736,7 +739,8 @@ async function openModal(p){
                   (
                     c.uid === auth.currentUser.uid
                     ||
-                    auth.currentUser.uid === ADMIN_UID
+                    auth.currentUser.email ===
+                    "ektjttnfp5@gmail.com"
                   )
                 ){
 
@@ -844,7 +848,9 @@ async function openModal(p){
                         delBtn
                     );
                 }
-
+                
+                
+                
                 commentsDiv.appendChild(
                     div
                 );
@@ -887,6 +893,26 @@ modal.addEventListener(
         }
     }
 );
+
+watchAuth(user=>{
+
+    const userInfo =
+        document.getElementById(
+            "userInfo"
+        );
+
+    if(!user){
+
+        userInfo.textContent =
+            "로그인 안 됨";
+
+        return;
+    }
+
+    userInfo.textContent =
+        user.email;
+
+});
 
 /* =========================
    START
