@@ -137,3 +137,301 @@ header{
 .timestamp {
   color: #707070 !important;
 }
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.6);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    z-index:9999;
+}
+
+.modal.hidden{
+    display:none;
+}
+
+.modal-content{
+
+    width:min(900px, 95vw);
+    max-height:90vh;
+
+    overflow:auto;
+
+    background:white;
+
+    border-radius:16px;
+
+    padding:24px;
+
+    box-sizing:border-box;
+
+    position:relative;
+}
+
+.closeBtn{
+
+    position:absolute;
+    right:15px;
+    top:15px;
+
+    border:none;
+    background:none;
+
+    font-size:24px;
+    cursor:pointer;
+}
+
+/* =========================
+   MODAL PHOTO
+========================= */
+
+.modal-photo{
+
+    width:100%;
+    max-width:320px;
+
+    border-radius:12px;
+
+    display:block;
+
+    margin:0 auto 20px;
+}
+
+.modal-name{
+
+    font-size:24px;
+    font-weight:700;
+
+    margin-bottom:10px;
+}
+
+.modal-desc{
+
+    line-height:1.8;
+
+    white-space:pre-line;
+
+    margin-bottom:20px;
+}
+
+/* =========================
+   LIKE
+========================= */
+
+.likeArea{
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    margin-bottom:20px;
+}
+
+.likeBtn{
+
+    border:none;
+
+    background:#1976d2;
+
+    color:white;
+
+    border-radius:10px;
+
+    padding:10px 16px;
+
+    cursor:pointer;
+
+    font-size:15px;
+}
+
+.likeBtn:hover{
+    opacity:.9;
+}
+
+.likeCount{
+
+    font-weight:700;
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+.loginArea{
+
+    margin-bottom:20px;
+}
+
+.loginBtn{
+
+    border:none;
+
+    background:#4285F4;
+
+    color:white;
+
+    border-radius:10px;
+
+    padding:10px 16px;
+
+    cursor:pointer;
+}
+
+.userInfo{
+
+    margin-top:10px;
+
+    display:flex;
+    align-items:center;
+
+    gap:10px;
+}
+
+.userInfo img{
+
+    width:40px;
+    height:40px;
+
+    border-radius:50%;
+}
+
+/* =========================
+   COMMENTS
+========================= */
+
+.commentArea{
+
+    margin-top:20px;
+}
+
+.commentInput{
+
+    width:100%;
+
+    min-height:90px;
+
+    resize:vertical;
+
+    padding:10px;
+
+    box-sizing:border-box;
+
+    border:1px solid #ccc;
+
+    border-radius:10px;
+}
+
+.commentBtn{
+
+    margin-top:10px;
+
+    border:none;
+
+    background:#2e7d32;
+
+    color:white;
+
+    border-radius:10px;
+
+    padding:10px 16px;
+
+    cursor:pointer;
+}
+
+.comments{
+
+    margin-top:20px;
+}
+
+.comment{
+
+    padding:12px;
+
+    border:1px solid #e5e5e5;
+
+    border-radius:10px;
+
+    margin-bottom:10px;
+}
+
+.commentHeader{
+
+    display:flex;
+    align-items:center;
+
+    gap:10px;
+
+    margin-bottom:8px;
+}
+
+.commentHeader img{
+
+    width:36px;
+    height:36px;
+
+    border-radius:50%;
+}
+
+.commentName{
+
+    font-weight:700;
+}
+
+.commentText{
+
+    line-height:1.6;
+}
+
+.deleteBtn{
+
+    margin-top:10px;
+
+    border:none;
+
+    background:#d32f2f;
+
+    color:white;
+
+    border-radius:8px;
+
+    padding:6px 12px;
+
+    cursor:pointer;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width:700px){
+
+    .modal-content{
+
+        width:100vw;
+        height:100vh;
+
+        max-height:none;
+
+        border-radius:0;
+    }
+
+}
+
+.editBtn{
+    margin-top:10px;
+    margin-right:8px;
+    border:none;
+    background:#1976d2;
+    color:white;
+    border-radius:8px;
+    padding:6px 12px;
+    cursor:pointer;
+}

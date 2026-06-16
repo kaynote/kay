@@ -7,13 +7,11 @@
 
 <title>Kay Notes Archive</title>
 
-<!-- 🔥 캐시 방지 -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 
-<!-- 🔥 CSS 버전 -->
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="style.css?v=10">
 
 <style>
 #peopleContainer{
@@ -26,6 +24,7 @@
 <body>
 
 <header>
+
     <h1>Kay Notes Archive</h1>
 
     <input
@@ -33,144 +32,861 @@
         id="searchBox"
         placeholder="검색..."
     >
+
 </header>
 
 <div id="peopleContainer"></div>
 
+<!-- =========================
+     MODAL
+========================= -->
+
+<div
+    id="modal"
+    class="modal hidden"
+>
+
+    <div class="modal-content">
+
+        <button
+            id="closeModal"
+            class="closeBtn"
+        >
+            ✕
+        </button>
+
+        <div id="modalBody"></div>
+
+    </div>
+
+</div>
+
 <script type="module">
 
-/* 🔥 JS도 캐시 방지 */
-import people from "./people.js?v=3";
+import people
+from "./people.js?v=10";
+
+import {
+    db,
+    auth,
+    login
+}
+from "./firebase.js";
+
+import {
+    collection,
+    getDocs,
+    addDoc,
+    deleteDoc,
+    doc,
+    setDoc,
+    getDoc,
+    updateDoc,
+    query,
+    orderBy
+}
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+/* =========================
+   DOM
+========================= */
 
 const container =
-    document.getElementById("peopleContainer");
+    document.getElementById(
+        "peopleContainer"
+    );
 
 const searchBox =
-    document.getElementById("searchBox");
+    document.getElementById(
+        "searchBox"
+    );
+
+const modal =
+    document.getElementById(
+        "modal"
+    );
+
+const modalBody =
+    document.getElementById(
+        "modalBody"
+    );
+
+const closeModal =
+    document.getElementById(
+        "closeModal"
+    );
+
+/* =========================
+   DATA
+========================= */
 
 let data = [];
 
-let renderedMap = new Map();
+let renderedMap =
+    new Map();
 
-/* INIT */
+/* =========================
+   INIT
+========================= */
+
 function init(){
-    if(!Array.isArray(people)) return;
+
+    if(
+        !Array.isArray(
+            people
+        )
+    ){
+        return;
+    }
+
     data = people;
+
     render(data);
 }
 
-/* CARD */
-function createCard(p, index){
+/* =========================
+   CARD
+========================= */
 
-    const card = document.createElement("div");
-    card.className = "card";
+function createCard(
+    p,
+    index
+){
 
-    const photo = document.createElement("div");
-    photo.className = "photo";
+    const card =
+        document.createElement(
+            "div"
+        );
 
-    const img = document.createElement("img");
+    card.className =
+        "card";
 
-    img.src = p.image
+    const photo =
+        document.createElement(
+            "div"
+        );
+
+    photo.className =
+        "photo";
+
+    const img =
+        document.createElement(
+            "img"
+        );
+
+    img.src =
+        p.image
         ? "images/" + p.image
         : "images/no-image.jpg";
 
-    img.loading = "lazy";
-    img.decoding = "async";
+    img.loading =
+        "lazy";
 
-    photo.appendChild(img);
+    img.decoding =
+        "async";
 
-    const info = document.createElement("div");
-    info.className = "info";
+    photo.appendChild(
+        img
+    );
 
-    const nameEl = document.createElement("div");
-    nameEl.className = "name";
+    const info =
+        document.createElement(
+            "div"
+        );
 
-    const enEl = document.createElement("div");
-    enEl.className = "en";
+    info.className =
+        "info";
 
-    const no = (p.no || (index + 1));
+    const nameEl =
+        document.createElement(
+            "div"
+        );
 
-    enEl.innerHTML =
-        `<span class="num">${no}.</span>
-         <span class="txt">${p.name || ""}</span>`;
+    nameEl.className =
+        "name";
 
-    const koEl = document.createElement("div");
-    koEl.className = "ko";
-    koEl.textContent = p.ko || "";
+    const enEl =
+        document.createElement(
+            "div"
+        );
 
-    nameEl.appendChild(enEl);
+    enEl.className =
+        "en";
+
+    const no =
+        p.no ||
+        (index + 1);
+
+    enEl.innerHTML = `
+        <span class="num">
+            ${no}.
+        </span>
+
+        <span class="txt">
+            ${p.name || ""}
+        </span>
+    `;
+
+    nameEl.appendChild(
+        enEl
+    );
 
     if(p.ko){
-        nameEl.appendChild(koEl);
+
+        const koEl =
+            document.createElement(
+                "div"
+            );
+
+        koEl.className =
+            "ko";
+
+        koEl.textContent =
+            p.ko;
+
+        nameEl.appendChild(
+            koEl
+        );
     }
 
-    const metaEl = document.createElement("div");
-    metaEl.className = "meta";
-    metaEl.textContent = p.tags ? p.tags.join(" · ") : "";
+    const metaEl =
+        document.createElement(
+            "div"
+        );
 
-    const descEl = document.createElement("div");
-    descEl.className = "desc";
-    descEl.innerHTML = p.note || "";
+    metaEl.className =
+        "meta";
 
-    info.appendChild(nameEl);
-    info.appendChild(metaEl);
-    info.appendChild(descEl);
+    metaEl.textContent =
+        p.tags
+        ? p.tags.join(" · ")
+        : "";
 
-    card.appendChild(photo);
-    card.appendChild(info);
+    const descEl =
+        document.createElement(
+            "div"
+        );
+
+    descEl.className =
+        "desc";
+
+    descEl.innerHTML =
+        p.note || "";
+
+    info.appendChild(
+        nameEl
+    );
+
+    info.appendChild(
+        metaEl
+    );
+
+    info.appendChild(
+        descEl
+    );
+
+    card.appendChild(
+        photo
+    );
+
+    card.appendChild(
+        info
+    );
+
+    card.addEventListener(
+        "click",
+        ()=>{
+            openModal(p);
+        }
+    );
 
     return card;
 }
 
-/* RENDER */
+/* =========================
+   RENDER
+========================= */
+
 function render(list){
 
-    const fragment = document.createDocumentFragment();
+    const fragment =
+        document.createDocumentFragment();
 
-    list.forEach((p, index) => {
+    list.forEach(
+        (
+            p,
+            index
+        )=>{
 
-        const key = (p.no || index) + "_" + p.name;
+            const key =
+                (
+                    p.no ||
+                    index
+                )
+                +
+                "_"
+                +
+                p.name;
 
-        if(renderedMap.has(key)){
-            fragment.appendChild(renderedMap.get(key));
-        }else{
-            const card = createCard(p, index);
-            renderedMap.set(key, card);
-            fragment.appendChild(card);
+            if(
+                renderedMap.has(
+                    key
+                )
+            ){
+
+                fragment.appendChild(
+                    renderedMap.get(
+                        key
+                    )
+                );
+
+            }else{
+
+                const card =
+                    createCard(
+                        p,
+                        index
+                    );
+
+                renderedMap.set(
+                    key,
+                    card
+                );
+
+                fragment.appendChild(
+                    card
+                );
+            }
+
         }
-    });
+    );
 
-    container.replaceChildren(fragment);
+    container.replaceChildren(
+        fragment
+    );
 }
 
-/* SEARCH */
-function debounce(fn, delay = 150){
+/* =========================
+   SEARCH
+========================= */
+
+function debounce(
+    fn,
+    delay = 150
+){
+
     let t;
-    return (...args) => {
-        clearTimeout(t);
-        t = setTimeout(() => fn(...args), delay);
+
+    return (...args)=>{
+
+        clearTimeout(
+            t
+        );
+
+        t =
+            setTimeout(
+                ()=>fn(...args),
+                delay
+            );
     };
 }
 
-const handleSearch = debounce((value) => {
+const handleSearch =
+    debounce(
+        value=>{
 
-    const k = value.toLowerCase();
+            const k =
+                value.toLowerCase();
 
-    const filtered = data.filter(p =>
-        (p.name || "").toLowerCase().includes(k) ||
-        (p.ko || "").toLowerCase().includes(k) ||
-        (p.note || "").toLowerCase().includes(k)
+            const filtered =
+                data.filter(
+                    p=>
+
+                    (
+                        p.name ||
+                        ""
+                    )
+                    .toLowerCase()
+                    .includes(k)
+
+                    ||
+
+                    (
+                        p.ko ||
+                        ""
+                    )
+                    .toLowerCase()
+                    .includes(k)
+
+                    ||
+
+                    (
+                        p.note ||
+                        ""
+                    )
+                    .toLowerCase()
+                    .includes(k)
+                );
+
+            render(
+                filtered
+            );
+
+        }
     );
 
-    render(filtered);
+searchBox.addEventListener(
+    "input",
+    e=>{
 
-}, 150);
+        handleSearch(
+            e.target.value
+        );
 
-searchBox.addEventListener("input", e => {
-    handleSearch(e.target.value);
-});
+    }
+);
 
-/* START */
+/* =========================
+   MODAL
+========================= */
+
+async function openModal(p){
+
+    modal.classList.remove(
+        "hidden"
+    );
+
+    modalBody.innerHTML = `
+
+        <img
+            class="modal-photo"
+            src="images/${p.image}"
+        >
+
+        <div class="modal-name">
+            ${p.displayName}
+        </div>
+
+        <div class="modal-desc">
+            ${p.note}
+        </div>
+
+        <div class="likeArea">
+
+            <button
+                class="likeBtn"
+            >
+                👍 좋아요
+            </button>
+
+            <span
+                class="likeCount"
+            >
+                0
+            </span>
+
+        </div>
+
+        <div class="commentArea">
+
+            <textarea
+                class="commentInput"
+                placeholder="댓글 입력 (최대 1000자)"
+            ></textarea>
+
+            <button
+                class="commentBtn"
+            >
+                등록
+            </button>
+
+            <div
+                class="comments"
+            ></div>
+
+        </div>
+    `;
+
+    const likeBtn =
+        modalBody.querySelector(
+            ".likeBtn"
+        );
+
+    const likeCountEl =
+        modalBody.querySelector(
+            ".likeCount"
+        );
+
+    const commentBtn =
+        modalBody.querySelector(
+            ".commentBtn"
+        );
+
+    const commentInput =
+        modalBody.querySelector(
+            ".commentInput"
+        );
+
+    const commentsDiv =
+        modalBody.querySelector(
+            ".comments"
+        );
+
+    /* =====================
+       LIKE
+    ===================== */
+
+    async function loadLikes(){
+
+        const snap =
+            await getDocs(
+                collection(
+                    db,
+                    "people",
+                    p.name,
+                    "likes"
+                )
+            );
+
+        likeCountEl.textContent =
+            snap.size;
+    }
+
+    likeBtn.addEventListener(
+        "click",
+        async ()=>{
+
+            const user =
+                auth.currentUser ||
+                await login();
+
+            const ref =
+                doc(
+                    db,
+                    "people",
+                    p.name,
+                    "likes",
+                    user.uid
+                );
+
+            const liked =
+                await getDoc(
+                    ref
+                );
+
+            if(
+                liked.exists()
+            ){
+
+                await deleteDoc(
+                    ref
+                );
+
+            }else{
+
+                await setDoc(
+                    ref,
+                    {
+                        createdAt:
+                            Date.now()
+                    }
+                );
+            }
+
+            loadLikes();
+        }
+    );
+
+    /* =====================
+       COMMENT WRITE
+    ===================== */
+
+    commentBtn.addEventListener(
+        "click",
+        async ()=>{
+
+            const text =
+                commentInput.value
+                .trim();
+
+            if(!text)
+                return;
+
+            if(
+                text.length > 1000
+            ){
+                alert(
+                    "댓글은 1000자 이하만 가능합니다."
+                );
+                return;
+            }
+
+            const user =
+                auth.currentUser ||
+                await login();
+
+            await addDoc(
+                collection(
+                    db,
+                    "people",
+                    p.name,
+                    "comments"
+                ),
+                {
+                    uid:
+                        user.uid,
+
+                    name:
+                        user.displayName,
+
+                    photo:
+                        user.photoURL,
+
+                    text:
+                        text,
+
+                    createdAt:
+                        Date.now()
+                }
+            );
+
+            commentInput.value =
+                "";
+
+            loadComments();
+        }
+    );
+
+    /* =====================
+       COMMENT LOAD
+    ===================== */
+
+    async function loadComments(){
+
+        const q =
+            query(
+                collection(
+                    db,
+                    "people",
+                    p.name,
+                    "comments"
+                ),
+                orderBy(
+                    "createdAt",
+                    "desc"
+                )
+            );
+
+        const snap =
+            await getDocs(
+                q
+            );
+
+        commentsDiv.innerHTML =
+            "";
+
+        snap.forEach(
+            docSnap=>{
+
+                const c =
+                    docSnap.data();
+
+                const div =
+                    document.createElement(
+                        "div"
+                    );
+
+                div.className =
+                    "comment";
+
+                div.innerHTML = `
+                    <div class="commentHeader">
+
+                        <img
+                            src="${c.photo}"
+                        >
+
+                        <span
+                            class="commentName"
+                        >
+                            ${c.name}
+                        </span>
+
+                    </div>
+
+                    <div
+                        class="commentText"
+                    >
+                        ${c.text}
+                    </div>
+
+                    ${
+                        c.editedAt
+                        ?
+                        '<div class="edited">(수정됨)</div>'
+                        :
+                        ''
+                    }
+                `;
+
+                if(
+                    auth.currentUser &&
+                    c.uid ===
+                    auth.currentUser.uid
+                ){
+
+                    const editBtn =
+                        document.createElement(
+                            "button"
+                        );
+
+                    editBtn.className =
+                        "editBtn";
+
+                    editBtn.textContent =
+                        "수정";
+
+                    editBtn.onclick =
+                        async ()=>{
+
+                            const newText =
+                                prompt(
+                                    "댓글 수정",
+                                    c.text
+                                );
+
+                            if(
+                                newText === null
+                            ){
+                                return;
+                            }
+
+                            const text =
+                                newText.trim();
+
+                            if(!text)
+                                return;
+
+                            if(
+                                text.length > 1000
+                            ){
+                                alert(
+                                    "댓글은 1000자 이하만 가능합니다."
+                                );
+                                return;
+                            }
+
+                            await updateDoc(
+                                doc(
+                                    db,
+                                    "people",
+                                    p.name,
+                                    "comments",
+                                    docSnap.id
+                                ),
+                                {
+                                    text:
+                                        text,
+
+                                    editedAt:
+                                        Date.now()
+                                }
+                            );
+
+                            loadComments();
+                        };
+
+                    div.appendChild(
+                        editBtn
+                    );
+
+                    const delBtn =
+                        document.createElement(
+                            "button"
+                        );
+
+                    delBtn.className =
+                        "deleteBtn";
+
+                    delBtn.textContent =
+                        "삭제";
+
+                    delBtn.onclick =
+                        async ()=>{
+
+                            if(
+                                !confirm(
+                                    "댓글을 삭제할까요?"
+                                )
+                            ){
+                                return;
+                            }
+
+                            await deleteDoc(
+                                doc(
+                                    db,
+                                    "people",
+                                    p.name,
+                                    "comments",
+                                    docSnap.id
+                                )
+                            );
+
+                            loadComments();
+                        };
+
+                    div.appendChild(
+                        delBtn
+                    );
+                }
+
+                commentsDiv.appendChild(
+                    div
+                );
+            }
+        );
+    }
+
+    await loadLikes();
+
+    await loadComments();
+}
+
+/* =========================
+   CLOSE MODAL
+========================= */
+
+closeModal.addEventListener(
+    "click",
+    ()=>{
+
+        modal.classList.add(
+            "hidden"
+        );
+
+    }
+);
+
+modal.addEventListener(
+    "click",
+    e=>{
+
+        if(
+            e.target === modal
+        ){
+
+            modal.classList.add(
+                "hidden"
+            );
+
+        }
+    }
+);
+
+/* =========================
+   START
+========================= */
+
 init();
 
 </script>
