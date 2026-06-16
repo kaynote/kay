@@ -435,3 +435,20 @@ header{
     padding:6px 12px;
     cursor:pointer;
 }
+
+.authArea{
+    margin:10px 0;
+}
+
+.authArea button{
+    padding:8px 14px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+#userInfo{
+    margin:8px 0;
+    font-size:14px;
+    color:#555;
+}

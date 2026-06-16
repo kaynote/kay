@@ -30,6 +30,18 @@
         로그인 안 됨
     </div>
 
+    <div class="authArea">
+
+      <button id="loginBtn">
+        로그인
+      </button>
+
+      <button id="logoutBtn">
+        로그아웃
+      </button>
+
+    </div>
+
     <input
         type="text"
         id="searchBox"
@@ -71,6 +83,7 @@ import {
     db,
     auth,
     login,
+    logout,
     watchAuth
 }
 from "./firebase.js";
@@ -116,6 +129,16 @@ const modalBody =
 const closeModal =
     document.getElementById(
         "closeModal"
+    );
+    
+const loginBtn =
+    document.getElementById(
+        "loginBtn"
+    );
+
+const logoutBtn =
+    document.getElementById(
+        "logoutBtn"
     );
 
 /* =========================
@@ -894,6 +917,20 @@ modal.addEventListener(
     }
 );
 
+loginBtn.addEventListener(
+    "click",
+    async ()=>{
+        await login();
+    }
+);
+
+logoutBtn.addEventListener(
+    "click",
+    async ()=>{
+        await logout();
+    }
+);
+
 watchAuth(user=>{
 
     const userInfo =
@@ -906,11 +943,23 @@ watchAuth(user=>{
         userInfo.textContent =
             "로그인 안 됨";
 
+        loginBtn.style.display =
+            "inline-block";
+
+        logoutBtn.style.display =
+            "none";
+
         return;
     }
 
     userInfo.textContent =
         user.email;
+
+    loginBtn.style.display =
+        "none";
+
+    logoutBtn.style.display =
+        "inline-block";
 
 });
 
