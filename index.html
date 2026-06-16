@@ -298,7 +298,7 @@ async function openModal(p){
         } else {
             await setDoc(ref, {
                 uid: user.uid,
-                name: user.displayName,
+                name: user.displayName || user.email || "익명",
                 photo: user.photoURL,
                 createdAt: Date.now()
             });
@@ -329,7 +329,7 @@ async function openModal(p){
 
         await addDoc(collection(db, "people", p.name, "comments"), {
             uid: user.uid,
-            name: user.displayName,
+            name: user.displayName || user.email || "익명",
             photo: user.photoURL,
             text,
             createdAt: Date.now()
