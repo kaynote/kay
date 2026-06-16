@@ -102,6 +102,9 @@ import {
 }
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
+const ADMIN_EMAIL =
+    "ektjttnfp5@gmail.com";
+    
 /* =========================
    DOM
 ========================= */
@@ -498,17 +501,19 @@ async function openModal(p){
 
         <div class="likeArea">
 
-            <button
-                class="likeBtn"
-            >
-                👍 좋아요
-            </button>
+          <button class="likeBtn">
+            👍 좋아요
+          </button>
 
-            <span
-                class="likeCount"
-            >
-                0
-            </span>
+          <span class="likeCount">
+            0
+          </span>
+
+          <button
+            class="showLikesBtn"
+            style="display:none;">
+            추천자 보기
+          </button>
 
         </div>
 
@@ -541,6 +546,11 @@ async function openModal(p){
         modalBody.querySelector(
             ".likeCount"
         );
+        
+    const showLikesBtn =
+        modalBody.querySelector(
+            ".showLikesBtn"
+        );    
 
     const commentBtn =
         modalBody.querySelector(
@@ -610,17 +620,58 @@ async function openModal(p){
             }else{
 
                 await setDoc(
-                    ref,
-                    {
-                        createdAt:
-                            Date.now()
-                    }
+                  ref,
+                  {
+                    uid: user.uid,
+                    name: user.displayName,
+                    photo: user.photoURL,
+                    createdAt: Date.now()
+                  }
                 );
             }
 
+            if(
+                auth.currentUser &&
+                auth.currentUser.email ===
+                ADMIN_EMAIL
+            ){
+                showLikesBtn.style.display =
+                    "inline-block";
+            }
+
             loadLikes();
-        }
-    );
+            
+            showLikesBtn.addEventListener(
+                "click",
+                async ()=>{
+
+                    const snap =
+                        await getDocs(
+                            collection(
+                                db,
+                                "people",
+                                p.name,
+                                "likes"
+                            )
+                        );
+
+                    let result = "";
+
+                    snap.forEach(docSnap=>{
+
+                        const d =
+                            docSnap.data();
+
+                        result +=
+                            (d.name || "이름 없음")
+                            + "\n";
+                    });
+
+                    alert(
+                        result || "추천 없음"
+                    );
+                }
+            );
 
     /* =====================
        COMMENT WRITE
