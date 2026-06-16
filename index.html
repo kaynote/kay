@@ -48,6 +48,13 @@ const closeModal = document.getElementById("closeModal");
 
 const loginBtn = document.getElementById("loginBtn");
 const logoutBtn = document.getElementById("logoutBtn");
+const closeModal = document.getElementById("closeModal");
+
+if(loginBtn) loginBtn.addEventListener("click", login);
+if(logoutBtn) logoutBtn.addEventListener("click", logout);
+if(closeModal) closeModal.addEventListener("click", () => {
+    modal.classList.add("hidden");
+});
 
 /* =========================
    INIT
