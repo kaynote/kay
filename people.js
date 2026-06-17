@@ -1111,7 +1111,7 @@ const people = [
     "ko": "저스틴",
     "displayName": "Justin 저스틴",
     "note": "신애의 사촌 오빠, <span class=\"timestamp\">정주행 2025.11.14 12:16</span>",
-    "image": "no-image.jpg"
+    "image": "Justin.jpg"
   },
   {
     "no": 140,
