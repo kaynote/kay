@@ -64,10 +64,14 @@ function normalizeUser(user) {
 export async function login() {
 
   if (auth.currentUser) {
+    console.log("CURRENT:", auth.currentUser.displayName);
     return normalizeUser(auth.currentUser);
   }
 
   const result = await signInWithPopup(auth, provider);
+
+  console.log("POPUP:", result.user.displayName);
+  console.log(result.user.providerData);
 
   return normalizeUser(result.user);
 }
