@@ -74,12 +74,13 @@ export async function login() {
     return normalizeUser(auth.currentUser);
   }
 
-  const result = await signInWithPopup(auth, provider);
+const result = await signInWithPopup(auth, provider);
 
-  console.log("POPUP:", result.user.displayName);
-  console.log(result.user.providerData);
+console.log("POPUP:", result.user.displayName);
+console.log("EMAIL:", result.user.email);
+console.log("PROVIDER:", result.user.providerData[0]);
 
-  return normalizeUser(result.user);
+return normalizeUser(result.user);
 }
 
 /* =========================
