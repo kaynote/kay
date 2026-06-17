@@ -43,6 +43,12 @@ const provider = new GoogleAuthProvider();
 ========================= */
 
 function normalizeUser(user) {
+
+  console.log("=== normalizeUser ===");
+  console.log("displayName:", user?.displayName);
+  console.log("email:", user?.email);
+  console.log("providerData:", user?.providerData);
+
   if (!user) return null;
 
   return {
