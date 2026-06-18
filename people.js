@@ -1654,7 +1654,7 @@ const people = [
     "name": "Paulo",
     "ko": "파울로",
     "displayName": "Paulo 파울로",
-    "note": "락다운 초기에 꾸야 작과 함께 제리님의 보디가드였으나 마약 조직 간의 관할 문제로 살해당했다, <span class=\"timestamp\">정주행 2021.07.15 01:19</span>",
+    "note": "락다운 초기에 꾸야 작과 함께 제리님의 보디가드였으나 마약 조직 간의 관할 다툼에 휘말려 목숨을 잃었다. <span class=\"timestamp\">정주행 2021.07.15 01:19</span>",
     "image": "Paulo.jpg"
   },
   {
