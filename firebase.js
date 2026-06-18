@@ -55,10 +55,10 @@ function normalizeUser(user) {
     uid: user.uid || "",
     email: user.email || "",
     name:
+      user.providerData?.[0]?.displayName ||
       user.displayName ||
       user.email ||
-      auth.currentUser?.providerData?.[0]?.displayName ||
-      "익명 사용자",
+      "익명 사용자"
     photo: user.photoURL || ""
   };
 }
