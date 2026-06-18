@@ -1092,8 +1092,8 @@ const people = [
   {
     "no": 137,
     "name": "Juana",
-    "ko": "와나 or 후아나",
-    "displayName": "Juana 와나 or 후아나",
+    "ko": "후아나",
+    "displayName": "Juana 후아나",
     "note": "산체스배 댄스 콘테스트에 참가 신청했으나 순번을 놓쳐 대회 포기, <span class=\"timestamp\"> 2026.06.05 37:16</span>",
     "image": "no-image.jpg"
   },
