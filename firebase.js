@@ -51,16 +51,16 @@ function normalizeUser(user) {
 
   if (!user) return null;
 
-  return {
-    uid: user.uid || "",
-    email: user.email || "",
-    name:
-      user.providerData?.[0]?.displayName ||
-      user.displayName ||
-      user.email ||
-      "익명 사용자"
-    photo: user.photoURL || ""
-  };
+return {
+  uid: user.uid || "",
+  email: user.email || "",
+  name:
+    user.providerData?.[0]?.displayName ||
+    user.displayName ||
+    user.email ||
+    "익명 사용자",
+  photo: user.photoURL || ""
+};
 }
 
 /* =========================
