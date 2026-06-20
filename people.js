@@ -1359,7 +1359,7 @@ const people = [
     "ko": "리아나",
     "displayName": "Liana 리아나",
     "note": "제리님 동네에 사는 여자아이, <span class=\"timestamp\"> 2026.06.20 48:59</span>",
-    "image": "no-image.jpg"
+    "image": "Liana.jpg"
   },
   {
     "no": 171,
