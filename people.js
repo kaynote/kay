@@ -110,7 +110,7 @@ const people = [
     "name": "Angela",
     "ko": "안젤라",
     "displayName": "Angela 안젤라",
-    "note": "제리님의 동네에 사는 예쁜 여자아이, <span class=\"timestamp\"> 2026.06.20 48:39</span>",
+    "note": "제리님 동네에 사는 예쁜 여자아이, <span class=\"timestamp\"> 2026.06.20 48:39</span>",
     "image": "Angela.jpg"
   },
   {
@@ -1598,7 +1598,7 @@ const people = [
     "name": "Mona",
     "ko": "모나",
     "displayName": "Mona 모나",
-    "note": "제리님의 동네에 사는 꼬마 여자아이, <span class=\"timestamp\"> 2026.06.20 49:02</span>",
+    "note": "제리님 동네에 사는 꼬마 여자아이, <span class=\"timestamp\"> 2026.06.20 49:02</span>",
     "image": "Mona.jpg"
   },
   {
@@ -1878,7 +1878,7 @@ const people = [
     "name": "Riana",
     "ko": "리아나",
     "displayName": "Riana 리아나",
-    "note": "제리님의 동네에 사는 여자아이, <span class=\"timestamp\"> 2026.06.20 48:59</span>",
+    "note": "제리님 동네에 사는 여자아이, <span class=\"timestamp\"> 2026.06.20 48:59</span>",
     "image": "Riana.jpg"
   },
   {
