@@ -350,10 +350,11 @@ async function openModal(p){
                   "익명",
                 photo: user.photoURL,
                 text,
-                createdAt: serverTimestamp() // 👈 이걸로 변경
+                parentId: null, // 👈 여기 추가 (중요)
+                createdAt: serverTimestamp()
             }
         );
-
+               
         commentInput.value = "";
         loadComments();
     });
