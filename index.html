@@ -111,7 +111,6 @@ let isAuthReady = false;
 function init(){
     if(!Array.isArray(people)) return;
     data = people;
-    render(data);
 }
 
 /* =========================
@@ -523,6 +522,21 @@ watchAuth(async (user) => {
 
 data = people;
 init();
+
+watchAuth(async (user) => {
+
+    isAuthReady = true;
+
+    if (!user) {
+        // UI 처리
+        return;
+    }
+
+    const banned = await isBanned(user.uid);
+    if (banned) return;
+
+    render(data); // 🔥 오직 여기만
+});
 
 </script>
 
