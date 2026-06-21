@@ -401,6 +401,37 @@ async function openModal(p){
                 ${c.editedAt ? '<div class="edited">(수정됨)</div>' : ''}
             `;
 
+            const replyBtn = document.createElement("button");
+
+            replyBtn.textContent = "답글";
+            replyBtn.className = "replyBtn"; // 👈 먼저 설정
+
+            replyBtn.onclick = async () => {
+
+                const replyText = prompt("답글 입력");
+                if (!replyText) return;
+
+                const user = auth.currentUser || await login();
+
+                await addDoc(collection(db, "people", p.name, "comments"), {
+                    text: replyText,
+                    uid: user.uid,
+                    name:
+                      user.providerData?.[0]?.displayName ||
+                      user.displayName ||
+                      user.email ||
+                      "익명",
+                    photo: user.photoURL,
+                    parentId: docSnap.id,
+                    createdAt: serverTimestamp()
+                });
+
+                loadComments();
+            };
+
+            // 👇 마지막에 DOM 붙이기 (핵심)
+            div.appendChild(replyBtn);
+
             if(
                 auth.currentUser &&
                 (c.uid === auth.currentUser.uid ||
