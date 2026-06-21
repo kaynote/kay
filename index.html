@@ -374,8 +374,59 @@ async function openModal(p){
 
         commentsDiv.innerHTML = "";
 
-        snap.forEach(docSnap=>{
+        const parents = [];
+        const replies = [];
+
+        snap.forEach(docSnap => {
             const c = docSnap.data();
+            c.id = docSnap.id;
+
+            if (!c.parentId) {
+                parents.push(c);
+            } else {
+                replies.push(c);
+            }
+        });
+
+            commentsDiv.innerHTML = "";
+
+            parents.forEach(parent => {
+
+                const div = document.createElement("div");
+                div.className = "comment";
+
+                div.innerHTML = `
+                    <div class="commentHeader">
+                        <img src="${parent.photo || 'images/no-image.jpg'}">
+                        <span class="commentName">${parent.name}</span>
+                    </div>
+
+                    <div class="commentText">${parent.text}</div>
+                `;
+
+                // 🔥 답글 영역
+                const repliesWrap = document.createElement("div");
+                repliesWrap.className = "replies";
+
+                replies
+                    .filter(r => r.parentId === parent.id)
+                    .forEach(r => {
+
+                        const rdiv = document.createElement("div");
+                        rdiv.className = "reply";
+
+                        rdiv.innerHTML = `
+                            <span class="replyName">${r.name}</span>
+                            <span class="replyText">${r.text}</span>
+                        `;
+
+                        repliesWrap.appendChild(rdiv);
+                    });
+
+                div.appendChild(repliesWrap);
+
+                commentsDiv.appendChild(div);
+            });
 
             const date = c.createdAt?.toDate?.();
 
