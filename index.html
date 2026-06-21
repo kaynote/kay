@@ -27,6 +27,7 @@ const container = document.getElementById("peopleContainer");
 const modal = document.getElementById("modal");
 const modalBody = document.getElementById("modalBody");
 const closeModal = document.getElementById("closeModal");
+
 const loginBtn = document.getElementById("loginBtn");
 const logoutBtn = document.getElementById("logoutBtn");
 
@@ -123,7 +124,7 @@ async function openModal(p){
         <div class="modal-name">${p.displayName || p.name}</div>
 
         <div class="commentArea">
-            <textarea class="commentInput"></textarea>
+            <textarea class="commentInput" placeholder="댓글 입력"></textarea>
             <button class="commentBtn">등록</button>
             <div class="comments"></div>
         </div>
@@ -133,10 +134,7 @@ async function openModal(p){
     const commentInput = modalBody.querySelector(".commentInput");
     const commentsDiv = modalBody.querySelector(".comments");
 
-    if (!commentBtn || !commentInput || !commentsDiv) {
-        console.error("DOM 생성 실패");
-        return;
-    }
+    if (!commentBtn || !commentInput || !commentsDiv) return;
 
     /* =========================
        댓글 작성
@@ -166,7 +164,7 @@ async function openModal(p){
     };
 
     /* =========================
-       댓글 로드
+       댓글 로드 (유튜브 구조)
     ========================= */
 
     async function loadComments(){
@@ -268,15 +266,17 @@ async function openModal(p){
 }
 
 /* =========================
-   AUTH
+   AUTH (안전 버전)
 ========================= */
 
-loginBtn.onclick = login;
-logoutBtn.onclick = logout;
+if (loginBtn) loginBtn.onclick = login;
+if (logoutBtn) logoutBtn.onclick = logout;
 
 watchAuth(user=>{
     const userInfo = document.getElementById("userInfo");
-    userInfo.textContent = user ? user.email : "로그인 안 됨";
+    if (userInfo) {
+        userInfo.textContent = user ? user.email : "로그인 안 됨";
+    }
 });
 
 /* =========================
