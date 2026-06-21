@@ -32,15 +32,19 @@ export const db = getFirestore(app);
 export const auth = getAuth(app);
 
 /* =========================
-   PROVIDER
+   PROVIDER FACTORY
+   🔥 핵심: 매번 새로 생성
 ========================= */
 
-const provider = new GoogleAuthProvider();
+function createProvider() {
+  const provider = new GoogleAuthProvider();
 
-/* 🔥 핵심: 항상 계정 선택창 */
-provider.setCustomParameters({
-  prompt: "select_account"
-});
+  provider.setCustomParameters({
+    prompt: "select_account"
+  });
+
+  return provider;
+}
 
 /* =========================
    USER NORMALIZER
@@ -66,35 +70,40 @@ function normalizeUser(user) {
 ========================= */
 
 export async function login() {
-  const result = await signInWithPopup(auth, provider);
+  const result = await signInWithPopup(auth, createProvider());
   return normalizeUser(result.user);
 }
 
 /* =========================
    LOGOUT
-   🔥 핵심: 완전 초기화
+   🔥 완전 초기화
 ========================= */
 
 export async function logout() {
   await signOut(auth);
 
-  // 중요: 이전 로그인 상태 캐시 방지
+  // Firebase 캐시 제거
   sessionStorage.clear();
+
+  // Google 세션 영향 최소화
   localStorage.removeItem("firebase:authUser");
+
+  // 확실하게 다시 선택창 보이게
+  location.reload();
 }
 
 /* =========================
-   SWITCH ACCOUNT (옵션)
+   SWITCH ACCOUNT (선택)
 ========================= */
 
 export async function switchAccount() {
   await logout();
-  const result = await signInWithPopup(auth, provider);
+  const result = await signInWithPopup(auth, createProvider());
   return normalizeUser(result.user);
 }
 
 /* =========================
-   WATCHER
+   AUTH WATCHER
 ========================= */
 
 export function watchAuth(callback) {
