@@ -90,19 +90,8 @@ const logoutBtn = document.getElementById("logoutBtn");
    STATE
 ========================= */
 
-async function isBanned(uid){
-
-    const snap = await getDoc(
-        doc(db, "bannedUsers", uid)
-    );
-
-    return snap.exists();
-}
-
 let data = [];
 let renderedMap = new Map();
-
-let isAuthReady = false;
 
 /* =========================
    INIT
@@ -111,6 +100,7 @@ let isAuthReady = false;
 function init(){
     if(!Array.isArray(people)) return;
     data = people;
+    render(data);
 }
 
 /* =========================
@@ -302,33 +292,31 @@ async function openModal(p){
        LIKE TOGGLE
     ===================== */
 
-    likeBtn.addEventListener("click", async () => {
+    likeBtn.addEventListener("click", async ()=>{
 
-        const user = authUser;
-
-        if (!user) {
-            alert("로그인 후 이용 가능합니다.");
-            return;
-        }
-
-        if (await isBanned(user.uid)) {
-            alert("차단된 계정입니다.");
-            return;
-        }
+        const user = auth.currentUser || await login();
 
         const ref = doc(db, "people", p.name, "likes", user.uid);
 
         const liked = await getDoc(ref);
 
-        if (liked.exists()) {
+        if(liked.exists()){
             await deleteDoc(ref);
         } else {
             await setDoc(ref, {
                 uid: user.uid,
-                name: user.displayName || user.email,
+                name:
+                  user.providerData?.[0]?.displayName ||
+                  user.displayName ||
+                  user.email ||
+                  "익명",
                 photo: user.photoURL,
                 createdAt: Date.now()
             });
+        }
+
+        if(auth.currentUser?.email === ADMIN_EMAIL){
+            showLikesBtn.style.display = "inline-block";
         }
 
         loadLikes();
@@ -349,11 +337,6 @@ async function openModal(p){
         }
 
         const user = auth.currentUser || await login();
-        
-        if(await isBanned(user.uid)){
-            alert("차단된 계정입니다.");
-            return;
-        }
 
         await addDoc(
             collection(db, "people", p.name, "comments"),
@@ -476,46 +459,26 @@ modal.addEventListener("click", e=>{
 loginBtn.addEventListener("click", login);
 logoutBtn.addEventListener("click", logout);
 
-data = people;
-init();
-
-/* 🔥 최초 1회만 렌더 */
-render(data);
-
-let authUser = null;
-
-/* AUTH */
-watchAuth(async (user) => {
-
-    authUser = user;
-
+watchAuth(user=>{
     const userInfo = document.getElementById("userInfo");
 
-    if (!user) {
+    if(!user){
         userInfo.textContent = "로그인 안 됨";
         loginBtn.style.display = "inline-block";
         logoutBtn.style.display = "none";
-        searchBox.style.display = "none";
-
-        container.innerHTML = `
-            <div style="text-align:center;padding:60px;">
-                🔒 Google 로그인 후 이용 가능합니다.
-            </div>
-        `;
         return;
     }
 
     userInfo.textContent = user.email;
-
     loginBtn.style.display = "none";
     logoutBtn.style.display = "inline-block";
-    searchBox.style.display = "block";
-
-    const banned = await isBanned(user.uid);
-    if (banned) {
-        container.innerHTML = `<div style="text-align:center;padding:80px;">접근 금지</div>`;
-    }
 });
+
+/* =========================
+   START
+========================= */
+
+init();
 
 </script>
 

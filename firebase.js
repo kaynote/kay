@@ -13,7 +13,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 /* =========================
-   INIT
+   CONFIG
 ========================= */
 
 const firebaseConfig = {
@@ -26,43 +26,41 @@ const firebaseConfig = {
   measurementId: "G-E61XXMZCHM"
 };
 
+/* =========================
+   INIT
+========================= */
+
 const app = initializeApp(firebaseConfig);
 
 export const db = getFirestore(app);
 export const auth = getAuth(app);
 
-/* =========================
-   PROVIDER FACTORY
-   🔥 핵심: 매번 새로 생성
-========================= */
-
-function createProvider() {
-  const provider = new GoogleAuthProvider();
-
-  provider.setCustomParameters({
-    prompt: "select_account"
-  });
-
-  return provider;
-}
+const provider = new GoogleAuthProvider();
 
 /* =========================
    USER NORMALIZER
+   👉 핵심 추가
 ========================= */
 
 function normalizeUser(user) {
+
+  console.log("=== normalizeUser ===");
+  console.log("displayName:", user?.displayName);
+  console.log("email:", user?.email);
+  console.log("providerData:", user?.providerData);
+
   if (!user) return null;
 
-  return {
-    uid: user.uid || "",
-    email: user.email || "",
-    name:
-      user.providerData?.[0]?.displayName ||
-      user.displayName ||
-      user.email ||
-      "익명 사용자",
-    photo: user.photoURL || ""
-  };
+return {
+  uid: user.uid || "",
+  email: user.email || "",
+  name:
+    user.providerData?.[0]?.displayName ||
+    user.displayName ||
+    user.email ||
+    "익명 사용자",
+  photo: user.photoURL || ""
+};
 }
 
 /* =========================
@@ -70,36 +68,27 @@ function normalizeUser(user) {
 ========================= */
 
 export async function login() {
-  const result = await signInWithPopup(auth, createProvider());
-  return normalizeUser(result.user);
+
+  if (auth.currentUser) {
+    console.log("CURRENT:", auth.currentUser.displayName);
+    return normalizeUser(auth.currentUser);
+  }
+
+const result = await signInWithPopup(auth, provider);
+
+console.log("POPUP:", result.user.displayName);
+console.log("EMAIL:", result.user.email);
+console.log("PROVIDER:", result.user.providerData[0]);
+
+return normalizeUser(result.user);
 }
 
 /* =========================
    LOGOUT
-   🔥 완전 초기화
 ========================= */
 
 export async function logout() {
   await signOut(auth);
-
-  // Firebase 캐시 제거
-  sessionStorage.clear();
-
-  // Google 세션 영향 최소화
-  localStorage.removeItem("firebase:authUser");
-
-  // 확실하게 다시 선택창 보이게
-  location.reload();
-}
-
-/* =========================
-   SWITCH ACCOUNT (선택)
-========================= */
-
-export async function switchAccount() {
-  await logout();
-  const result = await signInWithPopup(auth, createProvider());
-  return normalizeUser(result.user);
 }
 
 /* =========================
@@ -107,6 +96,7 @@ export async function switchAccount() {
 ========================= */
 
 export function watchAuth(callback) {
+
   return onAuthStateChanged(auth, (user) => {
     callback(normalizeUser(user));
   });
