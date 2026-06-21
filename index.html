@@ -24,7 +24,6 @@ import {
 ========================= */
 
 const container = document.getElementById("peopleContainer");
-const searchBox = document.getElementById("searchBox");
 const modal = document.getElementById("modal");
 const modalBody = document.getElementById("modalBody");
 const closeModal = document.getElementById("closeModal");
@@ -81,7 +80,7 @@ function createCard(p, index){
     card.appendChild(photo);
     card.appendChild(info);
 
-    card.addEventListener("click", () => openModal(p));
+    card.onclick = () => openModal(p);
 
     return card;
 }
@@ -124,7 +123,7 @@ async function openModal(p){
         <div class="modal-name">${p.displayName || p.name}</div>
 
         <div class="commentArea">
-            <textarea class="commentInput" placeholder="댓글 입력"></textarea>
+            <textarea class="commentInput"></textarea>
             <button class="commentBtn">등록</button>
             <div class="comments"></div>
         </div>
@@ -134,6 +133,11 @@ async function openModal(p){
     const commentInput = modalBody.querySelector(".commentInput");
     const commentsDiv = modalBody.querySelector(".comments");
 
+    if (!commentBtn || !commentInput || !commentsDiv) {
+        console.error("DOM 생성 실패");
+        return;
+    }
+
     /* =========================
        댓글 작성
     ========================= */
@@ -141,7 +145,7 @@ async function openModal(p){
     commentBtn.onclick = async () => {
 
         const text = commentInput.value.trim();
-        if(!text) return;
+        if (!text) return;
 
         const user = auth.currentUser || await login();
 
@@ -162,7 +166,7 @@ async function openModal(p){
     };
 
     /* =========================
-       댓글 로드 (유튜브 구조)
+       댓글 로드
     ========================= */
 
     async function loadComments(){
