@@ -304,7 +304,7 @@ async function openModal(p){
 
     likeBtn.addEventListener("click", async ()=>{
 
-        const user = auth.currentUser || await login();
+        const user = await login();
         
         if(await isBanned(user.uid)){
             alert("차단된 계정입니다.");
@@ -481,7 +481,9 @@ logoutBtn.addEventListener("click", logout);
 
 data = people;
 init();
-render(data); // 🔥 이거 추가 (핵심)
+
+/* 🔥 핵심: 무조건 1번 렌더 */
+render(data);
 
 watchAuth(async (user) => {
 
@@ -511,7 +513,7 @@ watchAuth(async (user) => {
     const banned = await isBanned(user.uid);
     if (banned) return;
 
-    // 여기서는 render 다시 하지 마
+    /* 🔥 여기서는 render 절대 다시 호출하지 마 */
 });
 
 </script>
