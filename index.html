@@ -349,7 +349,7 @@ async function openModal(p){
                   "익명",
                 photo: user.photoURL,
                 text,
-                createdAt: Date.now()
+                createdAt: serverTimestamp() // 👈 이걸로 변경
             }
         );
 
@@ -375,6 +375,8 @@ async function openModal(p){
         snap.forEach(docSnap=>{
             const c = docSnap.data();
 
+            const time = c.createdAt?.toDate?.().toLocaleString("ko-KR");  
+
             const div = document.createElement("div");
             div.className = "comment";
 
@@ -382,6 +384,7 @@ async function openModal(p){
                 <div class="commentHeader">
                     <img src="${c.photo || 'images/no-image.jpg'}">
                     <span class="commentName">${c.name}</span>
+                    <span class="commentTime">${time || ""}</span>
                 </div>
 
                 <div class="commentText">${c.text}</div>
