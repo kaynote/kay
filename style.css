@@ -452,3 +452,22 @@ header{
     font-size:14px;
     color:#555;
 }
+
+.comment {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.replies {
+    margin-left: 35px;
+    margin-top: 8px;
+    border-left: 2px solid #eee;
+    padding-left: 12px;
+}
+
+.reply {
+    padding: 6px 10px;
+    margin-top: 5px;
+    font-size: 14px;
+    color: #555;
+}
