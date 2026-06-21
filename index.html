@@ -481,11 +481,9 @@ logoutBtn.addEventListener("click", logout);
 
 data = people;
 init();
-render(data);   // ⭐ 필수
+render(data); // 🔥 이거 추가 (핵심)
 
 watchAuth(async (user) => {
-
-    isAuthReady = true;
 
     const userInfo = document.getElementById("userInfo");
 
@@ -513,7 +511,7 @@ watchAuth(async (user) => {
     const banned = await isBanned(user.uid);
     if (banned) return;
 
-    render(data);
+    // 여기서는 render 다시 하지 마
 });
 
 </script>
