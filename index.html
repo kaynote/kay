@@ -479,6 +479,10 @@ modal.addEventListener("click", e=>{
 loginBtn.addEventListener("click", login);
 logoutBtn.addEventListener("click", logout);
 
+data = people;
+init();
+render(data);   // ⭐ 필수
+
 watchAuth(async (user) => {
 
     isAuthReady = true;
@@ -511,9 +515,6 @@ watchAuth(async (user) => {
 
     render(data);
 });
-
-data = people;
-init();
 
 </script>
 
