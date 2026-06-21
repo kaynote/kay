@@ -14,21 +14,10 @@ import {
     collection,
     getDocs,
     addDoc,
-    deleteDoc,
-    doc,
-    setDoc,
-    getDoc,
-    updateDoc,
     query,
     orderBy,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
-/* =========================
-   CONFIG
-========================= */
-
-const ADMIN_EMAIL = "ektjttnfp5@gmail.com";
 
 /* =========================
    DOM
@@ -39,7 +28,6 @@ const searchBox = document.getElementById("searchBox");
 const modal = document.getElementById("modal");
 const modalBody = document.getElementById("modalBody");
 const closeModal = document.getElementById("closeModal");
-
 const loginBtn = document.getElementById("loginBtn");
 const logoutBtn = document.getElementById("logoutBtn");
 
@@ -123,7 +111,7 @@ function render(list){
 }
 
 /* =========================
-   MODAL
+   MODAL + COMMENTS
 ========================= */
 
 async function openModal(p){
@@ -136,7 +124,7 @@ async function openModal(p){
         <div class="modal-name">${p.displayName || p.name}</div>
 
         <div class="commentArea">
-            <textarea class="commentInput"></textarea>
+            <textarea class="commentInput" placeholder="댓글 입력"></textarea>
             <button class="commentBtn">등록</button>
             <div class="comments"></div>
         </div>
@@ -241,6 +229,7 @@ async function openModal(p){
 
             const replyBtn = document.createElement("button");
             replyBtn.textContent = "답글";
+            replyBtn.className = "replyBtn";
 
             replyBtn.onclick = async () => {
 
@@ -283,7 +272,6 @@ logoutBtn.onclick = logout;
 
 watchAuth(user=>{
     const userInfo = document.getElementById("userInfo");
-
     userInfo.textContent = user ? user.email : "로그인 안 됨";
 });
 
