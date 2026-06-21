@@ -507,36 +507,13 @@ watchAuth(async (user) => {
     searchBox.style.display = "block";
 
     const banned = await isBanned(user.uid);
-
-    if (banned) {
-        container.innerHTML = `<div style="text-align:center;padding:80px;">접근 권한 없음</div>`;
-        return;
-    }
+    if (banned) return;
 
     render(data);
 });
 
-/* =========================
-   START
-========================= */
-
 data = people;
 init();
-
-watchAuth(async (user) => {
-
-    isAuthReady = true;
-
-    if (!user) {
-        // UI 처리
-        return;
-    }
-
-    const banned = await isBanned(user.uid);
-    if (banned) return;
-
-    render(data); // 🔥 오직 여기만
-});
 
 </script>
 
