@@ -13,7 +13,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 /* =========================
-   CONFIG
+   INIT
 ========================= */
 
 const firebaseConfig = {
@@ -26,41 +26,39 @@ const firebaseConfig = {
   measurementId: "G-E61XXMZCHM"
 };
 
-/* =========================
-   INIT
-========================= */
-
 const app = initializeApp(firebaseConfig);
 
 export const db = getFirestore(app);
 export const auth = getAuth(app);
 
+/* =========================
+   PROVIDER
+========================= */
+
 const provider = new GoogleAuthProvider();
+
+/* 🔥 핵심: 항상 계정 선택창 */
+provider.setCustomParameters({
+  prompt: "select_account"
+});
 
 /* =========================
    USER NORMALIZER
-   👉 핵심 추가
 ========================= */
 
 function normalizeUser(user) {
-
-  console.log("=== normalizeUser ===");
-  console.log("displayName:", user?.displayName);
-  console.log("email:", user?.email);
-  console.log("providerData:", user?.providerData);
-
   if (!user) return null;
 
-return {
-  uid: user.uid || "",
-  email: user.email || "",
-  name:
-    user.providerData?.[0]?.displayName ||
-    user.displayName ||
-    user.email ||
-    "익명 사용자",
-  photo: user.photoURL || ""
-};
+  return {
+    uid: user.uid || "",
+    email: user.email || "",
+    name:
+      user.providerData?.[0]?.displayName ||
+      user.displayName ||
+      user.email ||
+      "익명 사용자",
+    photo: user.photoURL || ""
+  };
 }
 
 /* =========================
@@ -68,35 +66,38 @@ return {
 ========================= */
 
 export async function login() {
-
-  if (auth.currentUser) {
-    console.log("CURRENT:", auth.currentUser.displayName);
-    return normalizeUser(auth.currentUser);
-  }
-
-const result = await signInWithPopup(auth, provider);
-
-console.log("POPUP:", result.user.displayName);
-console.log("EMAIL:", result.user.email);
-console.log("PROVIDER:", result.user.providerData[0]);
-
-return normalizeUser(result.user);
+  const result = await signInWithPopup(auth, provider);
+  return normalizeUser(result.user);
 }
 
 /* =========================
    LOGOUT
+   🔥 핵심: 완전 초기화
 ========================= */
 
 export async function logout() {
   await signOut(auth);
+
+  // 중요: 이전 로그인 상태 캐시 방지
+  sessionStorage.clear();
+  localStorage.removeItem("firebase:authUser");
 }
 
 /* =========================
-   AUTH WATCHER
+   SWITCH ACCOUNT (옵션)
+========================= */
+
+export async function switchAccount() {
+  await logout();
+  const result = await signInWithPopup(auth, provider);
+  return normalizeUser(result.user);
+}
+
+/* =========================
+   WATCHER
 ========================= */
 
 export function watchAuth(callback) {
-
   return onAuthStateChanged(auth, (user) => {
     callback(normalizeUser(user));
   });

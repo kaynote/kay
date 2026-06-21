@@ -90,6 +90,15 @@ const logoutBtn = document.getElementById("logoutBtn");
    STATE
 ========================= */
 
+async function isBanned(uid){
+
+    const snap = await getDoc(
+        doc(db, "bannedUsers", uid)
+    );
+
+    return snap.exists();
+}
+
 let data = [];
 let renderedMap = new Map();
 
@@ -295,6 +304,11 @@ async function openModal(p){
     likeBtn.addEventListener("click", async ()=>{
 
         const user = auth.currentUser || await login();
+        
+        if(await isBanned(user.uid)){
+            alert("차단된 계정입니다.");
+            return;
+        }
 
         const ref = doc(db, "people", p.name, "likes", user.uid);
 
@@ -337,6 +351,11 @@ async function openModal(p){
         }
 
         const user = auth.currentUser || await login();
+        
+        if(await isBanned(user.uid)){
+            alert("차단된 계정입니다.");
+            return;
+        }
 
         await addDoc(
             collection(db, "people", p.name, "comments"),
@@ -485,12 +504,30 @@ watchAuth(user=>{
         return;
     }
 
-    userInfo.textContent = user.email;
+    userInfo.textContent =
+      user.email + " | UID: " + user.uid;
 
     loginBtn.style.display = "none";
     logoutBtn.style.display = "inline-block";
 
     searchBox.style.display = "block";
+
+    const banned = await isBanned(user.uid);
+
+    if(banned){
+
+        container.innerHTML = `
+          <div style="
+            text-align:center;
+            padding:80px;
+            font-size:22px;
+          ">
+            접근 권한이 없습니다.
+          </div>
+        `;
+
+        return;
+    }
 
     render(data);
 });
