@@ -504,8 +504,15 @@ watchAuth(async (user) => {
         return;
     }
 
-    userInfo.textContent =
-      user.email + " | UID: " + user.uid;
+    const isAdmin = user.email === ADMIN_EMAIL;
+
+    function isAdminUser(user) {
+      return user?.email === ADMIN_EMAIL;
+    }
+
+    userInfo.textContent = isAdminUser(user)
+      ? `${user.email} | UID: ${user.uid}`
+      : user.email;
 
     loginBtn.style.display = "none";
     logoutBtn.style.display = "inline-block";
