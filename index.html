@@ -441,28 +441,27 @@ async function openModal(p){
         div.style.marginLeft = `${depth * 25}px`;
 
         div.innerHTML = `
-            div.innerHTML = `
-                <div class="commentRow">
+            <div class="commentRow">
 
-                    <div class="left">
-                        <img src="${c.photo || 'images/no-image.jpg'}">
-                        <span class="name">${c.name}</span>
-                    </div>
-
-                    <div class="text">
-                        ${c.text}
-                    </div>
-
-                    <div class="right">
-                        <span class="time">
-                            ${c.createdAt ? formatDate(c.createdAt) : ""}
-                        </span>
-
-                        ${c.editedAt ? '<span class="edited">수정됨</span>' : ''}
-                    </div>
-
+                <div class="left">
+                    <img src="${c.photo || 'images/no-image.jpg'}">
+                    <span class="name">${c.name}</span>
                 </div>
-            `;
+
+                <div class="text">
+                    ${c.text}
+                </div>
+
+                <div class="right">
+                    <span class="time">
+                        ${c.createdAt ? formatDate(c.createdAt) : ""}
+                    </span>
+
+                    ${c.editedAt ? '<span class="edited">수정됨</span>' : ''}
+                </div>
+
+            </div>
+        `;
 
         const action = document.createElement("div");
         action.className = "actions";
