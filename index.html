@@ -374,146 +374,102 @@ async function openModal(p){
         loadComments();
     });
 
-/* =====================
-   LOAD COMMENTS (FIXED)
-===================== */
+    /* =====================
+       LOAD COMMENTS
+    ===================== */
 
-async function loadComments(){
+    async function loadComments(){
 
-    const q = query(
-        collection(db, "people", p.name, "comments"),
-        orderBy("createdAt", "desc")
-    );
+        const q = query(
+            collection(db, "people", p.name, "comments"),
+            orderBy("createdAt", "desc")
+        );
 
-    const snap = await getDocs(q);
+        const snap = await getDocs(q);
 
-    commentsDiv.innerHTML = "";
+        commentsDiv.innerHTML = "";
 
-    snap.forEach(docSnap => {
-        const c = docSnap.data();
+        snap.forEach(docSnap=>{
+            const c = docSnap.data();
+            
+            const div = document.createElement("div");
+            div.className = "comment";
 
-        /* =====================
-           COMMENT WRAPPER
-        ===================== */
-        const div = document.createElement("div");
-        div.className = "comment";
+            div.innerHTML = `
+                <div class="commentRow">
 
-        /* =====================
-           HTML 먼저 생성 (중요)
-        ===================== */
-        div.innerHTML = `
-            <div class="commentRow">
+                    <div class="left">
+                        <img src="${c.photo || 'images/no-image.jpg'}">
+                        <span class="name">${c.name}</span>
+                    </div>
 
-                <div class="left">
-                    <img src="${c.photo || 'images/no-image.jpg'}">
-                    <span class="name">${c.name}</span>
+                    <div class="text">
+                        ${c.text}
+                    </div>
+
+                    <div class="right">
+                        <span class="time">
+                            ${c.createdAt ? formatDate(c.createdAt) : ""}
+                        </span>
+
+                        ${c.editedAt ? '<span class="edited">수정됨</span>' : ''}
+                    </div>
+
                 </div>
+            `;
 
-                <div class="text">
-                    ${c.text}
-                </div>
+            if(
+                auth.currentUser &&
+                (c.uid === auth.currentUser.uid ||
+                 auth.currentUser.email === ADMIN_EMAIL)
+            ){
 
-                <div class="right">
-                    <span class="time">
-                        ${c.createdAt ? formatDate(c.createdAt) : ""}
-                    </span>
+                const editBtn = document.createElement("button");
+                editBtn.textContent = "수정";
 
-                    ${c.editedAt ? '<span class="edited">수정됨</span>' : ''}
-                </div>
+                editBtn.onclick = async ()=>{
+                    const newText = prompt("댓글 수정", c.text);
+                    if(!newText) return;
 
-            </div>
-        `;
+                    await updateDoc(
+                        doc(db, "people", p.name, "comments", docSnap.id),
+                        {
+                            text: newText.trim(),
+                            editedAt: serverTimestamp()
+                        }
+                    );
 
-        const commentRow = div.querySelector(".commentRow");
+                    loadComments();
+                };
 
-        /* =====================
-           REPLY BUTTON
-        ===================== */
-        const replyBtn = document.createElement("button");
-        replyBtn.textContent = "답글";
+                const delBtn = document.createElement("button");
+                delBtn.textContent = "삭제";
 
-        replyBtn.onclick = async () => {
-            const text = prompt("답글 입력");
-            if(!text) return;
+                delBtn.onclick = async ()=>{
+                    if(!confirm("삭제할까요?")) return;
 
-            const user = auth.currentUser || await login();
+                    await deleteDoc(
+                        doc(db, "people", p.name, "comments", docSnap.id)
+                    );
 
-            await addDoc(
-                collection(db, "people", p.name, "comments", docSnap.id, "replies"),
-                {
-                    uid: user.uid,
-                    name:
-                        user.providerData?.[0]?.displayName ||
-                        user.displayName ||
-                        user.email ||
-                        "익명",
-                    photo: user.photoURL,
-                    text,
-                    createdAt: serverTimestamp()
-                }
-            );
+                    loadComments();
+                };
 
-            loadComments();
-        };
+                const action = document.createElement("div");
+                action.className = "actions";
 
-        /* =====================
-           ACTIONS (reply)
-        ===================== */
-        const action = document.createElement("div");
-        action.className = "actions";
+                action.appendChild(editBtn);
+                action.appendChild(delBtn);
 
-        action.appendChild(replyBtn);
-        commentRow.appendChild(action);
+                div.querySelector(".commentRow").appendChild(action);
+            }
 
-        /* =====================
-           EDIT / DELETE (기존)
-        ===================== */
-        if (
-            auth.currentUser &&
-            (c.uid === auth.currentUser.uid ||
-             auth.currentUser.email === ADMIN_EMAIL)
-        ){
+            commentsDiv.appendChild(div);
+        });
+    }
 
-            const editBtn = document.createElement("button");
-            editBtn.textContent = "수정";
-
-            editBtn.onclick = async () => {
-                const newText = prompt("댓글 수정", c.text);
-                if(!newText) return;
-
-                await updateDoc(
-                    doc(db, "people", p.name, "comments", docSnap.id),
-                    {
-                        text: newText.trim(),
-                        editedAt: serverTimestamp()
-                    }
-                );
-
-                loadComments();
-            };
-
-            const delBtn = document.createElement("button");
-            delBtn.textContent = "삭제";
-
-            delBtn.onclick = async () => {
-                if(!confirm("삭제할까요?")) return;
-
-                await deleteDoc(
-                    doc(db, "people", p.name, "comments", docSnap.id)
-                );
-
-                loadComments();
-            };
-
-            action.appendChild(editBtn);
-            action.appendChild(delBtn);
-        }
-
-        /* =====================
-           APPEND
-        ===================== */
-        commentsDiv.appendChild(div);
-    });
+    await loadLikes();
+    await loadComments();
 }
 
 /* =========================
