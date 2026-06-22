@@ -379,7 +379,7 @@ async function openModal(p){
     ===================== */
 
     async function loadComments(){
-
+          
         const q = query(
             collection(db, "people", p.name, "comments"),
             orderBy("createdAt", "desc")
@@ -394,6 +394,34 @@ async function openModal(p){
             
             const div = document.createElement("div");
             div.className = "comment";
+            
+            const replyBtn = document.createElement("button");
+            replyBtn.textContent = "답글";
+
+            replyBtn.onclick = async () => {
+                const text = prompt("답글 입력");
+                if(!text) return;
+
+                const user = auth.currentUser || await login();
+
+                await addDoc(
+                    collection(db, "people", p.name, "comments", docSnap.id, "replies"),
+                    {
+                        uid: user.uid,
+                        name: user.email || "익명",
+                        text,
+                        createdAt: serverTimestamp()
+                    }
+                );
+
+                loadComments();
+            };
+            
+            const action = div.querySelector(".actions") || document.createElement("div");
+            action.className = "actions";
+
+            action.appendChild(replyBtn);
+            div.querySelector(".commentRow").appendChild(action);
 
             div.innerHTML = `
                 <div class="commentRow">
