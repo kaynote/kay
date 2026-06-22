@@ -241,7 +241,7 @@ function formatDate(ts){
             
 async function openModal(p) {
 
-    const personName = p.name; // 🔥 무조건 통일 키
+    const personName = p.name; // 🔥 먼저 선언 (가장 중요)
 
     modal.classList.remove("hidden");
 
@@ -264,12 +264,57 @@ async function openModal(p) {
         </div>
     `;
 
+    // 🔥 DOM 생성 후에 잡아야 함 (중요)
     const likeBtn = modalBody.querySelector(".likeBtn");
     const likeCountEl = modalBody.querySelector(".likeCount");
     const showLikesBtn = modalBody.querySelector(".showLikesBtn");
     const commentBtn = modalBody.querySelector(".commentBtn");
     const commentInput = modalBody.querySelector(".commentInput");
     const commentsDiv = modalBody.querySelector(".comments");
+
+    // =========================
+    // LIKE LOAD FUNCTION
+    // =========================
+    async function loadLikes() {
+        const snap = await getDocs(
+            collection(db, "people", personName, "likes")
+        );
+        likeCountEl.textContent = snap.size;
+    }
+
+    // =========================
+    // LIKE BUTTON (여기가 핵심)
+    // =========================
+    likeBtn.addEventListener("click", async () => {
+        try {
+            const user = auth.currentUser || await login();
+
+            const ref = doc(db, "people", personName, "likes", user.uid);
+
+            const snap = await getDoc(ref);
+
+            if (snap.exists()) {
+                await deleteDoc(ref);
+            } else {
+                await setDoc(ref, {
+                    uid: user.uid,
+                    name: user.displayName || user.email || "익명",
+                    photo: user.photoURL,
+                    createdAt: serverTimestamp()
+                });
+            }
+
+            await loadLikes();
+
+        } catch (e) {
+            console.error("좋아요 실패:", e);
+            alert("좋아요 실패");
+        }
+    });
+
+    // 최초 로딩
+    await loadLikes();
+}
 
     // =========================
     // LIKE COUNT
