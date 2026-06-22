@@ -475,9 +475,9 @@ header{
 
 .commentRow .text {
     flex: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    white-space: normal;   /* 핵심 */
+    overflow: visible;
+    text-overflow: unset;
 }
 
 .commentRow .right {
