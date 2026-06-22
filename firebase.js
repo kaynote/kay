@@ -10,7 +10,8 @@ import {
   serverTimestamp,
   updateDoc,
   doc,
-  deleteDoc
+  deleteDoc,
+  getDocs
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 import {
@@ -76,11 +77,13 @@ export function watchAuth(cb) {
 }
 
 /* =========================
-   🔥 COMMENTS (대댓글 지원 핵심)
+   🔥 COMMENTS (대댓글 핵심)
 ========================= */
 
 // 댓글 추가 (일반 + 대댓글)
 export async function addComment(personId, text, user, parentId = null) {
+  if (!user) throw new Error("로그인이 필요합니다");
+
   return await addDoc(
     collection(db, "people", String(personId), "comments"),
     {
@@ -88,13 +91,15 @@ export async function addComment(personId, text, user, parentId = null) {
       uid: user.uid,
       name: user.name,
       photo: user.photo,
-      parentId, // null = 일반댓글 / 값 있음 = 대댓글
+      parentId,
       createdAt: serverTimestamp()
     }
   );
 }
 
-// 댓글 실시간 구독 (🔥 대댓글 구조로 정리해서 반환)
+/* =========================
+   댓글 실시간 구독 (UI 최적화 구조)
+========================= */
 export function watchComments(personId, callback) {
   const q = query(
     collection(db, "people", String(personId), "comments"),
@@ -114,9 +119,7 @@ export function watchComments(personId, callback) {
       if (!c.parentId) {
         main.push(c);
       } else {
-        if (!replies[c.parentId]) {
-          replies[c.parentId] = [];
-        }
+        if (!replies[c.parentId]) replies[c.parentId] = [];
         replies[c.parentId].push(c);
       }
     });
@@ -125,7 +128,9 @@ export function watchComments(personId, callback) {
   });
 }
 
-// 댓글 수정
+/* =========================
+   댓글 수정
+========================= */
 export async function editComment(personId, commentId, newText) {
   return await updateDoc(
     doc(db, "people", String(personId), "comments", commentId),
@@ -133,9 +138,27 @@ export async function editComment(personId, commentId, newText) {
   );
 }
 
-// 댓글 삭제 (대댓글 포함 동일)
+/* =========================
+   댓글 삭제 (대댓글 포함 삭제 옵션)
+========================= */
 export async function deleteComment(personId, commentId) {
-  return await deleteDoc(
-    doc(db, "people", String(personId), "comments", commentId)
-  );
+  const baseRef = collection(db, "people", String(personId), "comments");
+
+  // 🔥 1. 자식 댓글(대댓글) 먼저 삭제
+  const q = query(baseRef);
+  const snap = await getDocs(q);
+
+  const deletes = [];
+
+  snap.forEach((d) => {
+    const data = d.data();
+
+    if (d.id === commentId || data.parentId === commentId) {
+      deletes.push(
+        deleteDoc(doc(db, "people", String(personId), "comments", d.id))
+      );
+    }
+  });
+
+  return Promise.all(deletes);
 }
