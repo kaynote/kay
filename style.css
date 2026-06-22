@@ -452,14 +452,3 @@ header{
     font-size:14px;
     color:#555;
 }
-
-.replies {
-  margin-left: 20px;
-  border-left: 2px solid #ddd;
-  padding-left: 10px;
-}
-
-.reply {
-  background: #fafafa;
-  margin-top: 5px;
-}

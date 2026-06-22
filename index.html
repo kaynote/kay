@@ -1,3 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kay Notes Archive</title>
+
+<link rel="stylesheet" href="style.css?v=10">
+
+<style>
+#peopleContainer{
+    contain:layout paint;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+    <h1>Kay Notes Archive</h1>
+
+    <div id="userInfo">로그인 안 됨</div>
+
+    <div class="authArea">
+        <button id="loginBtn">로그인</button>
+        <button id="logoutBtn">로그아웃</button>
+    </div>
+
+    <input type="text" id="searchBox" placeholder="검색...">
+</header>
+
+<div id="peopleContainer"></div>
+
+<!-- MODAL -->
+<div id="modal" class="modal hidden">
+    <div class="modal-content">
+        <button id="closeModal" class="closeBtn">✕</button>
+        <div id="modalBody"></div>
+    </div>
+</div>
+
 <script type="module">
 
 import people from "./people.js?v=10";
@@ -18,10 +62,10 @@ import {
     doc,
     setDoc,
     getDoc,
+    updateDoc,
     query,
-    orderBy,
-    serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+    orderBy
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 /* =========================
    CONFIG
@@ -46,22 +90,16 @@ const logoutBtn = document.getElementById("logoutBtn");
    STATE
 ========================= */
 
-let data = Array.isArray(people) ? people : [];
+let data = [];
 let renderedMap = new Map();
-
-/* =========================
-   SAFE KEY
-========================= */
-
-function getKey(p, index){
-    return `${p?.id || p?.name || "no-id"}_${index}`;
-}
 
 /* =========================
    INIT
 ========================= */
 
 function init(){
+    if(!Array.isArray(people)) return;
+    data = people;
     render(data);
 }
 
@@ -75,8 +113,9 @@ function createCard(p, index){
     card.className = "card";
 
     const img = document.createElement("img");
-    img.src = p?.image ? `images/${p.image}` : "images/no-image.jpg";
+    img.src = p.image ? "images/" + p.image : "images/no-image.jpg";
     img.loading = "lazy";
+    img.decoding = "async";
 
     const photo = document.createElement("div");
     photo.className = "photo";
@@ -91,16 +130,16 @@ function createCard(p, index){
     const enEl = document.createElement("div");
     enEl.className = "en";
 
-    const no = p?.no || index + 1;
+    const no = p.no || (index + 1);
 
     enEl.innerHTML = `
         <span class="num">${no}.</span>
-        <span class="txt">${p?.id || p?.name || ""}</span>
+        <span class="txt">${p.name || ""}</span>
     `;
 
     nameEl.appendChild(enEl);
 
-    if(p?.ko){
+    if(p.ko){
         const koEl = document.createElement("div");
         koEl.className = "ko";
         koEl.textContent = p.ko;
@@ -109,11 +148,11 @@ function createCard(p, index){
 
     const metaEl = document.createElement("div");
     metaEl.className = "meta";
-    metaEl.textContent = Array.isArray(p?.tags) ? p.tags.join(" · ") : "";
+    metaEl.textContent = p.tags ? p.tags.join(" · ") : "";
 
     const descEl = document.createElement("div");
     descEl.className = "desc";
-    descEl.innerHTML = p?.note || "";
+    descEl.innerHTML = p.note || "";
 
     info.appendChild(nameEl);
     info.appendChild(metaEl);
@@ -128,7 +167,7 @@ function createCard(p, index){
 }
 
 /* =========================
-   RENDER (STABLE)
+   RENDER
 ========================= */
 
 function render(list){
@@ -137,16 +176,15 @@ function render(list){
 
     list.forEach((p, index)=>{
 
-        const key = getKey(p, index);
+        const key = (p.no || index) + "_" + p.name;
 
-        let card = renderedMap.get(key);
-
-        if(!card){
-            card = createCard(p, index);
+        if(renderedMap.has(key)){
+            fragment.appendChild(renderedMap.get(key));
+        } else {
+            const card = createCard(p, index);
             renderedMap.set(key, card);
+            fragment.appendChild(card);
         }
-
-        fragment.appendChild(card);
     });
 
     container.replaceChildren(fragment);
@@ -165,12 +203,12 @@ function debounce(fn, delay = 150){
 }
 
 const handleSearch = debounce(value=>{
-    const k = (value || "").toLowerCase();
+    const k = value.toLowerCase();
 
     const filtered = data.filter(p =>
-        (p?.id || p?.name || "").toLowerCase().includes(k) ||
-        (p?.ko || "").toLowerCase().includes(k) ||
-        (p?.note || "").toLowerCase().includes(k)
+        (p.name || "").toLowerCase().includes(k) ||
+        (p.ko || "").toLowerCase().includes(k) ||
+        (p.note || "").toLowerCase().includes(k)
     );
 
     render(filtered);
@@ -181,22 +219,18 @@ searchBox.addEventListener("input", e=>{
 });
 
 /* =========================
-   MODAL CORE
+   MODAL
 ========================= */
 
-let currentPerson = null;
-
 async function openModal(p){
-
-    currentPerson = p;
 
     modal.classList.remove("hidden");
 
     modalBody.innerHTML = `
-        <img class="modal-photo" src="images/${p?.image || 'no-image.jpg'}">
+        <img class="modal-photo" src="images/${p.image || 'no-image.jpg'}">
 
-        <div class="modal-name">${p?.displayName || p?.id || p?.name || ""}</div>
-        <div class="modal-desc">${p?.note || ""}</div>
+        <div class="modal-name">${p.displayName || p.name}</div>
+        <div class="modal-desc">${p.note || ""}</div>
 
         <div class="likeArea">
             <button class="likeBtn">👍 좋아요</button>
@@ -205,183 +239,269 @@ async function openModal(p){
         </div>
 
         <div class="commentArea">
-            <textarea class="commentInput"></textarea>
+            <textarea class="commentInput" placeholder="댓글 입력 (최대 1000자)"></textarea>
             <button class="commentBtn">등록</button>
             <div class="comments"></div>
         </div>
     `;
 
-    setupLikeSystem(p);
-    setupCommentSystem(p);
-}
-
-/* =========================
-   LIKES (SAFE)
-========================= */
-
-function setupLikeSystem(p){
-
     const likeBtn = modalBody.querySelector(".likeBtn");
     const likeCountEl = modalBody.querySelector(".likeCount");
     const showLikesBtn = modalBody.querySelector(".showLikesBtn");
 
-    const id = p?.id || p?.name;
-    if(!id) return;
+    /* 🔥 여기 */
+    if(auth.currentUser?.email === ADMIN_EMAIL){
+        showLikesBtn.style.display = "inline-block";
+    } else {
+        showLikesBtn.style.display = "none";
+    }
+
+    const commentBtn = modalBody.querySelector(".commentBtn");
+    const commentInput = modalBody.querySelector(".commentInput");
+    const commentsDiv = modalBody.querySelector(".comments");
+
+    /* =====================
+       SHOW LIKES (한 번만 등록)
+    ===================== */
+
+    showLikesBtn.addEventListener("click", async ()=>{
+        const snap = await getDocs(
+            collection(db, "people", p.name, "likes")
+        );
+
+        const result = snap.docs
+            .map(d => d.data().name || "이름 없음")
+            .join("\n");
+
+        alert(result || "추천 없음");
+    });
+
+    /* =====================
+       LOAD LIKES
+    ===================== */
 
     async function loadLikes(){
-        const snap = await getDocs(collection(db, "people", id, "likes"));
+        const snap = await getDocs(
+            collection(db, "people", p.name, "likes")
+        );
+
         likeCountEl.textContent = snap.size;
     }
 
-    likeBtn.onclick = async () => {
+    /* =====================
+       LIKE TOGGLE
+    ===================== */
+
+    likeBtn.addEventListener("click", async ()=>{
 
         const user = auth.currentUser || await login();
-        const ref = doc(db, "people", id, "likes", user.uid);
 
-        const snap = await getDoc(ref);
+        const ref = doc(db, "people", p.name, "likes", user.uid);
 
-        if(snap.exists()){
+        const liked = await getDoc(ref);
+
+        if(liked.exists()){
             await deleteDoc(ref);
         } else {
             await setDoc(ref, {
                 uid: user.uid,
-                name: user.email || "익명",
+                name:
+                  user.providerData?.[0]?.displayName ||
+                  user.displayName ||
+                  user.email ||
+                  "익명",
+                photo: user.photoURL,
                 createdAt: Date.now()
             });
         }
 
+        if(auth.currentUser?.email === ADMIN_EMAIL){
+            showLikesBtn.style.display = "inline-block";
+        }
+
         loadLikes();
-    };
+    });
 
-    showLikesBtn.onclick = async () => {
-        const snap = await getDocs(collection(db, "people", id, "likes"));
+    /* =====================
+       COMMENTS
+    ===================== */
 
-        const list = snap.docs.map(d => d.data().name || "익명").join("\n");
-        alert(list || "없음");
-    };
+    commentBtn.addEventListener("click", async ()=>{
 
-    if(auth.currentUser?.email === ADMIN_EMAIL){
-        showLikesBtn.style.display = "inline-block";
-    }
+        const text = commentInput.value.trim();
+        if(!text) return;
 
-    loadLikes();
-}
+        if(text.length > 1000){
+            alert("댓글은 1000자 이하만 가능합니다.");
+            return;
+        }
 
-/* =========================
-   COMMENTS (SAFE)
-========================= */
+        const user = auth.currentUser || await login();
 
-function setupCommentSystem(p){
+        await addDoc(
+            collection(db, "people", p.name, "comments"),
+            {
+                uid: user.uid,
+                name:
+                  user.providerData?.[0]?.displayName ||
+                  user.displayName ||
+                  user.email ||
+                  "익명",
+                photo: user.photoURL,
+                text,
+                createdAt: Date.now()
+            }
+        );
 
-    const commentBtn = modalBody.querySelector(".commentBtn");
-    const input = modalBody.querySelector(".commentInput");
-    const box = modalBody.querySelector(".comments");
+        commentInput.value = "";
+        loadComments();
+    });
 
-    const id = p?.id || p?.name;
-    if(!id) return;
+    /* =====================
+       LOAD COMMENTS
+    ===================== */
 
     async function loadComments(){
 
         const q = query(
-            collection(db, "people", id, "comments"),
-            orderBy("createdAt", "asc")
+            collection(db, "people", p.name, "comments"),
+            orderBy("createdAt", "desc")
         );
 
         const snap = await getDocs(q);
 
-        box.innerHTML = "";
+        commentsDiv.innerHTML = "";
 
-        const list = [];
-        snap.forEach(d => list.push({ id: d.id, ...d.data() }));
-
-        list.filter(c => !c.parentId).forEach(parent => {
+        snap.forEach(docSnap=>{
+            const c = docSnap.data();
 
             const div = document.createElement("div");
             div.className = "comment";
 
             div.innerHTML = `
-                <div>${parent.name || "익명"}: ${parent.text || ""}</div>
-                <button class="replyBtn">답글</button>
+                <div class="commentHeader">
+                    <img src="${c.photo || 'images/no-image.jpg'}">
+                    <span class="commentName">${c.name}</span>
+                </div>
+
+                <div class="commentText">${c.text}</div>
+
+                ${c.editedAt ? '<div class="edited">(수정됨)</div>' : ''}
             `;
 
-            div.querySelector(".replyBtn").onclick = async () => {
-                const text = prompt("답글");
-                if(!text) return;
+            if(
+                auth.currentUser &&
+                (c.uid === auth.currentUser.uid ||
+                 auth.currentUser.email === ADMIN_EMAIL)
+            ){
 
-                const user = auth.currentUser || await login();
+                const editBtn = document.createElement("button");
+                editBtn.textContent = "수정";
 
-                await addDoc(collection(db, "people", id, "comments"), {
-                    text,
-                    uid: user.uid,
-                    name: user.email || "익명",
-                    parentId: parent.id,
-                    createdAt: serverTimestamp()
-                });
+                editBtn.onclick = async ()=>{
+                    const newText = prompt("댓글 수정", c.text);
+                    if(!newText) return;
 
-                loadComments();
-            };
+                    await updateDoc(
+                        doc(db, "people", p.name, "comments", docSnap.id),
+                        {
+                            text: newText.trim(),
+                            editedAt: Date.now()
+                        }
+                    );
 
-            box.appendChild(div);
+                    loadComments();
+                };
 
-            list.filter(r => r.parentId === parent.id).forEach(reply => {
-                const rdiv = document.createElement("div");
-                rdiv.style.marginLeft = "20px";
-                rdiv.textContent = `↳ ${reply.name}: ${reply.text}`;
-                box.appendChild(rdiv);
-            });
+                const delBtn = document.createElement("button");
+                delBtn.textContent = "삭제";
+
+                delBtn.onclick = async ()=>{
+                    if(!confirm("삭제할까요?")) return;
+
+                    await deleteDoc(
+                        doc(db, "people", p.name, "comments", docSnap.id)
+                    );
+
+                    loadComments();
+                };
+
+                div.appendChild(editBtn);
+                div.appendChild(delBtn);
+            }
+
+            commentsDiv.appendChild(div);
         });
     }
 
-    commentBtn.onclick = async () => {
-
-        const text = input.value.trim();
-        if(!text) return;
-
-        const user = auth.currentUser || await login();
-
-        await addDoc(collection(db, "people", id, "comments"), {
-            text,
-            uid: user.uid,
-            name: user.email || "익명",
-            parentId: null,
-            createdAt: serverTimestamp()
-        });
-
-        input.value = "";
-        loadComments();
-    };
-
-    loadComments();
+    await loadLikes();
+    await loadComments();
 }
 
 /* =========================
    CLOSE MODAL
 ========================= */
 
-closeModal.onclick = () => modal.classList.add("hidden");
+closeModal.addEventListener("click", ()=>{
+    modal.classList.add("hidden");
+});
 
-modal.onclick = (e) => {
+modal.addEventListener("click", e=>{
     if(e.target === modal){
         modal.classList.add("hidden");
     }
-};
+});
 
 /* =========================
    AUTH
 ========================= */
 
-loginBtn.onclick = login;
-logoutBtn.onclick = logout;
+loginBtn.addEventListener("click", login);
+logoutBtn.addEventListener("click", logout);
 
 watchAuth(user=>{
-    document.getElementById("userInfo").textContent =
-        user?.email || "로그인 안 됨";
+
+    const userInfo = document.getElementById("userInfo");
+
+    if(!user){
+
+        userInfo.textContent = "로그인 안 됨";
+
+        loginBtn.style.display = "inline-block";
+        logoutBtn.style.display = "none";
+
+        searchBox.style.display = "none";
+
+        container.innerHTML = `
+            <div style="
+                text-align:center;
+                padding:60px 20px;
+                font-size:20px;
+            ">
+                🔒 Google 로그인 후 이용 가능합니다.
+            </div>
+        `;
+
+        return;
+    }
+
+    userInfo.textContent = user.email;
+
+    loginBtn.style.display = "none";
+    logoutBtn.style.display = "inline-block";
+
+    searchBox.style.display = "block";
+
+    render(data);
 });
 
 /* =========================
    START
 ========================= */
 
-init();
+data = people;
 
 </script>
+
+</body>
+</html>
