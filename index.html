@@ -389,12 +389,10 @@ async function openModal(p){
 
         commentsDiv.innerHTML = "";
 
-        snap.forEach(docSnap=>{
+        snap.forEach(docSnap => {
+
             const c = docSnap.data();
-            
-            const replyBtn = div.querySelector(".replyBtn");
-            const repliesDiv = div.querySelector(".replies");
-            
+
             const div = document.createElement("div");
             div.className = "comment";
 
@@ -426,7 +424,11 @@ async function openModal(p){
 
                 <div class="replies"></div>
             `;
-            
+
+            // 🔥 여기서 querySelector 해야 함 (div 만든 후)
+            const replyBtn = div.querySelector(".replyBtn");
+            const repliesDiv = div.querySelector(".replies");
+
             replyBtn.addEventListener("click", async () => {
 
                 const text = prompt("답글 입력");
@@ -451,6 +453,9 @@ async function openModal(p){
 
                 loadReplies(docSnap.id, repliesDiv);
             });
+
+            commentsDiv.appendChild(div);
+        });
 
             if(
                 auth.currentUser &&
