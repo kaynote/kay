@@ -455,8 +455,13 @@ async function openModal(p){
                     loadComments();
                 };
 
-                div.appendChild(editBtn);
-                div.appendChild(delBtn);
+                const action = document.createElement("div");
+                action.className = "actions";
+
+                action.appendChild(editBtn);
+                action.appendChild(delBtn);
+
+                div.querySelector(".commentRow").appendChild(action);
             }
 
             commentsDiv.appendChild(div);
