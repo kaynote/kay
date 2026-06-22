@@ -239,9 +239,9 @@ function formatDate(ts){
     return `${yyyy}-${mm}-${dd} ${hh}:${mi}:${ss}`;
 }
             
-async function openModal(p){
+async function openModal(p) {
 
-    const personName = p.name;  // 🔥 여기
+    const personName = p.name; // 🔥 무조건 통일 키
 
     modal.classList.remove("hidden");
 
@@ -267,123 +267,27 @@ async function openModal(p){
     const likeBtn = modalBody.querySelector(".likeBtn");
     const likeCountEl = modalBody.querySelector(".likeCount");
     const showLikesBtn = modalBody.querySelector(".showLikesBtn");
-
-    /* 🔥 여기 */
-    if(auth.currentUser?.email === ADMIN_EMAIL){
-        showLikesBtn.style.display = "inline-block";
-    } else {
-        showLikesBtn.style.display = "none";
-    }
-
     const commentBtn = modalBody.querySelector(".commentBtn");
     const commentInput = modalBody.querySelector(".commentInput");
     const commentsDiv = modalBody.querySelector(".comments");
 
-    /* =====================
-       SHOW LIKES (한 번만 등록)
-    ===================== */
-
-    showLikesBtn.addEventListener("click", async ()=>{
+    // =========================
+    // LIKE COUNT
+    // =========================
+    async function loadLikes() {
         const snap = await getDocs(
-            collection(db, "people", p.name, "likes")
+            collection(db, "people", personName, "likes")
         );
-
-        const result = snap.docs
-            .map(d => d.data().name || "이름 없음")
-            .join("\n");
-
-        alert(result || "추천 없음");
-    });
-
-    /* =====================
-       LOAD LIKES
-    ===================== */
-
-    async function loadLikes(){
-        const snap = await getDocs(
-            collection(db, "people", p.name, "likes")
-        );
-
         likeCountEl.textContent = snap.size;
     }
 
-    /* =====================
-       LIKE TOGGLE
-    ===================== */
-
-    likeBtn.addEventListener("click", async ()=>{
-
-        const user = auth.currentUser || await login();
-
-        const ref = doc(db, "people", p.name, "likes", user.uid);
-
-        const liked = await getDoc(ref);
-
-        if(liked.exists()){
-            await deleteDoc(ref);
-        } else {
-            await setDoc(ref, {
-                uid: user.uid,
-                name:
-                  user.providerData?.[0]?.displayName ||
-                  user.displayName ||
-                  user.email ||
-                  "익명",
-                photo: user.photoURL,
-                createdAt: Date.now()
-            });
-        }
-
-        if(auth.currentUser?.email === ADMIN_EMAIL){
-            showLikesBtn.style.display = "inline-block";
-        }
-
-        loadLikes();
-    });
-
-    /* =====================
-       COMMENTS
-    ===================== */
-
-    commentBtn.addEventListener("click", async ()=>{
-
-        const text = commentInput.value.trim();
-        if(!text) return;
-
-        if(text.length > 1000){
-            alert("댓글은 1000자 이하만 가능합니다.");
-            return;
-        }
-
-        const user = auth.currentUser || await login();
-
-        await addDoc(
-            collection(db, "people", p.name, "comments"),
-            {
-                uid: user.uid,
-                name:
-                  user.providerData?.[0]?.displayName ||
-                  user.displayName ||
-                  user.email ||
-                  "익명",
-                photo: user.photoURL,
-                text,
-                createdAt: serverTimestamp()   // 🔥 변경
-            }
-        );
-
-        commentInput.value = "";
-        loadComments();
-    });
-
-    /* =====================
-       LOAD COMMENTS
-    ===================== */
-
-    async function loadComments(){
+    // =========================
+    // COMMENTS LOAD
+    // =========================
+    async function loadComments() {
 
         const q = query(
-            collection(db, "people", p.name, "comments"),
+            collection(db, "people", personName, "comments"),
             orderBy("createdAt", "desc")
         );
 
@@ -394,30 +298,26 @@ async function openModal(p){
         snap.forEach(docSnap => {
 
             const c = docSnap.data();
+            const commentId = docSnap.id;
 
             const div = document.createElement("div");
             div.className = "comment";
 
             div.innerHTML = `
                 <div class="commentRow">
-
                     <div class="left">
                         <img src="${c.photo || 'images/no-image.jpg'}">
                         <span class="name">${c.name}</span>
                     </div>
 
-                    <div class="text">
-                        ${c.text}
-                    </div>
+                    <div class="text">${c.text}</div>
 
                     <div class="right">
                         <span class="time">
                             ${c.createdAt ? formatDate(c.createdAt) : ""}
                         </span>
-
                         ${c.editedAt ? '<span class="edited">수정됨</span>' : ''}
                     </div>
-
                 </div>
 
                 <div class="commentActions">
@@ -430,38 +330,62 @@ async function openModal(p){
             const replyBtn = div.querySelector(".replyBtn");
             const repliesDiv = div.querySelector(".replies");
 
+            // =========================
+            // LOAD REPLIES
+            // =========================
+            async function loadReplies() {
+                const rq = query(
+                    collection(db, "people", personName, "comments", commentId, "replies"),
+                    orderBy("createdAt", "asc")
+                );
+
+                const rsnap = await getDocs(rq);
+
+                repliesDiv.innerHTML = "";
+
+                rsnap.forEach(rdoc => {
+                    const r = rdoc.data();
+
+                    const rdiv = document.createElement("div");
+                    rdiv.className = "reply";
+
+                    rdiv.innerHTML = `
+                        <img src="${r.photo || 'images/no-image.jpg'}">
+                        <span>${r.name}</span>
+                        <span>${r.text}</span>
+                        <span>${r.createdAt ? formatDate(r.createdAt) : ""}</span>
+                    `;
+
+                    repliesDiv.appendChild(rdiv);
+                });
+            }
+
+            // 최초 답글 로드
+            loadReplies();
+
+            // =========================
+            // ADD REPLY
+            // =========================
             replyBtn.addEventListener("click", async () => {
 
-                const text = prompt("답글 입력");
-                if (!text) return;
-
                 try {
+                    const text = prompt("답글 입력");
+                    if (!text) return;
 
                     const user = auth.currentUser || await login();
 
                     await addDoc(
-                        collection(
-                            db,
-                            "people",
-                            personName,
-                            "comments",
-                            docSnap.id,
-                            "replies"
-                        ),
+                        collection(db, "people", personName, "comments", commentId, "replies"),
                         {
                             uid: user.uid,
-                            name:
-                                user.providerData?.[0]?.displayName ||
-                                user.displayName ||
-                                user.email ||
-                                "익명",
+                            name: user.displayName || user.email || "익명",
                             photo: user.photoURL,
                             text,
                             createdAt: serverTimestamp()
                         }
                     );
 
-                    await loadReplies(docSnap.id, repliesDiv);
+                    await loadReplies();
 
                 } catch (e) {
                     console.error("답글 저장 실패:", e);
@@ -469,22 +393,26 @@ async function openModal(p){
                 }
             });
 
-            // 🔥 수정/삭제도 반드시 여기 안에
-            if(
+            // =========================
+            // EDIT / DELETE
+            // =========================
+            if (
                 auth.currentUser &&
-                (c.uid === auth.currentUser.uid ||
-                 auth.currentUser.email === ADMIN_EMAIL)
-            ){
+                (c.uid === auth.currentUser.uid || auth.currentUser.email === ADMIN_EMAIL)
+            ) {
+
+                const action = document.createElement("div");
+                action.className = "actions";
 
                 const editBtn = document.createElement("button");
                 editBtn.textContent = "수정";
 
-                editBtn.onclick = async ()=>{
+                editBtn.onclick = async () => {
                     const newText = prompt("댓글 수정", c.text);
-                    if(!newText) return;
+                    if (!newText) return;
 
                     await updateDoc(
-                        doc(db, "people", p.name, "comments", docSnap.id),
+                        doc(db, "people", personName, "comments", commentId),
                         {
                             text: newText.trim(),
                             editedAt: serverTimestamp()
@@ -497,18 +425,15 @@ async function openModal(p){
                 const delBtn = document.createElement("button");
                 delBtn.textContent = "삭제";
 
-                delBtn.onclick = async ()=>{
-                    if(!confirm("삭제할까요?")) return;
+                delBtn.onclick = async () => {
+                    if (!confirm("삭제할까요?")) return;
 
                     await deleteDoc(
-                        doc(db, "people", p.name, "comments", docSnap.id)
+                        doc(db, "people", personName, "comments", commentId)
                     );
 
                     loadComments();
                 };
-
-                const action = document.createElement("div");
-                action.className = "actions";
 
                 action.appendChild(editBtn);
                 action.appendChild(delBtn);
@@ -520,6 +445,45 @@ async function openModal(p){
         });
     }
 
+    // =========================
+    // ADD COMMENT
+    // =========================
+    commentBtn.addEventListener("click", async () => {
+
+        try {
+            const text = commentInput.value.trim();
+            if (!text) return;
+
+            if (text.length > 1000) {
+                alert("댓글은 1000자 이하");
+                return;
+            }
+
+            const user = auth.currentUser || await login();
+
+            await addDoc(
+                collection(db, "people", personName, "comments"),
+                {
+                    uid: user.uid,
+                    name: user.displayName || user.email || "익명",
+                    photo: user.photoURL,
+                    text,
+                    createdAt: serverTimestamp()
+                }
+            );
+
+            commentInput.value = "";
+            loadComments();
+
+        } catch (e) {
+            console.error("댓글 저장 실패:", e);
+            alert("댓글 저장 실패");
+        }
+    });
+
+    // =========================
+    // INIT LOAD
+    // =========================
     await loadLikes();
     await loadComments();
 }
