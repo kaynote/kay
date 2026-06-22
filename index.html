@@ -1,47 +1,3 @@
-<!DOCTYPE html>
-<html lang="ko">
-
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Kay Notes Archive</title>
-
-<link rel="stylesheet" href="style.css?v=10">
-
-<style>
-#peopleContainer{
-    contain:layout paint;
-}
-</style>
-
-</head>
-
-<body>
-
-<header>
-    <h1>Kay Notes Archive</h1>
-
-    <div id="userInfo">로그인 안 됨</div>
-
-    <div class="authArea">
-        <button id="loginBtn">로그인</button>
-        <button id="logoutBtn">로그아웃</button>
-    </div>
-
-    <input type="text" id="searchBox" placeholder="검색...">
-</header>
-
-<div id="peopleContainer"></div>
-
-<!-- MODAL -->
-<div id="modal" class="modal hidden">
-    <div class="modal-content">
-        <button id="closeModal" class="closeBtn">✕</button>
-        <div id="modalBody"></div>
-    </div>
-</div>
-
 <script type="module">
 
 import people from "./people.js?v=10";
@@ -116,7 +72,6 @@ function createCard(p, index){
     const img = document.createElement("img");
     img.src = p.image ? "images/" + p.image : "images/no-image.jpg";
     img.loading = "lazy";
-    img.decoding = "async";
 
     const photo = document.createElement("div");
     photo.className = "photo";
@@ -128,17 +83,12 @@ function createCard(p, index){
     const nameEl = document.createElement("div");
     nameEl.className = "name";
 
-    const enEl = document.createElement("div");
-    enEl.className = "en";
-
     const no = p.no || (index + 1);
 
-    enEl.innerHTML = `
+    nameEl.innerHTML = `
         <span class="num">${no}.</span>
         <span class="txt">${p.name || ""}</span>
     `;
-
-    nameEl.appendChild(enEl);
 
     if(p.ko){
         const koEl = document.createElement("div");
@@ -220,28 +170,19 @@ searchBox.addEventListener("input", e=>{
 });
 
 /* =========================
-   MODAL
+   MODAL (핵심 수정 부분)
 ========================= */
 
 function formatDate(ts){
     if(!ts) return "";
-
     const d = ts.toDate();
 
-    const yyyy = d.getFullYear();
-    const mm = String(d.getMonth()+1).padStart(2,"0");
-    const dd = String(d.getDate()).padStart(2,"0");
-
-    const hh = String(d.getHours()).padStart(2,"0");
-    const mi = String(d.getMinutes()).padStart(2,"0");
-    const ss = String(d.getSeconds()).padStart(2,"0");
-
-    return `${yyyy}-${mm}-${dd} ${hh}:${mi}:${ss}`;
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")} ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`;
 }
-            
+
 async function openModal(p) {
 
-    const personName = p.name; // 🔥 먼저 선언 (가장 중요)
+    const personName = p.name;
 
     modal.classList.remove("hidden");
 
@@ -254,43 +195,39 @@ async function openModal(p) {
         <div class="likeArea">
             <button class="likeBtn">👍 좋아요</button>
             <span class="likeCount">0</span>
-            <button class="showLikesBtn" style="display:none;">추천자 보기</button>
         </div>
 
         <div class="commentArea">
-            <textarea class="commentInput" placeholder="댓글 입력 (최대 1000자)"></textarea>
+            <textarea class="commentInput" placeholder="댓글 입력"></textarea>
             <button class="commentBtn">등록</button>
             <div class="comments"></div>
         </div>
     `;
 
-    // 🔥 DOM 생성 후에 잡아야 함 (중요)
     const likeBtn = modalBody.querySelector(".likeBtn");
     const likeCountEl = modalBody.querySelector(".likeCount");
-    const showLikesBtn = modalBody.querySelector(".showLikesBtn");
     const commentBtn = modalBody.querySelector(".commentBtn");
     const commentInput = modalBody.querySelector(".commentInput");
     const commentsDiv = modalBody.querySelector(".comments");
 
-    // =========================
-    // LIKE LOAD FUNCTION
-    // =========================
-    async function loadLikes() {
-        const snap = await getDocs(
-            collection(db, "people", personName, "likes")
-        );
+    /* =========================
+       LIKE LOAD
+    ========================= */
+
+    async function loadLikes(){
+        const snap = await getDocs(collection(db, "people", personName, "likes"));
         likeCountEl.textContent = snap.size;
     }
 
-    // =========================
-    // LIKE BUTTON (여기가 핵심)
-    // =========================
-    likeBtn.addEventListener("click", async () => {
+    /* =========================
+       LIKE TOGGLE (핵심)
+    ========================= */
+
+    likeBtn.onclick = async () => {
         try {
             const user = auth.currentUser || await login();
 
             const ref = doc(db, "people", personName, "likes", user.uid);
-
             const snap = await getDoc(ref);
 
             if (snap.exists()) {
@@ -310,26 +247,13 @@ async function openModal(p) {
             console.error("좋아요 실패:", e);
             alert("좋아요 실패");
         }
-    });
+    };
 
-    // 최초 로딩
-    await loadLikes();
-}
+    /* =========================
+       COMMENTS LOAD
+    ========================= */
 
-    // =========================
-    // LIKE COUNT
-    // =========================
-    async function loadLikes() {
-        const snap = await getDocs(
-            collection(db, "people", personName, "likes")
-        );
-        likeCountEl.textContent = snap.size;
-    }
-
-    // =========================
-    // COMMENTS LOAD
-    // =========================
-    async function loadComments() {
+    async function loadComments(){
 
         const q = query(
             collection(db, "people", personName, "comments"),
@@ -351,18 +275,10 @@ async function openModal(p) {
             div.innerHTML = `
                 <div class="commentRow">
                     <div class="left">
-                        <img src="${c.photo || 'images/no-image.jpg'}">
                         <span class="name">${c.name}</span>
                     </div>
-
                     <div class="text">${c.text}</div>
-
-                    <div class="right">
-                        <span class="time">
-                            ${c.createdAt ? formatDate(c.createdAt) : ""}
-                        </span>
-                        ${c.editedAt ? '<span class="edited">수정됨</span>' : ''}
-                    </div>
+                    <div class="right">${c.createdAt ? formatDate(c.createdAt) : ""}</div>
                 </div>
 
                 <div class="commentActions">
@@ -375,10 +291,12 @@ async function openModal(p) {
             const replyBtn = div.querySelector(".replyBtn");
             const repliesDiv = div.querySelector(".replies");
 
-            // =========================
-            // LOAD REPLIES
-            // =========================
-            async function loadReplies() {
+            /* =========================
+               LOAD REPLIES
+            ========================= */
+
+            async function loadReplies(){
+
                 const rq = query(
                     collection(db, "people", personName, "comments", commentId, "replies"),
                     orderBy("createdAt", "asc")
@@ -395,114 +313,52 @@ async function openModal(p) {
                     rdiv.className = "reply";
 
                     rdiv.innerHTML = `
-                        <img src="${r.photo || 'images/no-image.jpg'}">
                         <span>${r.name}</span>
                         <span>${r.text}</span>
-                        <span>${r.createdAt ? formatDate(r.createdAt) : ""}</span>
                     `;
 
                     repliesDiv.appendChild(rdiv);
                 });
             }
 
-            // 최초 답글 로드
             loadReplies();
 
-            // =========================
-            // ADD REPLY
-            // =========================
-            replyBtn.addEventListener("click", async () => {
+            /* =========================
+               REPLY ADD
+            ========================= */
 
-                try {
-                    const text = prompt("답글 입력");
-                    if (!text) return;
+            replyBtn.onclick = async () => {
+                const text = prompt("답글");
+                if (!text) return;
 
-                    const user = auth.currentUser || await login();
+                const user = auth.currentUser || await login();
 
-                    await addDoc(
-                        collection(db, "people", personName, "comments", commentId, "replies"),
-                        {
-                            uid: user.uid,
-                            name: user.displayName || user.email || "익명",
-                            photo: user.photoURL,
-                            text,
-                            createdAt: serverTimestamp()
-                        }
-                    );
+                await addDoc(
+                    collection(db, "people", personName, "comments", commentId, "replies"),
+                    {
+                        uid: user.uid,
+                        name: user.displayName || "익명",
+                        text,
+                        createdAt: serverTimestamp()
+                    }
+                );
 
-                    await loadReplies();
-
-                } catch (e) {
-                    console.error("답글 저장 실패:", e);
-                    alert("답글 저장 실패");
-                }
-            });
-
-            // =========================
-            // EDIT / DELETE
-            // =========================
-            if (
-                auth.currentUser &&
-                (c.uid === auth.currentUser.uid || auth.currentUser.email === ADMIN_EMAIL)
-            ) {
-
-                const action = document.createElement("div");
-                action.className = "actions";
-
-                const editBtn = document.createElement("button");
-                editBtn.textContent = "수정";
-
-                editBtn.onclick = async () => {
-                    const newText = prompt("댓글 수정", c.text);
-                    if (!newText) return;
-
-                    await updateDoc(
-                        doc(db, "people", personName, "comments", commentId),
-                        {
-                            text: newText.trim(),
-                            editedAt: serverTimestamp()
-                        }
-                    );
-
-                    loadComments();
-                };
-
-                const delBtn = document.createElement("button");
-                delBtn.textContent = "삭제";
-
-                delBtn.onclick = async () => {
-                    if (!confirm("삭제할까요?")) return;
-
-                    await deleteDoc(
-                        doc(db, "people", personName, "comments", commentId)
-                    );
-
-                    loadComments();
-                };
-
-                action.appendChild(editBtn);
-                action.appendChild(delBtn);
-
-                div.querySelector(".commentRow").appendChild(action);
-            }
+                loadReplies();
+            };
 
             commentsDiv.appendChild(div);
         });
     }
 
-    // =========================
-    // ADD COMMENT
-    // =========================
-    commentBtn.addEventListener("click", async () => {
+    /* =========================
+       COMMENT ADD
+    ========================= */
+
+    commentBtn.onclick = async () => {
 
         try {
             const text = commentInput.value.trim();
             if (!text) return;
-
-            if (text.length > 1000) {
-                alert("댓글은 1000자 이하");
-                return;
-            }
 
             const user = auth.currentUser || await login();
 
@@ -511,7 +367,6 @@ async function openModal(p) {
                 {
                     uid: user.uid,
                     name: user.displayName || user.email || "익명",
-                    photo: user.photoURL,
                     text,
                     createdAt: serverTimestamp()
                 }
@@ -521,80 +376,38 @@ async function openModal(p) {
             loadComments();
 
         } catch (e) {
-            console.error("댓글 저장 실패:", e);
-            alert("댓글 저장 실패");
+            console.error(e);
+            alert("댓글 실패");
         }
-    });
+    };
 
-    // =========================
-    // INIT LOAD
-    // =========================
     await loadLikes();
     await loadComments();
-}
-
-async function loadReplies(commentId, container){
-
-    const q = query(
-        collection(db, "people", p.name, "comments", commentId, "replies"),
-        orderBy("createdAt", "asc")
-    );
-
-    const snap = await getDocs(q);
-
-    container.innerHTML = "";
-
-    snap.forEach(d => {
-        const r = d.data();
-
-        const div = document.createElement("div");
-        div.className = "reply";
-
-        div.innerHTML = `
-            <img src="${r.photo || 'images/no-image.jpg'}">
-            <span>${r.name}</span>
-            <span>${r.text}</span>
-            <span>${r.createdAt ? formatDate(r.createdAt) : ""}</span>
-        `;
-
-        container.appendChild(div);
-    });
 }
 
 /* =========================
    CLOSE MODAL
 ========================= */
 
-closeModal.addEventListener("click", ()=>{
-    modal.classList.add("hidden");
-});
-
-modal.addEventListener("click", e=>{
-    if(e.target === modal){
-        modal.classList.add("hidden");
-    }
-});
+closeModal.onclick = () => modal.classList.add("hidden");
+modal.onclick = (e) => { if(e.target === modal) modal.classList.add("hidden"); };
 
 /* =========================
    AUTH
 ========================= */
 
-loginBtn.addEventListener("click", login);
-logoutBtn.addEventListener("click", logout);
+loginBtn.onclick = login;
+logoutBtn.onclick = logout;
 
 watchAuth(user=>{
     const userInfo = document.getElementById("userInfo");
 
     if(!user){
         userInfo.textContent = "로그인 안 됨";
-        loginBtn.style.display = "inline-block";
-        logoutBtn.style.display = "none";
         return;
     }
 
     userInfo.textContent = user.email;
-    loginBtn.style.display = "none";
-    logoutBtn.style.display = "inline-block";
 });
 
 /* =========================
@@ -604,6 +417,3 @@ watchAuth(user=>{
 init();
 
 </script>
-
-</body>
-</html>
