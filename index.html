@@ -408,6 +408,15 @@ async function openModal(p){
             });
         });
 
+        console.table(
+            list.map(x => ({
+                text: x.text,
+                parentId: x.parentId
+            }))
+        );
+
+        commentCountEl.textContent = list.length;
+
         const map = {};
         const roots = [];
 
