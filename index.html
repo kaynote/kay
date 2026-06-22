@@ -425,7 +425,6 @@ async function openModal(p){
                 <div class="replies"></div>
             `;
 
-            // 🔥 여기서 querySelector 해야 함 (div 만든 후)
             const replyBtn = div.querySelector(".replyBtn");
             const repliesDiv = div.querySelector(".replies");
 
@@ -454,9 +453,7 @@ async function openModal(p){
                 loadReplies(docSnap.id, repliesDiv);
             });
 
-            commentsDiv.appendChild(div);
-        });
-
+            // 🔥 수정/삭제도 반드시 여기 안에
             if(
                 auth.currentUser &&
                 (c.uid === auth.currentUser.uid ||
