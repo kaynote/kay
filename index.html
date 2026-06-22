@@ -563,17 +563,48 @@ async function openModal(p){
 
             delBtn.onclick = async ()=>{
 
-                if(!confirm("삭제할까요?")) return;
+                if(!confirm("댓글과 모든 답글을 삭제할까요?")) return;
 
-                await deleteDoc(
-                    doc(
-                        db,
-                        "people",
-                        p.name,
-                        "comments",
-                        c.id
-                    )
+                const snap = await getDocs(
+                    collection(db, "people", p.name, "comments")
                 );
+
+                const targets = [];
+
+                function collectReplies(parentId){
+
+                    snap.forEach(docSnap=>{
+
+                        const data = docSnap.data();
+
+                        if(data.parentId === parentId){
+
+                            targets.push(docSnap.id);
+
+                            collectReplies(docSnap.id);
+                        }
+                    });
+                }
+
+                // 자기 자신
+                targets.push(c.id);
+
+                // 자식 답글 전부
+                collectReplies(c.id);
+
+                // 삭제
+                for(const id of targets){
+
+                    await deleteDoc(
+                        doc(
+                            db,
+                            "people",
+                            p.name,
+                            "comments",
+                            id
+                        )
+                    );
+                }
 
                 loadComments();
             };
