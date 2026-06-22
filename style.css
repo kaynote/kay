@@ -498,3 +498,17 @@ header{
     font-size: 11px;
     padding: 2px 6px;
 }
+
+.comment{
+    border-left:1px solid #ddd;
+    padding-left:10px;
+    margin-top:8px;
+}
+
+.actions{
+    margin-top:4px;
+}
+
+.actions button{
+    margin-right:4px;
+}

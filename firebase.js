@@ -1,7 +1,14 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 
 import {
-  getFirestore
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  doc,
+  updateDoc,
+  deleteDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 import {
@@ -100,4 +107,67 @@ export function watchAuth(callback) {
   return onAuthStateChanged(auth, (user) => {
     callback(normalizeUser(user));
   });
+}
+
+/* =========================
+   COMMENTS
+========================= */
+
+export async function addComment(
+  postId,
+  text,
+  user,
+  parentId = null
+) {
+  return await addDoc(
+    collection(db, "comments", postId, "items"),
+    {
+      text,
+      parentId,
+
+      uid: user.uid,
+      name: user.name,
+      photo: user.photo,
+
+      createdAt: serverTimestamp()
+    }
+  );
+}
+
+export async function getComments(postId) {
+
+  const snap = await getDocs(
+    collection(db, "comments", postId, "items")
+  );
+
+  const arr = [];
+
+  snap.forEach(doc => {
+    arr.push({
+      id: doc.id,
+      ...doc.data()
+    });
+  });
+
+  return arr;
+}
+
+export async function updateComment(
+  postId,
+  commentId,
+  text
+) {
+  await updateDoc(
+    doc(db, "comments", postId, "items", commentId),
+    { text }
+  );
+}
+
+export async function deleteComment(
+  postId,
+  commentId
+) {
+  await deleteDoc(
+    doc(db, "comments", postId, "items", commentId)
+  );
 }
