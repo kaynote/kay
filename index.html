@@ -1,3 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kay Notes Archive</title>
+
+<link rel="stylesheet" href="style.css?v=10">
+
+<style>
+#peopleContainer{
+    contain:layout paint;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+    <h1>Kay Notes Archive</h1>
+
+    <div id="userInfo">로그인 안 됨</div>
+
+    <div class="authArea">
+        <button id="loginBtn">로그인</button>
+        <button id="logoutBtn">로그아웃</button>
+    </div>
+
+    <input type="text" id="searchBox" placeholder="검색...">
+</header>
+
+<div id="peopleContainer"></div>
+
+<!-- MODAL -->
+<div id="modal" class="modal hidden">
+    <div class="modal-content">
+        <button id="closeModal" class="closeBtn">✕</button>
+        <div id="modalBody"></div>
+    </div>
+</div>
+
 <script type="module">
 
 import people from "./people.js?v=10";
@@ -18,6 +62,7 @@ import {
     doc,
     setDoc,
     getDoc,
+    updateDoc,
     query,
     orderBy,
     serverTimestamp
@@ -71,6 +116,7 @@ function createCard(p, index){
     const img = document.createElement("img");
     img.src = p.image ? "images/" + p.image : "images/no-image.jpg";
     img.loading = "lazy";
+    img.decoding = "async";
 
     const photo = document.createElement("div");
     photo.className = "photo";
@@ -82,12 +128,17 @@ function createCard(p, index){
     const nameEl = document.createElement("div");
     nameEl.className = "name";
 
+    const enEl = document.createElement("div");
+    enEl.className = "en";
+
     const no = p.no || (index + 1);
 
-    nameEl.innerHTML = `
+    enEl.innerHTML = `
         <span class="num">${no}.</span>
         <span class="txt">${p.name || ""}</span>
     `;
+
+    nameEl.appendChild(enEl);
 
     if(p.ko){
         const koEl = document.createElement("div");
@@ -169,18 +220,26 @@ searchBox.addEventListener("input", e=>{
 });
 
 /* =========================
-   MODAL (FULL FIX)
+   MODAL
 ========================= */
 
 function formatDate(ts){
     if(!ts) return "";
+
     const d = ts.toDate();
-    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")} ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`;
+
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth()+1).padStart(2,"0");
+    const dd = String(d.getDate()).padStart(2,"0");
+
+    const hh = String(d.getHours()).padStart(2,"0");
+    const mi = String(d.getMinutes()).padStart(2,"0");
+    const ss = String(d.getSeconds()).padStart(2,"0");
+
+    return `${yyyy}-${mm}-${dd} ${hh}:${mi}:${ss}`;
 }
-
-async function openModal(p) {
-
-    const personName = p.name;
+            
+async function openModal(p){
 
     modal.classList.remove("hidden");
 
@@ -193,10 +252,11 @@ async function openModal(p) {
         <div class="likeArea">
             <button class="likeBtn">👍 좋아요</button>
             <span class="likeCount">0</span>
+            <button class="showLikesBtn" style="display:none;">추천자 보기</button>
         </div>
 
         <div class="commentArea">
-            <textarea class="commentInput"></textarea>
+            <textarea class="commentInput" placeholder="댓글 입력 (최대 1000자)"></textarea>
             <button class="commentBtn">등록</button>
             <div class="comments"></div>
         </div>
@@ -204,50 +264,124 @@ async function openModal(p) {
 
     const likeBtn = modalBody.querySelector(".likeBtn");
     const likeCountEl = modalBody.querySelector(".likeCount");
+    const showLikesBtn = modalBody.querySelector(".showLikesBtn");
+
+    /* 🔥 여기 */
+    if(auth.currentUser?.email === ADMIN_EMAIL){
+        showLikesBtn.style.display = "inline-block";
+    } else {
+        showLikesBtn.style.display = "none";
+    }
+
     const commentBtn = modalBody.querySelector(".commentBtn");
     const commentInput = modalBody.querySelector(".commentInput");
     const commentsDiv = modalBody.querySelector(".comments");
 
-    /* =========================
-       LIKE
-    ========================= */
+    /* =====================
+       SHOW LIKES (한 번만 등록)
+    ===================== */
+
+    showLikesBtn.addEventListener("click", async ()=>{
+        const snap = await getDocs(
+            collection(db, "people", p.name, "likes")
+        );
+
+        const result = snap.docs
+            .map(d => d.data().name || "이름 없음")
+            .join("\n");
+
+        alert(result || "추천 없음");
+    });
+
+    /* =====================
+       LOAD LIKES
+    ===================== */
 
     async function loadLikes(){
-        const snap = await getDocs(collection(db, "people", personName, "likes"));
+        const snap = await getDocs(
+            collection(db, "people", p.name, "likes")
+        );
+
         likeCountEl.textContent = snap.size;
     }
 
-    likeBtn.onclick = async () => {
-        try {
-            const user = auth.currentUser || await login();
+    /* =====================
+       LIKE TOGGLE
+    ===================== */
 
-            const ref = doc(db, "people", personName, "likes", user.uid);
-            const snap = await getDoc(ref);
+    likeBtn.addEventListener("click", async ()=>{
 
-            if (snap.exists()) {
-                await deleteDoc(ref);
-            } else {
-                await setDoc(ref, {
-                    uid: user.uid,
-                    createdAt: serverTimestamp()
-                });
-            }
+        const user = auth.currentUser || await login();
 
-            loadLikes();
+        const ref = doc(db, "people", p.name, "likes", user.uid);
 
-        } catch (e) {
-            console.error(e);
+        const liked = await getDoc(ref);
+
+        if(liked.exists()){
+            await deleteDoc(ref);
+        } else {
+            await setDoc(ref, {
+                uid: user.uid,
+                name:
+                  user.providerData?.[0]?.displayName ||
+                  user.displayName ||
+                  user.email ||
+                  "익명",
+                photo: user.photoURL,
+                createdAt: Date.now()
+            });
         }
-    };
 
-    /* =========================
+        if(auth.currentUser?.email === ADMIN_EMAIL){
+            showLikesBtn.style.display = "inline-block";
+        }
+
+        loadLikes();
+    });
+
+    /* =====================
        COMMENTS
-    ========================= */
+    ===================== */
+
+    commentBtn.addEventListener("click", async ()=>{
+
+        const text = commentInput.value.trim();
+        if(!text) return;
+
+        if(text.length > 1000){
+            alert("댓글은 1000자 이하만 가능합니다.");
+            return;
+        }
+
+        const user = auth.currentUser || await login();
+
+        await addDoc(
+            collection(db, "people", p.name, "comments"),
+            {
+                uid: user.uid,
+                name:
+                  user.providerData?.[0]?.displayName ||
+                  user.displayName ||
+                  user.email ||
+                  "익명",
+                photo: user.photoURL,
+                text,
+                createdAt: serverTimestamp()   // 🔥 변경
+            }
+        );
+
+        commentInput.value = "";
+        loadComments();
+    });
+
+    /* =====================
+       LOAD COMMENTS
+    ===================== */
 
     async function loadComments(){
 
         const q = query(
-            collection(db, "people", personName, "comments"),
+            collection(db, "people", p.name, "comments"),
             orderBy("createdAt", "desc")
         );
 
@@ -255,112 +389,123 @@ async function openModal(p) {
 
         commentsDiv.innerHTML = "";
 
-        snap.forEach(docSnap => {
-
+        snap.forEach(docSnap=>{
             const c = docSnap.data();
-            const commentId = docSnap.id;
-
+            
             const div = document.createElement("div");
             div.className = "comment";
 
             div.innerHTML = `
                 <div class="commentRow">
-                    <div>${c.name}</div>
-                    <div>${c.text}</div>
-                    <div>${c.createdAt ? formatDate(c.createdAt) : ""}</div>
-                </div>
 
-                <div class="replies"></div>
-                <button class="replyBtn">답글</button>
+                    <div class="left">
+                        <img src="${c.photo || 'images/no-image.jpg'}">
+                        <span class="name">${c.name}</span>
+                    </div>
+
+                    <div class="text">
+                        ${c.text}
+                    </div>
+
+                    <div class="right">
+                        <span class="time">
+                            ${c.createdAt ? formatDate(c.createdAt) : ""}
+                        </span>
+
+                        ${c.editedAt ? '<span class="edited">수정됨</span>' : ''}
+                    </div>
+
+                </div>
             `;
 
-            const repliesDiv = div.querySelector(".replies");
-            const replyBtn = div.querySelector(".replyBtn");
+            if(
+                auth.currentUser &&
+                (c.uid === auth.currentUser.uid ||
+                 auth.currentUser.email === ADMIN_EMAIL)
+            ){
 
-            async function loadReplies(){
+                const editBtn = document.createElement("button");
+                editBtn.textContent = "수정";
 
-                const rq = query(
-                    collection(db, "people", personName, "comments", commentId, "replies"),
-                    orderBy("createdAt", "asc")
-                );
+                editBtn.onclick = async ()=>{
+                    const newText = prompt("댓글 수정", c.text);
+                    if(!newText) return;
 
-                const rsnap = await getDocs(rq);
+                    await updateDoc(
+                        doc(db, "people", p.name, "comments", docSnap.id),
+                        {
+                            text: newText.trim(),
+                            editedAt: serverTimestamp()
+                        }
+                    );
 
-                repliesDiv.innerHTML = "";
+                    loadComments();
+                };
 
-                rsnap.forEach(r => {
-                    const rdiv = document.createElement("div");
-                    rdiv.textContent = `${r.data().name}: ${r.data().text}`;
-                    repliesDiv.appendChild(rdiv);
-                });
+                const delBtn = document.createElement("button");
+                delBtn.textContent = "삭제";
+
+                delBtn.onclick = async ()=>{
+                    if(!confirm("삭제할까요?")) return;
+
+                    await deleteDoc(
+                        doc(db, "people", p.name, "comments", docSnap.id)
+                    );
+
+                    loadComments();
+                };
+
+                const action = document.createElement("div");
+                action.className = "actions";
+
+                action.appendChild(editBtn);
+                action.appendChild(delBtn);
+
+                div.querySelector(".commentRow").appendChild(action);
             }
-
-            loadReplies();
-
-            replyBtn.onclick = async () => {
-                const text = prompt("답글");
-                if (!text) return;
-
-                const user = auth.currentUser || await login();
-
-                await addDoc(
-                    collection(db, "people", personName, "comments", commentId, "replies"),
-                    {
-                        uid: user.uid,
-                        name: user.displayName || "익명",
-                        text,
-                        createdAt: serverTimestamp()
-                    }
-                );
-
-                loadReplies();
-            };
 
             commentsDiv.appendChild(div);
         });
     }
-
-    commentBtn.onclick = async () => {
-        const text = commentInput.value.trim();
-        if (!text) return;
-
-        const user = auth.currentUser || await login();
-
-        await addDoc(
-            collection(db, "people", personName, "comments"),
-            {
-                uid: user.uid,
-                name: user.displayName || "익명",
-                text,
-                createdAt: serverTimestamp()
-            }
-        );
-
-        commentInput.value = "";
-        loadComments();
-    };
 
     await loadLikes();
     await loadComments();
 }
 
 /* =========================
-   CLOSE
+   CLOSE MODAL
 ========================= */
 
-closeModal.onclick = () => modal.classList.add("hidden");
-modal.onclick = e => { if(e.target === modal) modal.classList.add("hidden"); };
+closeModal.addEventListener("click", ()=>{
+    modal.classList.add("hidden");
+});
+
+modal.addEventListener("click", e=>{
+    if(e.target === modal){
+        modal.classList.add("hidden");
+    }
+});
 
 /* =========================
    AUTH
 ========================= */
 
-loginBtn.onclick = login;
-logoutBtn.onclick = logout;
+loginBtn.addEventListener("click", login);
+logoutBtn.addEventListener("click", logout);
 
 watchAuth(user=>{
-    document.getElementById("userInfo").textContent =
-        user ? user.email : "로그인 안 됨";
+    const userInfo = document.getElementById("userInfo");
+
+    if(!user){
+        userInfo.textContent = "로그인 안 됨";
+        loginBtn.style.display = "inline-block";
+        logoutBtn.style.display = "none";
+        return;
+    }
+
+    userInfo.textContent = user.email;
+    loginBtn.style.display = "none";
+    logoutBtn.style.display = "inline-block";
 });
 
 /* =========================
@@ -370,3 +515,6 @@ watchAuth(user=>{
 init();
 
 </script>
+
+</body>
+</html>
