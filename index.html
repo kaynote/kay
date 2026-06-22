@@ -66,7 +66,7 @@ import {
     query,
     orderBy,
     serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
 /* =========================
    CONFIG
@@ -135,7 +135,7 @@ function createCard(p, index){
 
     enEl.innerHTML = `
         <span class="num">${no}.</span>
-        <span class="txt">${p.id || p.name || ""}</span>
+        <span class="txt">${p.id || ""}</span>
     `;
 
     nameEl.appendChild(enEl);
@@ -177,7 +177,7 @@ function render(list){
 
     list.forEach((p, index)=>{
 
-        const key = (p.no || index) + "_" + (p.id || p.name);
+        const key = (p.no || index) + "_" + (p.id);
 
         if(renderedMap.has(key)){
             fragment.appendChild(renderedMap.get(key));
@@ -207,7 +207,7 @@ const handleSearch = debounce(value=>{
     const k = value.toLowerCase();
 
     const filtered = data.filter(p =>
-        (p.id || p.name || "").toLowerCase().includes(k) ||
+        (p.id || "").toLowerCase().includes(k) ||
         (p.ko || "").toLowerCase().includes(k) ||
         (p.note || "").toLowerCase().includes(k)
     );
@@ -230,7 +230,7 @@ async function openModal(p){
     modalBody.innerHTML = `
         <img class="modal-photo" src="images/${p.image || 'no-image.jpg'}">
 
-        <div class="modal-name">${p.displayName || p.id || p.name}</div>
+        <div class="modal-name">${p.displayName || p.id}</div>
         <div class="modal-desc">${p.note || ""}</div>
 
         <div class="likeArea">
@@ -267,7 +267,7 @@ async function openModal(p){
 
     showLikesBtn.addEventListener("click", async ()=>{
         const snap = await getDocs(
-            collection(db, "people", p.id || p.name, "likes")
+            collection(db, "people", p.id, "likes")
         );
 
         const result = snap.docs
@@ -283,7 +283,7 @@ async function openModal(p){
 
     async function loadLikes(){
         const snap = await getDocs(
-            collection(db, "people", p.id || p.name, "likes")
+            collection(db, "people", p.id, "likes")
         );
 
         likeCountEl.textContent = snap.size;
@@ -297,7 +297,7 @@ async function openModal(p){
 
         const user = auth.currentUser || await login();
 
-        const ref = doc(db, "people", p.id || p.name, "likes", user.uid);
+        const ref = doc(db, "people", p.id, "likes", user.uid);
 
         const liked = await getDoc(ref);
 
@@ -340,7 +340,7 @@ async function openModal(p){
         const user = auth.currentUser || await login();
 
         await addDoc(
-            collection(db, "people", p.id || p.name, "comments"),
+            collection(db, "people", p.id, "comments"),
             {
                 uid: user.uid,
                 name:
@@ -366,7 +366,7 @@ async function openModal(p){
     async function loadComments(){
 
     const q = query(
-        collection(db, "people", p.id || p.name, "comments"),
+        collection(db, "people", p.id, "comments"),
         orderBy("createdAt", "asc")
     );
 
@@ -415,7 +415,7 @@ async function openModal(p){
             const user = auth.currentUser || await login();
 
             await addDoc(
-                collection(db, "people", p.id || p.name, "comments"),
+                collection(db, "people", p.id, "comments"),
                 {
                     text: replyText,
                     uid: user.uid,
