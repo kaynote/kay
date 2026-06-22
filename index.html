@@ -392,6 +392,9 @@ async function openModal(p){
         snap.forEach(docSnap=>{
             const c = docSnap.data();
             
+            const replyBtn = div.querySelector(".replyBtn");
+            const repliesDiv = div.querySelector(".replies");
+            
             const div = document.createElement("div");
             div.className = "comment";
 
@@ -416,7 +419,38 @@ async function openModal(p){
                     </div>
 
                 </div>
+
+                <div class="commentActions">
+                    <button class="replyBtn">답글</button>
+                </div>
+
+                <div class="replies"></div>
             `;
+            
+            replyBtn.addEventListener("click", async () => {
+
+                const text = prompt("답글 입력");
+                if (!text) return;
+
+                const user = auth.currentUser || await login();
+
+                await addDoc(
+                    collection(db, "people", p.name, "comments", docSnap.id, "replies"),
+                    {
+                        uid: user.uid,
+                        name:
+                            user.providerData?.[0]?.displayName ||
+                            user.displayName ||
+                            user.email ||
+                            "익명",
+                        photo: user.photoURL,
+                        text,
+                        createdAt: serverTimestamp()
+                    }
+                );
+
+                loadReplies(docSnap.id, repliesDiv);
+            });
 
             if(
                 auth.currentUser &&
@@ -470,6 +504,34 @@ async function openModal(p){
 
     await loadLikes();
     await loadComments();
+}
+
+async function loadReplies(commentId, container){
+
+    const q = query(
+        collection(db, "people", p.name, "comments", commentId, "replies"),
+        orderBy("createdAt", "asc")
+    );
+
+    const snap = await getDocs(q);
+
+    container.innerHTML = "";
+
+    snap.forEach(d => {
+        const r = d.data();
+
+        const div = document.createElement("div");
+        div.className = "reply";
+
+        div.innerHTML = `
+            <img src="${r.photo || 'images/no-image.jpg'}">
+            <span>${r.name}</span>
+            <span>${r.text}</span>
+            <span>${r.createdAt ? formatDate(r.createdAt) : ""}</span>
+        `;
+
+        container.appendChild(div);
+    });
 }
 
 /* =========================
