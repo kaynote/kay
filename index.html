@@ -456,9 +456,9 @@ async function openModal(p){
                     <span class="time">
                         ${c.createdAt ? formatDate(c.createdAt) : ""}
                     </span>
-                </div>
 
-            </div>
+                    ${c.editedAt ? '<span class="edited">수정됨</span>' : ''}
+                </div>
         `;
 
         const action = document.createElement("div");
@@ -489,7 +489,7 @@ async function openModal(p){
 
                     text,
 
-                    parentId: c.id,
+                    parentId: null,
 
                     createdAt: serverTimestamp()
                 }
