@@ -498,3 +498,9 @@ header{
     font-size: 11px;
     padding: 2px 6px;
 }
+
+.reply {
+    margin-left: 20px;
+    font-size: 0.9em;
+    color: #555;
+}
