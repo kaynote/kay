@@ -58,7 +58,7 @@ function normalizeUser(user) {
 }
 
 /* =========================
-   LOGIN / LOGOUT
+   AUTH
 ========================= */
 export async function login() {
   const result = await signInWithPopup(auth, provider);
@@ -76,7 +76,7 @@ export function watchAuth(cb) {
 }
 
 /* =========================
-   🔥 COMMENTS (대댓글 핵심)
+   🔥 COMMENTS (대댓글 지원 핵심)
 ========================= */
 
 // 댓글 추가 (일반 + 대댓글)
@@ -88,13 +88,13 @@ export async function addComment(personId, text, user, parentId = null) {
       uid: user.uid,
       name: user.name,
       photo: user.photo,
-      parentId, // 👈 핵심 (대댓글 구조)
+      parentId, // null = 일반댓글 / 값 있음 = 대댓글
       createdAt: serverTimestamp()
     }
   );
 }
 
-// 댓글 실시간 구독
+// 댓글 실시간 구독 (🔥 대댓글 구조로 정리해서 반환)
 export function watchComments(personId, callback) {
   const q = query(
     collection(db, "people", String(personId), "comments"),
@@ -102,12 +102,26 @@ export function watchComments(personId, callback) {
   );
 
   return onSnapshot(q, (snap) => {
-    const comments = snap.docs.map((d) => ({
+    const raw = snap.docs.map((d) => ({
       id: d.id,
       ...d.data()
     }));
 
-    callback(comments);
+    const main = [];
+    const replies = {};
+
+    raw.forEach((c) => {
+      if (!c.parentId) {
+        main.push(c);
+      } else {
+        if (!replies[c.parentId]) {
+          replies[c.parentId] = [];
+        }
+        replies[c.parentId].push(c);
+      }
+    });
+
+    callback({ main, replies });
   });
 }
 
