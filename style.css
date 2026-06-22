@@ -458,3 +458,8 @@ header{
   border-left: 2px solid #ddd;
   padding-left: 10px;
 }
+
+.reply {
+  background: #fafafa;
+  margin-top: 5px;
+}

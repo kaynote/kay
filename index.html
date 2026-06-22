@@ -365,55 +365,58 @@ async function openModal(p){
 
     async function loadComments(){
 
-        const q = query(
-            collection(db, "people", p.name, "comments"),
-            orderBy("createdAt", "desc")
-        );
+    const q = query(
+        collection(db, "people", p.name, "comments"),
+        orderBy("createdAt", "asc")
+    );
 
-        const snap = await getDocs(q);
+    const snap = await getDocs(q);
 
-        commentsDiv.innerHTML = "";
+    commentsDiv.innerHTML = "";
 
-        snap.forEach(docSnap=>{
-            const c = docSnap.data();
+    const comments = [];
 
-            const date = c.createdAt?.toDate?.();
+    snap.forEach(d => {
+        comments.push({ id: d.id, ...d.data() });
+    });
 
-            const pad = (n) => String(n).padStart(2, "0");
+    const parents = comments.filter(c => !c.parentId);
 
-            const time = date
-              ? `${date.getFullYear()}.${pad(date.getMonth() + 1)}.${pad(date.getDate())} ` +
-                `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`
-              : "";  
+    parents.forEach(parent => {
 
-            const div = document.createElement("div");
-            div.className = "comment";
+        const div = document.createElement("div");
+        div.className = "comment";
 
-            div.innerHTML = `
-                <div class="commentHeader">
-                    <img src="${c.photo || 'images/no-image.jpg'}">
-                    <span class="commentName">${c.name}</span>
-                    <span class="commentTime">${time || ""}</span>
-                </div>
+        const date = parent.createdAt?.toDate?.();
+        const pad = (n) => String(n).padStart(2, "0");
 
-                <div class="commentText">${c.text}</div>
+        const time = date
+          ? `${date.getFullYear()}.${pad(date.getMonth() + 1)}.${pad(date.getDate())} ` +
+            `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`
+          : "";
 
-                ${c.editedAt ? '<div class="edited">(수정됨)</div>' : ''}
-            `;
+        div.innerHTML = `
+            <div class="commentHeader">
+                <img src="${parent.photo || 'images/no-image.jpg'}">
+                <span class="commentName">${parent.name}</span>
+                <span class="commentTime">${time}</span>
+            </div>
 
-            const replyBtn = document.createElement("button");
+            <div class="commentText">${parent.text}</div>
 
-            replyBtn.textContent = "답글";
-            replyBtn.className = "replyBtn"; // 👈 먼저 설정
+            <button class="replyBtn">답글</button>
+        `;
 
-            replyBtn.onclick = async () => {
+        div.querySelector(".replyBtn").onclick = async () => {
 
-                const replyText = prompt("답글 입력");
-                if (!replyText) return;
+            const replyText = prompt("답글 입력");
+            if(!replyText) return;
 
-                const user = auth.currentUser || await login();
+            const user = auth.currentUser || await login();
 
-                await addDoc(collection(db, "people", p.name, "comments"), {
+            await addDoc(
+                collection(db, "people", p.name, "comments"),
+                {
                     text: replyText,
                     uid: user.uid,
                     name:
@@ -422,63 +425,33 @@ async function openModal(p){
                       user.email ||
                       "익명",
                     photo: user.photoURL,
-                    parentId: docSnap.id,
+                    parentId: parent.id,
                     createdAt: serverTimestamp()
-                });
+                }
+            );
 
-                loadComments();
-            };
+            loadComments();
+        };
 
-            // 👇 마지막에 DOM 붙이기 (핵심)
-            div.appendChild(replyBtn);
+        commentsDiv.appendChild(div);
 
-            if(
-                auth.currentUser &&
-                (c.uid === auth.currentUser.uid ||
-                 auth.currentUser.email === ADMIN_EMAIL)
-            ){
+        const replies = comments.filter(c => c.parentId === parent.id);
 
-                const editBtn = document.createElement("button");
-                editBtn.textContent = "수정";
+        replies.forEach(reply => {
 
-                editBtn.onclick = async ()=>{
-                    const newText = prompt("댓글 수정", c.text);
-                    if(!newText) return;
+            const rdiv = document.createElement("div");
+            rdiv.className = "comment reply";
+            rdiv.style.marginLeft = "30px";
 
-                    await updateDoc(
-                        doc(db, "people", p.name, "comments", docSnap.id),
-                        {
-                            text: newText.trim(),
-                            editedAt: Date.now()
-                        }
-                    );
+            rdiv.innerHTML = `
+                <div>
+                    ↳ ${reply.name}: ${reply.text}
+                </div>
+            `;
 
-                    loadComments();
-                };
-
-                const delBtn = document.createElement("button");
-                delBtn.textContent = "삭제";
-
-                delBtn.onclick = async ()=>{
-                    if(!confirm("삭제할까요?")) return;
-
-                    await deleteDoc(
-                        doc(db, "people", p.name, "comments", docSnap.id)
-                    );
-
-                    loadComments();
-                };
-
-                div.appendChild(editBtn);
-                div.appendChild(delBtn);
-            }
-
-            commentsDiv.appendChild(div);
+            commentsDiv.appendChild(rdiv);
         });
-    }
-
-    await loadLikes();
-    await loadComments();
+    });
 }
 
 /* =========================
