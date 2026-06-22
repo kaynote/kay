@@ -241,6 +241,8 @@ function formatDate(ts){
             
 async function openModal(p){
 
+    const personName = p.name;  // 🔥 여기
+
     modal.classList.remove("hidden");
 
     modalBody.innerHTML = `
@@ -433,24 +435,38 @@ async function openModal(p){
                 const text = prompt("답글 입력");
                 if (!text) return;
 
-                const user = auth.currentUser || await login();
+                try {
 
-                await addDoc(
-                    collection(db, "people", p.name, "comments", docSnap.id, "replies"),
-                    {
-                        uid: user.uid,
-                        name:
-                            user.providerData?.[0]?.displayName ||
-                            user.displayName ||
-                            user.email ||
-                            "익명",
-                        photo: user.photoURL,
-                        text,
-                        createdAt: serverTimestamp()
-                    }
-                );
+                    const user = auth.currentUser || await login();
 
-                loadReplies(docSnap.id, repliesDiv);
+                    await addDoc(
+                        collection(
+                            db,
+                            "people",
+                            personName,
+                            "comments",
+                            docSnap.id,
+                            "replies"
+                        ),
+                        {
+                            uid: user.uid,
+                            name:
+                                user.providerData?.[0]?.displayName ||
+                                user.displayName ||
+                                user.email ||
+                                "익명",
+                            photo: user.photoURL,
+                            text,
+                            createdAt: serverTimestamp()
+                        }
+                    );
+
+                    await loadReplies(docSnap.id, repliesDiv);
+
+                } catch (e) {
+                    console.error("답글 저장 실패:", e);
+                    alert("답글 저장 실패");
+                }
             });
 
             // 🔥 수정/삭제도 반드시 여기 안에
