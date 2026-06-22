@@ -18,7 +18,6 @@ import {
     doc,
     setDoc,
     getDoc,
-    updateDoc,
     query,
     orderBy,
     serverTimestamp
@@ -170,13 +169,12 @@ searchBox.addEventListener("input", e=>{
 });
 
 /* =========================
-   MODAL (핵심 수정 부분)
+   MODAL (FULL FIX)
 ========================= */
 
 function formatDate(ts){
     if(!ts) return "";
     const d = ts.toDate();
-
     return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")} ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`;
 }
 
@@ -198,7 +196,7 @@ async function openModal(p) {
         </div>
 
         <div class="commentArea">
-            <textarea class="commentInput" placeholder="댓글 입력"></textarea>
+            <textarea class="commentInput"></textarea>
             <button class="commentBtn">등록</button>
             <div class="comments"></div>
         </div>
@@ -211,17 +209,13 @@ async function openModal(p) {
     const commentsDiv = modalBody.querySelector(".comments");
 
     /* =========================
-       LIKE LOAD
+       LIKE
     ========================= */
 
     async function loadLikes(){
         const snap = await getDocs(collection(db, "people", personName, "likes"));
         likeCountEl.textContent = snap.size;
     }
-
-    /* =========================
-       LIKE TOGGLE (핵심)
-    ========================= */
 
     likeBtn.onclick = async () => {
         try {
@@ -235,22 +229,19 @@ async function openModal(p) {
             } else {
                 await setDoc(ref, {
                     uid: user.uid,
-                    name: user.displayName || user.email || "익명",
-                    photo: user.photoURL,
                     createdAt: serverTimestamp()
                 });
             }
 
-            await loadLikes();
+            loadLikes();
 
         } catch (e) {
-            console.error("좋아요 실패:", e);
-            alert("좋아요 실패");
+            console.error(e);
         }
     };
 
     /* =========================
-       COMMENTS LOAD
+       COMMENTS
     ========================= */
 
     async function loadComments(){
@@ -274,26 +265,17 @@ async function openModal(p) {
 
             div.innerHTML = `
                 <div class="commentRow">
-                    <div class="left">
-                        <span class="name">${c.name}</span>
-                    </div>
-                    <div class="text">${c.text}</div>
-                    <div class="right">${c.createdAt ? formatDate(c.createdAt) : ""}</div>
-                </div>
-
-                <div class="commentActions">
-                    <button class="replyBtn">답글</button>
+                    <div>${c.name}</div>
+                    <div>${c.text}</div>
+                    <div>${c.createdAt ? formatDate(c.createdAt) : ""}</div>
                 </div>
 
                 <div class="replies"></div>
+                <button class="replyBtn">답글</button>
             `;
 
-            const replyBtn = div.querySelector(".replyBtn");
             const repliesDiv = div.querySelector(".replies");
-
-            /* =========================
-               LOAD REPLIES
-            ========================= */
+            const replyBtn = div.querySelector(".replyBtn");
 
             async function loadReplies(){
 
@@ -306,26 +288,14 @@ async function openModal(p) {
 
                 repliesDiv.innerHTML = "";
 
-                rsnap.forEach(rdoc => {
-                    const r = rdoc.data();
-
+                rsnap.forEach(r => {
                     const rdiv = document.createElement("div");
-                    rdiv.className = "reply";
-
-                    rdiv.innerHTML = `
-                        <span>${r.name}</span>
-                        <span>${r.text}</span>
-                    `;
-
+                    rdiv.textContent = `${r.data().name}: ${r.data().text}`;
                     repliesDiv.appendChild(rdiv);
                 });
             }
 
             loadReplies();
-
-            /* =========================
-               REPLY ADD
-            ========================= */
 
             replyBtn.onclick = async () => {
                 const text = prompt("답글");
@@ -350,35 +320,24 @@ async function openModal(p) {
         });
     }
 
-    /* =========================
-       COMMENT ADD
-    ========================= */
-
     commentBtn.onclick = async () => {
+        const text = commentInput.value.trim();
+        if (!text) return;
 
-        try {
-            const text = commentInput.value.trim();
-            if (!text) return;
+        const user = auth.currentUser || await login();
 
-            const user = auth.currentUser || await login();
+        await addDoc(
+            collection(db, "people", personName, "comments"),
+            {
+                uid: user.uid,
+                name: user.displayName || "익명",
+                text,
+                createdAt: serverTimestamp()
+            }
+        );
 
-            await addDoc(
-                collection(db, "people", personName, "comments"),
-                {
-                    uid: user.uid,
-                    name: user.displayName || user.email || "익명",
-                    text,
-                    createdAt: serverTimestamp()
-                }
-            );
-
-            commentInput.value = "";
-            loadComments();
-
-        } catch (e) {
-            console.error(e);
-            alert("댓글 실패");
-        }
+        commentInput.value = "";
+        loadComments();
     };
 
     await loadLikes();
@@ -386,11 +345,11 @@ async function openModal(p) {
 }
 
 /* =========================
-   CLOSE MODAL
+   CLOSE
 ========================= */
 
 closeModal.onclick = () => modal.classList.add("hidden");
-modal.onclick = (e) => { if(e.target === modal) modal.classList.add("hidden"); };
+modal.onclick = e => { if(e.target === modal) modal.classList.add("hidden"); };
 
 /* =========================
    AUTH
@@ -400,14 +359,8 @@ loginBtn.onclick = login;
 logoutBtn.onclick = logout;
 
 watchAuth(user=>{
-    const userInfo = document.getElementById("userInfo");
-
-    if(!user){
-        userInfo.textContent = "로그인 안 됨";
-        return;
-    }
-
-    userInfo.textContent = user.email;
+    document.getElementById("userInfo").textContent =
+        user ? user.email : "로그인 안 됨";
 });
 
 /* =========================
