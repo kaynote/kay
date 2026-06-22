@@ -64,7 +64,7 @@ import {
     getDoc,
     updateDoc,
     query,
-    orderBy
+    orderBy,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
@@ -223,6 +223,22 @@ searchBox.addEventListener("input", e=>{
    MODAL
 ========================= */
 
+function formatDate(ts){
+    if(!ts) return "";
+
+    const d = ts.toDate();
+
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth()+1).padStart(2,"0");
+    const dd = String(d.getDate()).padStart(2,"0");
+
+    const hh = String(d.getHours()).padStart(2,"0");
+    const mi = String(d.getMinutes()).padStart(2,"0");
+    const ss = String(d.getSeconds()).padStart(2,"0");
+
+    return `${yyyy}-${mm}-${dd} ${hh}:${mi}:${ss}`;
+}
+            
 async function openModal(p){
 
     modal.classList.remove("hidden");
@@ -376,22 +392,6 @@ async function openModal(p){
         snap.forEach(docSnap=>{
             const c = docSnap.data();
             
-            function formatDate(ts){
-                if(!ts) return "";
-
-                const d = ts.toDate();
-
-                const yyyy = d.getFullYear();
-                const mm = String(d.getMonth()+1).padStart(2,"0");
-                const dd = String(d.getDate()).padStart(2,"0");
-
-                const hh = String(d.getHours()).padStart(2,"0");
-                const mi = String(d.getMinutes()).padStart(2,"0");
-                const ss = String(d.getSeconds()).padStart(2,"0");
-
-                return `${yyyy}-${mm}-${dd} ${hh}:${mi}:${ss}`;
-            }
-
             const div = document.createElement("div");
             div.className = "comment";
 
@@ -404,7 +404,7 @@ async function openModal(p){
                 <div class="commentText">${c.text}</div>
 
                 <div class="commentTime">
-                    ${formatDate(c.createdAt)}
+                    ${c.createdAt ? formatDate(c.createdAt) : ""}
                 </div>
 
                 ${c.editedAt ? '<div class="edited">(수정됨)</div>' : ''}
@@ -427,7 +427,7 @@ async function openModal(p){
                         doc(db, "people", p.name, "comments", docSnap.id),
                         {
                             text: newText.trim(),
-                            editedAt: Date.now()
+                            editedAt: serverTimestamp()
                         }
                     );
 
