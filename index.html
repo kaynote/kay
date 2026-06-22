@@ -387,189 +387,187 @@ async function openModal(p){
 
     async function loadComments(){
 
-async function loadComments(){
-
-    const q = query(
-        collection(db, "people", p.name, "comments"),
-        orderBy("createdAt", "asc")
-    );
-
-    const snap = await getDocs(q);
-
-    const list = [];
-
-    snap.forEach(docSnap=>{
-        list.push({
-            id: docSnap.id,
-            ...docSnap.data()
-        });
-    });
-
-    const map = {};
-    const roots = [];
-
-    list.forEach(c=>{
-        map[c.id] = {
-            ...c,
-            replies:[]
-        };
-    });
-
-    list.forEach(c=>{
-
-        if(c.parentId){
-            map[c.parentId]?.replies.push(map[c.id]);
-        }else{
-            roots.push(map[c.id]);
-        }
-
-    });
-
-    commentsDiv.innerHTML = "";
-
-    roots.forEach(c=>{
-        commentsDiv.appendChild(
-            renderComment(c)
-        );
-    });
-}
-
-function renderComment(c, depth = 0){
-
-    const div = document.createElement("div");
-
-    div.className = "comment";
-
-    div.style.marginLeft = `${depth * 25}px`;
-
-    div.innerHTML = `
-        <div class="commentRow">
-
-            <div class="left">
-                <img src="${c.photo || 'images/no-image.jpg'}">
-                <span class="name">${c.name}</span>
-            </div>
-
-            <div class="text">
-                ${c.text}
-            </div>
-
-            <div class="right">
-                <span class="time">
-                    ${c.createdAt ? formatDate(c.createdAt) : ""}
-                </span>
-            </div>
-
-        </div>
-    `;
-
-    const action = document.createElement("div");
-    action.className = "actions";
-
-    const replyBtn = document.createElement("button");
-    replyBtn.textContent = "답글";
-
-    replyBtn.onclick = async ()=>{
-
-        const text = prompt("답글 입력");
-
-        if(!text) return;
-
-        const user = auth.currentUser || await login();
-
-        await addDoc(
+        const q = query(
             collection(db, "people", p.name, "comments"),
-            {
-                uid: user.uid,
-                name:
-                    user.providerData?.[0]?.displayName ||
-                    user.displayName ||
-                    user.email ||
-                    "익명",
-
-                photo: user.photoURL,
-
-                text,
-
-                parentId: c.id,
-
-                createdAt: serverTimestamp()
-            }
+            orderBy("createdAt", "asc")
         );
 
-        loadComments();
-    };
+        const snap = await getDocs(q);
 
-    action.appendChild(replyBtn);
+        const list = [];
 
-    if(
-        auth.currentUser &&
-        (
-            c.uid === auth.currentUser.uid ||
-            auth.currentUser.email === ADMIN_EMAIL
-        )
-    ){
+        snap.forEach(docSnap=>{
+            list.push({
+                id: docSnap.id,
+                ...docSnap.data()
+            });
+        });
 
-        const editBtn = document.createElement("button");
-        editBtn.textContent = "수정";
+        const map = {};
+        const roots = [];
 
-        editBtn.onclick = async ()=>{
+        list.forEach(c=>{
+            map[c.id] = {
+                ...c,
+                replies:[]
+            };
+        });
 
-            const newText = prompt("댓글 수정", c.text);
+        list.forEach(c=>{
 
-            if(!newText) return;
+            if(c.parentId){
+                map[c.parentId]?.replies.push(map[c.id]);
+            }else{
+                roots.push(map[c.id]);
+            }
 
-            await updateDoc(
-                doc(
-                    db,
-                    "people",
-                    p.name,
-                    "comments",
-                    c.id
-                ),
+        });
+
+        commentsDiv.innerHTML = "";
+
+        roots.forEach(c=>{
+            commentsDiv.appendChild(
+                renderComment(c)
+            );
+        });
+    }
+
+    function renderComment(c, depth = 0){
+
+        const div = document.createElement("div");
+
+        div.className = "comment";
+
+        div.style.marginLeft = `${depth * 25}px`;
+
+        div.innerHTML = `
+            <div class="commentRow">
+
+                <div class="left">
+                    <img src="${c.photo || 'images/no-image.jpg'}">
+                    <span class="name">${c.name}</span>
+                </div>
+
+                <div class="text">
+                    ${c.text}
+                </div>
+
+                <div class="right">
+                    <span class="time">
+                        ${c.createdAt ? formatDate(c.createdAt) : ""}
+                    </span>
+                </div>
+
+            </div>
+        `;
+
+        const action = document.createElement("div");
+        action.className = "actions";
+
+        const replyBtn = document.createElement("button");
+        replyBtn.textContent = "답글";
+
+        replyBtn.onclick = async ()=>{
+
+            const text = prompt("답글 입력");
+
+            if(!text) return;
+
+            const user = auth.currentUser || await login();
+
+            await addDoc(
+                collection(db, "people", p.name, "comments"),
                 {
-                    text:newText,
-                    editedAt:serverTimestamp()
+                    uid: user.uid,
+                    name:
+                        user.providerData?.[0]?.displayName ||
+                        user.displayName ||
+                        user.email ||
+                        "익명",
+
+                    photo: user.photoURL,
+
+                    text,
+
+                    parentId: c.id,
+
+                    createdAt: serverTimestamp()
                 }
             );
 
             loadComments();
         };
 
-        const delBtn = document.createElement("button");
-        delBtn.textContent = "삭제";
+        action.appendChild(replyBtn);
 
-        delBtn.onclick = async ()=>{
+        if(
+            auth.currentUser &&
+            (
+                c.uid === auth.currentUser.uid ||
+                auth.currentUser.email === ADMIN_EMAIL
+            )
+        ){
 
-            if(!confirm("삭제할까요?")) return;
+            const editBtn = document.createElement("button");
+            editBtn.textContent = "수정";
 
-            await deleteDoc(
-                doc(
-                    db,
-                    "people",
-                    p.name,
-                    "comments",
-                    c.id
-                )
+            editBtn.onclick = async ()=>{
+
+                const newText = prompt("댓글 수정", c.text);
+
+                if(!newText) return;
+
+                await updateDoc(
+                    doc(
+                        db,
+                        "people",
+                        p.name,
+                        "comments",
+                        c.id
+                    ),
+                    {
+                        text:newText,
+                        editedAt:serverTimestamp()
+                    }
+                );
+
+                loadComments();
+            };
+
+            const delBtn = document.createElement("button");
+            delBtn.textContent = "삭제";
+
+            delBtn.onclick = async ()=>{
+
+                if(!confirm("삭제할까요?")) return;
+
+                await deleteDoc(
+                    doc(
+                        db,
+                        "people",
+                        p.name,
+                        "comments",
+                        c.id
+                    )
+                );
+
+                loadComments();
+            };
+
+            action.appendChild(editBtn);
+            action.appendChild(delBtn);
+        }
+
+        div.appendChild(action);
+
+        c.replies.forEach(reply=>{
+            div.appendChild(
+                renderComment(reply, depth + 1)
             );
+        });
 
-            loadComments();
-        };
-
-        action.appendChild(editBtn);
-        action.appendChild(delBtn);
+        return div;
     }
-
-    div.appendChild(action);
-
-    c.replies.forEach(reply=>{
-        div.appendChild(
-            renderComment(reply, depth + 1)
-        );
-    });
-
-    return div;
-}
 
 /* =========================
    CLOSE MODAL
