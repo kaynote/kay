@@ -498,33 +498,3 @@ header{
     font-size: 11px;
     padding: 2px 6px;
 }
-
-.commentActions {
-    margin-top: 5px;
-}
-
-.replyBtn {
-    font-size: 11px;
-    padding: 2px 6px;
-}
-
-.replies {
-    margin-left: 30px;
-    margin-top: 5px;
-    border-left: 1px solid #ddd;
-    padding-left: 8px;
-}
-
-.reply {
-    display: flex;
-    gap: 5px;
-    font-size: 12px;
-    margin-top: 4px;
-    align-items: center;
-}
-
-.reply img {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-}
