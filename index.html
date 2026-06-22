@@ -371,7 +371,7 @@ async function openModal(p){
 
                 text,
 
-                parentId: c.id, // 추가
+                parentId: null,
 
                 createdAt: serverTimestamp()
             }
@@ -570,6 +570,11 @@ async function openModal(p){
 
         return div;
     }
+    
+    await loadLikes();
+    await loadComments();
+
+} // openModal 종료
 
 /* =========================
    CLOSE MODAL
