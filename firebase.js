@@ -1,7 +1,16 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 
 import {
-  getFirestore
+  getFirestore,
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  onSnapshot,
+  serverTimestamp,
+  updateDoc,
+  doc,
+  deleteDoc
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 import {
@@ -15,23 +24,16 @@ import {
 /* =========================
    CONFIG
 ========================= */
-
 const firebaseConfig = {
   apiKey: "AIzaSyCAZzJdAB_a65dkJaL-XLQqzImzlSI8Gmw",
   authDomain: "kay-gallery.firebaseapp.com",
   projectId: "kay-gallery",
   storageBucket: "kay-gallery.firebasestorage.app",
   messagingSenderId: "276470297982",
-  appId: "1:276470297982:web:838b8a57269b26cd3d6f2f",
-  measurementId: "G-E61XXMZCHM"
+  appId: "1:276470297982:web:838b8a57269b26cd3d6f2f"
 };
 
-/* =========================
-   INIT
-========================= */
-
 const app = initializeApp(firebaseConfig);
-
 export const db = getFirestore(app);
 export const auth = getAuth(app);
 
@@ -39,65 +41,87 @@ const provider = new GoogleAuthProvider();
 
 /* =========================
    USER NORMALIZER
-   👉 핵심 추가
 ========================= */
-
 function normalizeUser(user) {
-
-  console.log("=== normalizeUser ===");
-  console.log("displayName:", user?.displayName);
-  console.log("email:", user?.email);
-  console.log("providerData:", user?.providerData);
-
   if (!user) return null;
 
-return {
-  uid: user.uid || "",
-  email: user.email || "",
-  name:
-    user.providerData?.[0]?.displayName ||
-    user.displayName ||
-    user.email ||
-    "익명 사용자",
-  photo: user.photoURL || ""
-};
+  return {
+    uid: user.uid,
+    email: user.email || "",
+    name:
+      user.providerData?.[0]?.displayName ||
+      user.displayName ||
+      user.email ||
+      "익명",
+    photo: user.photoURL || ""
+  };
 }
 
 /* =========================
-   LOGIN
+   LOGIN / LOGOUT
 ========================= */
-
 export async function login() {
-
-  if (auth.currentUser) {
-    console.log("CURRENT:", auth.currentUser.displayName);
-    return normalizeUser(auth.currentUser);
-  }
-
-const result = await signInWithPopup(auth, provider);
-
-console.log("POPUP:", result.user.displayName);
-console.log("EMAIL:", result.user.email);
-console.log("PROVIDER:", result.user.providerData[0]);
-
-return normalizeUser(result.user);
+  const result = await signInWithPopup(auth, provider);
+  return normalizeUser(result.user);
 }
-
-/* =========================
-   LOGOUT
-========================= */
 
 export async function logout() {
   await signOut(auth);
 }
 
+export function watchAuth(cb) {
+  return onAuthStateChanged(auth, (user) => {
+    cb(normalizeUser(user));
+  });
+}
+
 /* =========================
-   AUTH WATCHER
+   🔥 COMMENTS (대댓글 핵심)
 ========================= */
 
-export function watchAuth(callback) {
+// 댓글 추가 (일반 + 대댓글)
+export async function addComment(personId, text, user, parentId = null) {
+  return await addDoc(
+    collection(db, "people", String(personId), "comments"),
+    {
+      text,
+      uid: user.uid,
+      name: user.name,
+      photo: user.photo,
+      parentId, // 👈 핵심 (대댓글 구조)
+      createdAt: serverTimestamp()
+    }
+  );
+}
 
-  return onAuthStateChanged(auth, (user) => {
-    callback(normalizeUser(user));
+// 댓글 실시간 구독
+export function watchComments(personId, callback) {
+  const q = query(
+    collection(db, "people", String(personId), "comments"),
+    orderBy("createdAt", "asc")
+  );
+
+  return onSnapshot(q, (snap) => {
+    const comments = snap.docs.map((d) => ({
+      id: d.id,
+      ...d.data()
+    }));
+
+    callback(comments);
   });
+}
+
+// 댓글 수정
+export async function editComment(personId, commentId, newText) {
+  return await updateDoc(
+    doc(db, "people", String(personId), "comments", commentId),
+    { text: newText }
+  );
+}
+
+// 댓글 삭제 (대댓글 포함 동일)
+export async function deleteComment(personId, commentId) {
+  return await deleteDoc(
+    doc(db, "people", String(personId), "comments", commentId)
+  );
 }
