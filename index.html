@@ -460,46 +460,25 @@ loginBtn.addEventListener("click", login);
 logoutBtn.addEventListener("click", logout);
 
 watchAuth(user=>{
-
     const userInfo = document.getElementById("userInfo");
 
     if(!user){
-
         userInfo.textContent = "로그인 안 됨";
-
         loginBtn.style.display = "inline-block";
         logoutBtn.style.display = "none";
-
-        searchBox.style.display = "none";
-
-        container.innerHTML = `
-            <div style="
-                text-align:center;
-                padding:60px 20px;
-                font-size:20px;
-            ">
-                🔒 Google 로그인 후 이용 가능합니다.
-            </div>
-        `;
-
         return;
     }
 
     userInfo.textContent = user.email;
-
     loginBtn.style.display = "none";
     logoutBtn.style.display = "inline-block";
-
-    searchBox.style.display = "block";
-
-    render(data);
 });
 
 /* =========================
    START
 ========================= */
 
-data = people;
+init();
 
 </script>
 
