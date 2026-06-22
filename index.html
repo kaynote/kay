@@ -396,18 +396,26 @@ async function openModal(p){
             div.className = "comment";
 
             div.innerHTML = `
-                <div class="commentHeader">
-                    <img src="${c.photo || 'images/no-image.jpg'}">
-                    <span class="commentName">${c.name}</span>
+                <div class="commentRow">
+
+                    <div class="left">
+                        <img src="${c.photo || 'images/no-image.jpg'}">
+                        <span class="name">${c.name}</span>
+                    </div>
+
+                    <div class="text">
+                        ${c.text}
+                    </div>
+
+                    <div class="right">
+                        <span class="time">
+                            ${c.createdAt ? formatDate(c.createdAt) : ""}
+                        </span>
+
+                        ${c.editedAt ? '<span class="edited">수정됨</span>' : ''}
+                    </div>
+
                 </div>
-
-                <div class="commentText">${c.text}</div>
-
-                <div class="commentTime">
-                    ${c.createdAt ? formatDate(c.createdAt) : ""}
-                </div>
-
-                ${c.editedAt ? '<div class="edited">(수정됨)</div>' : ''}
             `;
 
             if(
