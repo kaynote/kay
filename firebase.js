@@ -224,11 +224,16 @@ export async function getNotifications(uid) {
   return arr;
 }
 
+  console.log("ADD ADMIN NOTIFICATION");
+
 export async function addAdminNotification(
   postId,
   sender,
   type
 ) {
+  
+  console.log("ADD ADMIN NOTIFICATION");
+  
   await addDoc(
     collection(db, "adminNotifications"),
     {
