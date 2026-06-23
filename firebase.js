@@ -138,27 +138,6 @@ export async function addComment(
   );
 }
 
-if(parentId){
-
-   const comments = await getComments(postId);
-
-   const parent = comments.find(
-      c => c.id === parentId
-   );
-
-   if(
-      parent &&
-      parent.uid !== user.uid
-   ){
-      await addNotification(
-         parent.uid,
-         user,
-         postId,
-         "reply"
-      );
-   }
-}
-
 export async function getComments(postId) {
 
   const snap = await getDocs(
