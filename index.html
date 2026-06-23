@@ -688,7 +688,6 @@ watchAuth(user=>{
               border-radius:16px;
               padding:24px;
               box-shadow:0 6px 18px rgba(0,0,0,0.12);
-              text-align:center;
               display:flex;
               flex-direction:column;
               gap:16px;
@@ -698,11 +697,21 @@ watchAuth(user=>{
                 font-size:18px;
                 font-weight:700;
                 line-height:1.4;
+
+                display:flex;
+                justify-content:center;
+                align-items:center;
+
                 white-space:nowrap;
-                overflow:hidden;
-                text-overflow:ellipsis;
+                min-width:0;
               ">
-                🔒 로그인 후 이용 가능합니다.
+                <span style="
+                  flex:1;
+                  min-width:0;
+                  text-align:center;
+                ">
+                  🔒 로그인 후 이용 가능합니다.
+                </span>
               </div>
 
               <button id="needLoginBtn" style="
