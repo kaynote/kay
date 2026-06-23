@@ -39,7 +39,10 @@ const firebaseConfig = {
    INIT
 ========================= */
 
+// 이 줄 바로 아래
 const app = initializeApp(firebaseConfig);
+
+console.log("FIREBASE JS LOADED"); // 👈 여기
 
 export const db = getFirestore(app);
 export const auth = getAuth(app);

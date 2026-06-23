@@ -10,7 +10,7 @@ import {
 } from "./firebase.js";
 
 /* 현재 게시물 */
-const currentPost = people[people.length - 1]; // 예: Zyra Mae
+const currentPost = people[people.length - 1];
 const postId = String(currentPost.no);
 
 /* 상태 */
@@ -87,6 +87,7 @@ async function sendComment() {
 
   await addComment(postId, text, currentUser);
 
+  // 🔔 관리자 알림 (1회)
   await addAdminNotification(
     postId,
     currentUser.name,
@@ -106,11 +107,6 @@ window.reply = (id) => {
 
 /* 답글 작성 */
 async function sendReply() {
-  
-  console.log("SEND REPLY TRIGGERED");
-  
-  await addAdminNotification(postId, currentUser.name, "reply");
-  console.log("ADMIN NOTI CALLED");
 
   const text = document.getElementById("replyInput").value;
   if (!text) return;
@@ -128,17 +124,15 @@ async function sendReply() {
     currentReplyId
   );
 
+  // 🔔 관리자 알림 (1회만)
   await addAdminNotification(
     postId,
     currentUser.name,
     "reply"
   );
 
-  // 👇 여기
-  if (
-    parent &&
-    parent.uid !== currentUser.uid
-  ) {
+  // 🔔 사용자 알림
+  if (parent && parent.uid !== currentUser.uid) {
     await addNotification(
       parent.uid,
       currentUser,
