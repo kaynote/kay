@@ -9,6 +9,70 @@ import {
   addAdminNotification
 } from "./firebase.js";
 
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { db } from "./firebase.js";
+
+/* =========================
+   ADMIN NOTIFICATION UI
+========================= */
+
+const badge = document.getElementById("adminBadge");
+const list = document.getElementById("adminList");
+const bell = document.getElementById("adminBell");
+
+/* 알림 불러오기 */
+async function loadAdminNotifications() {
+  const q = query(
+    collection(db, "adminNotifications"),
+    orderBy("createdAt", "desc")
+  );
+
+  const snap = await getDocs(q);
+
+  const arr = [];
+  snap.forEach(doc => arr.push(doc.data()));
+
+  renderAdminNotifications(arr);
+}
+
+/* 숫자 + 리스트 표시 */
+function renderAdminNotifications(data) {
+
+  const unread = data.filter(n => n.read === false);
+
+  // 🔴 뱃지 숫자
+  if (unread.length > 0) {
+    badge.style.display = "block";
+    badge.textContent = unread.length;
+  } else {
+    badge.style.display = "none";
+  }
+
+  // 리스트
+  list.innerHTML = data.map(n => `
+    <div class="notifItem" data-id="${n.id}" style="
+      padding:5px;
+      border-bottom:1px solid #eee;
+      cursor:pointer;
+      ${n.read ? "opacity:0.5" : "font-weight:bold;"}
+    ">
+      <b>${n.sender}</b> 님이<br>
+      ${n.type === "comment" ? "댓글" : "답글"}을 남겼습니다
+    </div>
+  `).join("");
+}
+
+/* 클릭하면 목록 열기 */
+bell.onclick = () => {
+  list.style.display = list.style.display === "block" ? "none" : "block";
+};
+
+/* 처음 실행 */
+loadAdminNotifications();
+
+/* 새로고침 (5초마다 실시간처럼) */
+setInterval(loadAdminNotifications, 5000);
+
 /* =========================
    현재 게시물
 ========================= */
