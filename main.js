@@ -106,6 +106,11 @@ window.reply = (id) => {
 
 /* 답글 작성 */
 async function sendReply() {
+  
+  console.log("SEND REPLY TRIGGERED");
+  
+  await addAdminNotification(postId, currentUser.name, "reply");
+  console.log("ADMIN NOTI CALLED");
 
   const text = document.getElementById("replyInput").value;
   if (!text) return;
