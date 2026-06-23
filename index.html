@@ -399,100 +399,71 @@ async function openModal(p){
 
         const snap = await getDocs(q);
 
-        const list = [];
-
-        snap.forEach(docSnap=>{
-            list.push({
-                id: docSnap.id,
-                ...docSnap.data()
-            });
-        });
-
-        console.table(
-            list.map(x => ({
-                text: x.text,
-                parentId: x.parentId
-            }))
-        );
+        const list = snap.docs.map(d => ({
+            id: d.id,
+            ...d.data()
+        }));
 
         commentCountEl.textContent = list.length;
 
+        // id -> node map
         const map = {};
         const roots = [];
 
-        list.forEach(c=>{
-            map[c.id] = {
-                ...c,
-                replies:[]
-            };
+        list.forEach(c => {
+            map[c.id] = { ...c, replies: [] };
         });
 
-        commentCountEl.textContent = list.length;
-
-        list.forEach(c=>{
-
-            if(c.parentId){
-                map[c.parentId]?.replies.push(map[c.id]);
-            }else{
+        list.forEach(c => {
+            if (c.parentId && map[c.parentId]) {
+                map[c.parentId].replies.push(map[c.id]);
+            } else {
                 roots.push(map[c.id]);
             }
-
         });
 
         commentsDiv.innerHTML = "";
 
-        roots.forEach(c=>{
-            commentsDiv.appendChild(
-                renderComment(c)
-            );
+        roots.forEach(c => {
+            commentsDiv.appendChild(renderComment(c));
         });
     }
 
     function renderComment(c, depth = 0){
 
         const div = document.createElement("div");
-
         div.className = "comment";
-
-        div.style.marginLeft = `${depth * 25}px`;
+        div.style.marginLeft = `${depth * 20}px`;
 
         div.innerHTML = `
             <div class="commentRow">
-
                 <div class="left">
                     <img src="${c.photo || 'images/no-image.jpg'}">
                     <span class="name">${c.name}</span>
                 </div>
 
-                <div class="text">
-                    ${c.text}
-                </div>
+                <div class="text">${c.text}</div>
 
                 <div class="right">
                     <span class="time">
                         ${c.createdAt ? formatDate(c.createdAt) : ""}
                     </span>
-
-                    ${c.editedAt ? '<span class="edited">수정됨</span>' : ''}
+                    ${c.editedAt ? `<span class="edited">수정됨</span>` : ""}
                 </div>
-
             </div>
         `;
 
         const action = document.createElement("div");
         action.className = "actions";
 
+        // ======================
+        // 답글 버튼
+        // ======================
         const replyBtn = document.createElement("button");
-
         const replyCount = c.replies?.length || 0;
+        replyBtn.textContent = replyCount ? `답글 (${replyCount})` : "답글";
 
-        replyBtn.textContent =
-            replyCount > 0
-                ? `답글 (${replyCount})`
-                : "답글";
-
-        replyBtn.onclick = (e) => {
-            e.stopPropagation();
+        replyBtn.onclick = () => {
 
             const old = div.querySelector(".inline-reply");
             if (old) old.remove();
@@ -502,8 +473,10 @@ async function openModal(p){
 
             form.innerHTML = `
                 <textarea placeholder="답글 입력"></textarea>
-                <button class="send">전송</button>
-                <button class="cancel">취소</button>
+                <div style="display:flex; gap:6px; margin-top:6px;">
+                    <button class="send">전송</button>
+                    <button class="cancel">취소</button>
+                </div>
             `;
 
             div.appendChild(form);
@@ -512,6 +485,7 @@ async function openModal(p){
             textarea.focus();
 
             form.querySelector(".send").onclick = async () => {
+
                 const text = textarea.value.trim();
                 if (!text) return;
 
@@ -541,114 +515,67 @@ async function openModal(p){
             };
         };
 
-            if(!text) return;
-
-            const user = auth.currentUser || await login();
-
-            await addDoc(
-                collection(db, "people", p.name, "comments"),
-                {
-                    uid: user.uid,
-                    name:
-                        user.providerData?.[0]?.displayName ||
-                        user.displayName ||
-                        user.email ||
-                        "익명",
-
-                    photo: user.photoURL,
-
-                    text,
-
-                    parentId: c.id,
-
-                    createdAt: serverTimestamp()
-                }
-            );
-
-            loadComments();
-        };
-
         action.appendChild(replyBtn);
 
-        if(
+        // ======================
+        // 권한 체크 (삭제/수정)
+        // ======================
+        const isOwner =
             auth.currentUser &&
-            (
-                c.uid === auth.currentUser.uid ||
-                auth.currentUser.email === ADMIN_EMAIL
-            )
-        ){
+            (auth.currentUser.uid === c.uid ||
+             auth.currentUser.email === ADMIN_EMAIL);
 
+        if (isOwner) {
+
+            // 수정
             const editBtn = document.createElement("button");
             editBtn.textContent = "수정";
 
-            editBtn.onclick = async ()=>{
+            editBtn.onclick = async () => {
 
                 const newText = prompt("댓글 수정", c.text);
-
-                if(!newText) return;
+                if (!newText) return;
 
                 await updateDoc(
-                    doc(
-                        db,
-                        "people",
-                        p.name,
-                        "comments",
-                        c.id
-                    ),
+                    doc(db, "people", p.name, "comments", c.id),
                     {
-                        text:newText,
-                        editedAt:serverTimestamp()
+                        text: newText,
+                        editedAt: serverTimestamp()
                     }
                 );
 
                 loadComments();
             };
 
+            // 삭제
             const delBtn = document.createElement("button");
             delBtn.textContent = "삭제";
 
-            delBtn.onclick = async ()=>{
+            delBtn.onclick = async () => {
 
-                if(!confirm("댓글과 모든 답글을 삭제할까요?")) return;
+                if (!confirm("댓글과 답글을 삭제할까요?")) return;
 
                 const snap = await getDocs(
                     collection(db, "people", p.name, "comments")
                 );
 
-                const targets = [];
+                const targets = new Set([c.id]);
 
-                function collectReplies(parentId){
-
-                    snap.forEach(docSnap=>{
-
-                        const data = docSnap.data();
-
-                        if(data.parentId === parentId){
-
-                            targets.push(docSnap.id);
-
-                            collectReplies(docSnap.id);
+                const collect = (parentId) => {
+                    snap.forEach(d => {
+                        const data = d.data();
+                        if (data.parentId === parentId) {
+                            targets.add(d.id);
+                            collect(d.id);
                         }
                     });
-                }
+                };
 
-                // 자기 자신
-                targets.push(c.id);
+                collect(c.id);
 
-                // 자식 답글 전부
-                collectReplies(c.id);
-
-                // 삭제
-                for(const id of targets){
-
+                for (const id of targets) {
                     await deleteDoc(
-                        doc(
-                            db,
-                            "people",
-                            p.name,
-                            "comments",
-                            id
-                        )
+                        doc(db, "people", p.name, "comments", id)
                     );
                 }
 
@@ -661,10 +588,11 @@ async function openModal(p){
 
         div.appendChild(action);
 
-        c.replies.forEach(reply=>{
-            div.appendChild(
-                renderComment(reply, depth + 1)
-            );
+        // ======================
+        // 재귀 렌더
+        // ======================
+        c.replies.forEach(r => {
+            div.appendChild(renderComment(r, depth + 1));
         });
 
         return div;
