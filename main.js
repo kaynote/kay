@@ -4,7 +4,9 @@ import {
   addComment,
   getComments,
   deleteComment,
-  updateComment
+  updateComment,
+  addNotification,
+  addAdminNotification
 } from "./firebase.js";
 
 /* 현재 게시물 */
@@ -84,6 +86,13 @@ async function sendComment() {
   if (!text) return;
 
   await addComment(postId, text, currentUser);
+
+  await addAdminNotification(
+    postId,
+    currentUser.name,
+    "comment"
+  );
+
   document.getElementById("commentInput").value = "";
 
   loadComments();
@@ -97,10 +106,41 @@ window.reply = (id) => {
 
 /* 답글 작성 */
 async function sendReply() {
+
   const text = document.getElementById("replyInput").value;
   if (!text) return;
 
-  await addComment(postId, text, currentUser, currentReplyId);
+  const comments = await getComments(postId);
+
+  const parent = comments.find(
+    c => c.id === currentReplyId
+  );
+
+  await addComment(
+    postId,
+    text,
+    currentUser,
+    currentReplyId
+  );
+
+  await addAdminNotification(
+    postId,
+    currentUser.name,
+    "reply"
+  );
+
+  // 👇 여기
+  if (
+    parent &&
+    parent.uid !== currentUser.uid
+  ) {
+    await addNotification(
+      parent.uid,
+      currentUser,
+      postId,
+      "reply"
+    );
+  }
 
   document.getElementById("replyInput").value = "";
   document.getElementById("replyBox").style.display = "none";
