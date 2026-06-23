@@ -9,15 +9,21 @@ import {
   addAdminNotification
 } from "./firebase.js";
 
-/* 현재 게시물 */
+/* =========================
+   현재 게시물
+========================= */
 const currentPost = people[people.length - 1];
 const postId = String(currentPost.no);
 
-/* 상태 */
+/* =========================
+   상태
+========================= */
 let currentUser = null;
 let currentReplyId = null;
 
-/* 초기 로딩 */
+/* =========================
+   초기 로딩
+========================= */
 window.addEventListener("load", async () => {
   document.getElementById("person").innerHTML = currentPost.displayName;
 
@@ -28,7 +34,9 @@ window.addEventListener("load", async () => {
   document.getElementById("replySend").onclick = sendReply;
 });
 
-/* 댓글 로딩 */
+/* =========================
+   댓글 로딩
+========================= */
 async function loadComments() {
   const data = await getComments(postId);
 
@@ -40,7 +48,9 @@ async function loadComments() {
   roots.forEach(c => box.appendChild(render(c)));
 }
 
-/* 트리 구조 */
+/* =========================
+   트리 구조
+========================= */
 function buildTree(list) {
   const map = {};
   const roots = [];
@@ -58,7 +68,9 @@ function buildTree(list) {
   return roots;
 }
 
-/* 렌더링 */
+/* =========================
+   렌더링
+========================= */
 function render(c) {
   const div = document.createElement("div");
   div.style.marginLeft = c.parentId ? "20px" : "0px";
@@ -80,7 +92,9 @@ function render(c) {
   return div;
 }
 
-/* 댓글 작성 */
+/* =========================
+   댓글 작성
+========================= */
 async function sendComment() {
   const text = document.getElementById("commentInput").value;
   if (!text) return;
@@ -99,13 +113,17 @@ async function sendComment() {
   loadComments();
 }
 
-/* 답글 열기 */
+/* =========================
+   답글 열기
+========================= */
 window.reply = (id) => {
   currentReplyId = id;
   document.getElementById("replyBox").style.display = "block";
 };
 
-/* 답글 작성 */
+/* =========================
+   답글 작성
+========================= */
 async function sendReply() {
 
   const text = document.getElementById("replyInput").value;
@@ -124,7 +142,7 @@ async function sendReply() {
     currentReplyId
   );
 
-  // 🔔 관리자 알림 (1회만)
+  // 🔔 관리자 알림 (1회)
   await addAdminNotification(
     postId,
     currentUser.name,
@@ -145,15 +163,19 @@ async function sendReply() {
   document.getElementById("replyBox").style.display = "none";
 
   loadComments();
-};
+}
 
-/* 삭제 */
+/* =========================
+   삭제
+========================= */
 window.remove = async (id) => {
   await deleteComment(postId, id);
   loadComments();
 };
 
-/* 수정 */
+/* =========================
+   수정
+========================= */
 window.edit = async (id) => {
   const text = prompt("수정 내용");
   if (!text) return;
