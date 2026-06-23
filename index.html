@@ -682,16 +682,19 @@ watchAuth(user=>{
                 gap:12px;
                 padding:50px;
                 font-size:20px;
+                box-sizing:border-box;
             ">
                 <span style="
-                    white-space:nowrap !important;
+                    white-space:nowrap;
                     word-break:keep-all;
-                    flex-shrink:0;
+                    flex:0 0 auto;
                 ">
                     🔒 이 사이트는 로그인 후 이용 가능합니다.
                 </span>
 
-                <button id="needLoginBtn" style="flex-shrink:0;">
+                <button id="needLoginBtn" style="
+                    flex:0 0 auto;
+                ">
                     Google 로그인
                 </button>
             </div>
