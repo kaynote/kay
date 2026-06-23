@@ -66,7 +66,7 @@ function normalizeUser(user) {
 }
 
 /* =========================
-   LOGIN / AUTH
+   AUTH
 ========================= */
 
 export async function login() {
@@ -89,7 +89,7 @@ export function watchAuth(callback) {
 }
 
 /* =========================
-   COMMENTS (people 구조 기준)
+   COMMENTS (people 구조)
    people/{postId}/comments
 ========================= */
 
@@ -112,12 +112,10 @@ export async function getComments(postId) {
     collection(db, "people", postId, "comments")
   );
 
-  const arr = [];
-  snap.forEach(d => {
-    arr.push({ id: d.id, ...d.data() });
-  });
-
-  return arr;
+  return snap.docs.map(d => ({
+    id: d.id,
+    ...d.data()
+  }));
 }
 
 export async function updateComment(postId, commentId, text) {
@@ -134,8 +132,7 @@ export async function deleteComment(postId, commentId) {
 }
 
 /* =========================
-   USER NOTIFICATION
-   people/{postId}/notifications 아님 (루트)
+   USER NOTIFICATIONS (루트)
 ========================= */
 
 export async function addNotification(
@@ -144,7 +141,7 @@ export async function addNotification(
   postId,
   type
 ) {
-  await addDoc(
+  return await addDoc(
     collection(db, "notifications"),
     {
       recipientUid,
@@ -167,20 +164,18 @@ export async function getNotifications(uid) {
 
   const snap = await getDocs(q);
 
-  const arr = [];
-  snap.forEach(d => {
-    arr.push({ id: d.id, ...d.data() });
-  });
-
-  return arr;
+  return snap.docs.map(d => ({
+    id: d.id,
+    ...d.data()
+  }));
 }
 
 /* =========================
-   ADMIN NOTIFICATION
+   ADMIN NOTIFICATIONS
 ========================= */
 
 export async function addAdminNotification(postId, sender, type) {
-  await addDoc(
+  return await addDoc(
     collection(db, "adminNotifications"),
     {
       postId,
@@ -188,6 +183,19 @@ export async function addAdminNotification(postId, sender, type) {
       type,
       read: false,
       createdAt: serverTimestamp()
+    }
+  );
+}
+
+/* =========================
+   ADMIN READ
+========================= */
+
+export async function markAdminNotificationRead(notificationId) {
+  return await updateDoc(
+    doc(db, "adminNotifications", notificationId),
+    {
+      read: true
     }
   );
 }
