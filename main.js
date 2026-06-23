@@ -9,7 +9,13 @@ import {
   addAdminNotification
 } from "./firebase.js";
 
-import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  query,
+  orderBy
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
 import { db } from "./firebase.js";
 
 /* =========================
@@ -21,16 +27,23 @@ const list = document.getElementById("adminList");
 const bell = document.getElementById("adminBell");
 
 /* 알림 불러오기 */
-async function loadAdminNotifications() {
+async function loadAdminNotifications(postId) {
+
   const q = query(
-    collection(db, "adminNotifications"),
+    collection(db, "people", postId, "adminNotifications"),
     orderBy("createdAt", "desc")
   );
 
   const snap = await getDocs(q);
 
   const arr = [];
-  snap.forEach(doc => arr.push(doc.data()));
+
+  snap.forEach(doc => {
+    arr.push({
+      id: doc.id,
+      ...doc.data()
+    });
+  });
 
   renderAdminNotifications(arr);
 }
@@ -68,10 +81,12 @@ bell.onclick = () => {
 };
 
 /* 처음 실행 */
-loadAdminNotifications();
+loadAdminNotifications(postId);
 
 /* 새로고침 (5초마다 실시간처럼) */
-setInterval(loadAdminNotifications, 5000);
+setInterval(() => {
+  loadAdminNotifications(postId);
+}, 5000);
 
 /* =========================
    현재 게시물
