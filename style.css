@@ -519,14 +519,14 @@ header{
     flex-wrap:nowrap;
     gap:6px;
     width:100%;
-    box-sizing:border-box;
     overflow:hidden;
+    box-sizing:border-box;
 }
 
 .authArea span{
-    flex:1;
-    min-width:0;
     white-space:nowrap;
+    min-width:0;
+    flex:1;
     overflow:hidden;
     text-overflow:ellipsis;
 }
