@@ -183,24 +183,21 @@ export async function addNotification(
   type
 ) {
 
+  console.log("ADD USER NOTIFICATION");
+
   await addDoc(
     collection(db, "notifications"),
     {
       recipientUid,
-
       senderUid: senderUser.uid,
       senderName: senderUser.name,
       senderPhoto: senderUser.photo,
-
       postId,
       type,
-
       read: false,
-
       createdAt: serverTimestamp()
     }
   );
-
 }
 
 export async function getNotifications(uid) {
@@ -223,8 +220,6 @@ export async function getNotifications(uid) {
 
   return arr;
 }
-
-  console.log("ADD ADMIN NOTIFICATION");
 
 export async function addAdminNotification(
   postId,
