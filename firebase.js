@@ -8,7 +8,9 @@ import {
   doc,
   updateDoc,
   deleteDoc,
-  serverTimestamp
+  serverTimestamp,
+  query,
+  where
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 import {
@@ -129,9 +131,32 @@ export async function addComment(
       name: user.name,
       photo: user.photo,
 
+      adminChecked: false,
+
       createdAt: serverTimestamp()
     }
   );
+}
+
+if(parentId){
+
+   const comments = await getComments(postId);
+
+   const parent = comments.find(
+      c => c.id === parentId
+   );
+
+   if(
+      parent &&
+      parent.uid !== user.uid
+   ){
+      await addNotification(
+         parent.uid,
+         user,
+         postId,
+         "reply"
+      );
+   }
 }
 
 export async function getComments(postId) {
@@ -169,5 +194,70 @@ export async function deleteComment(
 ) {
   await deleteDoc(
     doc(db, "comments", postId, "items", commentId)
+  );
+}
+
+export async function addNotification(
+  recipientUid,
+  senderUser,
+  postId,
+  type
+) {
+
+  await addDoc(
+    collection(db, "notifications"),
+    {
+      recipientUid,
+
+      senderUid: senderUser.uid,
+      senderName: senderUser.name,
+      senderPhoto: senderUser.photo,
+
+      postId,
+      type,
+
+      read: false,
+
+      createdAt: serverTimestamp()
+    }
+  );
+
+}
+
+export async function getNotifications(uid) {
+
+  const q = query(
+    collection(db, "notifications"),
+    where("recipientUid", "==", uid)
+  );
+
+  const snap = await getDocs(q);
+
+  const arr = [];
+
+  snap.forEach(doc => {
+    arr.push({
+      id: doc.id,
+      ...doc.data()
+    });
+  });
+
+  return arr;
+}
+
+export async function addAdminNotification(
+  postId,
+  sender,
+  type
+) {
+  await addDoc(
+    collection(db, "adminNotifications"),
+    {
+      postId,
+      sender,
+      type,
+      read: false,
+      createdAt: serverTimestamp()
+    }
   );
 }
