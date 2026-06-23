@@ -1,201 +1,208 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import people from "./people.js";
 
 import {
-  getFirestore,
+  login,
+  addComment,
+  getComments,
+  deleteComment,
+  updateComment,
+  addNotification,
+  addAdminNotification
+} from "./firebase.js";
+
+import {
   collection,
-  addDoc,
   getDocs,
-  doc,
-  updateDoc,
-  deleteDoc,
-  serverTimestamp,
   query,
-  where
+  orderBy
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import { db } from "./firebase.js";
 
 /* =========================
-   CONFIG
+   STATE
 ========================= */
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCAZzJdAB_a65dkJaL-XLQqzImzlSI8Gmw",
-  authDomain: "kay-gallery.firebaseapp.com",
-  projectId: "kay-gallery",
-  storageBucket: "kay-gallery.firebasestorage.app",
-  messagingSenderId: "276470297982",
-  appId: "1:276470297982:web:838b8a57269b26cd3d6f2f",
-  measurementId: "G-E61XXMZCHM"
+let currentUser = null;
+let currentReplyId = null;
+
+const currentPost = people[people.length - 1];
+const postId = String(currentPost.no);
+
+/* =========================
+   DOM
+========================= */
+
+const badge = document.getElementById("adminBadge");
+const list = document.getElementById("adminList");
+const bell = document.getElementById("adminBell");
+
+/* =========================
+   ADMIN NOTIFICATION
+========================= */
+
+async function loadAdminNotifications() {
+  const q = query(
+    collection(db, "people", postId, "adminNotifications"),
+    orderBy("createdAt", "desc")
+  );
+
+  const snap = await getDocs(q);
+
+  const arr = snap.docs.map(d => ({
+    id: d.id,
+    ...d.data()
+  }));
+
+  renderAdminNotifications(arr);
+}
+
+function renderAdminNotifications(data) {
+  const unread = data.filter(n => !n.read);
+
+  badge.style.display = unread.length ? "block" : "none";
+  badge.textContent = unread.length;
+
+  list.innerHTML = data.map(n => `
+    <div class="notifItem" data-id="${n.id}" style="
+      padding:5px;
+      border-bottom:1px solid #eee;
+      cursor:pointer;
+      ${n.read ? "opacity:0.5" : "font-weight:bold;"}
+    ">
+      <b>${n.sender}</b> 님이 ${n.type}
+    </div>
+  `).join("");
+}
+
+bell.onclick = () => {
+  list.style.display = list.style.display === "block" ? "none" : "block";
 };
 
 /* =========================
    INIT
 ========================= */
 
-const app = initializeApp(firebaseConfig);
-
-export const db = getFirestore(app);
-export const auth = getAuth(app);
-
-const provider = new GoogleAuthProvider();
+loadAdminNotifications();
+setInterval(loadAdminNotifications, 5000);
 
 /* =========================
-   USER NORMALIZER
+   START
 ========================= */
 
-function normalizeUser(user) {
-  if (!user) return null;
+window.addEventListener("load", async () => {
+  currentUser = await login();
+  loadComments();
 
-  return {
-    uid: user.uid || "",
-    email: user.email || "",
-    name:
-      user.providerData?.[0]?.displayName ||
-      user.displayName ||
-      user.email ||
-      "익명 사용자",
-    photo: user.photoURL || ""
-  };
+  document.getElementById("sendBtn").onclick = sendComment;
+  document.getElementById("replySend").onclick = sendReply;
+});
+
+/* =========================
+   COMMENTS
+========================= */
+
+async function loadComments() {
+  const data = await getComments(postId);
+
+  const map = {};
+  const roots = [];
+
+  data.forEach(c => map[c.id] = { ...c, replies: [] });
+
+  data.forEach(c => {
+    if (c.parentId) map[c.parentId]?.replies.push(map[c.id]);
+    else roots.push(map[c.id]);
+  });
+
+  const box = document.getElementById("comments");
+  box.innerHTML = "";
+
+  roots.forEach(c => box.appendChild(render(c)));
+}
+
+function render(c) {
+  const div = document.createElement("div");
+
+  div.style.marginLeft = c.parentId ? "20px" : "0px";
+
+  div.innerHTML = `
+    <b>${c.name}</b>
+    <p>${c.text}</p>
+
+    <button onclick="reply('${c.id}')">답글</button>
+    <button onclick="edit('${c.id}')">수정</button>
+    <button onclick="remove('${c.id}')">삭제</button>
+
+    <div class="child"></div>
+  `;
+
+  const child = div.querySelector(".child");
+  c.replies.forEach(r => child.appendChild(render(r)));
+
+  return div;
 }
 
 /* =========================
-   AUTH
+   SEND COMMENT
 ========================= */
 
-export async function login() {
-  if (auth.currentUser) {
-    return normalizeUser(auth.currentUser);
+async function sendComment() {
+  const text = document.getElementById("commentInput").value;
+  if (!text) return;
+
+  await addComment(postId, text, currentUser);
+
+  await addAdminNotification(postId, currentUser.name, "comment");
+
+  document.getElementById("commentInput").value = "";
+
+  loadComments();
+}
+
+/* =========================
+   REPLY
+========================= */
+
+window.reply = (id) => {
+  currentReplyId = id;
+  document.getElementById("replyBox").style.display = "block";
+};
+
+async function sendReply() {
+  const text = document.getElementById("replyInput").value;
+  if (!text) return;
+
+  const comments = await getComments(postId);
+  const parent = comments.find(c => c.id === currentReplyId);
+
+  await addComment(postId, text, currentUser, currentReplyId);
+
+  await addAdminNotification(postId, currentUser.name, "reply");
+
+  if (parent && parent.uid !== currentUser.uid) {
+    await addNotification(parent.uid, currentUser, postId, "reply");
   }
 
-  const result = await signInWithPopup(auth, provider);
-  return normalizeUser(result.user);
-}
+  document.getElementById("replyInput").value = "";
+  document.getElementById("replyBox").style.display = "none";
 
-export async function logout() {
-  await signOut(auth);
-}
-
-export function watchAuth(callback) {
-  return onAuthStateChanged(auth, (user) => {
-    callback(normalizeUser(user));
-  });
+  loadComments();
 }
 
 /* =========================
-   COMMENTS (people 구조)
-   people/{postId}/comments
+   DELETE / EDIT
 ========================= */
 
-export async function addComment(postId, text, user, parentId = null) {
-  return await addDoc(
-    collection(db, "people", postId, "comments"),
-    {
-      text,
-      parentId,
-      uid: user.uid,
-      name: user.name,
-      photo: user.photo,
-      createdAt: serverTimestamp()
-    }
-  );
-}
+window.remove = async (id) => {
+  await deleteComment(postId, id);
+  loadComments();
+};
 
-export async function getComments(postId) {
-  const snap = await getDocs(
-    collection(db, "people", postId, "comments")
-  );
+window.edit = async (id) => {
+  const text = prompt("수정 내용");
+  if (!text) return;
 
-  return snap.docs.map(d => ({
-    id: d.id,
-    ...d.data()
-  }));
-}
-
-export async function updateComment(postId, commentId, text) {
-  await updateDoc(
-    doc(db, "people", postId, "comments", commentId),
-    { text }
-  );
-}
-
-export async function deleteComment(postId, commentId) {
-  await deleteDoc(
-    doc(db, "people", postId, "comments", commentId)
-  );
-}
-
-/* =========================
-   USER NOTIFICATIONS (루트)
-========================= */
-
-export async function addNotification(
-  recipientUid,
-  senderUser,
-  postId,
-  type
-) {
-  return await addDoc(
-    collection(db, "people", postId, "notifications"),
-    {
-      recipientUid,
-      senderUid: senderUser.uid,
-      senderName: senderUser.name,
-      senderPhoto: senderUser.photo,
-      postId,
-      type,
-      read: false,
-      createdAt: serverTimestamp()
-    }
-  );
-}
-
-export async function getNotifications(postId, uid) {
-  const q = query(
-    collection(db, "people", postId, "notifications"),
-    where("recipientUid", "==", uid)
-  );
-
-  const snap = await getDocs(q);
-
-  return snap.docs.map(d => ({
-    id: d.id,
-    ...d.data()
-  }));
-}
-
-/* =========================
-   ADMIN NOTIFICATIONS
-========================= */
-
-export async function addAdminNotification(postId, sender, type) {
-  return await addDoc(
-    collection(db, "people", postId, "adminNotifications"),
-    {
-      postId,
-      sender,
-      type,
-      read: false,
-      createdAt: serverTimestamp()
-    }
-  );
-}
-
-/* =========================
-   ADMIN READ
-========================= */
-
-export async function markAdminNotificationRead(postId, notificationId) {
-  return await updateDoc(
-    doc(db, "people", postId, "adminNotifications", notificationId),
-    {
-      read: true
-    }
-  );
-}
+  await updateComment(postId, id, text);
+  loadComments();
+};
