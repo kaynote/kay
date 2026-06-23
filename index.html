@@ -22,32 +22,6 @@
 <header>
     <h1>Kay Notes Archive</h1>
 
-    <!-- 🔔 관리자 알림 -->
-    <div id="adminBell" style="position:relative; cursor:pointer;">
-      🔔
-      <span id="adminBadge" style="
-        position:absolute;
-        top:-5px;
-        right:-10px;
-        background:red;
-        color:white;
-        border-radius:50%;
-        padding:2px 6px;
-        font-size:12px;
-        display:none;
-      ">0</span>
-    </div>
-
-    <div id="adminList" style="
-      display:none;
-      position:absolute;
-      background:white;
-      border:1px solid #ccc;
-      width:250px;
-      padding:10px;
-      z-index:9999;
-    "></div>
-
     <div id="userInfo">로그인 안 됨</div>
 
     <div class="authArea">
@@ -70,19 +44,14 @@
 
 <script type="module">
 
-/* 기존 코드 */
 import people from "./people.js?v=10";
+
 import {
     db,
     auth,
     login,
     logout,
-    watchAuth,
-    addComment,
-    getComments,
-    addNotification,
-    addAdminNotification,
-    markAdminNotificationRead
+    watchAuth
 } from "./firebase.js";
 
 import {
@@ -271,10 +240,6 @@ function formatDate(ts){
 }
             
 async function openModal(p){
-
-    await addAdminNotification(p.name, user.name, "comment");
-
-    await addAdminNotification(p.name, user.name, "reply");
 
     modal.classList.remove("hidden");
 
@@ -711,10 +676,12 @@ watchAuth(user=>{
         container.innerHTML = `
             <div style="
                 text-align:center;
-                padding:20px;
+                padding:50px;
+                font-size:20px;
             ">
+                🔒 이 사이트는 로그인 후 이용 가능합니다.<br><br>
                 <button id="needLoginBtn">
-                    Google 로그인 후 이용 가능합니다
+                    Google 로그인
                 </button>
             </div>
         `;
@@ -733,89 +700,6 @@ watchAuth(user=>{
 
     init(); // 로그인 성공하면 목록 표시
 });
-
-import {
-  getDocs,
-  collection
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
-import {
-  db,
-  markAdminNotificationRead
-} from "./firebase.js";
-
-/* =========================
-   LOAD ADMIN NOTI
-========================= */
-
-async function loadAdminNotifications(){
-
-  const snap = await getDocs(collection(db, "adminNotifications"));
-
-  const list = snap.docs.map(d => ({
-    id: d.id,
-    ...d.data()
-  }));
-
-  renderAdminNotifications(list);
-}
-
-/* =========================
-   RENDER
-========================= */
-
-function renderAdminNotifications(list){
-
-  const box = document.getElementById("adminList");
-  const badge = document.getElementById("adminBadge");
-
-  box.innerHTML = "";
-
-  let unread = 0;
-
-  list.forEach(n => {
-
-    if(!n.read) unread++;
-
-    const div = document.createElement("div");
-    div.className = "notifItem";
-    div.dataset.id = n.id;
-
-    div.innerHTML = `
-      <div>${n.sender}</div>
-      <div>${n.type}</div>
-    `;
-
-    box.appendChild(div);
-  });
-
-  badge.textContent = unread;
-
-  badge.style.display = unread > 0 ? "inline-block" : "none";
-}
-
-/* =========================
-   CLICK (읽음 처리)
-========================= */
-
-document.addEventListener("click", async (e)=>{
-
-  const item = e.target.closest(".notifItem");
-  if(!item) return;
-
-  await markAdminNotificationRead(item.dataset.id);
-
-  loadAdminNotifications();
-});
-
-/* =========================
-   BELL TOGGLE
-========================= */
-
-document.getElementById("adminBell").onclick = () => {
-  const box = document.getElementById("adminList");
-  box.style.display = box.style.display === "block" ? "none" : "block";
-};
 
 </script>
 
