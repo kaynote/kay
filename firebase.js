@@ -39,10 +39,7 @@ const firebaseConfig = {
    INIT
 ========================= */
 
-// 이 줄 바로 아래
 const app = initializeApp(firebaseConfig);
-
-console.log("FIREBASE JS LOADED"); // 👈 여기
 
 export const db = getFirestore(app);
 export const auth = getAuth(app);
@@ -51,133 +48,95 @@ const provider = new GoogleAuthProvider();
 
 /* =========================
    USER NORMALIZER
-   👉 핵심 추가
 ========================= */
 
 function normalizeUser(user) {
-
-  console.log("=== normalizeUser ===");
-  console.log("displayName:", user?.displayName);
-  console.log("email:", user?.email);
-  console.log("providerData:", user?.providerData);
-
   if (!user) return null;
 
-return {
-  uid: user.uid || "",
-  email: user.email || "",
-  name:
-    user.providerData?.[0]?.displayName ||
-    user.displayName ||
-    user.email ||
-    "익명 사용자",
-  photo: user.photoURL || ""
-};
+  return {
+    uid: user.uid || "",
+    email: user.email || "",
+    name:
+      user.providerData?.[0]?.displayName ||
+      user.displayName ||
+      user.email ||
+      "익명 사용자",
+    photo: user.photoURL || ""
+  };
 }
 
 /* =========================
-   LOGIN
+   LOGIN / AUTH
 ========================= */
 
 export async function login() {
-
   if (auth.currentUser) {
-    console.log("CURRENT:", auth.currentUser.displayName);
     return normalizeUser(auth.currentUser);
   }
 
-const result = await signInWithPopup(auth, provider);
-
-console.log("POPUP:", result.user.displayName);
-console.log("EMAIL:", result.user.email);
-console.log("PROVIDER:", result.user.providerData[0]);
-
-return normalizeUser(result.user);
+  const result = await signInWithPopup(auth, provider);
+  return normalizeUser(result.user);
 }
-
-/* =========================
-   LOGOUT
-========================= */
 
 export async function logout() {
   await signOut(auth);
 }
 
-/* =========================
-   AUTH WATCHER
-========================= */
-
 export function watchAuth(callback) {
-
   return onAuthStateChanged(auth, (user) => {
     callback(normalizeUser(user));
   });
 }
 
 /* =========================
-   COMMENTS
+   COMMENTS (people 구조 기준)
+   people/{postId}/comments
 ========================= */
 
-export async function addComment(
-  postId,
-  text,
-  user,
-  parentId = null
-) {
+export async function addComment(postId, text, user, parentId = null) {
   return await addDoc(
-    collection(db, "comments", postId, "items"),
+    collection(db, "people", postId, "comments"),
     {
       text,
       parentId,
-
       uid: user.uid,
       name: user.name,
       photo: user.photo,
-
-      adminChecked: false,
-
       createdAt: serverTimestamp()
     }
   );
 }
 
 export async function getComments(postId) {
-
   const snap = await getDocs(
-    collection(db, "comments", postId, "items")
+    collection(db, "people", postId, "comments")
   );
 
   const arr = [];
-
-  snap.forEach(doc => {
-    arr.push({
-      id: doc.id,
-      ...doc.data()
-    });
+  snap.forEach(d => {
+    arr.push({ id: d.id, ...d.data() });
   });
 
   return arr;
 }
 
-export async function updateComment(
-  postId,
-  commentId,
-  text
-) {
+export async function updateComment(postId, commentId, text) {
   await updateDoc(
-    doc(db, "comments", postId, "items", commentId),
+    doc(db, "people", postId, "comments", commentId),
     { text }
   );
 }
 
-export async function deleteComment(
-  postId,
-  commentId
-) {
+export async function deleteComment(postId, commentId) {
   await deleteDoc(
-    doc(db, "comments", postId, "items", commentId)
+    doc(db, "people", postId, "comments", commentId)
   );
 }
+
+/* =========================
+   USER NOTIFICATION
+   people/{postId}/notifications 아님 (루트)
+========================= */
 
 export async function addNotification(
   recipientUid,
@@ -185,9 +144,6 @@ export async function addNotification(
   postId,
   type
 ) {
-
-  console.log("ADD USER NOTIFICATION");
-
   await addDoc(
     collection(db, "notifications"),
     {
@@ -204,7 +160,6 @@ export async function addNotification(
 }
 
 export async function getNotifications(uid) {
-
   const q = query(
     collection(db, "notifications"),
     where("recipientUid", "==", uid)
@@ -213,25 +168,18 @@ export async function getNotifications(uid) {
   const snap = await getDocs(q);
 
   const arr = [];
-
-  snap.forEach(doc => {
-    arr.push({
-      id: doc.id,
-      ...doc.data()
-    });
+  snap.forEach(d => {
+    arr.push({ id: d.id, ...d.data() });
   });
 
   return arr;
 }
 
-export async function addAdminNotification(
-  postId,
-  sender,
-  type
-) {
-  
-  console.log("ADD ADMIN NOTIFICATION");
-  
+/* =========================
+   ADMIN NOTIFICATION
+========================= */
+
+export async function addAdminNotification(postId, sender, type) {
   await addDoc(
     collection(db, "adminNotifications"),
     {
