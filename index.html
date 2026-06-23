@@ -491,9 +491,55 @@ async function openModal(p){
                 ? `답글 (${replyCount})`
                 : "답글";
 
-        replyBtn.onclick = async ()=>{
+        replyBtn.onclick = (e) => {
+            e.stopPropagation();
 
-            const text = prompt("답글 입력");
+            const old = div.querySelector(".inline-reply");
+            if (old) old.remove();
+
+            const form = document.createElement("div");
+            form.className = "inline-reply";
+
+            form.innerHTML = `
+                <textarea placeholder="답글 입력"></textarea>
+                <button class="send">전송</button>
+                <button class="cancel">취소</button>
+            `;
+
+            div.appendChild(form);
+
+            const textarea = form.querySelector("textarea");
+            textarea.focus();
+
+            form.querySelector(".send").onclick = async () => {
+                const text = textarea.value.trim();
+                if (!text) return;
+
+                const user = auth.currentUser || await login();
+
+                await addDoc(
+                    collection(db, "people", p.name, "comments"),
+                    {
+                        uid: user.uid,
+                        name:
+                            user.providerData?.[0]?.displayName ||
+                            user.displayName ||
+                            user.email ||
+                            "익명",
+                        photo: user.photoURL,
+                        text,
+                        parentId: c.id,
+                        createdAt: serverTimestamp()
+                    }
+                );
+
+                loadComments();
+            };
+
+            form.querySelector(".cancel").onclick = () => {
+                form.remove();
+            };
+        };
 
             if(!text) return;
 
