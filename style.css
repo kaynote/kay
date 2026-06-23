@@ -512,3 +512,21 @@ header{
 .actions button{
     margin-right:4px;
 }
+
+.authArea{
+    display:flex;
+    align-items:center;
+    flex-wrap:nowrap;
+    gap:6px;
+    width:100%;
+    box-sizing:border-box;
+    overflow:hidden;
+}
+
+.authArea span{
+    flex:1;
+    min-width:0;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
