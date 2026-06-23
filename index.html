@@ -677,29 +677,46 @@ watchAuth(user=>{
           <div style="
             width:100%;
             display:flex;
-            flex-direction:row;
             justify-content:center;
-            align-items:center;
-            gap:12px;
-            padding:50px;
-            font-size:20px;
+            padding:40px 20px;
             box-sizing:border-box;
           ">
-            <span style="
-              white-space:nowrap;
-              word-break:keep-all;
-              flex-shrink:0;
-              display:inline-block;
+            <div style="
+              width:100%;
+              max-width:360px;
+              background:white;
+              border-radius:16px;
+              padding:24px;
+              box-shadow:0 6px 18px rgba(0,0,0,0.12);
+              text-align:center;
+              display:flex;
+              flex-direction:column;
+              gap:16px;
             ">
-              🔒 로그인 후 이용 가능합니다.
-            </span>
 
-            <button id="needLoginBtn" style="
-              flex-shrink:0;
-              display:inline-block;
-            ">
-              Google 로그인
-            </button>
+              <div style="
+                font-size:18px;
+                font-weight:700;
+                line-height:1.4;
+                word-break:keep-all;
+              ">
+                🔒 이 사이트는 로그인 후 이용 가능합니다.
+              </div>
+
+              <button id="needLoginBtn" style="
+                background:#4285F4;
+                color:white;
+                border:none;
+                border-radius:10px;
+                padding:12px 14px;
+                font-size:15px;
+                cursor:pointer;
+                width:100%;
+              ">
+                Google 로그인
+              </button>
+
+            </div>
           </div>
         `;
         
