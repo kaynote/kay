@@ -675,22 +675,28 @@ watchAuth(user=>{
 
         container.innerHTML = `
             <div style="
-                text-align:center;
-                padding:50px;
-                font-size:20px;
+                width:100%;
                 display:flex;
                 justify-content:center;
                 align-items:center;
                 gap:12px;
-                white-space:nowrap;
+                padding:50px;
+                font-size:20px;
             ">
-                <span>🔒 이 사이트는 로그인 후 이용 가능합니다.</span>
-                <button id="needLoginBtn">
+                <span style="
+                    white-space:nowrap !important;
+                    word-break:keep-all;
+                    flex-shrink:0;
+                ">
+                    🔒 이 사이트는 로그인 후 이용 가능합니다.
+                </span>
+
+                <button id="needLoginBtn" style="flex-shrink:0;">
                     Google 로그인
                 </button>
             </div>
         `;
-
+        
         document
             .getElementById("needLoginBtn")
             ?.addEventListener("click", login);
