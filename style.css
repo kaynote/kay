@@ -530,3 +530,16 @@ header{
     overflow:hidden;
     text-overflow:ellipsis;
 }
+
+.inline-reply {
+    width: 90%;
+    max-width: 800px;
+    margin-top: 8px;
+}
+
+.inline-reply textarea {
+    width: 100%;
+    min-height: 90px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
