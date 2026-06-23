@@ -142,7 +142,7 @@ export async function addNotification(
   type
 ) {
   return await addDoc(
-    collection(db, "notifications"),
+    collection(db, "people", postId, "notifications"),
     {
       recipientUid,
       senderUid: senderUser.uid,
@@ -156,9 +156,9 @@ export async function addNotification(
   );
 }
 
-export async function getNotifications(uid) {
+export async function getNotifications(postId, uid) {
   const q = query(
-    collection(db, "notifications"),
+    collection(db, "people", postId, "notifications"),
     where("recipientUid", "==", uid)
   );
 
@@ -176,7 +176,7 @@ export async function getNotifications(uid) {
 
 export async function addAdminNotification(postId, sender, type) {
   return await addDoc(
-    collection(db, "adminNotifications"),
+    collection(db, "people", postId, "adminNotifications"),
     {
       postId,
       sender,
@@ -191,9 +191,9 @@ export async function addAdminNotification(postId, sender, type) {
    ADMIN READ
 ========================= */
 
-export async function markAdminNotificationRead(notificationId) {
+export async function markAdminNotificationRead(postId, notificationId) {
   return await updateDoc(
-    doc(db, "adminNotifications", notificationId),
+    doc(db, "people", postId, "adminNotifications", notificationId),
     {
       read: true
     }
