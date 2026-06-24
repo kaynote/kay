@@ -6,10 +6,13 @@ collection,
 addDoc,
 getDocs,
 doc,
+getDoc,                 // # 추가
 updateDoc,
 deleteDoc,
 serverTimestamp,
-onSnapshot
+onSnapshot,
+query,                  // # 추가
+where                   // # 추가
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 import {
@@ -109,6 +112,7 @@ text,
 user,
 parentId = null
 ) {
+
 return await addDoc(
 collection(db, "comments", postId, "items"),
 {
@@ -136,51 +140,243 @@ collection(db, "comments", postId, "items")
 const arr = [];
 
 snap.forEach(docItem => {
+
+```
 arr.push({
-id: docItem.id,
-...docItem.data()
+  id: docItem.id,
+  ...docItem.data()
 });
+```
+
 });
 
 arr.sort((a, b) => {
-const ta = a.createdAt?.seconds || 0;
-const tb = b.createdAt?.seconds || 0;
+
+```
+const ta =
+  a.createdAt?.seconds || 0;
+
+const tb =
+  b.createdAt?.seconds || 0;
+
 return ta - tb;
+```
+
 });
 
 return arr;
 }
 
 /* =========================
+
+# 특정 댓글 1개 조회
+
+========================= */
+
+export async function getCommentById(
+postId,
+commentId
+) {
+
+const snap = await getDoc(
+doc(
+db,
+"comments",
+postId,
+"items",
+commentId
+)
+);
+
+if (!snap.exists()) {
+return null;
+}
+
+return {
+id: snap.id,
+...snap.data()
+};
+}
+
+/* =========================
 REALTIME COMMENTS
 ========================= */
 
-export function watchComments(postId, callback) {
+export function watchComments(
+postId,
+callback
+) {
 
 return onSnapshot(
-collection(db, "comments", postId, "items"),
-(snapshot) => {
+collection(
+db,
+"comments",
+postId,
+"items"
+),
 
 ```
+(snapshot) => {
+
   const comments = [];
 
   snapshot.forEach(docItem => {
+
     comments.push({
       id: docItem.id,
       ...docItem.data()
     });
+
   });
 
   comments.sort((a, b) => {
-    const ta = a.createdAt?.seconds || 0;
-    const tb = b.createdAt?.seconds || 0;
+
+    const ta =
+      a.createdAt?.seconds || 0;
+
+    const tb =
+      b.createdAt?.seconds || 0;
+
     return ta - tb;
+
   });
 
   callback(
     comments,
     snapshot.docChanges()
   );
+}
+```
+
+);
+}
+
+/* =========================
+
+# 알림 생성
+
+========================= */
+
+export async function addNotification(
+targetUid,
+senderUid,
+senderName,
+commentId,
+type
+) {
+
+if (
+!targetUid ||
+targetUid === senderUid
+) {
+return;
+}
+
+await addDoc(
+collection(
+db,
+"notifications"
+),
+{
+targetUid,
+senderUid,
+
+```
+  senderName,
+
+  commentId,
+
+  type, // comment | reply
+
+  read: false,
+
+  createdAt:
+    serverTimestamp()
+}
+```
+
+);
+}
+
+/* =========================
+
+# 내 알림 실시간 감시
+
+========================= */
+
+export function watchNotifications(
+uid,
+callback
+) {
+
+return onSnapshot(
+
+```
+query(
+  collection(
+    db,
+    "notifications"
+  ),
+
+  where(
+    "targetUid",
+    "==",
+    uid
+  )
+),
+
+(snapshot) => {
+
+  const arr = [];
+
+  snapshot.forEach(docItem => {
+
+    arr.push({
+      id: docItem.id,
+      ...docItem.data()
+    });
+
+  });
+
+  arr.sort((a, b) => {
+
+    const ta =
+      a.createdAt?.seconds || 0;
+
+    const tb =
+      b.createdAt?.seconds || 0;
+
+    return tb - ta;
+  });
+
+  callback(arr);
+}
+```
+
+);
+}
+
+/* =========================
+
+# 읽음 처리
+
+========================= */
+
+export async function markNotificationRead(
+notificationId
+) {
+
+await updateDoc(
+
+```
+doc(
+  db,
+  "notifications",
+  notificationId
+),
+
+{
+  read: true
 }
 ```
 
@@ -196,17 +392,23 @@ postId,
 commentId,
 text
 ) {
+
 await updateDoc(
+
+```
 doc(
-db,
-"comments",
-postId,
-"items",
-commentId
+  db,
+  "comments",
+  postId,
+  "items",
+  commentId
 ),
+
 {
-text
+  text
 }
+```
+
 );
 }
 
@@ -218,13 +420,18 @@ export async function deleteComment(
 postId,
 commentId
 ) {
+
 await deleteDoc(
+
+```
 doc(
-db,
-"comments",
-postId,
-"items",
-commentId
+  db,
+  "comments",
+  postId,
+  "items",
+  commentId
 )
+```
+
 );
 }
