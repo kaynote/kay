@@ -1,40 +1,41 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 
 import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  doc,
-  updateDoc,
-  deleteDoc,
-  serverTimestamp
+getFirestore,
+collection,
+addDoc,
+getDocs,
+doc,
+updateDoc,
+deleteDoc,
+serverTimestamp,
+onSnapshot
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut,
-  onAuthStateChanged
+getAuth,
+GoogleAuthProvider,
+signInWithPopup,
+signOut,
+onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 /* =========================
-   CONFIG
+CONFIG
 ========================= */
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCAZzJdAB_a65dkJaL-XLQqzImzlSI8Gmw",
-  authDomain: "kay-gallery.firebaseapp.com",
-  projectId: "kay-gallery",
-  storageBucket: "kay-gallery.firebasestorage.app",
-  messagingSenderId: "276470297982",
-  appId: "1:276470297982:web:838b8a57269b26cd3d6f2f",
-  measurementId: "G-E61XXMZCHM"
+apiKey: "AIzaSyCAZzJdAB_a65dkJaL-XLQqzImzlSI8Gmw",
+authDomain: "kay-gallery.firebaseapp.com",
+projectId: "kay-gallery",
+storageBucket: "kay-gallery.firebasestorage.app",
+messagingSenderId: "276470297982",
+appId: "1:276470297982:web:838b8a57269b26cd3d6f2f",
+measurementId: "G-E61XXMZCHM"
 };
 
 /* =========================
-   INIT
+INIT
 ========================= */
 
 const app = initializeApp(firebaseConfig);
@@ -45,129 +46,185 @@ export const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 /* =========================
-   USER NORMALIZER
-   👉 핵심 추가
+USER NORMALIZER
 ========================= */
 
 function normalizeUser(user) {
 
-  console.log("=== normalizeUser ===");
-  console.log("displayName:", user?.displayName);
-  console.log("email:", user?.email);
-  console.log("providerData:", user?.providerData);
-
-  if (!user) return null;
+if (!user) return null;
 
 return {
-  uid: user.uid || "",
-  email: user.email || "",
-  name:
-    user.providerData?.[0]?.displayName ||
-    user.displayName ||
-    user.email ||
-    "익명 사용자",
-  photo: user.photoURL || ""
+uid: user.uid || "",
+email: user.email || "",
+name:
+user.providerData?.[0]?.displayName ||
+user.displayName ||
+user.email ||
+"익명 사용자",
+photo: user.photoURL || ""
 };
 }
 
 /* =========================
-   LOGIN
+LOGIN
 ========================= */
 
 export async function login() {
 
-  if (auth.currentUser) {
-    console.log("CURRENT:", auth.currentUser.displayName);
-    return normalizeUser(auth.currentUser);
-  }
+if (auth.currentUser) {
+return normalizeUser(auth.currentUser);
+}
 
 const result = await signInWithPopup(auth, provider);
-
-console.log("POPUP:", result.user.displayName);
-console.log("EMAIL:", result.user.email);
-console.log("PROVIDER:", result.user.providerData[0]);
 
 return normalizeUser(result.user);
 }
 
 /* =========================
-   LOGOUT
+LOGOUT
 ========================= */
 
 export async function logout() {
-  await signOut(auth);
+await signOut(auth);
 }
 
 /* =========================
-   AUTH WATCHER
+AUTH WATCHER
 ========================= */
 
 export function watchAuth(callback) {
 
-  return onAuthStateChanged(auth, (user) => {
-    callback(normalizeUser(user));
-  });
+return onAuthStateChanged(auth, (user) => {
+callback(normalizeUser(user));
+});
 }
 
 /* =========================
-   COMMENTS
+COMMENTS
 ========================= */
 
 export async function addComment(
-  postId,
-  text,
-  user,
-  parentId = null
+postId,
+text,
+user,
+parentId = null
 ) {
-  return await addDoc(
-    collection(db, "comments", postId, "items"),
-    {
-      text,
-      parentId,
+return await addDoc(
+collection(db, "comments", postId, "items"),
+{
+text,
+parentId,
 
-      uid: user.uid,
-      name: user.name,
-      photo: user.photo,
+```
+  uid: user.uid,
+  name: user.name,
+  photo: user.photo,
 
-      createdAt: serverTimestamp()
-    }
-  );
+  createdAt: serverTimestamp()
+}
+```
+
+);
 }
 
 export async function getComments(postId) {
 
-  const snap = await getDocs(
-    collection(db, "comments", postId, "items")
-  );
+const snap = await getDocs(
+collection(db, "comments", postId, "items")
+);
 
-  const arr = [];
+const arr = [];
 
-  snap.forEach(doc => {
-    arr.push({
-      id: doc.id,
-      ...doc.data()
+snap.forEach(docItem => {
+arr.push({
+id: docItem.id,
+...docItem.data()
+});
+});
+
+arr.sort((a, b) => {
+const ta = a.createdAt?.seconds || 0;
+const tb = b.createdAt?.seconds || 0;
+return ta - tb;
+});
+
+return arr;
+}
+
+/* =========================
+REALTIME COMMENTS
+========================= */
+
+export function watchComments(postId, callback) {
+
+return onSnapshot(
+collection(db, "comments", postId, "items"),
+(snapshot) => {
+
+```
+  const comments = [];
+
+  snapshot.forEach(docItem => {
+    comments.push({
+      id: docItem.id,
+      ...docItem.data()
     });
   });
 
-  return arr;
+  comments.sort((a, b) => {
+    const ta = a.createdAt?.seconds || 0;
+    const tb = b.createdAt?.seconds || 0;
+    return ta - tb;
+  });
+
+  callback(
+    comments,
+    snapshot.docChanges()
+  );
 }
+```
+
+);
+}
+
+/* =========================
+UPDATE
+========================= */
 
 export async function updateComment(
-  postId,
-  commentId,
-  text
+postId,
+commentId,
+text
 ) {
-  await updateDoc(
-    doc(db, "comments", postId, "items", commentId),
-    { text }
-  );
+await updateDoc(
+doc(
+db,
+"comments",
+postId,
+"items",
+commentId
+),
+{
+text
+}
+);
 }
 
+/* =========================
+DELETE
+========================= */
+
 export async function deleteComment(
-  postId,
-  commentId
+postId,
+commentId
 ) {
-  await deleteDoc(
-    doc(db, "comments", postId, "items", commentId)
-  );
+await deleteDoc(
+doc(
+db,
+"comments",
+postId,
+"items",
+commentId
+)
+);
 }
