@@ -24,9 +24,6 @@
 
     <div id="userInfo">로그인 안 됨</div>
     
-    document.getElementById("badge").textContent = "0";
-    document.getElementById("notificationList").innerHTML = "";
-
     <div class="authArea">
         <button id="loginBtn">로그인</button>
         <button id="logoutBtn">로그아웃</button>
@@ -686,6 +683,9 @@ watchAuth(user=>{
     if(!user){
 
         userInfo.textContent = "로그인 안 됨";
+        
+        document.getElementById("badge").textContent = "0";
+        document.getElementById("notificationList").innerHTML = "";
 
         loginBtn.style.display = "inline-block";
         logoutBtn.style.display = "none";
