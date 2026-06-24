@@ -23,6 +23,9 @@
     <h1>Kay Notes Archive</h1>
 
     <div id="userInfo">로그인 안 됨</div>
+    
+    document.getElementById("badge").textContent = "0";
+    document.getElementById("notificationList").innerHTML = "";
 
     <div class="authArea">
         <button id="loginBtn">로그인</button>
@@ -35,6 +38,13 @@
 <div id="peopleContainer"></div>
 
 <div id="notify" class="notify"></div>
+
+<button id="bellBtn">
+  🔔
+  <span id="badge">0</span>
+</button>
+
+<div id="notificationList"></div>
 
 <!-- MODAL -->
 <div id="modal" class="modal hidden">
@@ -68,6 +78,8 @@ import {
     query,
     orderBy,
     serverTimestamp
+    onSnapshot,   // ★ 추가
+    where         // ★ 추가
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 /* =========================
@@ -509,6 +521,35 @@ async function openModal(p){
                     }
                 );
 
+                // ★ 답글 알림 생성
+                if (c.uid !== user.uid) {
+
+                    await addDoc(
+                        collection(db, "notifications"),
+                        {
+                            targetUid: c.uid,
+
+                            senderUid: user.uid,
+
+                            senderName:
+                                user.providerData?.[0]?.displayName ||
+                                user.displayName ||
+                                user.email ||
+                                "익명",
+
+                            personName: p.name,
+
+                            commentId: c.id,
+
+                            type: "reply",
+
+                            read: false,
+
+                            createdAt: serverTimestamp()
+                        }
+                    );
+                }
+
                 loadComments();
             };
 
@@ -714,10 +755,153 @@ watchAuth(user=>{
         return;
     }
 
+    /* =========================
+       NOTIFICATIONS
+    ========================= */
+
+    function watchNotifications(uid){
+
+        onSnapshot(
+
+            collection(
+                db,
+                "notifications"
+            ),
+
+            (snap)=>{
+
+                const list = [];
+
+                snap.forEach(docItem=>{
+
+                    const n = docItem.data();
+
+                    if(n.targetUid === uid){
+
+                        list.push({
+                            id: docItem.id,
+                            ...n
+                        });
+
+                    }
+
+                });
+
+                renderNotifications(list);
+
+            }
+        );
+    }
+
+    function renderNotifications(list){
+
+        const badge =
+            document.getElementById("badge");
+
+        const unread =
+            list.filter(
+                n => !n.read
+            ).length;
+
+        badge.textContent = unread;
+
+        const box =
+            document.getElementById(
+                "notificationList"
+            );
+
+        box.innerHTML = "";
+
+        list
+            .sort((a,b)=>{
+
+                const ta =
+                    a.createdAt?.seconds || 0;
+
+                const tb =
+                    b.createdAt?.seconds || 0;
+
+                return tb - ta;
+
+            })
+            .forEach(n=>{
+
+                const div =
+                    document.createElement("div");
+
+                div.className =
+                    "notification-item";
+
+                div.textContent =
+                    `🔔 ${n.senderName} 님이 답글을 남겼습니다`;
+
+                div.onclick =
+                    ()=>openNotification(n);
+
+                box.appendChild(div);
+
+            });
+    }
+
+    async function openNotification(n){
+
+        await updateDoc(
+
+            doc(
+                db,
+                "notifications",
+                n.id
+            ),
+
+            {
+                read:true
+            }
+        );
+
+        const person =
+            people.find(
+                p => p.name === n.personName
+            );
+
+        if(person){
+
+            openModal(person);
+
+        }
+    }
+
+    /* =========================
+       BELL
+    ========================= */
+
+    const bellBtn =
+        document.getElementById(
+            "bellBtn"
+        );
+
+    const notificationList =
+        document.getElementById(
+            "notificationList"
+        );
+
+    bellBtn.addEventListener(
+        "click",
+        ()=>{
+
+            notificationList.classList.toggle(
+                "show"
+            );
+
+        }
+    );
+
     userInfo.textContent = user.email;
 
     loginBtn.style.display = "none";
     logoutBtn.style.display = "inline-block";
+
+    // ★ 알림 시작
+    watchNotifications(user.uid);
 
     init(); // 로그인 성공하면 목록 표시
 });

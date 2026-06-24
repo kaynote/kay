@@ -5,78 +5,124 @@ login,
 addComment,
 deleteComment,
 updateComment,
-watchComments
+
+watchComments,
+
+addNotification,       // # 알림 생성
+watchNotifications,    // # 알림 감시
+markNotificationRead,  // # 읽음 처리
+getCommentById         // # 댓글 조회
 } from "./firebase.js";
 
-/* 현재 게시물 */
-const currentPost = people[people.length - 1];
-const postId = String(currentPost.no);
+/* =========================
+현재 게시물
+========================= */
 
-/* 상태 */
+const currentPost =
+people[people.length - 1];
+
+const postId =
+String(currentPost.no);
+
+/* =========================
+상태
+========================= */
+
 let currentUser = null;
 
 let firstSnapshot = true;
-let unreadCount = 0;
 
 /* =========================
 초기 로딩
 ========================= */
 
-window.addEventListener("load", async () => {
-
-document.getElementById("person").innerHTML =
-currentPost.displayName;
-
-currentUser = await login();
-
-document.getElementById("sendBtn").onclick =
-sendComment;
-
-watchComments(postId, (data, changes) => {
+window.addEventListener(
+"load",
+async () => {
 
 ```
-const roots = buildTree(data);
+document.getElementById(
+  "person"
+).innerHTML =
+  currentPost.displayName;
 
-const box =
-  document.getElementById("comments");
+currentUser =
+  await login();
 
-box.innerHTML = "";
+document.getElementById(
+  "sendBtn"
+).onclick =
+  sendComment;
 
-roots.forEach(c => {
-  box.appendChild(render(c));
-});
+/* # 댓글 실시간 감시 */
 
-if (!firstSnapshot) {
-  detectNotifications(changes);
+watchComments(
+  postId,
+  (data, changes) => {
+
+    const roots =
+      buildTree(data);
+
+    const box =
+      document.getElementById(
+        "comments"
+      );
+
+    box.innerHTML = "";
+
+    roots.forEach(c => {
+      box.appendChild(
+        render(c)
+      );
+    });
+
+    if (!firstSnapshot) {
+      detectNotifications(
+        changes
+      );
+    }
+
+    firstSnapshot = false;
+  }
+);
+
+/* # 내 알림 감시 */
+
+watchNotifications(
+  currentUser.uid,
+  renderNotifications
+);
+```
+
 }
-
-firstSnapshot = false;
-```
-
-});
-});
+);
 
 /* =========================
-알림
+실시간 팝업 알림
 ========================= */
 
-function detectNotifications(changes) {
+function detectNotifications(
+changes
+) {
 
 changes.forEach(change => {
 
 ```
-if (change.type !== "added") return;
+if (
+  change.type !== "added"
+) return;
 
-const data = change.doc.data();
+const data =
+  change.doc.data();
 
-if (!currentUser) return;
+if (
+  data.uid ===
+  currentUser.uid
+) {
+  return;
+}
 
-/* 내가 쓴 댓글은 무시 */
-if (data.uid === currentUser.uid) return;
-
-unreadCount++;
-
-showNotification(
+showPopup(
   data.parentId
     ? "새 답글"
     : "새 댓글"
@@ -86,27 +132,150 @@ showNotification(
 });
 }
 
-function showNotification(message) {
+function showPopup(msg) {
 
 const notify =
-document.getElementById("notify");
+document.getElementById(
+"notify"
+);
 
 if (!notify) return;
 
-notify.style.display = "block";
+notify.style.display =
+"block";
 
 notify.textContent =
-`🔔 ${message} (${unreadCount})`;
+`🔔 ${msg}`;
 
-clearTimeout(notify.timer);
+clearTimeout(
+notify.timer
+);
 
-notify.timer = setTimeout(() => {
-notify.style.display = "none";
+notify.timer =
+setTimeout(() => {
+
+```
+  notify.style.display =
+    "none";
+
 }, 5000);
+```
+
 }
 
 /* =========================
-트리 구조
+알림 목록
+========================= */
+
+function renderNotifications(
+list
+) {
+
+const badge =
+document.getElementById(
+"badge"
+);
+
+const unread =
+list.filter(
+n => !n.read
+).length;
+
+badge.textContent =
+unread;
+
+const box =
+document.getElementById(
+"notificationList"
+);
+
+if (!box) return;
+
+box.innerHTML = "";
+
+list.forEach(n => {
+
+```
+const div =
+  document.createElement(
+    "div"
+  );
+
+div.className =
+  "notification-item";
+
+div.innerHTML = `
+
+  <b>${n.senderName}</b>
+
+  ${
+    n.type === "reply"
+      ? "님이 답글을 남겼습니다"
+      : "님이 댓글을 남겼습니다"
+  }
+
+`;
+
+div.onclick =
+  async () => {
+
+    await markNotificationRead(
+      n.id
+    );
+
+    jumpToComment(
+      n.commentId
+    );
+  };
+
+box.appendChild(div);
+```
+
+});
+}
+
+/* =========================
+댓글 위치 이동
+========================= */
+
+function jumpToComment(
+commentId
+) {
+
+const target =
+document.querySelector(
+`[data-id="${commentId}"]`
+);
+
+if (!target) return;
+
+target.scrollIntoView({
+
+```
+behavior: "smooth",
+
+block: "center"
+```
+
+});
+
+target.classList.add(
+"highlight"
+);
+
+setTimeout(() => {
+
+```
+target.classList.remove(
+  "highlight"
+);
+```
+
+}, 3000);
+}
+
+/* =========================
+트리 생성
 ========================= */
 
 function buildTree(list) {
@@ -115,10 +284,16 @@ const map = {};
 const roots = [];
 
 list.forEach(c => {
+
+```
 map[c.id] = {
-...c,
-replies: []
+
+  ...c,
+
+  replies: []
 };
+```
+
 });
 
 list.forEach(c => {
@@ -128,12 +303,15 @@ if (c.parentId) {
 
   map[c.parentId]
     ?.replies
-    .push(map[c.id]);
+    .push(
+      map[c.id]
+    );
 
 } else {
 
-  roots.push(map[c.id]);
-
+  roots.push(
+    map[c.id]
+  );
 }
 ```
 
@@ -143,25 +321,33 @@ return roots;
 }
 
 /* =========================
-댓글 렌더링
+렌더
 ========================= */
 
 function render(c) {
 
 const div =
-document.createElement("div");
-
-div.style.marginLeft =
-c.parentId ? "20px" : "0px";
+document.createElement(
+"div"
+);
 
 div.setAttribute(
 "data-id",
 c.id
 );
 
-div.innerHTML = ` <b>${c.name}</b> <p>${c.text}</p>
+div.style.marginLeft =
+c.parentId
+? "20px"
+: "0px";
+
+div.innerHTML = `
 
 ```
+<b>${c.name}</b>
+
+<p>${c.text}</p>
+
 <button class="reply-btn">
   답글
 </button>
@@ -179,23 +365,40 @@ div.innerHTML = ` <b>${c.name}</b> <p>${c.text}</p>
 
 `;
 
-div.querySelector(".reply-btn")
-.onclick = () =>
-openReplyForm(c.id, div);
+div.querySelector(
+".reply-btn"
+).onclick =
+() =>
+openReplyForm(
+c.id,
+div
+);
 
-div.querySelector(".edit-btn")
-.onclick = () =>
+div.querySelector(
+".edit-btn"
+).onclick =
+() =>
 editComment(c.id);
 
-div.querySelector(".delete-btn")
-.onclick = () =>
+div.querySelector(
+".delete-btn"
+).onclick =
+() =>
 removeComment(c.id);
 
 const child =
-div.querySelector(".child");
+div.querySelector(
+".child"
+);
 
 c.replies.forEach(r => {
-child.appendChild(render(r));
+
+```
+child.appendChild(
+  render(r)
+);
+```
+
 });
 
 return div;
@@ -236,8 +439,12 @@ commentElement
 ) {
 
 document
-.querySelectorAll(".reply-form")
-.forEach(el => el.remove());
+.querySelectorAll(
+".reply-form"
+)
+.forEach(el =>
+el.remove()
+);
 
 const childArea =
 commentElement.querySelector(
@@ -245,15 +452,20 @@ commentElement.querySelector(
 );
 
 const form =
-document.createElement("div");
+document.createElement(
+"div"
+);
 
-form.className = "reply-form";
+form.className =
+"reply-form";
 
-form.innerHTML = ` <textarea
-   placeholder="답글을 입력하세요"
- ></textarea>
+form.innerHTML = `
 
 ```
+<textarea
+  placeholder="답글 입력"
+></textarea>
+
 <button class="send">
   전송
 </button>
@@ -265,15 +477,21 @@ form.innerHTML = ` <textarea
 
 `;
 
-childArea.prepend(form);
+childArea.prepend(
+form
+);
 
 const textarea =
-form.querySelector("textarea");
+form.querySelector(
+"textarea"
+);
 
 textarea.focus();
 
-form.querySelector(".send")
-.onclick = async () => {
+form.querySelector(
+".send"
+).onclick =
+async () => {
 
 ```
   const text =
@@ -287,40 +505,47 @@ form.querySelector(".send")
     currentUser,
     commentId
   );
-};
-```
 
-form.querySelector(".cancel")
-.onclick = () => {
-form.remove();
-};
+  /* # 부모 댓글 조회 */
 
-textarea.addEventListener(
-"keydown",
-(e) => {
+  const parent =
+    await getCommentById(
+      postId,
+      commentId
+    );
 
-```
-  if (
-    e.key === "Enter" &&
-    !e.shiftKey
-  ) {
-    e.preventDefault();
+  if (parent) {
 
-    form
-      .querySelector(".send")
-      .click();
+    await addNotification(
+
+      parent.uid,
+
+      currentUser.uid,
+
+      currentUser.name,
+
+      commentId,
+
+      "reply"
+
+    );
   }
-}
+};
 ```
 
-);
+form.querySelector(
+".cancel"
+).onclick =
+() => form.remove();
 }
 
 /* =========================
 삭제
 ========================= */
 
-async function removeComment(id) {
+async function removeComment(
+id
+) {
 
 await deleteComment(
 postId,
@@ -332,10 +557,14 @@ id
 수정
 ========================= */
 
-async function editComment(id) {
+async function editComment(
+id
+) {
 
 const text =
-prompt("수정 내용");
+prompt(
+"수정 내용"
+);
 
 if (!text) return;
 
@@ -346,9 +575,8 @@ text
 );
 }
 
-/* =========================
-전역 노출
-========================= */
+window.remove =
+removeComment;
 
-window.remove = removeComment;
-window.edit = editComment;
+window.edit =
+editComment;
