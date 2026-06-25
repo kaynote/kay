@@ -301,52 +301,33 @@ senderUid,
 
 ========================= */
 
-export function watchNotifications(
-uid,
-callback
-) {
+export function watchNotifications(uid, callback) {
 
-return onSnapshot(
+  if (!uid) return;
 
+  return onSnapshot(
+    query(
+      collection(db, "notifications"),
+      where("targetUid", "==", uid)
+    ),
+    (snapshot) => {
 
-query(
-  collection(
-    db,
-    "notifications"
-  ),
+      const arr = [];
 
-  where("targetUid", "==", auth.currentUser.uid)
-),
+      snapshot.forEach(docItem => {
+        arr.push({
+          id: docItem.id,
+          ...docItem.data()
+        });
+      });
 
-(snapshot) => {
+      arr.sort((a, b) => {
+        return (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0);
+      });
 
-  const arr = [];
-
-  snapshot.forEach(docItem => {
-
-    arr.push({
-      id: docItem.id,
-      ...docItem.data()
-    });
-
-  });
-
-  arr.sort((a, b) => {
-
-    const ta =
-      a.createdAt?.seconds || 0;
-
-    const tb =
-      b.createdAt?.seconds || 0;
-
-    return tb - ta;
-  });
-
-  callback(arr);
-}
-
-
-);
+      callback(arr);
+    }
+  );
 }
 
 /* =========================
