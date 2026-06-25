@@ -187,7 +187,10 @@ function renderNotifications(list) {
 
   const badge = document.getElementById("badge");
 
-  const unread = list.filter(n => !n.read).length;
+  const safeList = [...list]; // 🔥 강제 복사
+
+  const unread = safeList.filter(n => !n.read).length;
+
   badge.textContent = unread;
 
   const box = document.getElementById("notificationList");
@@ -196,35 +199,28 @@ function renderNotifications(list) {
 
   box.innerHTML = "";
 
-  list.forEach(n => {
+  safeList.forEach(n => {
     const div = document.createElement("div");
     div.className = "notification-item";
 
     div.innerHTML = `
       <b>${n.senderName}</b>
-      ${
-        n.type === "reply"
-          ? "님이 답글을 남겼습니다"
-          : "님이 댓글을 남겼습니다"
-      }
+      ${n.type === "reply"
+        ? "님이 답글을 남겼습니다"
+        : "님이 댓글을 남겼습니다"}
     `;
 
-div.onclick =
-  async () => {
+    div.onclick = async () => {
+      await markNotificationRead(n.id);
 
-    await markNotificationRead(
-      n.id
-    );
+      // 🔥 즉시 UI 반영
+      n.read = true;
 
-    jumpToComment(
-      n.commentId
-    );
-  };
+      renderNotifications(safeList); // 🔥 강제 재렌더
+    };
 
-box.appendChild(div);
-```
-
-});
+    box.appendChild(div);
+  });
 }
 
 /* =========================
