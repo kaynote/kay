@@ -187,17 +187,15 @@ function renderNotifications(list) {
 
   const badge = document.getElementById("badge");
 
-  const unreadList = list.filter(n => !n.read);
-
-  badge.textContent = unreadList.length;
+  const unread = list.filter(n => !n.read);
+  badge.textContent = unread.length;
 
   const box = document.getElementById("notificationList");
-
   if (!box) return;
 
   box.innerHTML = "";
 
-  unreadList.forEach(n => {
+  unread.forEach(n => {
 
     const div = document.createElement("div");
     div.className = "notification-item";
