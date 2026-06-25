@@ -315,11 +315,7 @@ query(
     "notifications"
   ),
 
-  where(
-    "targetUid",
-    "==",
-    uid
-  )
+  where("targetUid", "==", auth.currentUser.uid)
 ),
 
 (snapshot) => {
