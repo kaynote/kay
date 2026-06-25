@@ -193,6 +193,20 @@ setTimeout(() => {
 
 function renderNotifications(list) {
 
+  console.log(
+    "알림 렌더링",
+    list.length,
+    list
+  );
+
+  const box =
+    document.getElementById(
+      "notificationList"
+    );
+
+  ...
+}
+
   const box = document.getElementById("notificationList");
   const badge = document.getElementById("badge");
 
