@@ -431,13 +431,17 @@ async function sendComment() {
 
   // 3️⃣ 댓글 알림 (post owner)
   if (postOwnerUid) {
+    console.log("before notification");
+
     await addNotification(
-      postOwnerUid,
-      currentUser.uid,
-      currentUser.name,
-      comment.id,
-      "comment"
+        postOwnerUid,
+        currentUser.uid,
+        currentUser.name,
+        comment.id,
+        "comment"
     );
+
+    console.log("after notification");
   }
 
   input.value = "";
