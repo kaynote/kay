@@ -16,7 +16,11 @@ import {
 const ADMIN_UID =
   "eEltgLaV6oN7MHUXTfQONc2wGAk1";
 
-import { deleteDoc, doc } from "firebase/firestore";
+import {
+  deleteDoc,
+  doc
+} from
+"https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 /* =========================
 현재 게시물
@@ -212,11 +216,23 @@ function renderNotifications(list) {
 
     div.onclick = async () => {
 
-      await deleteDoc(
-        doc(db, "notifications", n.id)
-      );
+      try {
 
-      div.remove();
+        await deleteDoc(
+          doc(db, "notifications", n.id)
+        );
+
+        div.remove();
+
+      } catch (e) {
+
+        console.error(
+          "알림 삭제 실패",
+          e
+        );
+
+      }
+    };
 
       badge.textContent =
         box.querySelectorAll(
