@@ -200,13 +200,17 @@ setTimeout(() => {
 
 function renderNotifications(list) {
 
-  console.log("알림 렌더링", list);
-
   const box =
-    document.getElementById("notificationList");
+    document.getElementById(
+      "notificationList"
+    );
 
   const badge =
-    document.getElementById("badge");
+    document.getElementById(
+      "badge"
+    );
+
+  if (!box) return;
 
   const unread =
     list.filter(n => !n.read);
@@ -224,38 +228,33 @@ function renderNotifications(list) {
     div.className =
       "notification-item";
 
-    div.innerHTML = `
-      <b>${n.senderName}</b>
-      ${
+    div.textContent =
+      `🔔 ${n.senderName} ${
         n.type === "reply"
-        ? "님이 답글을 남겼습니다"
-        : "님이 댓글을 남겼습니다"
-      }
-    `;
+          ? "님이 답글을 남겼습니다"
+          : "님이 댓글을 남겼습니다"
+      }`;
 
     div.onclick = async () => {
 
       try {
 
-        console.log("삭제 전", n.id);
-
-        await deleteDoc(
-          doc(db, "notifications", n.id)
+        await markNotificationRead(
+          n.id
         );
-
-        console.log("삭제 완료");
 
       } catch (e) {
 
-        console.error(
-          "알림 삭제 실패",
-          e
-        );
+        console.error(e);
+
       }
+
     };
 
     box.appendChild(div);
+
   });
+
 }
 
 /* =========================
