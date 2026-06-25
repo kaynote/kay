@@ -183,54 +183,31 @@ setTimeout(() => {
 알림 목록
 ========================= */
 
-function renderNotifications(
-list
-) {
+function renderNotifications(list) {
 
-const badge =
-document.getElementById(
-"badge"
-);
+  const badge = document.getElementById("badge");
 
-const unread =
-list.filter(
-n => !n.read
-).length;
+  const unread = list.filter(n => !n.read).length;
+  badge.textContent = unread;
 
-badge.textContent =
-unread;
+  const box = document.getElementById("notificationList");
 
-const box =
-document.getElementById(
-"notificationList"
-);
+  if (!box) return;
 
-if (!box) return;
+  box.innerHTML = "";
 
-box.innerHTML = "";
+  list.forEach(n => {
+    const div = document.createElement("div");
+    div.className = "notification-item";
 
-list.forEach(n => {
-
-```
-const div =
-  document.createElement(
-    "div"
-  );
-
-div.className =
-  "notification-item";
-
-div.innerHTML = `
-
-  <b>${n.senderName}</b>
-
-  ${
-    n.type === "reply"
-      ? "님이 답글을 남겼습니다"
-      : "님이 댓글을 남겼습니다"
-  }
-
-`;
+    div.innerHTML = `
+      <b>${n.senderName}</b>
+      ${
+        n.type === "reply"
+          ? "님이 답글을 남겼습니다"
+          : "님이 댓글을 남겼습니다"
+      }
+    `;
 
 div.onclick =
   async () => {

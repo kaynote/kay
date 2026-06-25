@@ -278,7 +278,7 @@ export async function addNotification(
     senderName,
     commentId,
     type,           // comment | reply
-    read: false,
+    read: false, // 🔥 이거 없으면 unread 카운트 0/이상하게 됨
     createdAt: serverTimestamp()
   });
 }
