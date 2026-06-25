@@ -1,6 +1,7 @@
 import people from "./people.js";
 
 import {
+  db,
   login,
   addComment,
   deleteComment,
@@ -199,39 +200,37 @@ setTimeout(() => {
 
 function renderNotifications(list) {
 
-  console.log(
-    "알림 렌더링",
-    list.length,
-    list
-  );
+  console.log("알림 렌더링", list);
 
   const box =
-    document.getElementById(
-      "notificationList"
-    );
+    document.getElementById("notificationList");
 
-  ...
-}
+  const badge =
+    document.getElementById("badge");
 
-  const box = document.getElementById("notificationList");
-  const badge = document.getElementById("badge");
+  const unread =
+    list.filter(n => !n.read);
 
-  const unread = list.filter(n => !n.read);
-  badge.textContent = unread.length;
+  badge.textContent =
+    unread.length;
 
   box.innerHTML = "";
 
   unread.forEach(n => {
 
-    const div = document.createElement("div");
+    const div =
+      document.createElement("div");
 
-    div.className = "notification-item";
+    div.className =
+      "notification-item";
 
     div.innerHTML = `
       <b>${n.senderName}</b>
-      ${n.type === "reply"
+      ${
+        n.type === "reply"
         ? "님이 답글을 남겼습니다"
-        : "님이 댓글을 남겼습니다"}
+        : "님이 댓글을 남겼습니다"
+      }
     `;
 
     div.onclick = async () => {
@@ -252,13 +251,12 @@ function renderNotifications(list) {
           "알림 삭제 실패",
           e
         );
-
       }
     };
 
     box.appendChild(div);
-      });
-    }
+  });
+}
 
 /* =========================
 댓글 위치 이동

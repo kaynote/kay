@@ -163,16 +163,18 @@ export async function addNotification(
   // 🔥 핵심: commentId 기준 중복 방지
   const notifId = `${commentId}_${type}`;
 
-  return await addDoc(doc(db, "notifications", notifId), {
-    targetUid,
-    senderUid,
-    senderName,
-    commentId,
-    type,
-    read: false,
-    createdAt: serverTimestamp()
-  });
-}
+  return await addDoc(
+    collection(db, "notifications"),
+    {
+      targetUid,
+      senderUid,
+      senderName,
+      commentId,
+      type,
+      read: false,
+      createdAt: serverTimestamp()
+    }
+  );
 
 /* =========================
 WATCH NOTIFICATIONS
