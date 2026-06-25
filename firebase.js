@@ -28,17 +28,17 @@ CONFIG
 ========================= */
 
 const firebaseConfig = {
-apiKey: "AIzaSyCAZzJdAB_a65dkJaL-XLQqzImzlSI8Gmw",
-authDomain: "kay-gallery.firebaseapp.com",
-projectId: "kay-gallery",
-storageBucket: "kay-gallery.firebasestorage.app",
-messagingSenderId: "276470297982",
-appId: "1:276470297982:web:838b8a57269b26cd3d6f2f",
-measurementId: "G-E61XXMZCHM"
+  apiKey: "AIzaSyCAZzJdAB_a65dkJaL-XLQqzImzlSI8Gmw",
+  authDomain: "kay-gallery.firebaseapp.com",
+  projectId: "kay-gallery",
+  storageBucket: "kay-gallery.firebasestorage.app",
+  messagingSenderId: "276470297982",
+  appId: "1:276470297982:web:838b8a57269b26cd3d6f2f",
+  measurementId: "G-E61XXMZCHM"
 };
 
 /* =========================
-INIT (중요: 순서)
+INIT
 ========================= */
 
 const app = initializeApp(firebaseConfig);
@@ -49,7 +49,7 @@ export const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 /* =========================
-USER NORMALIZE
+USER
 ========================= */
 
 function normalizeUser(user) {
@@ -72,9 +72,7 @@ AUTH
 ========================= */
 
 export async function login() {
-  if (auth.currentUser) {
-    return normalizeUser(auth.currentUser);
-  }
+  if (auth.currentUser) return normalizeUser(auth.currentUser);
 
   const result = await signInWithPopup(auth, provider);
   return normalizeUser(result.user);
@@ -91,7 +89,7 @@ export function watchAuth(callback) {
 }
 
 /* =========================
-POST OWNER UID (핵심)
+POST OWNER (FIXED SAFE)
 ========================= */
 
 export async function getPostOwnerUid(personNo) {
@@ -100,7 +98,10 @@ export async function getPostOwnerUid(personNo) {
 
   if (!snap.exists()) return null;
 
-  return snap.data().ownerUid || null;
+  const data = snap.data();
+
+  // 🔥 핵심: fallback 구조 (ownerUid 없으면 uid/name 구조 대응)
+  return data.ownerUid || data.uid || null;
 }
 
 /* =========================
@@ -121,26 +122,6 @@ export async function addComment(postId, text, user, parentId = null) {
   );
 }
 
-export async function getComments(postId) {
-  const snap = await getDocs(
-    collection(db, "comments", postId, "items")
-  );
-
-  const arr = [];
-
-  snap.forEach(d => {
-    arr.push({ id: d.id, ...d.data() });
-  });
-
-  arr.sort((a, b) => {
-    const ta = a.createdAt?.seconds ?? 0;
-    const tb = b.createdAt?.seconds ?? 0;
-    return ta - tb;
-  });
-
-  return arr;
-}
-
 export async function getCommentById(postId, commentId) {
   const snap = await getDoc(
     doc(db, "comments", postId, "items", commentId)
@@ -155,25 +136,19 @@ export function watchComments(postId, callback) {
   return onSnapshot(
     collection(db, "comments", postId, "items"),
     (snapshot) => {
-      const comments = [];
+      const arr = [];
 
       snapshot.forEach(d => {
-        comments.push({ id: d.id, ...d.data() });
+        arr.push({ id: d.id, ...d.data() });
       });
 
-      comments.sort((a, b) => {
-        const ta = a.createdAt?.seconds ?? 0;
-        const tb = b.createdAt?.seconds ?? 0;
-        return ta - tb;
-      });
-
-      callback(comments, snapshot.docChanges());
+      callback(arr, snapshot.docChanges());
     }
   );
 }
 
 /* =========================
-NOTIFICATIONS (핵심 안정화)
+NOTIFICATIONS (FIXED CORE)
 ========================= */
 
 export async function addNotification(
@@ -185,16 +160,23 @@ export async function addNotification(
 ) {
   if (!targetUid || targetUid === senderUid) return;
 
-  return await addDoc(collection(db, "notifications"), {
+  // 🔥 핵심: commentId 기준 중복 방지
+  const notifId = `${commentId}_${type}`;
+
+  return await addDoc(doc(db, "notifications", notifId), {
     targetUid,
     senderUid,
     senderName,
     commentId,
-    type, // comment | reply
+    type,
     read: false,
     createdAt: serverTimestamp()
   });
 }
+
+/* =========================
+WATCH NOTIFICATIONS
+========================= */
 
 export function watchNotifications(uid, callback) {
   return onSnapshot(
@@ -203,7 +185,6 @@ export function watchNotifications(uid, callback) {
       where("targetUid", "==", uid)
     ),
     (snapshot) => {
-
       const arr = [];
 
       snapshot.forEach(doc => {
@@ -214,6 +195,10 @@ export function watchNotifications(uid, callback) {
     }
   );
 }
+
+/* =========================
+READ (SYNC FIX)
+========================= */
 
 export async function markNotificationRead(id) {
   await updateDoc(doc(db, "notifications", id), {
