@@ -377,6 +377,8 @@ function render(c) {
 ========================= */
 
 async function sendComment() {
+  
+  console.log("ADD NOTIFICATION TARGET:", currentPost?.uid);
 
   const input =
     document.getElementById("commentInput");
