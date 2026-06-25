@@ -384,7 +384,7 @@ function render(c) {
 
 async function sendComment() {
 
-  console.log("OWNER:", peopleOwners[currentPost.no]);
+  console.log("OWNER:", peopleOwners[String(currentPost.no)]);
   console.log("POST NO:", currentPost.no);
   console.log("POST DATA:", currentPost);
 
@@ -400,8 +400,7 @@ async function sendComment() {
     currentUser
   );
 
-  // 🔥 정답
-  const postOwnerUid = peopleOwners[currentPost.no];
+  const postOwnerUid = peopleOwners[String(currentPost.no)];
 
   console.log("OWNER UID:", postOwnerUid);
 
