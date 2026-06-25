@@ -384,6 +384,10 @@ function render(c) {
 
 async function sendComment() {
 
+  console.log("peopleOwners:", peopleOwners);
+  console.log("key:", currentPost.no);
+  console.log("lookup:", peopleOwners[currentPost.no]);
+
   console.log("OWNER:", peopleOwners[String(currentPost.no)]);
   console.log("POST NO:", currentPost.no);
   console.log("POST DATA:", currentPost);
