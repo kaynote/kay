@@ -326,24 +326,14 @@ return roots;
 
 function render(c) {
 
-const div =
-document.createElement(
-"div"
-);
+  const div = document.createElement("div");
 
-div.setAttribute(
-"data-id",
-c.id
-);
+  div.setAttribute("data-id", c.id);
 
-div.style.marginLeft =
-c.parentId
-? "20px"
-: "0px";
+  div.style.marginLeft = c.parentId ? "20px" : "0px";
 
-div.innerHTML = `
+  div.innerHTML = `
 
-```
 <b>${c.name}</b>
 
 <p>${c.text}</p>
@@ -361,47 +351,25 @@ div.innerHTML = `
 </button>
 
 <div class="child"></div>
-```
 
 `;
 
-div.querySelector(
-".reply-btn"
-).onclick =
-() =>
-openReplyForm(
-c.id,
-div
-);
+  div.querySelector(".reply-btn").onclick =
+    () => openReplyForm(c.id, div);
 
-div.querySelector(
-".edit-btn"
-).onclick =
-() =>
-editComment(c.id);
+  div.querySelector(".edit-btn").onclick =
+    () => editComment(c.id);
 
-div.querySelector(
-".delete-btn"
-).onclick =
-() =>
-removeComment(c.id);
+  div.querySelector(".delete-btn").onclick =
+    () => removeComment(c.id);
 
-const child =
-div.querySelector(
-".child"
-);
+  const child = div.querySelector(".child");
 
-c.replies.forEach(r => {
+  c.replies.forEach(r => {
+    child.appendChild(render(r));
+  });
 
-```
-child.appendChild(
-  render(r)
-);
-```
-
-});
-
-return div;
+  return div;
 }
 
 /* =========================
@@ -409,7 +377,7 @@ return div;
 ========================= */
 
 async function sendComment() {
-  
+
   console.log("POST:", currentPost);
   console.log("UID:", currentPost?.uid);
 
@@ -425,14 +393,22 @@ async function sendComment() {
     currentUser
   );
 
-  // 🔥 여기 추가
-  await addNotification(
-    currentPost.uid,      // 댓글 주인 (게시물 작성자)
-    currentUser.uid,
-    currentUser.name,
-    comment.id,
-    "comment"
-  );
+  // ✅ 🔥 핵심 수정: 안전한 게시물 작성자 UID 추출
+  const postOwnerUid =
+    currentPost?.uid || currentPost?.userId || currentPost?.ownerUid;
+
+  console.log("POST OWNER UID:", postOwnerUid);
+
+  // 🔥 알림 생성
+  if (postOwnerUid) {
+    await addNotification(
+      postOwnerUid,
+      currentUser.uid,
+      currentUser.name,
+      comment.id,
+      "comment"
+    );
+  }
 
   input.value = "";
 }
@@ -441,150 +417,91 @@ async function sendComment() {
 답글 작성
 ========================= */
 
-function openReplyForm(
-commentId,
-commentElement
-) {
+function openReplyForm(commentId, commentElement) {
 
-document
-.querySelectorAll(
-".reply-form"
-)
-.forEach(el =>
-el.remove()
-);
+  document.querySelectorAll(".reply-form")
+    .forEach(el => el.remove());
 
-const childArea =
-commentElement.querySelector(
-".child"
-);
+  const childArea =
+    commentElement.querySelector(".child");
 
-const form =
-document.createElement(
-"div"
-);
+  const form = document.createElement("div");
 
-form.className =
-"reply-form";
+  form.className = "reply-form";
 
-form.innerHTML = `
+  form.innerHTML = `
 
-```
-<textarea
-  placeholder="답글 입력"
-></textarea>
+<textarea placeholder="답글 입력"></textarea>
 
-<button class="send">
-  전송
-</button>
+<button class="send">전송</button>
 
-<button class="cancel">
-  취소
-</button>
-```
+<button class="cancel">취소</button>
 
 `;
 
-childArea.prepend(
-form
-);
+  childArea.prepend(form);
 
-const textarea =
-form.querySelector(
-"textarea"
-);
+  const textarea = form.querySelector("textarea");
+  textarea.focus();
 
-textarea.focus();
+  form.querySelector(".send").onclick = async () => {
 
-form.querySelector(
-".send"
-).onclick =
-async () => {
+    const text = textarea.value.trim();
+    if (!text) return;
 
-```
-  const text =
-    textarea.value.trim();
+    await addComment(
+      postId,
+      text,
+      currentUser,
+      commentId
+    );
 
-  if (!text) return;
-
-  await addComment(
-    postId,
-    text,
-    currentUser,
-    commentId
-  );
-
-  /* # 부모 댓글 조회 */
-
-  const parent =
-    await getCommentById(
+    /* 부모 댓글 조회 */
+    const parent = await getCommentById(
       postId,
       commentId
     );
 
-  if (parent) {
+    const parentUid =
+      parent?.uid;
 
-    await addNotification(
+    console.log("PARENT UID:", parentUid);
 
-      parent.uid,
+    if (parentUid) {
 
-      currentUser.uid,
+      await addNotification(
+        parentUid,
+        currentUser.uid,
+        currentUser.name,
+        commentId,
+        "reply"
+      );
+    }
+  };
 
-      currentUser.name,
-
-      commentId,
-
-      "reply"
-
-    );
-  }
-};
-```
-
-form.querySelector(
-".cancel"
-).onclick =
-() => form.remove();
+  form.querySelector(".cancel").onclick =
+    () => form.remove();
 }
 
 /* =========================
 삭제
 ========================= */
 
-async function removeComment(
-id
-) {
-
-await deleteComment(
-postId,
-id
-);
+async function removeComment(id) {
+  await deleteComment(postId, id);
 }
 
 /* =========================
 수정
 ========================= */
 
-async function editComment(
-id
-) {
+async function editComment(id) {
 
-const text =
-prompt(
-"수정 내용"
-);
+  const text = prompt("수정 내용");
+  if (!text) return;
 
-if (!text) return;
-
-await updateComment(
-postId,
-id,
-text
-);
+  await updateComment(postId, id, text);
 }
 
-window.remove =
-removeComment;
-
-window.edit =
-editComment;
+window.remove = removeComment;
+window.edit = editComment;
