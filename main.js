@@ -378,9 +378,6 @@ function render(c) {
 
 async function sendComment() {
 
-  console.log("POST:", currentPost);
-  console.log("UID:", currentPost?.uid);
-
   const input =
     document.getElementById("commentInput");
 
@@ -393,13 +390,11 @@ async function sendComment() {
     currentUser
   );
 
-  // ✅ 🔥 핵심 수정: 안전한 게시물 작성자 UID 추출
-  const postOwnerUid =
-    currentPost?.uid || currentPost?.userId || currentPost?.ownerUid;
+  // 🔥 핵심: people 대신 매핑 사용
+  const postOwnerUid = peopleOwners[currentPost.no];
 
-  console.log("POST OWNER UID:", postOwnerUid);
+  console.log("OWNER UID:", postOwnerUid);
 
-  // 🔥 알림 생성
   if (postOwnerUid) {
     await addNotification(
       postOwnerUid,
@@ -462,8 +457,7 @@ function openReplyForm(commentId, commentElement) {
       commentId
     );
 
-    const parentUid =
-      parent?.uid;
+    const parentUid = peopleOwners[currentPost.no];
 
     console.log("PARENT UID:", parentUid);
 
