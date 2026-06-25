@@ -14,6 +14,8 @@ getCommentById         // # 댓글 조회
 
 import { getPostOwnerUid } from "./firebase.js";
 
+import { deleteDoc, doc } from "firebase/firestore";
+
 /* =========================
 현재 게시물
 ========================= */
@@ -185,20 +187,17 @@ setTimeout(() => {
 
 function renderNotifications(list) {
 
+  const box = document.getElementById("notificationList");
   const badge = document.getElementById("badge");
 
   const unread = list.filter(n => !n.read);
   badge.textContent = unread.length;
-
-  const box = document.getElementById("notificationList");
-  if (!box) return;
 
   box.innerHTML = "";
 
   unread.forEach(n => {
 
     const div = document.createElement("div");
-    div.className = "notification-item";
 
     div.innerHTML = `
       <b>${n.senderName}</b>
@@ -208,7 +207,10 @@ function renderNotifications(list) {
     `;
 
     div.onclick = async () => {
-      await markNotificationRead(n.id);
+
+      await deleteDoc(doc(db, "notifications", n.id));
+
+      div.remove(); // UI에서도 즉시 제거
     };
 
     box.appendChild(div);
