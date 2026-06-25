@@ -23,6 +23,15 @@ signOut,
 onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
+export async function getPostOwnerUid(personNo) {
+  const ref = doc(db, "people", String(personNo));
+  const snap = await getDoc(ref);
+
+  if (!snap.exists()) return null;
+
+  return snap.data().ownerUid;
+}
+
 /* =========================
 CONFIG
 ========================= */

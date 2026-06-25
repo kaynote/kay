@@ -14,23 +14,14 @@ markNotificationRead,  // # 읽음 처리
 getCommentById         // # 댓글 조회
 } from "./firebase.js";
 
-async function getPostOwnerUid(personNo) {
-  const ref = doc(db, "people", String(personNo));
-  const snap = await getDoc(ref);
-
-  if (!snap.exists()) return null;
-
-  return snap.data().ownerUid;
-}
+import { getPostOwnerUid } from "./firebase.js";
 
 /* =========================
 현재 게시물
 ========================= */
 
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "./firebase.js";
-
 const currentPost = people[people.length - 1];
+const postId = String(currentPost.no);
 
 /* =========================
 상태
@@ -61,6 +52,25 @@ document.getElementById(
   "sendBtn"
 ).onclick =
   sendComment;
+  
+  const list = document.getElementById("list");
+
+  people.forEach(p => {
+    const div = document.createElement("div");
+    div.className = "person-card";
+    div.dataset.no = p.no;
+
+    div.innerHTML = `
+      <img src="${p.image}">
+      <p>${p.name}</p>
+    `;
+
+    div.onclick = () => {
+      openModal(p.no);
+    };
+
+    list.appendChild(div);
+  });
 
 /* # 댓글 실시간 감시 */
 
@@ -80,7 +90,7 @@ watchComments(
 
     roots.forEach(c => {
       box.appendChild(
-        render(c)
+        renderComment(c)
       );
     });
 
@@ -328,11 +338,58 @@ if (c.parentId) {
 return roots;
 }
 
+function renderComment(c) {
+  const div = document.createElement("div");
+  div.className = "comment";
+  div.setAttribute("data-id", c.id);
+
+  div.innerHTML = `
+    <b>${c.name}</b>
+    <p>${c.text}</p>
+
+    <button class="reply-btn">답글</button>
+    <div class="replies"></div>
+  `;
+
+  div.querySelector(".reply-btn").onclick = () => {
+    openReplyForm(c.id);
+  };
+
+  const replyBox = div.querySelector(".replies");
+
+  c.replies.forEach(r => {
+    replyBox.appendChild(renderComment(r));
+  });
+
+  return div;
+}
+
+function openModal(personNo) {
+  const modal = document.getElementById("modal");
+  const box = document.getElementById("modalContent");
+
+  modal.style.display = "block";
+  box.innerHTML = "로딩중...";
+
+  watchComments(String(postId), (data) => {
+    const tree = buildTree(data);
+    box.innerHTML = "";
+
+    tree.forEach(c => {
+      box.appendChild(renderComment(c));
+    });
+  });
+}
+
+document.getElementById("modal").onclick = (e) => {
+  if (e.target.id === "modal") {
+    e.target.style.display = "none";
+  }
+};
+
 /* =========================
 렌더
 ========================= */
-
-function render(c) {
 
   const div = document.createElement("div");
 
@@ -379,8 +436,6 @@ function render(c) {
 
   return div;
 }
-
-import posts from "./posts.js";
 
 /* =========================
 댓글 작성
