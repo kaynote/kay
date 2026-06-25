@@ -264,29 +264,23 @@ postId,
 ========================= */
 
 export async function addNotification(
-targetUid,
-senderUid,
-senderName,
-commentId,
-type
-) {
-
-if (
-!targetUid ||
-targetUid === senderUid
-) {
-return;
-}
-
-await addDoc(collection(db, "notifications"), {
   targetUid,
   senderUid,
   senderName,
   commentId,
-  type,
-  read: false,
-  createdAt: serverTimestamp()
-});
+  type
+) {
+  if (!targetUid || targetUid === senderUid) return;
+
+  await addDoc(collection(db, "notifications"), {
+    targetUid,      // 🔥 rules와 동일
+    senderUid,
+    senderName,
+    commentId,
+    type,           // comment | reply
+    read: false,
+    createdAt: serverTimestamp()
+  });
 }
 
 /* =========================
@@ -296,7 +290,6 @@ await addDoc(collection(db, "notifications"), {
 ========================= */
 
 export function watchNotifications(uid, callback) {
-
   if (!uid) return;
 
   return onSnapshot(
@@ -305,7 +298,6 @@ export function watchNotifications(uid, callback) {
       where("targetUid", "==", uid)
     ),
     (snapshot) => {
-
       const arr = [];
 
       snapshot.forEach(docItem => {
@@ -315,9 +307,9 @@ export function watchNotifications(uid, callback) {
         });
       });
 
-      arr.sort((a, b) => {
-        return (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0);
-      });
+      arr.sort((a, b) =>
+        (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0)
+      );
 
       callback(arr);
     }
@@ -330,25 +322,10 @@ export function watchNotifications(uid, callback) {
 
 ========================= */
 
-export async function markNotificationRead(
-notificationId
-) {
-
-await updateDoc(
-
-
-doc(
-  db,
-  "notifications",
-  notificationId
-),
-
-{
-  read: true
-}
-
-
-);
+export async function markNotificationRead(id) {
+  await updateDoc(doc(db, "notifications", id), {
+    read: true
+  });
 }
 
 /* =========================

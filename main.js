@@ -5,9 +5,7 @@ login,
 addComment,
 deleteComment,
 updateComment,
-
 watchComments,
-
 addNotification,       // # 알림 생성
 watchNotifications,    // # 알림 감시
 markNotificationRead,  // # 읽음 처리
@@ -438,7 +436,7 @@ document.getElementById("modal").onclick = (e) => {
 }
 
 /* =========================
-댓글 작성
+댓글 작성 (COMMENT)
 ========================= */
 
 async function sendComment() {
@@ -446,18 +444,15 @@ async function sendComment() {
   const text = input.value.trim();
   if (!text) return;
 
-  // 1️⃣ 댓글 먼저 저장
-  const comment = await addComment(
-    postId,
-    text,
-    currentUser
-  );
+  // 1️⃣ 댓글 저장
+  const comment = await addComment(postId, text, currentUser);
 
-  // 2️⃣ 🔥 여기 붙이는 게 정답
+  // 2️⃣ 게시물 작성자 UID 가져오기
   const postOwnerUid = await getPostOwnerUid(currentPost.no);
 
   console.log("OWNER UID:", postOwnerUid);
 
+  // 3️⃣ 댓글 알림 (post owner)
   if (postOwnerUid) {
     await addNotification(
       postOwnerUid,
@@ -472,7 +467,7 @@ async function sendComment() {
 }
 
 /* =========================
-답글 작성
+답글 작성 (REPLY)
 ========================= */
 
 function openReplyForm(commentId, commentElement) {
@@ -480,33 +475,29 @@ function openReplyForm(commentId, commentElement) {
   document.querySelectorAll(".reply-form")
     .forEach(el => el.remove());
 
-  const childArea =
-    commentElement.querySelector(".child");
+  const childArea = commentElement.querySelector(".child");
 
   const form = document.createElement("div");
-
   form.className = "reply-form";
 
   form.innerHTML = `
-
-<textarea placeholder="답글 입력"></textarea>
-
-<button class="send">전송</button>
-
-<button class="cancel">취소</button>
-
-`;
+    <textarea placeholder="답글 입력"></textarea>
+    <button class="send">전송</button>
+    <button class="cancel">취소</button>
+  `;
 
   childArea.prepend(form);
 
   const textarea = form.querySelector("textarea");
   textarea.focus();
 
+  // 🔥 답글 전송
   form.querySelector(".send").onclick = async () => {
 
     const text = textarea.value.trim();
     if (!text) return;
 
+    // 1️⃣ 답글 저장
     const comment = await addComment(
       postId,
       text,
@@ -514,15 +505,13 @@ function openReplyForm(commentId, commentElement) {
       commentId
     );
 
-    const parent = await getCommentById(
-      postId,
-      commentId
-    );
-
+    // 2️⃣ 부모 댓글 가져오기
+    const parent = await getCommentById(postId, commentId);
     const parentUid = parent?.uid;
 
     console.log("PARENT UID:", parentUid);
 
+    // 3️⃣ reply 알림
     if (parentUid) {
       await addNotification(
         parentUid,
@@ -536,8 +525,7 @@ function openReplyForm(commentId, commentElement) {
     }
   };
 
-  form.querySelector(".cancel").onclick =
-    () => form.remove();
+  form.querySelector(".cancel").onclick = () => form.remove();
 }
 
 /* =========================
@@ -553,12 +541,17 @@ async function removeComment(id) {
 ========================= */
 
 async function editComment(id) {
-
   const text = prompt("수정 내용");
   if (!text) return;
 
   await updateComment(postId, id, text);
 }
 
+/* =========================
+window export
+========================= */
+
 window.remove = removeComment;
 window.edit = editComment;
+window.openReplyForm = openReplyForm;
+window.sendComment = sendComment;
