@@ -1,4 +1,3 @@
-import posts from "./posts.js";
 import people from "./people.js";
 
 import {
@@ -15,9 +14,21 @@ markNotificationRead,  // # 읽음 처리
 getCommentById         // # 댓글 조회
 } from "./firebase.js";
 
+async function getPostOwnerUid(personNo) {
+  const ref = doc(db, "people", String(personNo));
+  const snap = await getDoc(ref);
+
+  if (!snap.exists()) return null;
+
+  return snap.data().ownerUid;
+}
+
 /* =========================
 현재 게시물
 ========================= */
+
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "./firebase.js";
 
 const currentPost = people[people.length - 1];
 
@@ -369,6 +380,8 @@ function render(c) {
   return div;
 }
 
+import posts from "./posts.js";
+
 /* =========================
 댓글 작성
 ========================= */
@@ -378,15 +391,15 @@ async function sendComment() {
   const text = input.value.trim();
   if (!text) return;
 
+  // 1️⃣ 댓글 먼저 저장
   const comment = await addComment(
     postId,
     text,
     currentUser
   );
 
-  // 👇 여기
-  const postOwnerUid =
-    posts.find(p => p.personNo === currentPost.no)?.ownerUid;
+  // 2️⃣ 🔥 여기 붙이는 게 정답
+  const postOwnerUid = await getPostOwnerUid(currentPost.no);
 
   console.log("OWNER UID:", postOwnerUid);
 
