@@ -114,20 +114,17 @@ parentId = null
 ) {
 
 return await addDoc(
-collection(db, "comments", postId, "items"),
-{
-text,
-parentId,
+  collection(db, "comments", postId, "items"),
+  {
+    text,
+    parentId,
 
-```
-  uid: user.uid,
-  name: user.name,
-  photo: user.photo,
+    uid: user.uid,
+    name: user.name,
+    photo: user.photo,
 
-  createdAt: serverTimestamp()
-}
-```
-
+    createdAt: serverTimestamp()
+  }
 );
 }
 
@@ -141,18 +138,18 @@ const arr = [];
 
 snap.forEach(docItem => {
 
-```
+
 arr.push({
   id: docItem.id,
   ...docItem.data()
 });
-```
+
 
 });
 
 arr.sort((a, b) => {
 
-```
+
 const ta =
   a.createdAt?.seconds || 0;
 
@@ -160,7 +157,7 @@ const tb =
   b.createdAt?.seconds || 0;
 
 return ta - tb;
-```
+
 
 });
 
@@ -215,7 +212,7 @@ postId,
 "items"
 ),
 
-```
+
 (snapshot) => {
 
   const comments = [];
@@ -246,7 +243,7 @@ postId,
     snapshot.docChanges()
   );
 }
-```
+
 
 );
 }
@@ -281,7 +278,7 @@ db,
 targetUid,
 senderUid,
 
-```
+
   senderName,
 
   commentId,
@@ -293,7 +290,7 @@ senderUid,
   createdAt:
     serverTimestamp()
 }
-```
+
 
 );
 }
@@ -311,7 +308,7 @@ callback
 
 return onSnapshot(
 
-```
+
 query(
   collection(
     db,
@@ -351,7 +348,7 @@ query(
 
   callback(arr);
 }
-```
+
 
 );
 }
@@ -368,7 +365,7 @@ notificationId
 
 await updateDoc(
 
-```
+
 doc(
   db,
   "notifications",
@@ -378,7 +375,7 @@ doc(
 {
   read: true
 }
-```
+
 
 );
 }
@@ -395,7 +392,7 @@ text
 
 await updateDoc(
 
-```
+
 doc(
   db,
   "comments",
@@ -407,7 +404,7 @@ doc(
 {
   text
 }
-```
+
 
 );
 }
@@ -423,7 +420,7 @@ commentId
 
 await deleteDoc(
 
-```
+
 doc(
   db,
   "comments",
@@ -431,7 +428,7 @@ doc(
   "items",
   commentId
 )
-```
+
 
 );
 }
