@@ -232,11 +232,13 @@ function renderNotifications(list) {
 
       try {
 
+        console.log("삭제 전", n.id);
+
         await deleteDoc(
           doc(db, "notifications", n.id)
         );
 
-        div.remove();
+        console.log("삭제 완료");
 
       } catch (e) {
 
@@ -248,15 +250,9 @@ function renderNotifications(list) {
       }
     };
 
-      badge.textContent =
-        box.querySelectorAll(
-          ".notification-item"
-        ).length;
-    };
-
     box.appendChild(div);
-  });
-}
+      });
+    }
 
 /* =========================
 댓글 위치 이동
