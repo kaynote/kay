@@ -178,15 +178,21 @@ export async function addNotification(
 WATCH NOTIFICATIONS
 ========================= */
 
-export function watchNotifications(uid, callback) {
-  if (!uid) return;
+export function watchNotifications(
+  uid,
+  callback,
+  errorCallback
+) {
 
   return onSnapshot(
+
     query(
       collection(db, "notifications"),
       where("targetUid", "==", uid)
     ),
+
     (snapshot) => {
+
       const arr = [];
 
       snapshot.forEach(doc => {
@@ -198,9 +204,8 @@ export function watchNotifications(uid, callback) {
 
       callback(arr);
     },
-    (error) => {
-      console.error("notification snapshot error:", error);
-    }
+
+    errorCallback
   );
 }
 

@@ -114,7 +114,13 @@ watchComments(
 
 watchNotifications(
   currentUser.uid,
-  renderNotifications
+  (list) => {
+    console.log("알림 읽기 성공", list);
+    renderNotifications(list);
+  },
+  (error) => {
+    console.error("알림 읽기 실패", error);
+  }
 );
 ```
 
