@@ -409,6 +409,9 @@ return div;
 ========================= */
 
 async function sendComment() {
+  
+  console.log("POST:", currentPost);
+  console.log("UID:", currentPost?.uid);
 
   const input =
     document.getElementById("commentInput");
