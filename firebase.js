@@ -205,19 +205,14 @@ export function watchNotifications(uid, callback) {
       where("targetUid", "==", uid)
     ),
     (snapshot) => {
-      const arr = [];
 
-      snapshot.forEach(d => {
-        arr.push({ id: d.id, ...d.data() });
-      });
+      const arr = snapshot.docs.map(d => ({
+        id: d.id,
+        ...d.data()
+      }));
 
-      arr.sort((a, b) => {
-        const ta = a.createdAt?.seconds ?? 0;
-        const tb = b.createdAt?.seconds ?? 0;
-        return tb - ta;
-      });
-
-      callback(arr);
+      // 🔥 핵심: 새 객체 강제 생성
+      callback(JSON.parse(JSON.stringify(arr)));
     }
   );
 }
