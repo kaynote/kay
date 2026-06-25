@@ -187,8 +187,6 @@ setTimeout(() => {
 알림 목록
 ========================= */
 
-import { deleteDoc, doc } from "firebase/firestore";
-
 function renderNotifications(list) {
 
   const box = document.getElementById("notificationList");
@@ -214,15 +212,16 @@ function renderNotifications(list) {
 
     div.onclick = async () => {
 
-      // 1️⃣ read 처리 (중요)
-      await markNotificationRead(n.id);
+      await deleteDoc(
+        doc(db, "notifications", n.id)
+      );
 
-      // 2️⃣ UI 즉시 제거
       div.remove();
 
-      // 3️⃣ badge 즉시 감소
-      const newUnread = box.querySelectorAll(".notification-item").length;
-      badge.textContent = newUnread;
+      badge.textContent =
+        box.querySelectorAll(
+          ".notification-item"
+        ).length;
     };
 
     box.appendChild(div);
@@ -460,7 +459,6 @@ async function sendComment() {
 
     if (
       uid !== currentUser.uid &&
-      uid !== parentUid &&
       uid !== ADMIN_UID
     ) {
 
