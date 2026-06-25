@@ -179,6 +179,8 @@ WATCH NOTIFICATIONS
 ========================= */
 
 export function watchNotifications(uid, callback) {
+  if (!uid) return;
+
   return onSnapshot(
     query(
       collection(db, "notifications"),
@@ -188,10 +190,16 @@ export function watchNotifications(uid, callback) {
       const arr = [];
 
       snapshot.forEach(doc => {
-        arr.push({ id: doc.id, ...doc.data() });
+        arr.push({
+          id: doc.id,
+          ...doc.data()
+        });
       });
 
       callback(arr);
+    },
+    (error) => {
+      console.error("notification snapshot error:", error);
     }
   );
 }
