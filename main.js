@@ -384,28 +384,24 @@ function render(c) {
 
 async function sendComment() {
 
-  console.log("peopleOwners:", peopleOwners);
-  console.log("key:", currentPost.no);
-  console.log("lookup:", peopleOwners[currentPost.no]);
-
   const input = document.getElementById("commentInput");
   const text = input.value.trim();
   if (!text) return;
 
-  // 1️⃣ 댓글 먼저 저장
+  // 👇 여기 (디버그 로그 위치)
+  console.log("UID MAP:", peopleOwners);
+  console.log("POST NO:", currentPost.no);
+  console.log("OWNER:", peopleOwners[String(currentPost.no)]);
+
   const comment = await addComment(
     postId,
     text,
     currentUser
   );
 
-  // 2️⃣ 알림 대상 찾기 (핵심)
   const postOwnerUid = peopleOwners[String(currentPost.no)];
 
-  console.log("OWNER UID:", postOwnerUid);
-
-  // 3️⃣ 알림 생성
-  if (postOwnerUid && postOwnerUid !== currentUser.uid) {
+  if (postOwnerUid) {
     await addNotification(
       postOwnerUid,
       currentUser.uid,
