@@ -197,8 +197,6 @@ export async function addNotification(
 }
 
 export function watchNotifications(uid, callback) {
-  if (!uid) return;
-
   return onSnapshot(
     query(
       collection(db, "notifications"),
@@ -206,13 +204,13 @@ export function watchNotifications(uid, callback) {
     ),
     (snapshot) => {
 
-      const arr = snapshot.docs.map(d => ({
-        id: d.id,
-        ...d.data()
-      }));
+      const arr = [];
 
-      // 🔥 핵심: 새 객체 강제 생성
-      callback(JSON.parse(JSON.stringify(arr)));
+      snapshot.forEach(doc => {
+        arr.push({ id: doc.id, ...doc.data() });
+      });
+
+      callback(arr);
     }
   );
 }
