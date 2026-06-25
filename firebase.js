@@ -1,40 +1,49 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 
 import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  doc,
-  getDoc,
-  updateDoc,
-  deleteDoc,
-  serverTimestamp,
-  onSnapshot,
-  query,
-  where
+getFirestore,
+collection,
+addDoc,
+getDocs,
+doc,
+getDoc,                 // # 추가
+updateDoc,
+deleteDoc,
+serverTimestamp,
+onSnapshot,
+query,                  // # 추가
+where                   // # 추가
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut,
-  onAuthStateChanged
+getAuth,
+GoogleAuthProvider,
+signInWithPopup,
+signOut,
+onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+export async function getPostOwnerUid(personNo) {
+  const ref = doc(db, "people", String(personNo));
+  const snap = await getDoc(ref);
+
+  if (!snap.exists()) return null;
+
+  return snap.data().ownerUid;
+}
 
 /* =========================
 CONFIG
 ========================= */
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCAZzJdAB_a65dkJaL-XLQqzImzlSI8Gmw",
-  authDomain: "kay-gallery.firebaseapp.com",
-  projectId: "kay-gallery",
-  storageBucket: "kay-gallery.firebasestorage.app",
-  messagingSenderId: "276470297982",
-  appId: "1:276470297982:web:838b8a57269b26cd3d6f2f",
-  measurementId: "G-E61XXMZCHM"
+apiKey: "AIzaSyCAZzJdAB_a65dkJaL-XLQqzImzlSI8Gmw",
+authDomain: "kay-gallery.firebaseapp.com",
+projectId: "kay-gallery",
+storageBucket: "kay-gallery.firebasestorage.app",
+messagingSenderId: "276470297982",
+appId: "1:276470297982:web:838b8a57269b26cd3d6f2f",
+measurementId: "G-E61XXMZCHM"
 };
 
 /* =========================
@@ -49,106 +58,209 @@ export const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 /* =========================
-USER
+USER NORMALIZER
 ========================= */
 
 function normalizeUser(user) {
-  if (!user) return null;
 
-  return {
-    uid: user.uid,
-    email: user.email || "",
-    name:
-      user.displayName ||
-      user.providerData?.[0]?.displayName ||
-      user.email ||
-      "익명",
-    photo: user.photoURL || ""
-  };
+if (!user) return null;
+
+return {
+uid: user.uid || "",
+email: user.email || "",
+name:
+user.providerData?.[0]?.displayName ||
+user.displayName ||
+user.email ||
+"익명 사용자",
+photo: user.photoURL || ""
+};
 }
 
 /* =========================
-AUTH
+LOGIN
 ========================= */
 
 export async function login() {
-  if (auth.currentUser) return normalizeUser(auth.currentUser);
 
-  const result = await signInWithPopup(auth, provider);
-  return normalizeUser(result.user);
+if (auth.currentUser) {
+return normalizeUser(auth.currentUser);
 }
 
-export async function logout() {
-  await signOut(auth);
-}
+const result = await signInWithPopup(auth, provider);
 
-export function watchAuth(callback) {
-  return onAuthStateChanged(auth, (user) => {
-    callback(normalizeUser(user));
-  });
+return normalizeUser(result.user);
 }
 
 /* =========================
-POST OWNER (FIXED SAFE)
+LOGOUT
 ========================= */
 
-export async function getPostOwnerUid(personNo) {
-  const ref = doc(db, "people", String(personNo));
-  const snap = await getDoc(ref);
+export async function logout() {
+await signOut(auth);
+}
 
-  if (!snap.exists()) return null;
+/* =========================
+AUTH WATCHER
+========================= */
 
-  const data = snap.data();
+export function watchAuth(callback) {
 
-  // 🔥 핵심: fallback 구조 (ownerUid 없으면 uid/name 구조 대응)
-  return data.ownerUid || data.uid || null;
+return onAuthStateChanged(auth, (user) => {
+callback(normalizeUser(user));
+});
 }
 
 /* =========================
 COMMENTS
 ========================= */
 
-export async function addComment(postId, text, user, parentId = null) {
-  return await addDoc(
-    collection(db, "comments", postId, "items"),
-    {
-      text,
-      parentId: parentId || null,
-      uid: user.uid,
-      name: user.name,
-      photo: user.photo,
-      createdAt: serverTimestamp()
-    }
-  );
+export async function addComment(
+postId,
+text,
+user,
+parentId = null
+) {
+
+return await addDoc(
+  collection(db, "comments", postId, "items"),
+  {
+    text,
+    parentId,
+
+    uid: user.uid,
+    name: user.name,
+    photo: user.photo,
+
+    createdAt: serverTimestamp()
+  }
+);
 }
 
-export async function getCommentById(postId, commentId) {
-  const snap = await getDoc(
-    doc(db, "comments", postId, "items", commentId)
-  );
+export async function getComments(postId) {
 
-  if (!snap.exists()) return null;
+const snap = await getDocs(
+collection(db, "comments", postId, "items")
+);
 
-  return { id: snap.id, ...snap.data() };
-}
+const arr = [];
 
-export function watchComments(postId, callback) {
-  return onSnapshot(
-    collection(db, "comments", postId, "items"),
-    (snapshot) => {
-      const arr = [];
+snap.forEach(docItem => {
 
-      snapshot.forEach(d => {
-        arr.push({ id: d.id, ...d.data() });
-      });
 
-      callback(arr, snapshot.docChanges());
-    }
-  );
+arr.push({
+  id: docItem.id,
+  ...docItem.data()
+});
+
+
+});
+
+arr.sort((a, b) => {
+
+
+const ta =
+  a.createdAt?.seconds || 0;
+
+const tb =
+  b.createdAt?.seconds || 0;
+
+return ta - tb;
+
+
+});
+
+return arr;
 }
 
 /* =========================
-NOTIFICATIONS (FIXED CORE)
+
+# 특정 댓글 1개 조회
+
+========================= */
+
+export async function getCommentById(
+postId,
+commentId
+) {
+
+const snap = await getDoc(
+doc(
+db,
+"comments",
+postId,
+"items",
+commentId
+)
+);
+
+if (!snap.exists()) {
+return null;
+}
+
+return {
+id: snap.id,
+...snap.data()
+};
+}
+
+/* =========================
+REALTIME COMMENTS
+========================= */
+
+export function watchComments(
+postId,
+callback
+) {
+
+return onSnapshot(
+collection(
+db,
+"comments",
+postId,
+"items"
+),
+
+
+(snapshot) => {
+
+  const comments = [];
+
+  snapshot.forEach(docItem => {
+
+    comments.push({
+      id: docItem.id,
+      ...docItem.data()
+    });
+
+  });
+
+  comments.sort((a, b) => {
+
+    const ta =
+      a.createdAt?.seconds || 0;
+
+    const tb =
+      b.createdAt?.seconds || 0;
+
+    return ta - tb;
+
+  });
+
+  callback(
+    comments,
+    snapshot.docChanges()
+  );
+}
+
+
+);
+}
+
+/* =========================
+
+# 알림 생성
+
 ========================= */
 
 export async function addNotification(
@@ -160,59 +272,54 @@ export async function addNotification(
 ) {
   if (!targetUid || targetUid === senderUid) return;
 
-  // 🔥 핵심: commentId 기준 중복 방지
-  const notifId = `${commentId}_${type}`;
-
-  return await addDoc(
-    collection(db, "notifications"),
-    {
-      targetUid,
-      senderUid,
-      senderName,
-      commentId,
-      type,
-      read: false,
-      createdAt: serverTimestamp()
-    }
-  );
+  await addDoc(collection(db, "notifications"), {
+    targetUid,      // 🔥 rules와 동일
+    senderUid,
+    senderName,
+    commentId,
+    type,           // comment | reply
+    read: false,
+    createdAt: serverTimestamp()
+  });
+}
 
 /* =========================
-WATCH NOTIFICATIONS
+
+# 내 알림 실시간 감시
+
 ========================= */
 
-export function watchNotifications(
-  uid,
-  callback,
-  errorCallback
-) {
+export function watchNotifications(uid, callback) {
+  if (!uid) return;
 
   return onSnapshot(
-
     query(
       collection(db, "notifications"),
       where("targetUid", "==", uid)
     ),
-
     (snapshot) => {
-
       const arr = [];
 
-      snapshot.forEach(doc => {
+      snapshot.forEach(docItem => {
         arr.push({
-          id: doc.id,
-          ...doc.data()
+          id: docItem.id,
+          ...docItem.data()
         });
       });
 
-      callback(arr);
-    },
+      arr.sort((a, b) =>
+        (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0)
+      );
 
-    errorCallback
+      callback(arr);
+    }
   );
 }
 
 /* =========================
-READ (SYNC FIX)
+
+# 읽음 처리
+
 ========================= */
 
 export async function markNotificationRead(id) {
@@ -222,18 +329,54 @@ export async function markNotificationRead(id) {
 }
 
 /* =========================
-UPDATE / DELETE COMMENTS
+UPDATE
 ========================= */
 
-export async function updateComment(postId, commentId, text) {
-  return await updateDoc(
-    doc(db, "comments", postId, "items", commentId),
-    { text }
-  );
+export async function updateComment(
+postId,
+commentId,
+text
+) {
+
+await updateDoc(
+
+
+doc(
+  db,
+  "comments",
+  postId,
+  "items",
+  commentId
+),
+
+{
+  text
 }
 
-export async function deleteComment(postId, commentId) {
-  return await deleteDoc(
-    doc(db, "comments", postId, "items", commentId)
-  );
+
+);
+}
+
+/* =========================
+DELETE
+========================= */
+
+export async function deleteComment(
+postId,
+commentId
+) {
+
+await deleteDoc(
+
+
+doc(
+  db,
+  "comments",
+  postId,
+  "items",
+  commentId
+)
+
+
+);
 }
