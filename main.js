@@ -197,13 +197,10 @@ function renderNotifications(list) {
 
   box.innerHTML = "";
 
-  list.forEach(n => {
+  unreadList.forEach(n => {
 
     const div = document.createElement("div");
-
     div.className = "notification-item";
-
-    div.style.opacity = n.read ? "0.4" : "1";
 
     div.innerHTML = `
       <b>${n.senderName}</b>
