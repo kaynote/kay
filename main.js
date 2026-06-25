@@ -1,18 +1,20 @@
 import people from "./people.js";
 
 import {
-login,
-addComment,
-deleteComment,
-updateComment,
-watchComments,
-addNotification,       // # 알림 생성
-watchNotifications,    // # 알림 감시
-markNotificationRead,  // # 읽음 처리
-getCommentById         // # 댓글 조회
+  login,
+  addComment,
+  deleteComment,
+  updateComment,
+  watchComments,
+  addNotification,
+  watchNotifications,
+  markNotificationRead,
+  getCommentById,
+  getComments
 } from "./firebase.js";
 
-import { getPostOwnerUid } from "./firebase.js";
+const ADMIN_UID =
+  "eEltgLaV6oN7MHUXTfQONc2wGAk1";
 
 import { deleteDoc, doc } from "firebase/firestore";
 
@@ -417,27 +419,59 @@ document.getElementById("modal").onclick = (e) => {
 ========================= */
 
 async function sendComment() {
-  const input = document.getElementById("commentInput");
-  const text = input.value.trim();
+
+  const input =
+    document.getElementById(
+      "commentInput"
+    );
+
+  const text =
+    input.value.trim();
+
   if (!text) return;
 
-  // 1️⃣ 댓글 저장
-  const comment = await addComment(postId, text, currentUser);
-
-  // 2️⃣ 게시물 작성자 UID 가져오기
-  const postOwnerUid = await getPostOwnerUid(currentPost.no);
-
-  console.log("OWNER UID:", postOwnerUid);
-
-  // 3️⃣ 댓글 알림 (post owner)
-  if (postOwnerUid) {
-    await addNotification(
-      postOwnerUid,
-      currentUser.uid,
-      currentUser.name,
-      comment.id,
-      "comment"
+  // 댓글 저장
+  const comment =
+    await addComment(
+      postId,
+      text,
+      currentUser
     );
+
+  // 관리자 알림
+  await addNotification(
+    ADMIN_UID,
+    currentUser.uid,
+    currentUser.name,
+    comment.id,
+    "comment"
+  );
+
+  // 참여자 조회
+  const comments =
+    await getComments(postId);
+
+  const participantUids =
+    [...new Set(
+      comments.map(c => c.uid)
+    )];
+
+  for (const uid of participantUids) {
+
+    if (
+      uid !== currentUser.uid &&
+      uid !== parentUid &&
+      uid !== ADMIN_UID
+    ) {
+
+      await addNotification(
+        uid,
+        currentUser.uid,
+        currentUser.name,
+        comment.id,
+        "comment"
+      );
+    }
   }
 
   input.value = "";
