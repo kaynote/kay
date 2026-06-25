@@ -1,5 +1,11 @@
 import people from "./people.js";
 
+const peopleOwners = {
+  1: "UID_A",
+  2: "UID_B",
+  3: "UID_C"
+};
+
 import {
 login,
 addComment,
@@ -377,8 +383,10 @@ function render(c) {
 ========================= */
 
 async function sendComment() {
-  
-  console.log("ADD NOTIFICATION TARGET:", currentPost?.uid);
+
+  console.log("OWNER:", peopleOwners[currentPost.no]);
+  console.log("POST NO:", currentPost.no);
+  console.log("POST DATA:", currentPost);
 
   const input =
     document.getElementById("commentInput");
@@ -392,7 +400,7 @@ async function sendComment() {
     currentUser
   );
 
-  // 🔥 핵심: people 대신 매핑 사용
+  // 🔥 정답
   const postOwnerUid = peopleOwners[currentPost.no];
 
   console.log("OWNER UID:", postOwnerUid);
@@ -443,37 +451,35 @@ function openReplyForm(commentId, commentElement) {
 
   form.querySelector(".send").onclick = async () => {
 
-    const text = textarea.value.trim();
-    if (!text) return;
+  const text = textarea.value.trim();
+  if (!text) return;
 
-    await addComment(
-      postId,
-      text,
-      currentUser,
-      commentId
+  const comment = await addComment(
+    postId,
+    text,
+    currentUser,
+    commentId
+  );
+
+  const parent = await getCommentById(
+    postId,
+    commentId
+  );
+
+  const parentUid = parent?.uid;
+
+  console.log("PARENT UID:", parentUid);
+
+  if (parentUid) {
+    await addNotification(
+      parentUid,
+      currentUser.uid,
+      currentUser.name,
+      comment.id,
+      "reply"
     );
-
-    /* 부모 댓글 조회 */
-    const parent = await getCommentById(
-      postId,
-      commentId
-    );
-
-    const parentUid = peopleOwners[currentPost.no];
-
-    console.log("PARENT UID:", parentUid);
-
-    if (parentUid) {
-
-      await addNotification(
-        parentUid,
-        currentUser.uid,
-        currentUser.name,
-        commentId,
-        "reply"
-      );
-    }
-  };
+  }
+};
 
   form.querySelector(".cancel").onclick =
     () => form.remove();
