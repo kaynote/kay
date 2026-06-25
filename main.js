@@ -1,10 +1,6 @@
 import people from "./people.js";
 
-const peopleOwners = {
-  1: "UID_A",
-  2: "UID_B",
-  3: "UID_C"
-};
+const postOwnerUid = currentPost.uid;
 
 import {
 login,
@@ -390,6 +386,10 @@ async function sendComment() {
   console.log("POST NO:", currentPost.no);
   console.log("OWNER MAP:", peopleOwners);
   console.log("OWNER UID:", peopleOwners[String(currentPost.no)]);
+  
+  console.log("KEY TYPE:", typeof currentPost.no);
+  console.log("LOOKUP KEY:", Number(currentPost.no));
+  console.log("EXISTS:", peopleOwners[Number(currentPost.no)]);
 
   const comment = await addComment(
     postId,
@@ -397,13 +397,14 @@ async function sendComment() {
     currentUser
   );
 
-  const postOwnerUid = peopleOwners[String(currentPost.no)];
+  const postOwnerUid = peopleOwners[Number(currentPost.no)];
 
   if (!postOwnerUid) {
     console.warn("❌ owner 없음 → notifications 생성 안됨");
     return;
   }
 
+try {
   await addNotification(
     postOwnerUid,
     currentUser.uid,
@@ -411,8 +412,10 @@ async function sendComment() {
     comment.id,
     "comment"
   );
-
-  console.log("✅ comment notification 생성 완료");
+  console.log("✅ notification created");
+} catch (e) {
+  console.error("❌ notification 실패:", e.code, e.message);
+}
 
   input.value = "";
 }
