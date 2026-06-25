@@ -410,23 +410,28 @@ return div;
 
 async function sendComment() {
 
-const input =
-document.getElementById(
-"commentInput"
-);
+  const input =
+    document.getElementById("commentInput");
 
-const text =
-input.value.trim();
+  const text = input.value.trim();
+  if (!text) return;
 
-if (!text) return;
+  const comment = await addComment(
+    postId,
+    text,
+    currentUser
+  );
 
-await addComment(
-postId,
-text,
-currentUser
-);
+  // 🔥 여기 추가
+  await addNotification(
+    currentPost.uid,      // 댓글 주인 (게시물 작성자)
+    currentUser.uid,
+    currentUser.name,
+    comment.id,
+    "comment"
+  );
 
-input.value = "";
+  input.value = "";
 }
 
 /* =========================
