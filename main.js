@@ -187,11 +187,9 @@ function renderNotifications(list) {
 
   const badge = document.getElementById("badge");
 
-  const safeList = [...list]; // 🔥 강제 복사
+  const unreadList = list.filter(n => !n.read);
 
-  const unread = safeList.filter(n => !n.read).length;
-
-  badge.textContent = unread;
+  badge.textContent = unreadList.length;
 
   const box = document.getElementById("notificationList");
 
@@ -199,7 +197,8 @@ function renderNotifications(list) {
 
   box.innerHTML = "";
 
-  safeList.forEach(n => {
+  unreadList.forEach(n => {
+
     const div = document.createElement("div");
     div.className = "notification-item";
 
@@ -212,11 +211,6 @@ function renderNotifications(list) {
 
     div.onclick = async () => {
       await markNotificationRead(n.id);
-
-      // 🔥 즉시 UI 반영
-      n.read = true;
-
-      renderNotifications(safeList); // 🔥 강제 재렌더
     };
 
     box.appendChild(div);
