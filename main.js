@@ -1,3 +1,5 @@
+import posts from "./posts.js";
+
 import people from "./people.js";
 
 const postOwnerUid = currentPost.uid;
@@ -23,8 +25,6 @@ getCommentById         // # 댓글 조회
 const currentPost =
 people[people.length - 1];
 
-const postId =
-String(currentPost.no);
 
 /* =========================
 상태
@@ -383,28 +383,19 @@ async function sendComment() {
   const text = input.value.trim();
   if (!text) return;
 
-  console.log("POST NO:", currentPost.no);
-  console.log("OWNER MAP:", peopleOwners);
-  console.log("OWNER UID:", peopleOwners[String(currentPost.no)]);
-  
-  console.log("KEY TYPE:", typeof currentPost.no);
-  console.log("LOOKUP KEY:", Number(currentPost.no));
-  console.log("EXISTS:", peopleOwners[Number(currentPost.no)]);
-
   const comment = await addComment(
     postId,
     text,
     currentUser
   );
 
-  const postOwnerUid = peopleOwners[Number(currentPost.no)];
+  const postOwnerUid =
+    posts.find(p => p.personNo === currentPost.no)?.ownerUid;
 
-  if (!postOwnerUid) {
-    console.warn("❌ owner 없음 → notifications 생성 안됨");
-    return;
-  }
+  console.log("OWNER UID:", postOwnerUid);
 
-try {
+  if (!postOwnerUid) return;
+
   await addNotification(
     postOwnerUid,
     currentUser.uid,
@@ -412,10 +403,6 @@ try {
     comment.id,
     "comment"
   );
-  console.log("✅ notification created");
-} catch (e) {
-  console.error("❌ notification 실패:", e.code, e.message);
-}
 
   input.value = "";
 }

@@ -269,30 +269,15 @@ targetUid === senderUid
 return;
 }
 
-await addDoc(
-collection(
-db,
-"notifications"
-),
-{
-targetUid,
-senderUid,
-
-
+await addDoc(collection(db, "notifications"), {
+  targetUid,
+  senderUid,
   senderName,
-
   commentId,
-
-  type, // comment | reply
-
+  type,
   read: false,
-
-  createdAt:
-    serverTimestamp()
-}
-
-
-);
+  createdAt: serverTimestamp()
+});
 }
 
 /* =========================
