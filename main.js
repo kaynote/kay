@@ -1,8 +1,5 @@
 import posts from "./posts.js";
-
 import people from "./people.js";
-
-const postOwnerUid = currentPost.uid;
 
 import {
 login,
@@ -22,9 +19,7 @@ getCommentById         // # 댓글 조회
 현재 게시물
 ========================= */
 
-const currentPost =
-people[people.length - 1];
-
+const currentPost = people[people.length - 1];
 
 /* =========================
 상태
@@ -389,20 +384,21 @@ async function sendComment() {
     currentUser
   );
 
+  // 👇 여기
   const postOwnerUid =
     posts.find(p => p.personNo === currentPost.no)?.ownerUid;
 
   console.log("OWNER UID:", postOwnerUid);
 
-  if (!postOwnerUid) return;
-
-  await addNotification(
-    postOwnerUid,
-    currentUser.uid,
-    currentUser.name,
-    comment.id,
-    "comment"
-  );
+  if (postOwnerUid) {
+    await addNotification(
+      postOwnerUid,
+      currentUser.uid,
+      currentUser.name,
+      comment.id,
+      "comment"
+    );
+  }
 
   input.value = "";
 }
