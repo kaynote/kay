@@ -1,15 +1,7 @@
 const posts = [
   {
-    personNo: 1,
-    ownerUid: "UID_A"
-  },
-  {
-    personNo: 2,
-    ownerUid: "UID_B"
-  },
-  {
-    personNo: 3,
-    ownerUid: "UID_C"
+    personNo: 293,
+    ownerUid: "FIREBASE_UID_HERE"
   }
 ];
 
