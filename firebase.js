@@ -106,62 +106,39 @@ callback(normalizeUser(user));
 COMMENTS
 ========================= */
 
-export async function addComment(
-postId,
-text,
-user,
-parentId = null
-) {
-
-return await addDoc(
-  collection(db, "comments", postId, "items"),
-  {
-    text,
-    parentId,
-
-    uid: user.uid,
-    name: user.name,
-    photo: user.photo,
-
-    createdAt: serverTimestamp()
-  }
-);
+export async function addComment(postId, text, user, parentId = null) {
+  return await addDoc(
+    collection(db, "people", postId, "comments"),
+    {
+      text,
+      parentId,
+      uid: user.uid,
+      name: user.name,
+      photo: user.photo,
+      createdAt: serverTimestamp()
+    }
+  );
 }
 
 export async function getComments(postId) {
+  const snap = await getDocs(
+    collection(db, "people", postId, "comments")
+  );
 
-const snap = await getDocs(
-collection(db, "comments", postId, "items")
-);
+  const arr = [];
 
-const arr = [];
+  snap.forEach(docItem => {
+    arr.push({
+      id: docItem.id,
+      ...docItem.data()
+    });
+  });
 
-snap.forEach(docItem => {
+  arr.sort((a, b) =>
+    (a.createdAt?.seconds || 0) - (b.createdAt?.seconds || 0)
+  );
 
-
-arr.push({
-  id: docItem.id,
-  ...docItem.data()
-});
-
-
-});
-
-arr.sort((a, b) => {
-
-
-const ta =
-  a.createdAt?.seconds || 0;
-
-const tb =
-  b.createdAt?.seconds || 0;
-
-return ta - tb;
-
-
-});
-
-return arr;
+  return arr;
 }
 
 /* =========================
@@ -170,82 +147,44 @@ return arr;
 
 ========================= */
 
-export async function getCommentById(
-postId,
-commentId
-) {
+export async function getCommentById(postId, commentId) {
+  const snap = await getDoc(
+    doc(db, "people", postId, "comments", commentId)
+  );
 
-const snap = await getDoc(
-doc(
-db,
-"comments",
-postId,
-"items",
-commentId
-)
-);
+  if (!snap.exists()) return null;
 
-if (!snap.exists()) {
-return null;
-}
-
-return {
-id: snap.id,
-...snap.data()
-};
+  return {
+    id: snap.id,
+    ...snap.data()
+  };
 }
 
 /* =========================
 REALTIME COMMENTS
 ========================= */
 
-export function watchComments(
-postId,
-callback
-) {
+export function watchComments(postId, callback) {
+  return onSnapshot(
+    collection(db, "people", postId, "comments"),
+    (snapshot) => {
 
-return onSnapshot(
-collection(
-db,
-"comments",
-postId,
-"items"
-),
+      const comments = [];
 
+      snapshot.forEach(docItem => {
+        comments.push({
+          id: docItem.id,
+          ...docItem.data()
+        });
+      });
 
-(snapshot) => {
+      comments.sort((a, b) =>
+        (a.createdAt?.seconds || 0) - (b.createdAt?.seconds || 0)
+      );
 
-  const comments = [];
-
-  snapshot.forEach(docItem => {
-
-    comments.push({
-      id: docItem.id,
-      ...docItem.data()
-    });
-
-  });
-
-  comments.sort((a, b) => {
-
-    const ta =
-      a.createdAt?.seconds || 0;
-
-    const tb =
-      b.createdAt?.seconds || 0;
-
-    return ta - tb;
-
-  });
-
-  callback(
-    comments,
-    snapshot.docChanges()
+      callback(comments, snapshot.docChanges());
+    }
   );
-}
-
-
-);
 }
 
 /* =========================
@@ -376,51 +315,19 @@ export async function markNotificationRead(id) {
 UPDATE
 ========================= */
 
-export async function updateComment(
-postId,
-commentId,
-text
-) {
-
-await updateDoc(
-
-
-doc(
-  db,
-  "comments",
-  postId,
-  "items",
-  commentId
-),
-
-{
-  text
-}
-
-
-);
+export async function updateComment(postId, commentId, text) {
+  await updateDoc(
+    doc(db, "people", postId, "comments", commentId),
+    { text }
+  );
 }
 
 /* =========================
 DELETE
 ========================= */
 
-export async function deleteComment(
-postId,
-commentId
-) {
-
-await deleteDoc(
-
-
-doc(
-  db,
-  "comments",
-  postId,
-  "items",
-  commentId
-)
-
-
-);
+export async function deleteComment(postId, commentId) {
+  await deleteDoc(
+    doc(db, "people", postId, "comments", commentId)
+  );
 }
