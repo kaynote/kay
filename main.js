@@ -383,15 +383,13 @@ function render(c) {
 ========================= */
 
 async function sendComment() {
-
   const input = document.getElementById("commentInput");
   const text = input.value.trim();
   if (!text) return;
 
-  // 👇 여기 (디버그 로그 위치)
-  console.log("UID MAP:", peopleOwners);
   console.log("POST NO:", currentPost.no);
-  console.log("OWNER:", peopleOwners[String(currentPost.no)]);
+  console.log("OWNER MAP:", peopleOwners);
+  console.log("OWNER UID:", peopleOwners[String(currentPost.no)]);
 
   const comment = await addComment(
     postId,
@@ -401,15 +399,20 @@ async function sendComment() {
 
   const postOwnerUid = peopleOwners[String(currentPost.no)];
 
-  if (postOwnerUid) {
-    await addNotification(
-      postOwnerUid,
-      currentUser.uid,
-      currentUser.name,
-      comment.id,
-      "comment"
-    );
+  if (!postOwnerUid) {
+    console.warn("❌ owner 없음 → notifications 생성 안됨");
+    return;
   }
+
+  await addNotification(
+    postOwnerUid,
+    currentUser.uid,
+    currentUser.name,
+    comment.id,
+    "comment"
+  );
+
+  console.log("✅ comment notification 생성 완료");
 
   input.value = "";
 }
@@ -447,35 +450,37 @@ function openReplyForm(commentId, commentElement) {
 
   form.querySelector(".send").onclick = async () => {
 
-  const text = textarea.value.trim();
-  if (!text) return;
+    const text = textarea.value.trim();
+    if (!text) return;
 
-  const comment = await addComment(
-    postId,
-    text,
-    currentUser,
-    commentId
-  );
-
-  const parent = await getCommentById(
-    postId,
-    commentId
-  );
-
-  const parentUid = parent?.uid;
-
-  console.log("PARENT UID:", parentUid);
-
-  if (parentUid) {
-    await addNotification(
-      parentUid,
-      currentUser.uid,
-      currentUser.name,
-      comment.id,
-      "reply"
+    const comment = await addComment(
+      postId,
+      text,
+      currentUser,
+      commentId
     );
-  }
-};
+
+    const parent = await getCommentById(
+      postId,
+      commentId
+    );
+
+    const parentUid = parent?.uid;
+
+    console.log("PARENT UID:", parentUid);
+
+    if (parentUid) {
+      await addNotification(
+        parentUid,
+        currentUser.uid,
+        currentUser.name,
+        comment.id,
+        "reply"
+      );
+
+      console.log("✅ reply notification 생성 완료");
+    }
+  };
 
   form.querySelector(".cancel").onclick =
     () => form.remove();
