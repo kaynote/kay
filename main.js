@@ -6,13 +6,11 @@ addComment,
 deleteComment,
 updateComment,
 watchComments,
-addNotification,       // # 알림 생성
-watchNotifications,    // # 알림 감시
-markNotificationRead,  // # 읽음 처리
-getCommentById         // # 댓글 조회
+watchNotifications,
+markNotificationRead,
+getParticipants,
+addNotifications
 } from "./firebase.js";
-
-import { getPostOwnerUid } from "./firebase.js";
 
 /* =========================
 현재 게시물
@@ -327,7 +325,7 @@ function renderComment(c) {
   `;
 
   div.querySelector(".reply-btn").onclick = () => {
-    openReplyForm(c.id);
+      openReplyForm(c.id, div);
   };
 
   const replyBox = div.querySelector(".replies");
@@ -424,25 +422,19 @@ async function sendComment() {
   // 1️⃣ 댓글 저장
   const comment = await addComment(postId, text, currentUser);
 
-  // 2️⃣ 게시물 작성자 UID 가져오기
-  const postOwnerUid = await getPostOwnerUid(currentPost.no);
+  // 댓글 참여자 + 관리자에게 알림
+  const participants = await getParticipants(postId);
 
-  console.log("OWNER UID:", postOwnerUid);
+  // 👇 디버깅용
+  console.log("participants:", participants);
 
-  // 3️⃣ 댓글 알림 (post owner)
-  if (postOwnerUid) {
-    console.log("before notification");
-
-    await addNotification(
-        postOwnerUid,
-        currentUser.uid,
-        currentUser.name,
-        comment.id,
-        "comment"
-    );
-
-    console.log("after notification");
-  }
+  await addNotifications(
+    participants,
+    currentUser.uid,
+    currentUser.name,
+    comment.id,
+    "comment"
+  );
 
   input.value = "";
 }
@@ -486,24 +478,24 @@ function openReplyForm(commentId, commentElement) {
       commentId
     );
 
-    // 2️⃣ 부모 댓글 가져오기
-    const parent = await getCommentById(postId, commentId);
-    const parentUid = parent?.uid;
+    // 댓글 참여자 + 관리자에게 알림
+    const participants =
+        await getParticipants(postId);
 
-    console.log("PARENT UID:", parentUid);
+    // 👇 디버깅용
+    console.log("participants:", participants);
 
-    // 3️⃣ reply 알림
-    if (parentUid) {
-      await addNotification(
-        parentUid,
+    await addNotifications(
+        participants,
         currentUser.uid,
         currentUser.name,
         comment.id,
         "reply"
-      );
+    );
 
-      console.log("✅ reply notification 생성 완료");
-    }
+    form.remove();
+
+    console.log("✅ reply notifications 생성 완료");
   };
 
   form.querySelector(".cancel").onclick = () => form.remove();

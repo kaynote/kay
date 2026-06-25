@@ -23,15 +23,6 @@ signOut,
 onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
-export async function getPostOwnerUid(personNo) {
-  const ref = doc(db, "people", String(personNo));
-  const snap = await getDoc(ref);
-
-  if (!snap.exists()) return null;
-
-  return snap.data().ownerUid;
-}
-
 /* =========================
 CONFIG
 ========================= */
@@ -281,6 +272,59 @@ export async function addNotification(
     read: false,
     createdAt: serverTimestamp()
   });
+}
+
+const ADMIN_UID = "eEltgLaV6oN7MHUXTfQONc2wGAk1";
+
+export async function getParticipants(postId) {
+
+  const snap = await getDocs(
+    collection(db, "comments", postId, "items")
+  );
+
+  const users = new Set();
+
+  snap.forEach(docItem => {
+    const data = docItem.data();
+
+    if (data.uid) {
+      users.add(data.uid);
+    }
+  });
+
+  users.add(ADMIN_UID);
+
+  return [...users];
+}
+
+export async function addNotifications(
+    targetUids,
+    senderUid,
+    senderName,
+    commentId,
+    type
+) {
+
+    const jobs = [];
+
+    targetUids.forEach(uid => {
+
+        if (!uid) return;
+
+        if (uid === senderUid) return;
+
+        jobs.push(
+            addNotification(
+                uid,
+                senderUid,
+                senderName,
+                commentId,
+                type
+            )
+        );
+    });
+
+    await Promise.all(jobs);
 }
 
 /* =========================
