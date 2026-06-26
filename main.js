@@ -3,12 +3,12 @@ import people from "./people.js";
 import {
   login,
   addComment,
-  deleteComment,
   updateComment,
   watchComments,
   watchNotifications,
   getParticipants,
-  addNotifications
+  addNotifications,
+  markNotificationRead
 } from "./firebase.js";
 
 /* =========================
@@ -53,7 +53,7 @@ window.addEventListener("load", async () => {
 });
 
 /* =========================
-COMMENT TREE
+TREE
 ========================= */
 
 function buildTree(list) {
@@ -108,10 +108,11 @@ function renderComment(c) {
 }
 
 /* =========================
-COMMENT SEND
+SEND COMMENT
 ========================= */
 
 async function sendComment() {
+
   const input = document.getElementById("commentInput");
   const text = input.value.trim();
   if (!text) return;
@@ -144,11 +145,14 @@ function openReplyForm(c, commentEl) {
 
   form.innerHTML = `
     <textarea placeholder="답글 입력"></textarea>
-    <button class="send">전송</button>
-    <button class="cancel">취소</button>
+    <div class="btns">
+      <button class="send">전송</button>
+      <button class="cancel">취소</button>
+    </div>
   `;
 
-  commentEl.querySelector(".child").prepend(form);
+  const child = commentEl.querySelector(".child");
+  child.prepend(form);
 
   requestAnimationFrame(() => {
     form.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -156,6 +160,7 @@ function openReplyForm(c, commentEl) {
   });
 
   form.querySelector(".send").onclick = async () => {
+
     const text = form.querySelector("textarea").value.trim();
     if (!text) return;
 
@@ -183,58 +188,53 @@ function openReplyForm(c, commentEl) {
 }
 
 /* =========================
-EDIT (INLINE FIXED)
+EDIT
 ========================= */
 
-function openEditForm(commentId, commentElement, oldText) {
+function openEditForm(c, commentEl) {
 
-  document.querySelectorAll(".edit-form")
-    .forEach(el => el.remove());
+  document.querySelectorAll(".edit-form").forEach(e => e.remove());
 
-  const childArea = commentElement.querySelector(".child");
+  const child = commentEl.querySelector(".child");
 
   const form = document.createElement("div");
   form.className = "edit-form";
 
   form.innerHTML = `
-    <textarea>${oldText}</textarea>
-    <div style="display:flex; gap:6px; margin-top:6px;">
+    <textarea>${c.text}</textarea>
+    <div class="btns">
       <button class="save">저장</button>
       <button class="cancel">취소</button>
     </div>
   `;
 
-  // 🔥 핵심: 답글과 동일 위치
-  childArea.appendChild(form);
+  child.appendChild(form);
 
   requestAnimationFrame(() => {
-    form.scrollIntoView({
-      behavior: "smooth",
-      block: "center"
-    });
-
-    form.querySelector("textarea")?.focus();
+    form.scrollIntoView({ behavior: "smooth", block: "center" });
+    form.querySelector("textarea").focus();
   });
 
   form.querySelector(".save").onclick = async () => {
+
     const newText = form.querySelector("textarea").value.trim();
     if (!newText) return;
 
-    await updateComment(postId, commentId, newText);
+    await updateComment(postId, c.id, newText);
     form.remove();
   };
 
-  form.querySelector(".cancel").onclick = () => {
-    form.remove();
-  };
+  form.querySelector(".cancel").onclick = () => form.remove();
 }
 
 /* =========================
-NOTIFICATIONS
+NOTIFICATIONS POPUP
 ========================= */
 
 function detectNotifications(changes) {
+
   changes.forEach(change => {
+
     if (change.type !== "added") return;
 
     const data = change.doc.data();
@@ -246,6 +246,7 @@ function detectNotifications(changes) {
 }
 
 function showPopup(msg) {
+
   const el = document.getElementById("notify");
   if (!el) return;
 
@@ -258,6 +259,10 @@ function showPopup(msg) {
     el.style.display = "none";
   }, 4000);
 }
+
+/* =========================
+NOTIFICATION LIST
+========================= */
 
 function renderNotifications(list) {
 
@@ -274,20 +279,35 @@ function renderNotifications(list) {
     const div = document.createElement("div");
     div.className = "notification-item";
 
-    div.textContent = `🔔 ${n.senderName} 님이 답글을 남겼습니다`;
+    div.textContent = `🔔 ${n.senderName} 님이 ${n.type === "reply" ? "답글" : "댓글"}을 남겼습니다`;
 
     div.onclick = async () => {
 
-      await updateComment(doc(db, "notifications", n.id), {
-        read: true
-      });
+      await markNotificationRead(n.id);
 
-      const person = people.find(p => p.name === n.personName);
-      if (person) openModal(person.no);
+      if (n.commentId) {
+        jumpToComment(n.commentId);
+      }
     };
 
     box.appendChild(div);
   });
+}
+
+/* =========================
+SCROLL TO COMMENT
+========================= */
+
+function jumpToComment(id) {
+
+  const target = document.querySelector(`[data-id="${id}"]`);
+  if (!target) return;
+
+  target.scrollIntoView({ behavior: "smooth", block: "center" });
+
+  target.classList.add("highlight");
+
+  setTimeout(() => target.classList.remove("highlight"), 2000);
 }
 
 /* =========================
