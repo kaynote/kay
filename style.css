@@ -500,6 +500,7 @@ COMMENT SYSTEM
 /* reply / edit 동일 높이 기준 통일 */
 .inline-reply textarea,
 .inline-edit textarea {
+  width: 100%;
   min-height: 80px;   /* 답글 기준 */
   max-height: 120px;  /* 너무 커지는 것 방지 */
   resize: vertical;
