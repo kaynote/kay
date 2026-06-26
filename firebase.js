@@ -49,7 +49,7 @@ export const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 /* =========================
-USER NORMALIZER
+USER
 ========================= */
 
 function normalizeUser(user) {
@@ -121,6 +121,7 @@ export async function deleteComment(postId, commentId) {
   );
 }
 
+/* realtime comments */
 export function watchComments(postId, callback) {
   return onSnapshot(
     collection(db, "people", postId, "comments"),
@@ -146,7 +147,7 @@ export function watchComments(postId, callback) {
 }
 
 /* =========================
-NOTIFICATIONS
+NOTIFICATIONS (FIXED CORE)
 ========================= */
 
 export async function addNotification(
@@ -157,6 +158,17 @@ export async function addNotification(
   type
 ) {
   if (!targetUid || targetUid === senderUid) return;
+
+  /* 🔥 중복 방지 핵심 */
+  const q = query(
+    collection(db, "notifications"),
+    where("targetUid", "==", targetUid),
+    where("commentId", "==", commentId)
+  );
+
+  const snap = await getDocs(q);
+
+  if (!snap.empty) return;
 
   await addDoc(collection(db, "notifications"), {
     targetUid,
@@ -169,8 +181,9 @@ export async function addNotification(
   });
 }
 
-/* ✔ 핵심 수정됨 (경로 오류 제거) */
-const ADMIN_UID = "eEltgLaV6oN7MHUXTfQONc2wGAk1";
+/* =========================
+PARTICIPANTS (SIMPLIFIED)
+========================= */
 
 export async function getParticipants(postId) {
   const snap = await getDocs(
@@ -184,11 +197,10 @@ export async function getParticipants(postId) {
     if (data.uid) users.add(data.uid);
   });
 
-  users.add(ADMIN_UID);
-
   return [...users];
 }
 
+/* batch notifications */
 export async function addNotifications(
   targetUids,
   senderUid,
@@ -217,7 +229,7 @@ export async function addNotifications(
 }
 
 /* =========================
-NOTIFICATION WATCH
+WATCH NOTIFICATIONS
 ========================= */
 
 export function watchNotifications(uid, callback) {
@@ -250,7 +262,7 @@ export function watchNotifications(uid, callback) {
 }
 
 /* =========================
-READ NOTIFICATION (FIXED)
+READ NOTIFICATION
 ========================= */
 
 export async function markNotificationRead(id) {
