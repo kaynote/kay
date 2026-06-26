@@ -279,9 +279,9 @@ function renderNotifications(list){
   const box = document.getElementById("notificationList");
   box.innerHTML = "";
 
-  const myList = list.filter(n => n.targetUid === currentUser.uid);
-
-  myList.forEach(n => {
+  const myList = list.filter(n =>
+    n.targetUid === currentUser.uid && !n.read
+  );
 
     const div = document.createElement("div");
     div.className = "notification-item";
