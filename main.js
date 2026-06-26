@@ -1,315 +1,86 @@
 import people from "./people.js";
 
 import {
-login,
-addComment,
-deleteComment,
-updateComment,
-watchComments,
-watchNotifications,
-markNotificationRead,
-getParticipants,
-addNotifications
+  login,
+  addComment,
+  deleteComment,
+  updateComment,
+  watchComments,
+  watchNotifications,
+  getParticipants,
+  addNotifications
 } from "./firebase.js";
 
 /* =========================
-현재 게시물
+STATE
 ========================= */
 
 const currentPost = people[people.length - 1];
 const postId = String(currentPost.no);
 
-/* =========================
-상태
-========================= */
-
 let currentUser = null;
-
 let firstSnapshot = true;
 
 /* =========================
-초기 로딩
+INIT
 ========================= */
 
-window.addEventListener(
-"load",
-async () => {
+window.addEventListener("load", async () => {
 
-```
-document.getElementById(
-  "person"
-).innerHTML =
-  currentPost.displayName;
+  currentUser = await login();
 
-currentUser =
-  await login();
+  document.getElementById("sendBtn").onclick = sendComment;
 
-document.getElementById(
-  "sendBtn"
-).onclick =
-  sendComment;
-  
-  const list = document.getElementById("list");
+  watchComments(postId, (data, changes) => {
 
-  people.forEach(p => {
-    const div = document.createElement("div");
-    div.className = "person-card";
-    div.dataset.no = p.no;
-
-    div.innerHTML = `
-      <img src="${p.image}">
-      <p>${p.name}</p>
-    `;
-
-    div.onclick = () => {
-      openModal(p.no);
-    };
-
-    list.appendChild(div);
-  });
-
-/* # 댓글 실시간 감시 */
-
-watchComments(
-  postId,
-  (data, changes) => {
-
-    const roots =
-      buildTree(data);
-
-    const box =
-      document.getElementById(
-        "comments"
-      );
+    const tree = buildTree(data);
+    const box = document.getElementById("comments");
 
     box.innerHTML = "";
 
-    roots.forEach(c => {
-      box.appendChild(
-        renderComment(c)
-      );
+    tree.forEach(c => {
+      box.appendChild(renderComment(c));
     });
 
-    if (!firstSnapshot) {
-      detectNotifications(
-        changes
-      );
+    if (!firstSnapshot && changes) {
+      detectNotifications(changes);
     }
 
     firstSnapshot = false;
-  }
-);
+  });
 
-/* # 내 알림 감시 */
-
-watchNotifications(
-  currentUser.uid,
-  renderNotifications
-);
-```
-
-}
-);
-
-/* =========================
-실시간 팝업 알림
-========================= */
-
-function detectNotifications(
-changes
-) {
-
-changes.forEach(change => {
-
-```
-if (
-  change.type !== "added"
-) return;
-
-const data =
-  change.doc.data();
-
-if (
-  data.uid ===
-  currentUser.uid
-) {
-  return;
-}
-
-showPopup(
-  data.parentId
-    ? "새 답글"
-    : "새 댓글"
-);
-```
-
-});
-}
-
-function showPopup(msg) {
-
-const notify =
-document.getElementById(
-"notify"
-);
-
-if (!notify) return;
-
-notify.style.display =
-"block";
-
-notify.textContent =
-`🔔 ${msg}`;
-
-clearTimeout(
-notify.timer
-);
-
-notify.timer =
-setTimeout(() => {
-
-```
-  notify.style.display =
-    "none";
-
-}, 5000);
-```
-
-}
-
-/* =========================
-알림 목록
-========================= */
-
-function renderNotifications(list) {
-
-  const badge = document.getElementById("badge");
-
-  const unread = list.filter(n => !n.read).length;
-  badge.textContent = unread;
-
-  const box = document.getElementById("notificationList");
-
-  if (!box) return;
-
-  box.innerHTML = "";
-
-  list.forEach(n => {
-    const div = document.createElement("div");
-    div.className = "notification-item";
-
-    div.innerHTML = `
-      <b>${n.senderName}</b>
-      ${
-        n.type === "reply"
-          ? "님이 답글을 남겼습니다"
-          : "님이 댓글을 남겼습니다"
-      }
-    `;
-
-div.onclick =
-  async () => {
-
-    await deleteDoc(doc(db, "notifications", n.id));
-
-    jumpToComment(
-      n.commentId
-    );
-  };
-
-box.appendChild(div);
-```
-
-});
-}
-
-/* =========================
-댓글 위치 이동
-========================= */
-
-function jumpToComment(
-commentId
-) {
-
-const target =
-document.querySelector(
-`[data-id="${commentId}"]`
-);
-
-if (!target) return;
-
-target.scrollIntoView({
-
-```
-behavior: "smooth",
-
-block: "center"
-```
-
+  watchNotifications(currentUser.uid, renderNotifications);
 });
 
-target.classList.add(
-"highlight"
-);
-
-setTimeout(() => {
-
-```
-target.classList.remove(
-  "highlight"
-);
-```
-
-}, 3000);
-}
-
 /* =========================
-트리 생성
+COMMENT TREE
 ========================= */
 
 function buildTree(list) {
+  const map = {};
+  const roots = [];
 
-const map = {};
-const roots = [];
+  list.forEach(c => {
+    map[c.id] = { ...c, replies: [] };
+  });
 
-list.forEach(c => {
+  list.forEach(c => {
+    if (c.parentId && map[c.parentId]) {
+      map[c.parentId].replies.push(map[c.id]);
+    } else {
+      roots.push(map[c.id]);
+    }
+  });
 
-```
-map[c.id] = {
-
-  ...c,
-
-  replies: []
-};
-```
-
-});
-
-list.forEach(c => {
-
-```
-if (c.parentId) {
-
-  map[c.parentId]
-    ?.replies
-    .push(
-      map[c.id]
-    );
-
-} else {
-
-  roots.push(
-    map[c.id]
-  );
+  return roots;
 }
-```
 
-});
-
-return roots;
-}
+/* =========================
+RENDER COMMENT
+========================= */
 
 function renderComment(c) {
+
   const div = document.createElement("div");
   div.className = "comment";
   div.setAttribute("data-id", c.id);
@@ -324,45 +95,20 @@ function renderComment(c) {
     <div class="child"></div>
   `;
 
-  div.querySelector(".edit-btn").onclick = () => {
-    openEditForm(c.id, div, c.text);
-  };
+  div.querySelector(".reply-btn").onclick = () => openReplyForm(c, div);
+  div.querySelector(".edit-btn").onclick = () => openEditForm(c, div);
 
-  const replyBox = div.querySelector(".child");
+  const child = div.querySelector(".child");
 
   c.replies.forEach(r => {
-    replyBox.appendChild(renderComment(r));
+    child.appendChild(renderComment(r));
   });
 
   return div;
 }
 
-function openModal(personNo) {
-  const modal = document.getElementById("modal");
-  const box = document.getElementById("modalContent");
-
-  modal.style.display = "block";
-  box.innerHTML = "로딩중...";
-
-  watchComments(String(postId), (data) => {
-    const tree = buildTree(data);
-    box.innerHTML = "";
-
-    tree.forEach(c => {
-      box.appendChild(renderComment(c));
-    });
-  });
-}
-
-document.getElementById("modal").onclick = (e) => {
-  if (e.target.id === "modal") {
-    e.target.style.display = "none";
-  }
-};
-
-
 /* =========================
-댓글 작성 (COMMENT)
+COMMENT SEND
 ========================= */
 
 async function sendComment() {
@@ -370,14 +116,9 @@ async function sendComment() {
   const text = input.value.trim();
   if (!text) return;
 
-  // 1️⃣ 댓글 저장
   const comment = await addComment(postId, text, currentUser);
 
-  // 댓글 참여자 + 관리자에게 알림
   const participants = await getParticipants(postId) || [];
-
-  // 👇 디버깅용
-  console.log("participants:", participants);
 
   await addNotifications(
     participants,
@@ -391,121 +132,154 @@ async function sendComment() {
 }
 
 /* =========================
-답글 작성 (REPLY)
+REPLY
 ========================= */
 
-function openEditForm(commentId, commentElement, oldText) {
+function openReplyForm(c, commentEl) {
 
-  document.querySelectorAll(".edit-form")
-    .forEach(el => el.remove());
+  document.querySelectorAll(".reply-form").forEach(e => e.remove());
 
   const form = document.createElement("div");
-  form.className = "edit-form";
+  form.className = "reply-form";
 
   form.innerHTML = `
-    <textarea>${oldText}</textarea>
-    <button class="save">저장</button>
+    <textarea placeholder="답글 입력"></textarea>
+    <button class="send">전송</button>
     <button class="cancel">취소</button>
   `;
 
-  // 🔥 핵심: actions 아래에 붙이기
-  const actionBox = commentElement.querySelector(".actions");
+  commentEl.querySelector(".child").prepend(form);
 
-  actionBox.appendChild(form);
-
-  // 자동 포커스 + 위치 보정
   requestAnimationFrame(() => {
-    form.scrollIntoView({
-      behavior: "smooth",
-      block: "center"
-    });
-
-    form.querySelector("textarea")?.focus();
+    form.scrollIntoView({ behavior: "smooth", block: "center" });
+    form.querySelector("textarea").focus();
   });
 
-  const textarea = form.querySelector("textarea");
+  form.querySelector(".send").onclick = async () => {
+    const text = form.querySelector("textarea").value.trim();
+    if (!text) return;
 
-  form.querySelector(".save").onclick = async () => {
-    const newText = textarea.value.trim();
-    if (!newText) return;
-
-    await updateComment(postId, commentId, newText);
-    form.remove();
-  };
-
-  form.querySelector(".cancel").onclick = () => {
-    form.remove();
-  };
-}
-
-  // 취소
-  form.querySelector(".cancel").onclick = () => {
-    form.remove();
-  };
-}
-
-  // ❌ 취소
-  form.querySelector(".cancel").onclick = () => {
-    form.remove();
-  };
-}
-
-/* =========================
-삭제
-========================= */
-
-async function removeComment(id) {
-  await deleteComment(postId, id);
-}
-
-/* =========================
-수정
-========================= */
-
-function openEditForm(commentId, commentElement, oldText) {
-
-  const old = commentElement.querySelector(".inline-edit");
-  if (old) old.remove();
-
-  const form = document.createElement("div");
-  form.className = "inline-edit";
-
-  form.innerHTML = `
-    <textarea>${oldText}</textarea>
-    <div style="display:flex; gap:6px; margin-top:6px;">
-      <button class="save">저장</button>
-      <button class="cancel">취소</button>
-    </div>
-  `;
-
-  commentElement.appendChild(form);
-
-  const textarea = form.querySelector("textarea");
-  textarea.focus();
-
-  form.querySelector(".save").onclick = async () => {
-    const newText = textarea.value.trim();
-    if (!newText) return;
-
-    await updateComment(
+    const comment = await addComment(
       postId,
-      commentId,
-      newText
+      text,
+      currentUser,
+      c.id
+    );
+
+    const participants = await getParticipants(postId) || [];
+
+    await addNotifications(
+      participants,
+      currentUser.uid,
+      currentUser.name,
+      comment.id,
+      "reply"
     );
 
     form.remove();
   };
 
-  form.querySelector(".cancel").onclick = () => {
-    form.remove();
-  };
+  form.querySelector(".cancel").onclick = () => form.remove();
 }
 
 /* =========================
-window export
+EDIT (INLINE FIXED)
 ========================= */
 
-window.remove = removeComment;
-window.edit = editComment;
-window.openReplyForm = openReplyForm;
+function openEditForm(c, commentEl) {
+
+  document.querySelectorAll(".edit-form").forEach(e => e.remove());
+
+  const form = document.createElement("div");
+  form.className = "edit-form";
+
+  form.innerHTML = `
+    <textarea>${c.text}</textarea>
+    <button class="save">저장</button>
+    <button class="cancel">취소</button>
+  `;
+
+  commentEl.querySelector(".child").prepend(form);
+
+  requestAnimationFrame(() => {
+    form.scrollIntoView({ behavior: "smooth", block: "center" });
+    form.querySelector("textarea").focus();
+  });
+
+  form.querySelector(".save").onclick = async () => {
+    const newText = form.querySelector("textarea").value.trim();
+    if (!newText) return;
+
+    await updateComment(postId, c.id, newText);
+    form.remove();
+  };
+
+  form.querySelector(".cancel").onclick = () => form.remove();
+}
+
+/* =========================
+NOTIFICATIONS
+========================= */
+
+function detectNotifications(changes) {
+  changes.forEach(change => {
+    if (change.type !== "added") return;
+
+    const data = change.doc.data();
+
+    if (data.uid === currentUser.uid) return;
+
+    showPopup(data.parentId ? "새 답글" : "새 댓글");
+  });
+}
+
+function showPopup(msg) {
+  const el = document.getElementById("notify");
+  if (!el) return;
+
+  el.style.display = "block";
+  el.textContent = `🔔 ${msg}`;
+
+  clearTimeout(el.timer);
+
+  el.timer = setTimeout(() => {
+    el.style.display = "none";
+  }, 4000);
+}
+
+function renderNotifications(list) {
+
+  const badge = document.getElementById("badge");
+  const box = document.getElementById("notificationList");
+
+  const unread = list.filter(n => !n.read).length;
+  badge.textContent = unread;
+
+  box.innerHTML = "";
+
+  list.forEach(n => {
+
+    const div = document.createElement("div");
+    div.className = "notification-item";
+
+    div.textContent = `🔔 ${n.senderName} 님이 답글을 남겼습니다`;
+
+    div.onclick = async () => {
+
+      await updateComment(doc(db, "notifications", n.id), {
+        read: true
+      });
+
+      const person = people.find(p => p.name === n.personName);
+      if (person) openModal(person.no);
+    };
+
+    box.appendChild(div);
+  });
+}
+
+/* =========================
+EXPORT
+========================= */
+
 window.sendComment = sendComment;
