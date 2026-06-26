@@ -128,7 +128,7 @@ export function watchComments(postId, callback) {
     (snapshot) => {
       const comments = [];
 
-      snapshot.forEach(docItem => {
+      snap.forEach(docItem => {
         arr.push({
           id: docItem.id,
           ...docItem.data()
