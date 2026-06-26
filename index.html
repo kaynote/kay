@@ -832,7 +832,6 @@ watchAuth(user => {
         badge.textContent = unread;
 
         const box = document.getElementById("notificationList");
-
         box.innerHTML = "";
 
         list
@@ -840,15 +839,34 @@ watchAuth(user => {
             .forEach(n => {
 
                 const div = document.createElement("div");
-
                 div.className = "notification-item";
-
-                div.textContent =
-                    `🔔 ${n.senderName} 님이 답글을 남겼습니다`;
 
                 div.onclick = async () => {
                     await openNotification(n);
                 };
+
+                // 알림 내용
+                const text = document.createElement("span");
+                text.textContent =
+                    `🔔 ${n.senderName} 님이 답글을 남겼습니다`;
+
+                // X 버튼
+                const delBtn = document.createElement("button");
+                delBtn.textContent = "✕";
+                delBtn.className = "notification-delete";
+
+                delBtn.onclick = async (e) => {
+                    e.stopPropagation();
+
+                    if (!confirm("이 알림을 삭제할까요?")) return;
+
+                    await deleteDoc(
+                        doc(db, "notifications", n.id)
+                    );
+                };
+
+                div.appendChild(text);
+                div.appendChild(delBtn);
 
                 box.appendChild(div);
             });
