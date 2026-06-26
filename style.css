@@ -415,14 +415,12 @@ NOTIFICATION
 .reply-form textarea,
 .edit-form textarea {
   width: 100%;
-  min-height: 90px;   /* 답글과 동일 */
-  padding: 10px;
+  min-height: 120px;   /* 👈 키우기 (핵심) */
+  padding: 12px;
+  font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 10px;
   resize: vertical;
-  font-size: 14px;
-  line-height: 1.5;
-  box-sizing: border-box;
 }
 
 .reply-form .send,
