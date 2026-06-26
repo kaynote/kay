@@ -398,7 +398,8 @@ NOTIFICATION
 .comment {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
+  align-items: stretch;
 }
 
 .reply-form button,
@@ -412,9 +413,12 @@ NOTIFICATION
   cursor: pointer;
 }
 
-.edit-form textarea,
-.reply-form textarea {
+.reply-form textarea,
+.edit-form textarea {
   width: 100% !important;
+  min-height: 140px !important;
+  font-size: 14px;
+  padding: 10px;
   box-sizing: border-box;
 }
 
@@ -450,7 +454,19 @@ NOTIFICATION
 }
 
 .child {
+  width: 100%;
+  display: block;
+}
+
+.reply-form,
+.edit-form {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.edit-form,
+.reply-form {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
