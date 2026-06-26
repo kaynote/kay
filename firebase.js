@@ -1,26 +1,26 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 
 import {
-getFirestore,
-collection,
-addDoc,
-getDocs,
-doc,
-getDoc,                 // # 추가
-updateDoc,
-deleteDoc,
-serverTimestamp,
-onSnapshot,
-query,                  // # 추가
-where                   // # 추가
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  doc,
+  getDoc,
+  updateDoc,
+  deleteDoc,
+  serverTimestamp,
+  onSnapshot,
+  query,
+  where
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 import {
-getAuth,
-GoogleAuthProvider,
-signInWithPopup,
-signOut,
-onAuthStateChanged
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+  onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 /* =========================
@@ -28,13 +28,13 @@ CONFIG
 ========================= */
 
 const firebaseConfig = {
-apiKey: "AIzaSyCAZzJdAB_a65dkJaL-XLQqzImzlSI8Gmw",
-authDomain: "kay-gallery.firebaseapp.com",
-projectId: "kay-gallery",
-storageBucket: "kay-gallery.firebasestorage.app",
-messagingSenderId: "276470297982",
-appId: "1:276470297982:web:838b8a57269b26cd3d6f2f",
-measurementId: "G-E61XXMZCHM"
+  apiKey: "AIzaSyCAZzJdAB_a65dkJaL-XLQqzImzlSI8Gmw",
+  authDomain: "kay-gallery.firebaseapp.com",
+  projectId: "kay-gallery",
+  storageBucket: "kay-gallery.firebasestorage.app",
+  messagingSenderId: "276470297982",
+  appId: "1:276470297982:web:838b8a57269b26cd3d6f2f",
+  measurementId: "G-E61XXMZCHM"
 };
 
 /* =========================
@@ -53,53 +53,41 @@ USER NORMALIZER
 ========================= */
 
 function normalizeUser(user) {
+  if (!user) return null;
 
-if (!user) return null;
-
-return {
-uid: user.uid || "",
-email: user.email || "",
-name:
-user.providerData?.[0]?.displayName ||
-user.displayName ||
-user.email ||
-"익명 사용자",
-photo: user.photoURL || ""
-};
+  return {
+    uid: user.uid || "",
+    email: user.email || "",
+    name:
+      user.providerData?.[0]?.displayName ||
+      user.displayName ||
+      user.email ||
+      "익명 사용자",
+    photo: user.photoURL || ""
+  };
 }
 
 /* =========================
-LOGIN
+AUTH
 ========================= */
 
 export async function login() {
+  if (auth.currentUser) {
+    return normalizeUser(auth.currentUser);
+  }
 
-if (auth.currentUser) {
-return normalizeUser(auth.currentUser);
+  const result = await signInWithPopup(auth, provider);
+  return normalizeUser(result.user);
 }
-
-const result = await signInWithPopup(auth, provider);
-
-return normalizeUser(result.user);
-}
-
-/* =========================
-LOGOUT
-========================= */
 
 export async function logout() {
-await signOut(auth);
+  await signOut(auth);
 }
 
-/* =========================
-AUTH WATCHER
-========================= */
-
 export function watchAuth(callback) {
-
-return onAuthStateChanged(auth, (user) => {
-callback(normalizeUser(user));
-});
+  return onAuthStateChanged(auth, (user) => {
+    callback(normalizeUser(user));
+  });
 }
 
 /* =========================
@@ -120,55 +108,23 @@ export async function addComment(postId, text, user, parentId = null) {
   );
 }
 
-export async function getComments(postId) {
-  const snap = await getDocs(
-    collection(db, "people", postId, "comments")
+export async function updateComment(postId, commentId, text) {
+  await updateDoc(
+    doc(db, "people", postId, "comments", commentId),
+    { text }
   );
-
-  const arr = [];
-
-  snap.forEach(docItem => {
-    arr.push({
-      id: docItem.id,
-      ...docItem.data()
-    });
-  });
-
-  arr.sort((a, b) =>
-    (a.createdAt?.seconds || 0) - (b.createdAt?.seconds || 0)
-  );
-
-  return arr;
 }
 
-/* =========================
-
-# 특정 댓글 1개 조회
-
-========================= */
-
-export async function getCommentById(postId, commentId) {
-  const snap = await getDoc(
+export async function deleteComment(postId, commentId) {
+  await deleteDoc(
     doc(db, "people", postId, "comments", commentId)
   );
-
-  if (!snap.exists()) return null;
-
-  return {
-    id: snap.id,
-    ...snap.data()
-  };
 }
-
-/* =========================
-REALTIME COMMENTS
-========================= */
 
 export function watchComments(postId, callback) {
   return onSnapshot(
     collection(db, "people", postId, "comments"),
     (snapshot) => {
-
       const comments = [];
 
       snapshot.forEach(docItem => {
@@ -178,8 +134,10 @@ export function watchComments(postId, callback) {
         });
       });
 
-      comments.sort((a, b) =>
-        (a.createdAt?.seconds || 0) - (b.createdAt?.seconds || 0)
+      comments.sort(
+        (a, b) =>
+          (a.createdAt?.seconds || 0) -
+          (b.createdAt?.seconds || 0)
       );
 
       callback(comments, snapshot.docChanges());
@@ -188,9 +146,7 @@ export function watchComments(postId, callback) {
 }
 
 /* =========================
-
-# 알림 생성
-
+NOTIFICATIONS
 ========================= */
 
 export async function addNotification(
@@ -203,32 +159,29 @@ export async function addNotification(
   if (!targetUid || targetUid === senderUid) return;
 
   await addDoc(collection(db, "notifications"), {
-    targetUid,      // 🔥 rules와 동일
+    targetUid,
     senderUid,
     senderName,
     commentId,
-    type,           // comment | reply
+    type,
     read: false,
     createdAt: serverTimestamp()
   });
 }
 
+/* ✔ 핵심 수정됨 (경로 오류 제거) */
 const ADMIN_UID = "eEltgLaV6oN7MHUXTfQONc2wGAk1";
 
 export async function getParticipants(postId) {
-
   const snap = await getDocs(
-    collection(db, "comments", postId, "items")
+    collection(db, "people", postId, "comments")
   );
 
   const users = new Set();
 
   snap.forEach(docItem => {
     const data = docItem.data();
-
-    if (data.uid) {
-      users.add(data.uid);
-    }
+    if (data.uid) users.add(data.uid);
   });
 
   users.add(ADMIN_UID);
@@ -237,39 +190,34 @@ export async function getParticipants(postId) {
 }
 
 export async function addNotifications(
-    targetUids,
-    senderUid,
-    senderName,
-    commentId,
-    type
+  targetUids,
+  senderUid,
+  senderName,
+  commentId,
+  type
 ) {
+  const jobs = [];
 
-    const jobs = [];
+  targetUids.forEach(uid => {
+    if (!uid) return;
+    if (uid === senderUid) return;
 
-    targetUids.forEach(uid => {
+    jobs.push(
+      addNotification(
+        uid,
+        senderUid,
+        senderName,
+        commentId,
+        type
+      )
+    );
+  });
 
-        if (!uid) return;
-
-        if (uid === senderUid) return;
-
-        jobs.push(
-            addNotification(
-                uid,
-                senderUid,
-                senderName,
-                commentId,
-                type
-            )
-        );
-    });
-
-    await Promise.all(jobs);
+  await Promise.all(jobs);
 }
 
 /* =========================
-
-# 내 알림 실시간 감시
-
+NOTIFICATION WATCH
 ========================= */
 
 export function watchNotifications(uid, callback) {
@@ -290,8 +238,10 @@ export function watchNotifications(uid, callback) {
         });
       });
 
-      arr.sort((a, b) =>
-        (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0)
+      arr.sort(
+        (a, b) =>
+          (b.createdAt?.seconds || 0) -
+          (a.createdAt?.seconds || 0)
       );
 
       callback(arr);
@@ -300,9 +250,7 @@ export function watchNotifications(uid, callback) {
 }
 
 /* =========================
-
-# 읽음 처리
-
+READ NOTIFICATION (FIXED)
 ========================= */
 
 export async function markNotificationRead(id) {
@@ -312,22 +260,18 @@ export async function markNotificationRead(id) {
 }
 
 /* =========================
-UPDATE
+UTIL
 ========================= */
 
-export async function updateComment(postId, commentId, text) {
-  await updateDoc(
-    doc(db, "people", postId, "comments", commentId),
-    { text }
-  );
-}
-
-/* =========================
-DELETE
-========================= */
-
-export async function deleteComment(postId, commentId) {
-  await deleteDoc(
+export async function getCommentById(postId, commentId) {
+  const snap = await getDoc(
     doc(db, "people", postId, "comments", commentId)
   );
+
+  if (!snap.exists()) return null;
+
+  return {
+    id: snap.id,
+    ...snap.data()
+  };
 }
