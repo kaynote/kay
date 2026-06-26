@@ -210,9 +210,7 @@ function renderNotifications(list) {
 div.onclick =
   async () => {
 
-    await markNotificationRead(
-      n.id
-    );
+    await deleteDoc(doc(db, "notifications", n.id));
 
     jumpToComment(
       n.commentId
@@ -374,7 +372,7 @@ async function sendComment() {
   const comment = await addComment(postId, text, currentUser);
 
   // 댓글 참여자 + 관리자에게 알림
-  const participants = await getParticipants(postId);
+  const participants = await getParticipants(postId) || [];
 
   // 👇 디버깅용
   console.log("participants:", participants);
@@ -430,8 +428,7 @@ function openReplyForm(commentId, commentElement) {
     );
 
     // 댓글 참여자 + 관리자에게 알림
-    const participants =
-        await getParticipants(postId);
+    const participants = await getParticipants(postId) || [];
 
     // 👇 디버깅용
     console.log("participants:", participants);
