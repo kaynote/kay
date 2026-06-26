@@ -168,6 +168,7 @@ export async function addNotification(
   /* 🔥 중복 방지 핵심 */
 const q = query(
   collection(db, "notifications"),
+  
   where("targetUid", "==", targetUid),
   where("commentId", "==", commentId),
   where("senderUid", "==", senderUid)

@@ -540,7 +540,7 @@ async function openModal(p){
                                 user.email ||
                                 "익명",
 
-                            personName: p.name,
+                            personId: p.no,   // ⭐ 핵심 변경 (personName → personId)
 
                             commentId: c.id,
 
@@ -881,11 +881,14 @@ watchAuth(user=>{
         );
 
         const person =
-            people.find(p => p.name === n.personName);
+            people.find(p => String(p.no) === String(n.personId));
 
-        if(person){
-            openModal(person);
+        if(!person){
+            console.warn("person not found:", n);
+            return;
         }
+
+        openModal(person);
     }
 
     /* =========================
