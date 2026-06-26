@@ -269,34 +269,42 @@ function showPopup(msg) {
 NOTIFICATION LIST
 ========================= */
 
-list
-  .filter(n => n.targetUid === currentUser.uid)
-  .forEach(n => {
+function renderNotifications(list){
 
-    const div = document.createElement("div");
-    div.className = "notification-item";
+  if (!list) return;
 
-    div.textContent =
-      `🔔 ${n.senderName} 님이 ${n.type === "reply" ? "답글" : "댓글"}을 남겼습니다`;
+  const box = document.getElementById("notificationList");
+  box.innerHTML = "";
 
-    // 🔥 X 버튼 추가 위치
-    const delBtn = document.createElement("button");
-    delBtn.textContent = "✕";
+  list
+    .filter(n => n.targetUid === currentUser.uid)
+    .forEach(n => {
 
-    delBtn.onclick = async (e) => {
-      e.stopPropagation();
-      await deleteDoc(doc(db, "notifications", n.id));
-    };
+      const div = document.createElement("div");
+      div.className = "notification-item";
 
-    div.appendChild(delBtn);
+      div.textContent =
+        `🔔 ${n.senderName} 님이 ${n.type === "reply" ? "답글" : "댓글"}을 남겼습니다`;
 
-    div.onclick = async () => {
-      await markNotificationRead(n.id);
-      jumpToComment(n.commentId);
-    };
+      // ⭐ X 버튼 (이게 없으면 절대 안 뜸)
+      const delBtn = document.createElement("button");
+      delBtn.textContent = "✕";
 
-    box.appendChild(div);
-  });
+      delBtn.onclick = async (e) => {
+        e.stopPropagation();
+        await deleteDoc(doc(db, "notifications", n.id));
+      };
+
+      div.appendChild(delBtn);
+
+      div.onclick = async () => {
+        await markNotificationRead(n.id);
+        jumpToComment(n.commentId);
+      };
+
+      box.appendChild(div);
+    });
+}
 
 /* =========================
 SCROLL TO COMMENT
