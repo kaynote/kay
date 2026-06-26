@@ -4,6 +4,7 @@ import {
   login,
   addComment,
   updateComment,
+  watchAuth
   watchComments,
   watchNotifications,
   getParticipants,
