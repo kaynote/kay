@@ -473,6 +473,8 @@ async function openModal(p){
 
         const div = document.createElement("div");
         div.className = "comment";
+
+        div.id = `comment-${c.id}`;
         div.style.marginLeft = `${depth * 20}px`;
 
         div.innerHTML = `
@@ -903,7 +905,6 @@ watchAuth(user => {
 
     async function openNotification(n){
 
-        // 1. 안전하게 read 처리만
         try {
             await updateDoc(
                 doc(db, "notifications", n.id),
@@ -913,18 +914,38 @@ watchAuth(user => {
             console.warn(e);
         }
 
-        // 2. 사람 찾기 (핵심)
         const person = people.find(
             p => String(p.no) === String(n.personId)
         );
 
-        if (!person) {
-            console.warn("person not found", n);
-            return;
-        }
+        if (!person) return;
 
-        // 3. 이동
         openModal(person);
+
+        // 🔥 여기 핵심 추가
+        setTimeout(() => {
+
+            if (n.commentId) {
+                const target = document.getElementById(`comment-${n.commentId}`);
+
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center",
+                        inline: "nearest"
+                    });
+
+                    // 살짝 강조 효과
+                    target.style.background = "#fff3cd";
+                    target.style.transition = "0.3s";
+
+                    setTimeout(() => {
+                        target.style.background = "";
+                    }, 1500);
+                }
+            }
+
+        }, 300); // 모달 렌더 기다림
     }
 
     /* =========================
