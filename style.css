@@ -401,16 +401,16 @@ NOTIFICATION
   gap: 4px;
 }
 
+.reply-form,
 .edit-form {
   width: 100%;
   margin-top: 8px;
 }
 
+.reply-form textarea,
 .edit-form textarea {
   width: 100%;
   min-height: 80px;
-  padding: 10px;
-  box-sizing: border-box;
 }
 
 .edit-form button {

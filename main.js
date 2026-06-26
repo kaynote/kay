@@ -417,6 +417,11 @@ function openReplyForm(commentId, commentElement) {
 
   childArea.prepend(form);
 
+  form.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
+
   const textarea = form.querySelector("textarea");
   textarea.focus();
 
@@ -468,28 +473,32 @@ async function removeComment(id) {
 수정
 ========================= */
 
-function openEditForm(commentId, commentElement, currentText) {
+function openEditForm(commentId, commentElement, oldText) {
 
-  // 기존 edit 폼 제거
   document.querySelectorAll(".edit-form")
     .forEach(el => el.remove());
+
+  const childArea = commentElement.querySelector(".child");
 
   const form = document.createElement("div");
   form.className = "edit-form";
 
   form.innerHTML = `
-    <textarea>${currentText}</textarea>
-    <button class="save">저장</button>
+    <textarea>${oldText}</textarea>
+    <button class="send">수정</button>
     <button class="cancel">취소</button>
   `;
 
-  commentElement.appendChild(form);
+  childArea.prepend(form);
+
+  form.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
 
   const textarea = form.querySelector("textarea");
-  textarea.focus();
 
-  // 저장
-  form.querySelector(".save").onclick = async () => {
+  form.querySelector(".send").onclick = async () => {
     const text = textarea.value.trim();
     if (!text) return;
 
@@ -497,10 +506,7 @@ function openEditForm(commentId, commentElement, currentText) {
     form.remove();
   };
 
-  // 취소
-  form.querySelector(".cancel").onclick = () => {
-    form.remove();
-  };
+  form.querySelector(".cancel").onclick = () => form.remove();
 }
 
 /* =========================
