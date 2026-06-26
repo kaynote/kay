@@ -269,38 +269,34 @@ function showPopup(msg) {
 NOTIFICATION LIST
 ========================= */
 
-function renderNotifications(list){
+list
+  .filter(n => n.targetUid === currentUser.uid)
+  .forEach(n => {
 
-  if (!list) return;
+    const div = document.createElement("div");
+    div.className = "notification-item";
 
-  const badge = document.getElementById("badge");
+    div.textContent =
+      `🔔 ${n.senderName} 님이 ${n.type === "reply" ? "답글" : "댓글"}을 남겼습니다`;
 
-  const unread = list.filter(n => !n.read).length;
-  badge.textContent = unread;
+    // 🔥 X 버튼 추가 위치
+    const delBtn = document.createElement("button");
+    delBtn.textContent = "✕";
 
-  const box = document.getElementById("notificationList");
+    delBtn.onclick = async (e) => {
+      e.stopPropagation();
+      await deleteDoc(doc(db, "notifications", n.id));
+    };
 
-  box.innerHTML = "";
+    div.appendChild(delBtn);
 
-  list
-    .filter(n => n.targetUid === auth.currentUser?.uid) // ⭐ 안전장치
-    .sort((a,b)=> (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0))
-    .forEach(n => {
+    div.onclick = async () => {
+      await markNotificationRead(n.id);
+      jumpToComment(n.commentId);
+    };
 
-      const div = document.createElement("div");
-      div.className = "notification-item";
-
-      div.textContent =
-        `🔔 ${n.senderName} 님이 ${n.type === "reply" ? "답글" : "댓글"}을 남겼습니다`;
-
-      div.onclick = async () => {
-        await markNotificationRead(n.id);
-        jumpToComment(n.commentId);
-      };
-
-      box.appendChild(div);
-    });
-}
+    box.appendChild(div);
+  });
 
 /* =========================
 SCROLL TO COMMENT
