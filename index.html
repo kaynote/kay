@@ -862,6 +862,12 @@ watchAuth(user => {
                 doc(db, "notifications", n.id),
                 { read: true }
             );
+
+            // 화면에서도 즉시 제거
+            renderNotifications(
+                currentNotifications.filter(x => x.id !== n.id)
+            );
+            
         } catch (e) {
             console.warn(e);
         }
