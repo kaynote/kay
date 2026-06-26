@@ -876,28 +876,15 @@ watchAuth(user=>{
 
     async function openNotification(n){
 
-        await updateDoc(
-
-            doc(
-                db,
-                "notifications",
-                n.id
-            ),
-
-            {
-                read:true
-            }
+        await deleteDoc(
+            doc(db, "notifications", n.id)
         );
 
         const person =
-            people.find(
-                p => p.name === n.personName
-            );
+            people.find(p => p.name === n.personName);
 
         if(person){
-
             openModal(person);
-
         }
     }
 

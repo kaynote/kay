@@ -19,9 +19,9 @@ people.js가 생성된다. (또는, build.bat 더블클릭으로 people.js가 �
 
 * GitHub에서 images 폴더 만드는 방법: Add file - Create new file에서 images/.gitkeep 입력한다.
 
-----------------------------------------------------------
+-----------------------------------------------------------
 
-댓글과 답글 알림의 파일별 역할
+* 댓글과 답글 알림의 파일별 역할
 
 index.html
  └─ 알림 버튼 UI
@@ -39,6 +39,15 @@ main.js
  └─ 답글
  └─ 알림 표시
  └─ 댓글 이동
+
+-----------------------------------------------------------
+* firestore rules
+
+people/{postId}
+  ├─ comments/{commentId}
+  └─ likes/{uid}
+
+notifications/{notificationId}
 
 
 

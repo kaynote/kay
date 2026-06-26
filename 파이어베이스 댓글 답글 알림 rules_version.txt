@@ -12,53 +12,53 @@ service cloud.firestore {
     }
 
     function isAdmin() {
-      return isSignedIn()
-        && request.auth.uid == "eEltgLaV6oN7MHUXTfQONc2wGAk1";
+      return isSignedIn() &&
+        request.auth.uid == "eEltgLaV6oN7MHUXTfQONc2wGAk1";
     }
 
     function isOwner(uid) {
       return isSignedIn() && request.auth.uid == uid;
     }
 
+    function isValidString(field, maxSize) {
+      return field is string && field.size() > 0 && field.size() <= maxSize;
+    }
+
     /* =====================
-       NOTIFICATIONS
+       NOTIFICATIONS (SECURE)
     ===================== */
 
     match /notifications/{id} {
 
-      // 생성: 로그인 유저 누구나 가능
-      allow create: if isSignedIn();
+      // CREATE: senderUid 반드시 본인이어야 함 (조작 방지 핵심)
+      allow create: if isSignedIn()
+        && request.resource.data.senderUid == request.auth.uid
+        && isValidString(request.resource.data.targetUid, 128)
+        && isValidString(request.resource.data.commentId, 128)
+        && isValidString(request.resource.data.type, 20)
+        && request.resource.data.read == false;
 
-      // 읽기: 본인 알림 + 관리자만
+      // READ: 본인 or 관리자만
       allow read: if isSignedIn()
         && (resource.data.targetUid == request.auth.uid || isAdmin());
 
-      // 수정 (읽음 처리)
+      // UPDATE: read 상태만 변경 가능 (나머지 필드 보호)
       allow update: if isSignedIn()
-        && (resource.data.targetUid == request.auth.uid || isAdmin());
+        && (resource.data.targetUid == request.auth.uid || isAdmin())
+        && request.resource.data.diff(resource.data).affectedKeys()
+           .hasOnly(["read"]);
 
-      // 삭제: 본인 or 관리자
-      allow delete: if isSignedIn()
-        && (resource.data.targetUid == request.auth.uid || isAdmin());
+      // DELETE: 관리자만 (유저 삭제 차단)
+      allow delete: if isAdmin();
     }
 
     /* =====================
-       PEOPLE
+       PEOPLE (POSTS)
     ===================== */
 
-    match /people/{personId} {
+    match /people/{postId} {
 
       allow read: if true;
-
-      /* =====================
-         LIKES
-      ===================== */
-
-      match /likes/{uid} {
-        allow read: if true;
-        allow create: if isSignedIn();
-        allow delete: if isSignedIn();
-      }
 
       /* =====================
          COMMENTS
@@ -70,49 +70,30 @@ service cloud.firestore {
 
         allow create: if isSignedIn()
           && request.resource.data.uid == request.auth.uid
-          && request.resource.data.text is string
-          && request.resource.data.text.size() > 0
-          && request.resource.data.text.size() <= 1000;
+          && isValidString(request.resource.data.text, 1000)
+          && (request.resource.data.parentId == null
+              || request.resource.data.parentId is string);
 
-        // 수정: 작성자만 가능 (내용만 수정 기준)
         allow update: if isSignedIn()
-          && resource.data.uid == request.auth.uid;
+          && (resource.data.uid == request.auth.uid || isAdmin());
 
         allow delete: if isSignedIn()
           && (resource.data.uid == request.auth.uid || isAdmin());
-
-        /* =====================
-           REPLIES
-        ===================== */
-
-        match /replies/{replyId} {
-
-          allow read: if true;
-
-          allow create: if isSignedIn()
-            && request.resource.data.uid == request.auth.uid
-            && request.resource.data.text is string
-            && request.resource.data.text.size() > 0
-            && request.resource.data.text.size() <= 1000;
-
-          allow delete: if isSignedIn()
-            && (resource.data.uid == request.auth.uid || isAdmin());
-
-          allow update: if false;
-        }
       }
 
       /* =====================
-         ADMIN NOTIFICATIONS
+         LIKES
       ===================== */
 
-      match /adminNotifications/{notificationId} {
+      match /likes/{uid} {
 
-        allow create: if isSignedIn();
+        allow read: if true;
 
-        allow read: if isAdmin();
+        allow create: if isSignedIn()
+          && request.auth.uid == uid;
 
-        allow update: if isAdmin();
+        allow delete: if isSignedIn()
+          && request.auth.uid == uid;
       }
     }
   }
