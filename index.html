@@ -815,7 +815,7 @@ watchAuth(user => {
                     ...docItem.data()
                 });
             });
-
+            
             renderNotifications(list);
         }
     );
@@ -902,14 +902,14 @@ watchAuth(user => {
        BELL
     ========================= */
 
-    const bellBtn = document.getElementById("bellBtn");
-    const notificationList = document.getElementById("notificationList");
-
-    bellBtn.addEventListener("click", () => {
-        notificationList.classList.toggle("show");
-    });
-
     init();
+});
+
+const bellBtn = document.getElementById("bellBtn");
+const notificationList = document.getElementById("notificationList");
+
+bellBtn.addEventListener("click", () => {
+    notificationList.classList.toggle("show");
 });
 
 </script>
