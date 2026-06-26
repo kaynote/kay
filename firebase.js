@@ -240,8 +240,6 @@ WATCH NOTIFICATIONS
 ========================= */
 
 export function watchNotifications(uid, callback) {
-  if (!uid) return;
-
   return onSnapshot(
     query(
       collection(db, "notifications"),
@@ -250,7 +248,7 @@ export function watchNotifications(uid, callback) {
     (snap) => {
       const arr = [];
 
-      snapshot.forEach(docItem => {
+      snap.forEach(docItem => {
         arr.push({
           id: docItem.id,
           ...docItem.data()
@@ -259,8 +257,7 @@ export function watchNotifications(uid, callback) {
 
       arr.sort(
         (a, b) =>
-          (b.createdAt?.seconds || 0) -
-          (a.createdAt?.seconds || 0)
+          (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0)
       );
 
       callback(arr);
