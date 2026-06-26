@@ -169,7 +169,8 @@ export async function addNotification(
 const q = query(
   collection(db, "notifications"),
   where("targetUid", "==", targetUid),
-  where("commentId", "==", commentId)
+  where("commentId", "==", commentId),
+  where("senderUid", "==", senderUid)
 );
 
   const snap = await getDocs(q);

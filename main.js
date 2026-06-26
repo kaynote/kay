@@ -274,38 +274,33 @@ function renderNotifications(list){
   const box = document.getElementById("notificationList");
   box.innerHTML = "";
 
-  list
-    .filter(n => n.targetUid === currentUser.uid)
-    .forEach(n => {
+  const myList = list.filter(n => n.targetUid === currentUser.uid);
 
-      const div = document.createElement("div");
-      div.className = "notification-item";
+  myList.forEach(n => {
 
-      div.textContent =
-        `🔔 ${n.senderName} 님이 ${n.type === "reply" ? "답글" : "댓글"}을 남겼습니다`;
+    const div = document.createElement("div");
+    div.className = "notification-item";
 
-      // 🔥 X 버튼
-      const delBtn = document.createElement("button");
-      delBtn.textContent = "✕";
-      delBtn.style.marginLeft = "8px";
+    div.textContent =
+      `🔔 ${n.senderName} 님이 ${n.type === "reply" ? "답글" : "댓글"}을 남겼습니다`;
 
-      delBtn.onclick = async (e) => {
-        e.stopPropagation();
+    const delBtn = document.createElement("button");
+    delBtn.textContent = "✕";
 
-        await deleteDoc(
-          doc(db, "notifications", n.id)
-        );
-      };
+    delBtn.onclick = async (e) => {
+      e.stopPropagation();
+      await deleteDoc(doc(db, "notifications", n.id));
+    };
 
-      div.appendChild(delBtn);
+    div.appendChild(delBtn);
 
-      div.onclick = async () => {
-        await markNotificationRead(n.id);
-        jumpToComment(n.commentId);
-      };
+    div.onclick = async () => {
+      await markNotificationRead(n.id);
+      jumpToComment(n.commentId);
+    };
 
-      box.appendChild(div);
-    });
+    box.appendChild(div);
+  });
 }
 
 /* =========================
