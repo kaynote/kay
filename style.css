@@ -415,8 +415,6 @@ NOTIFICATION
 .edit-form textarea,
 .reply-form textarea {
   width: 100% !important;
-  display: block;
-  min-width: 0;
   box-sizing: border-box;
 }
 
@@ -449,4 +447,10 @@ NOTIFICATION
 
 .comment > div {
   min-width: 0;
+}
+
+.child {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
