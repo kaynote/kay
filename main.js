@@ -324,15 +324,11 @@ function renderComment(c) {
     <div class="child"></div>
   `;
 
-  div.querySelector(".reply-btn").onclick = () => {
-    openReplyForm(c.id, div);
-  };
-
   div.querySelector(".edit-btn").onclick = () => {
     openEditForm(c.id, div, c.text);
   };
 
-  const replyBox = div.querySelector(".replies");
+  const replyBox = div.querySelector(".child");
 
   c.replies.forEach(r => {
     replyBox.appendChild(renderComment(r));
@@ -403,7 +399,7 @@ function openReplyForm(commentId, commentElement) {
   document.querySelectorAll(".reply-form")
     .forEach(el => el.remove());
 
-  cconst childArea = commentElement.querySelector(".child");
+  commentElement.appendChild(form);
   if (!childArea) return;
 
   const form = document.createElement("div");
@@ -415,23 +411,20 @@ function openReplyForm(commentId, commentElement) {
     <button class="cancel">취소</button>
   `;
 
-  childArea.prepend(form);
+  childArea.appendChild(form);
 
-  form.scrollIntoView({
-    behavior: "smooth",
-    block: "center"
-  });
+  setTimeout(() => {
+    form.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, 50);
 
   const textarea = form.querySelector("textarea");
   textarea.focus();
 
-  // 🔥 답글 전송
+  // 🔥 전송
   form.querySelector(".send").onclick = async () => {
-
     const text = textarea.value.trim();
     if (!text) return;
 
-    // 1️⃣ 답글 저장
     const comment = await addComment(
       postId,
       text,
@@ -439,26 +432,23 @@ function openReplyForm(commentId, commentElement) {
       commentId
     );
 
-    // 댓글 참여자 + 관리자에게 알림
     const participants = await getParticipants(postId) || [];
 
-    // 👇 디버깅용
-    console.log("participants:", participants);
-
     await addNotifications(
-        participants,
-        currentUser.uid,
-        currentUser.name,
-        comment.id,
-        "reply"
+      participants,
+      currentUser.uid,
+      currentUser.name,
+      comment.id,
+      "reply"
     );
 
     form.remove();
-
-    console.log("✅ reply notifications 생성 완료");
   };
 
-  form.querySelector(".cancel").onclick = () => form.remove();
+  // ❌ 취소
+  form.querySelector(".cancel").onclick = () => {
+    form.remove();
+  };
 }
 
 /* =========================
@@ -475,38 +465,41 @@ async function removeComment(id) {
 
 function openEditForm(commentId, commentElement, oldText) {
 
-  document.querySelectorAll(".edit-form")
-    .forEach(el => el.remove());
-
-  const childArea = commentElement.querySelector(".child");
+  const old = commentElement.querySelector(".inline-edit");
+  if (old) old.remove();
 
   const form = document.createElement("div");
-  form.className = "edit-form";
+  form.className = "inline-edit";
 
   form.innerHTML = `
     <textarea>${oldText}</textarea>
-    <button class="send">수정</button>
-    <button class="cancel">취소</button>
+    <div style="display:flex; gap:6px; margin-top:6px;">
+      <button class="save">저장</button>
+      <button class="cancel">취소</button>
+    </div>
   `;
 
-  childArea.prepend(form);
-
-  form.scrollIntoView({
-    behavior: "smooth",
-    block: "center"
-  });
+  commentElement.appendChild(form);
 
   const textarea = form.querySelector("textarea");
+  textarea.focus();
 
-  form.querySelector(".send").onclick = async () => {
-    const text = textarea.value.trim();
-    if (!text) return;
+  form.querySelector(".save").onclick = async () => {
+    const newText = textarea.value.trim();
+    if (!newText) return;
 
-    await updateComment(postId, commentId, text);
+    await updateComment(
+      postId,
+      commentId,
+      newText
+    );
+
     form.remove();
   };
 
-  form.querySelector(".cancel").onclick = () => form.remove();
+  form.querySelector(".cancel").onclick = () => {
+    form.remove();
+  };
 }
 
 /* =========================

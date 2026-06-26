@@ -496,7 +496,7 @@ async function openModal(p){
                 </div>
             `;
 
-            div.appendChild(form);
+            div.insertBefore(form, action);
 
             const textarea = form.querySelector("textarea");
             textarea.focus();
@@ -577,20 +577,45 @@ async function openModal(p){
             const editBtn = document.createElement("button");
             editBtn.textContent = "수정";
 
-            editBtn.onclick = async () => {
+            editBtn.onclick = () => {
 
-                const newText = prompt("댓글 수정", c.text);
-                if (!newText) return;
+                const old = div.querySelector(".inline-edit");
+                if (old) old.remove();
 
-                await updateDoc(
-                    doc(db, "people", p.name, "comments", c.id),
-                    {
-                        text: newText,
-                        editedAt: serverTimestamp()
-                    }
-                );
+                const form = document.createElement("div");
+                form.className = "inline-edit";
 
-                loadComments();
+                form.innerHTML = `
+                    <textarea>${c.text}</textarea>
+                    <div style="display:flex; gap:6px; margin-top:6px;">
+                        <button class="save">저장</button>
+                        <button class="cancel">취소</button>
+                    </div>
+                `;
+
+                div.appendChild(form);
+
+                const textarea = form.querySelector("textarea");
+                textarea.focus();
+
+                form.querySelector(".save").onclick = async () => {
+                    const newText = textarea.value.trim();
+                    if (!newText) return;
+
+                    await updateDoc(
+                        doc(db, "people", p.name, "comments", c.id),
+                        {
+                            text: newText,
+                            editedAt: serverTimestamp()
+                        }
+                    );
+
+                    loadComments();
+                };
+
+                form.querySelector(".cancel").onclick = () => {
+                    form.remove();
+                };
             };
 
             // 삭제
