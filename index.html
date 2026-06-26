@@ -363,37 +363,57 @@ async function openModal(p){
        COMMENTS
     ===================== */
 
-    commentBtn.addEventListener("click", async ()=>{
+    commentBtn.addEventListener("click", async () => {
 
         const text = commentInput.value.trim();
-        if(!text) return;
+        if (!text) return;
 
-        if(text.length > 1000){
+        if (text.length > 1000) {
             alert("댓글은 1000자 이하만 가능합니다.");
             return;
         }
 
         const user = auth.currentUser || await login();
 
+        // 1. 댓글 저장
         await addDoc(
             collection(db, "people", p.name, "comments"),
             {
                 uid: user.uid,
                 name:
-                  user.providerData?.[0]?.displayName ||
-                  user.displayName ||
-                  user.email ||
-                  "익명",
+                    user.providerData?.[0]?.displayName ||
+                    user.displayName ||
+                    user.email ||
+                    "익명",
 
                 photo: user.photoURL,
-
                 text,
-
                 parentId: null,
-
                 createdAt: serverTimestamp()
             }
         );
+
+        // 2. 댓글 알림 생성
+        if (p.uid && p.uid !== user.uid) {
+            await addDoc(
+                collection(db, "notifications"),
+                {
+                    targetUid: p.uid,
+                    senderUid: user.uid,
+                    senderName:
+                        user.providerData?.[0]?.displayName ||
+                        user.displayName ||
+                        user.email ||
+                        "익명",
+
+                    personId: p.no,
+                    commentId: null,
+                    type: "comment",
+                    read: false,
+                    createdAt: serverTimestamp()
+                }
+            );
+        }
 
         commentInput.value = "";
         loadComments();
