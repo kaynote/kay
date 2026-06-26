@@ -797,6 +797,7 @@ watchAuth(user => {
 
     if (notifUnsub) {
         notifUnsub();
+        notifUnsub = null;
     }
 
     notifUnsub = onSnapshot(
@@ -827,7 +828,7 @@ watchAuth(user => {
 
         const badge = document.getElementById("badge");
 
-        const unread = list.filter(n => !n.read).length;
+        const unread = list.filter(n => n.read !== true).length;
         badge.textContent = unread;
 
         const box = document.getElementById("notificationList");
@@ -845,7 +846,9 @@ watchAuth(user => {
                 div.textContent =
                     `🔔 ${n.senderName} 님이 답글을 남겼습니다`;
 
-                div.onclick = () => openNotification(n);
+                div.onclick = async () => {
+                    await openNotification(n);
+                };
 
                 box.appendChild(div);
             });
@@ -853,18 +856,27 @@ watchAuth(user => {
 
     async function openNotification(n){
 
-        await deleteDoc(
-            doc(db, "notifications", n.id)
+        // 1. 안전하게 read 처리만
+        try {
+            await updateDoc(
+                doc(db, "notifications", n.id),
+                { read: true }
+            );
+        } catch (e) {
+            console.warn(e);
+        }
+
+        // 2. 사람 찾기 (핵심)
+        const person = people.find(
+            p => String(p.no) === String(n.personId)
         );
 
-        const person =
-            people.find(p => String(p.no) === String(n.personId));
-
-        if(!person){
-            console.warn("person not found:", n);
+        if (!person) {
+            console.warn("person not found", n);
             return;
         }
 
+        // 3. 이동
         openModal(person);
     }
 
