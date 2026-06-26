@@ -483,3 +483,15 @@ COMMENT SYSTEM
   width: 100%;
   margin-top: 8px;
 }
+
+.inline-edit {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.inline-edit textarea {
+  width: 100%;
+  min-height: 140px;
+  box-sizing: border-box;
+}

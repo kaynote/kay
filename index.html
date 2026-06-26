@@ -593,7 +593,7 @@ async function openModal(p){
                     </div>
                 `;
 
-                div.appendChild(form);
+                div.insertBefore(form, action);
 
                 const textarea = form.querySelector("textarea");
                 textarea.focus();
