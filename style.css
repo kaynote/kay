@@ -488,10 +488,27 @@ COMMENT SYSTEM
   width: 100%;
   display: flex;
   flex-direction: column;
+  gap: 6px;
 }
 
 .inline-edit textarea {
   width: 100%;
   min-height: 140px;
   box-sizing: border-box;
+}
+
+/* reply / edit 동일 높이 기준 통일 */
+.inline-reply textarea,
+.inline-edit textarea {
+  min-height: 80px;   /* 답글 기준 */
+  max-height: 120px;  /* 너무 커지는 것 방지 */
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.inline-reply > div,
+.inline-edit > div {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
 }
