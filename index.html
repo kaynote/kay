@@ -828,9 +828,7 @@ watchAuth(user => {
 
         const badge = document.getElementById("badge");
 
-        const unread = list.filter(n =>
-          n.targetUid === currentUser.uid && !n.read
-        ).length;
+        const unread = list.filter(n => !n.read).length;
         badge.textContent = unread;
 
         const box = document.getElementById("notificationList");
