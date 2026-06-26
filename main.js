@@ -123,18 +123,19 @@ async function sendComment() {
 
   const comment = await addComment(postId, text, currentUser);
 
-  const participants = await getParticipants(postId) || [];
+  const participants = (await getParticipants(postId)) || [];
+
+  // 본인 제거 + 중복 제거
+  const uniqueParticipants = [...new Set(participants)]
+    .filter(uid => uid !== currentUser.uid);
 
   await addNotifications(
-    participants,
+    uniqueParticipants,
     currentUser.uid,
     currentUser.name,
     comment.id,
     "comment"
   );
-
-  input.value = "";
-}
 
 /* =========================
 REPLY
@@ -180,8 +181,13 @@ function openReplyForm(c, commentEl) {
 
     const participants = await getParticipants(postId) || [];
 
+    const parentOwnerUid = c.uid;
+
+    const targets = [...new Set([parentOwnerUid])]
+      .filter(uid => uid !== currentUser.uid);
+
     await addNotifications(
-      participants,
+      targets,
       currentUser.uid,
       currentUser.name,
       comment.id,
@@ -198,7 +204,7 @@ function openReplyForm(c, commentEl) {
 EDIT
 ========================= */
 
-function openEditForm(commentId, commentEl, oldText) {
+function openEditForm(c, commentEl, oldText) {
 
   document.querySelectorAll(".edit-form")
     .forEach(e => e.remove());
