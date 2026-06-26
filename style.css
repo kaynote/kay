@@ -400,3 +400,20 @@ NOTIFICATION
   flex-direction: column;
   gap: 4px;
 }
+
+.edit-form {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.edit-form textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.edit-form button {
+  margin-top: 6px;
+  margin-right: 6px;
+}
