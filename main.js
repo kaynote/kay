@@ -394,27 +394,26 @@ async function sendComment() {
 답글 작성 (REPLY)
 ========================= */
 
-function openReplyForm(commentId, commentElement) {
+function openEditForm(commentId, commentElement, oldText) {
 
-  // 기존 폼 제거
-  document.querySelectorAll(".reply-form")
+  document.querySelectorAll(".edit-form")
     .forEach(el => el.remove());
 
-  const childArea = commentElement.querySelector(".child");
-  if (!childArea) return;
-
   const form = document.createElement("div");
-  form.className = "reply-form";
+  form.className = "edit-form";
 
   form.innerHTML = `
-    <textarea placeholder="답글 입력"></textarea>
-    <button class="send">전송</button>
+    <textarea>${oldText}</textarea>
+    <button class="save">저장</button>
     <button class="cancel">취소</button>
   `;
 
-  childArea.appendChild(form);
+  // 🔥 핵심: actions 아래에 붙이기
+  const actionBox = commentElement.querySelector(".actions");
 
-  // 🔥 핵심: 확실하게 보이게
+  actionBox.appendChild(form);
+
+  // 자동 포커스 + 위치 보정
   requestAnimationFrame(() => {
     form.scrollIntoView({
       behavior: "smooth",
@@ -426,30 +425,18 @@ function openReplyForm(commentId, commentElement) {
 
   const textarea = form.querySelector("textarea");
 
-  // 전송
-  form.querySelector(".send").onclick = async () => {
-    const text = textarea.value.trim();
-    if (!text) return;
+  form.querySelector(".save").onclick = async () => {
+    const newText = textarea.value.trim();
+    if (!newText) return;
 
-    const comment = await addComment(
-      postId,
-      text,
-      currentUser,
-      commentId
-    );
-
-    const participants = await getParticipants(postId) || [];
-
-    await addNotifications(
-      participants,
-      currentUser.uid,
-      currentUser.name,
-      comment.id,
-      "reply"
-    );
-
+    await updateComment(postId, commentId, newText);
     form.remove();
   };
+
+  form.querySelector(".cancel").onclick = () => {
+    form.remove();
+  };
+}
 
   // 취소
   form.querySelector(".cancel").onclick = () => {
