@@ -271,8 +271,6 @@ NOTIFICATION LIST
 
 function renderNotifications(list){
 
-  if (!list) return;
-
   const box = document.getElementById("notificationList");
   box.innerHTML = "";
 
@@ -286,13 +284,17 @@ function renderNotifications(list){
       div.textContent =
         `🔔 ${n.senderName} 님이 ${n.type === "reply" ? "답글" : "댓글"}을 남겼습니다`;
 
-      // ⭐ X 버튼 (이게 없으면 절대 안 뜸)
+      // 🔥 X 버튼
       const delBtn = document.createElement("button");
       delBtn.textContent = "✕";
+      delBtn.style.marginLeft = "8px";
 
       delBtn.onclick = async (e) => {
         e.stopPropagation();
-        await deleteDoc(doc(db, "notifications", n.id));
+
+        await deleteDoc(
+          doc(db, "notifications", n.id)
+        );
       };
 
       div.appendChild(delBtn);

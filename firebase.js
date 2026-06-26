@@ -246,6 +246,7 @@ export function watchNotifications(uid, callback) {
       where("targetUid", "==", uid)
     ),
     (snap) => {
+
       const arr = [];
 
       snap.forEach(docItem => {
@@ -255,9 +256,9 @@ export function watchNotifications(uid, callback) {
         });
       });
 
-      arr.sort(
-        (a, b) =>
-          (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0)
+      arr.sort((a, b) =>
+        (b.createdAt?.seconds || 0) -
+        (a.createdAt?.seconds || 0)
       );
 
       callback(arr);
