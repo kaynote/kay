@@ -419,7 +419,7 @@ async function openModal(p){
 
         commentCountEl.textContent = list.length;
 
-        // id -> node map
+        // 1. map 생성
         const map = {};
         const roots = [];
 
@@ -427,16 +427,23 @@ async function openModal(p){
             map[c.id] = { ...c, replies: [] };
         });
 
+        // 2. 트리 연결 (핵심 수정 버전)
         list.forEach(c => {
-            if (c.parentId && map[c.parentId]) {
-                map[c.parentId].replies.push(map[c.id]);
+
+            const node = map[c.id];
+
+            // 부모가 존재하고, 자기 자신이 아닌 경우만 자식으로 연결
+            if (c.parentId && map[c.parentId] && c.parentId !== c.id) {
+                map[c.parentId].replies.push(node);
             } else {
-                roots.push(map[c.id]);
+                roots.push(node);
             }
         });
 
+        // 3. 렌더 초기화
         commentsDiv.innerHTML = "";
 
+        // 4. 루트부터 렌더
         roots.forEach(c => {
             commentsDiv.appendChild(renderComment(c));
         });
@@ -626,19 +633,25 @@ async function openModal(p){
                     collection(db, "people", p.name, "comments")
                 );
 
+                const all = snap.docs.map(d => ({
+                    id: d.id,
+                    ...d.data()
+                }));
+
                 const targets = new Set([c.id]);
 
-                const collect = (parentId) => {
-                    snap.forEach(d => {
-                        const data = d.data();
-                        if (data.parentId === parentId) {
-                            targets.add(d.id);
-                            collect(d.id);
-                        }
-                    });
-                };
+                let changed = true;
 
-                collect(c.id);
+                while (changed) {
+                    changed = false;
+
+                    for (const item of all) {
+                        if (targets.has(item.parentId) && !targets.has(item.id)) {
+                            targets.add(item.id);
+                            changed = true;
+                        }
+                    }
+                }
 
                 for (const id of targets) {
                     await deleteDoc(
