@@ -835,9 +835,19 @@ watchAuth(user => {
 
         box.innerHTML = "";
 
-        list
-            .sort((a,b)=> (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0))
-            .forEach(n => {
+        const delBtn = document.createElement("button");
+        delBtn.textContent = "✕";
+        delBtn.className = "notification-delete";
+
+        delBtn.onclick = async (e) => {
+            e.stopPropagation();
+
+            await deleteDoc(
+                doc(db, "notifications", n.id)
+            );
+        };
+
+        div.appendChild(delBtn);
 
                 const div = document.createElement("div");
 
@@ -856,30 +866,23 @@ watchAuth(user => {
 
     async function openNotification(n){
 
-        // 1. 안전하게 read 처리만
+        // 1. 읽음 처리
         try {
             await updateDoc(
                 doc(db, "notifications", n.id),
                 { read: true }
-            );
-
-            // 화면에서도 즉시 제거
-            renderNotifications(
-                currentNotifications.filter(x => x.id !== n.id)
             );
             
         } catch (e) {
             console.warn(e);
         }
 
-        // 2. 사람 찾기 (핵심)
+        // 2. 사람 찾기
         const person = people.find(
             p => String(p.no) === String(n.personId)
         );
 
-        if (!person) {
-            console.warn("person not found", n);
-            return;
+        if (!person) return;
         }
 
         // 3. 이동
