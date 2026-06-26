@@ -413,15 +413,6 @@ NOTIFICATION
   cursor: pointer;
 }
 
-.reply-form textarea,
-.edit-form textarea {
-  width: 100% !important;
-  min-height: 140px !important;
-  font-size: 14px;
-  padding: 10px;
-  box-sizing: border-box;
-}
-
 .reply-form .send,
 .edit-form .save {
   background: #2e7d32;
@@ -458,15 +449,23 @@ NOTIFICATION
   display: block;
 }
 
-.reply-form,
-.edit-form {
+.reply-zone,
+.edit-zone {
   width: 100%;
-  box-sizing: border-box;
-}
-
-.edit-form,
-.reply-form {
+  margin-top: 8px;
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+.form-area {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.reply-form textarea,
+.edit-form textarea {
+  width: 100%;
+  min-height: 140px;
+  box-sizing: border-box;
 }

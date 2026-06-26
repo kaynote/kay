@@ -89,9 +89,13 @@ function renderComment(c) {
     <b>${c.name}</b>
     <p>${c.text}</p>
 
-    <button class="reply-btn">답글</button>
-    <button class="edit-btn">수정</button>
+    <div class="actions">
+      <button class="reply-btn">답글</button>
+      <button class="edit-btn">수정</button>
+    </div>
 
+    <div class="reply-slot"></div>
+    <div class="edit-slot"></div>
     <div class="child"></div>
   `;
 
@@ -138,7 +142,8 @@ REPLY
 
 function openReplyForm(c, commentEl) {
 
-  document.querySelectorAll(".reply-form").forEach(e => e.remove());
+  document.querySelectorAll(".reply-form")
+    .forEach(e => e.remove());
 
   const form = document.createElement("div");
   form.className = "reply-form";
@@ -152,6 +157,8 @@ function openReplyForm(c, commentEl) {
   `;
 
   const child = commentEl.querySelector(".child");
+
+  // 🔥 여기 핵심
   child.prepend(form);
 
   requestAnimationFrame(() => {
@@ -191,38 +198,30 @@ function openReplyForm(c, commentEl) {
 EDIT
 ========================= */
 
-function openEditForm(c, commentEl) {
+function openEditForm(commentId, commentEl, oldText) {
 
-  document.querySelectorAll(".edit-form").forEach(e => e.remove());
-
-  const child = commentEl.querySelector(".child");
+  document.querySelectorAll(".edit-form")
+    .forEach(e => e.remove());
 
   const form = document.createElement("div");
   form.className = "edit-form";
 
   form.innerHTML = `
-    <textarea>${c.text}</textarea>
-    <div class="btns">
+    <textarea>${oldText}</textarea>
+    <div>
       <button class="save">저장</button>
       <button class="cancel">취소</button>
     </div>
   `;
 
-  child.appendChild(form);
+  const zone = commentEl.querySelector(".reply-zone");
+  zone.innerHTML = "";
+  zone.appendChild(form);
 
   requestAnimationFrame(() => {
     form.scrollIntoView({ behavior: "smooth", block: "center" });
     form.querySelector("textarea").focus();
   });
-
-  form.querySelector(".save").onclick = async () => {
-
-    const newText = form.querySelector("textarea").value.trim();
-    if (!newText) return;
-
-    await updateComment(postId, c.id, newText);
-    form.remove();
-  };
 
   form.querySelector(".cancel").onclick = () => form.remove();
 }
