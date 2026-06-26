@@ -32,15 +32,11 @@ window.addEventListener("load", async () => {
   document.getElementById("sendBtn").onclick = sendComment;
 
   watchComments(postId, (data, changes) => {
-
     const tree = buildTree(data);
     const box = document.getElementById("comments");
 
     box.innerHTML = "";
-
-    tree.forEach(c => {
-      box.appendChild(renderComment(c));
-    });
+    tree.forEach(c => box.appendChild(renderComment(c)));
 
     if (!firstSnapshot && changes) {
       detectNotifications(changes);
@@ -49,7 +45,15 @@ window.addEventListener("load", async () => {
     firstSnapshot = false;
   });
 
-  watchNotifications(currentUser.uid, renderNotifications);
+  // 🔥 여기 대신 이 구조 사용
+  watchAuth((user) => {
+    if (!user) return;
+
+    currentUser = user;
+
+    watchNotifications(user.uid, renderNotifications);
+  });
+
 });
 
 /* =========================
