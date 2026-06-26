@@ -319,11 +319,17 @@ function renderComment(c) {
     <p>${c.text}</p>
 
     <button class="reply-btn">답글</button>
-    <div class="replies"></div>
+    <button class="edit-btn">수정</button>
+
+    <div class="child"></div>
   `;
 
   div.querySelector(".reply-btn").onclick = () => {
-      openReplyForm(c.id, div);
+    openReplyForm(c.id, div);
+  };
+
+  div.querySelector(".edit-btn").onclick = () => {
+    openEditForm(c.id, div, c.text);
   };
 
   const replyBox = div.querySelector(".replies");
@@ -397,7 +403,8 @@ function openReplyForm(commentId, commentElement) {
   document.querySelectorAll(".reply-form")
     .forEach(el => el.remove());
 
-  const childArea = commentElement.querySelector(".child");
+  cconst childArea = commentElement.querySelector(".child");
+  if (!childArea) return;
 
   const form = document.createElement("div");
   form.className = "reply-form";
@@ -461,11 +468,39 @@ async function removeComment(id) {
 수정
 ========================= */
 
-async function editComment(id) {
-  const text = prompt("수정 내용");
-  if (!text) return;
+function openEditForm(commentId, commentElement, currentText) {
 
-  await updateComment(postId, id, text);
+  // 기존 edit 폼 제거
+  document.querySelectorAll(".edit-form")
+    .forEach(el => el.remove());
+
+  const form = document.createElement("div");
+  form.className = "edit-form";
+
+  form.innerHTML = `
+    <textarea>${currentText}</textarea>
+    <button class="save">저장</button>
+    <button class="cancel">취소</button>
+  `;
+
+  commentElement.appendChild(form);
+
+  const textarea = form.querySelector("textarea");
+  textarea.focus();
+
+  // 저장
+  form.querySelector(".save").onclick = async () => {
+    const text = textarea.value.trim();
+    if (!text) return;
+
+    await updateComment(postId, commentId, text);
+    form.remove();
+  };
+
+  // 취소
+  form.querySelector(".cancel").onclick = () => {
+    form.remove();
+  };
 }
 
 /* =========================
