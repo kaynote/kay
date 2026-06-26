@@ -383,6 +383,26 @@ NOTIFICATION
   background: #f5f5f5;
 }
 
+.notification-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:8px;
+}
+
+.notification-delete{
+    border:none;
+    background:transparent;
+    cursor:pointer;
+    font-size:16px;
+    color:#999;
+    padding:4px 6px;
+    flex-shrink:0;
+}
+
+.notification-delete:hover{
+    color:#e53935;
+}
 
 /* =========================
 COMMENT SYSTEM
