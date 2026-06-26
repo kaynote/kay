@@ -129,11 +129,15 @@ export function watchComments(postId, callback) {
       const comments = [];
 
       snapshot.forEach(docItem => {
-        comments.push({
+        arr.push({
           id: docItem.id,
           ...docItem.data()
         });
       });
+
+      const filtered = arr.filter(n => !n.deleted);
+
+      callback(filtered);
 
       comments.sort(
         (a, b) =>
@@ -154,8 +158,10 @@ export async function addNotification(
   targetUid,
   senderUid,
   senderName,
+  personId,
   commentId,
-  type
+  type,
+  read = false
 ) {
   if (!targetUid || targetUid === senderUid) return;
 
@@ -175,6 +181,7 @@ const q = query(
     targetUid,
     senderUid,
     senderName,
+    personId,
     commentId,
     type,
     read: false,
