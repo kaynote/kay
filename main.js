@@ -360,55 +360,6 @@ document.getElementById("modal").onclick = (e) => {
   }
 };
 
-/* =========================
-렌더
-========================= */
-
-  const div = document.createElement("div");
-
-  div.setAttribute("data-id", c.id);
-
-  div.style.marginLeft = c.parentId ? "20px" : "0px";
-
-  div.innerHTML = `
-
-<b>${c.name}</b>
-
-<p>${c.text}</p>
-
-<button class="reply-btn">
-  답글
-</button>
-
-<button class="edit-btn">
-  수정
-</button>
-
-<button class="delete-btn">
-  삭제
-</button>
-
-<div class="child"></div>
-
-`;
-
-  div.querySelector(".reply-btn").onclick =
-    () => openReplyForm(c.id, div);
-
-  div.querySelector(".edit-btn").onclick =
-    () => editComment(c.id);
-
-  div.querySelector(".delete-btn").onclick =
-    () => removeComment(c.id);
-
-  const child = div.querySelector(".child");
-
-  c.replies.forEach(r => {
-    child.appendChild(render(r));
-  });
-
-  return div;
-}
 
 /* =========================
 댓글 작성 (COMMENT)
