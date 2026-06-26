@@ -274,25 +274,32 @@ function renderNotifications(list) {
   const badge = document.getElementById("badge");
   const box = document.getElementById("notificationList");
 
-  const unread = list.filter(n => !n.read).length;
-  badge.textContent = unread;
+  // 🔥 중복 제거 먼저
+  const unique = [...new Map(list.map(n => [n.id, n])).values()];
+
+  // 🔥 unread만 필터
+  const filtered = unique.filter(n => !n.read);
+
+  // 배지
+  badge.textContent = filtered.length;
 
   box.innerHTML = "";
 
-  list.forEach(n => {
-
+  filtered.forEach(n => {
     const div = document.createElement("div");
     div.className = "notification-item";
 
-    div.textContent = `🔔 ${n.senderName} 님이 ${n.type === "reply" ? "답글" : "댓글"}을 남겼습니다`;
+    div.textContent =
+      `🔔 ${n.senderName} 님이 ${n.type === "reply" ? "답글" : "댓글"}을 남겼습니다`;
 
     div.onclick = async () => {
-
-      await markNotificationRead(n.id);
-
-      if (n.commentId) {
-        jumpToComment(n.commentId);
+      try {
+        await markNotificationRead(n.id);
+      } catch (e) {
+        console.error("read update failed", e);
       }
+
+      jumpToComment(n.commentId);
     };
 
     box.appendChild(div);
