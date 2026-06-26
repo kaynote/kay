@@ -909,7 +909,12 @@ const bellBtn = document.getElementById("bellBtn");
 const notificationList = document.getElementById("notificationList");
 
 bellBtn.addEventListener("click", () => {
+    console.log("bell clicked");
+    console.log(notificationList.className);
+
     notificationList.classList.toggle("show");
+
+    console.log(notificationList.className);
 });
 
 </script>
