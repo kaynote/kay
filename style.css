@@ -382,3 +382,21 @@ NOTIFICATION
 .notification-item:hover {
   background: #f5f5f5;
 }
+
+/* 모든 댓글/답글/알림 이미지 강제 통일 */
+.comment img,
+.replies img,
+.child img,
+.notification-item img {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.comment {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
