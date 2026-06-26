@@ -269,41 +269,37 @@ function showPopup(msg) {
 NOTIFICATION LIST
 ========================= */
 
-function renderNotifications(list) {
+function renderNotifications(list){
+
+  if (!list) return;
 
   const badge = document.getElementById("badge");
+
+  const unread = list.filter(n => !n.read).length;
+  badge.textContent = unread;
+
   const box = document.getElementById("notificationList");
-
-  // 🔥 중복 제거 먼저
-  const unique = [...new Map(list.map(n => [n.id, n])).values()];
-
-  // 🔥 unread만 필터
-  const filtered = unique.filter(n => !n.read);
-
-  // 배지
-  badge.textContent = filtered.length;
 
   box.innerHTML = "";
 
-  filtered.forEach(n => {
-    const div = document.createElement("div");
-    div.className = "notification-item";
+  list
+    .filter(n => n.targetUid === auth.currentUser?.uid) // ⭐ 안전장치
+    .sort((a,b)=> (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0))
+    .forEach(n => {
 
-    div.textContent =
-      `🔔 ${n.senderName} 님이 ${n.type === "reply" ? "답글" : "댓글"}을 남겼습니다`;
+      const div = document.createElement("div");
+      div.className = "notification-item";
 
-    div.onclick = async () => {
-      try {
+      div.textContent =
+        `🔔 ${n.senderName} 님이 ${n.type === "reply" ? "답글" : "댓글"}을 남겼습니다`;
+
+      div.onclick = async () => {
         await markNotificationRead(n.id);
-      } catch (e) {
-        console.error("read update failed", e);
-      }
+        jumpToComment(n.commentId);
+      };
 
-      jumpToComment(n.commentId);
-    };
-
-    box.appendChild(div);
-  });
+      box.appendChild(div);
+    });
 }
 
 /* =========================

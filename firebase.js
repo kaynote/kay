@@ -249,7 +249,7 @@ export function watchNotifications(uid, callback) {
       collection(db, "notifications"),
       where("targetUid", "==", uid)
     ),
-    (snapshot) => {
+    (snap) => {
       const arr = [];
 
       snapshot.forEach(docItem => {

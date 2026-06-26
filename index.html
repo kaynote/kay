@@ -707,7 +707,9 @@ document.addEventListener("keydown", (e)=>{
 loginBtn.addEventListener("click", login);
 logoutBtn.addEventListener("click", logout);
 
-watchAuth(user=>{
+let notifUnsub = null;
+
+watchAuth(user => {
 
     const userInfo = document.getElementById("userInfo");
 
@@ -745,11 +747,9 @@ watchAuth(user=>{
                 font-size:18px;
                 font-weight:700;
                 line-height:1.4;
-
                 display:flex;
                 justify-content:center;
                 align-items:center;
-
                 white-space:nowrap;
                 min-width:0;
               ">
@@ -786,91 +786,68 @@ watchAuth(user=>{
         return;
     }
 
+    userInfo.textContent = user.email;
+
+    loginBtn.style.display = "none";
+    logoutBtn.style.display = "inline-block";
+
     /* =========================
-       NOTIFICATIONS
+       🔥 알림 구독 (중복 방지 핵심)
     ========================= */
 
-    function watchNotifications(uid){
-
-        onSnapshot(
-
-            collection(
-                db,
-                "notifications"
-            ),
-
-            (snap)=>{
-
-                const list = [];
-
-                snap.forEach(docItem=>{
-
-                    const n = docItem.data();
-
-                    if(n.targetUid === uid){
-
-                        list.push({
-                            id: docItem.id,
-                            ...n
-                        });
-
-                    }
-
-                });
-
-                renderNotifications(list);
-
-            }
-        );
+    if (notifUnsub) {
+        notifUnsub();
     }
+
+    notifUnsub = onSnapshot(
+        query(
+            collection(db, "notifications"),
+            where("targetUid", "==", user.uid)
+        ),
+        (snap) => {
+
+            const list = [];
+
+            snap.forEach(docItem => {
+                list.push({
+                    id: docItem.id,
+                    ...docItem.data()
+                });
+            });
+
+            renderNotifications(list);
+        }
+    );
+
+    /* =========================
+       렌더
+    ========================= */
 
     function renderNotifications(list){
 
-        const badge =
-            document.getElementById("badge");
+        const badge = document.getElementById("badge");
 
-        const unread =
-            list.filter(
-                n => !n.read
-            ).length;
-
+        const unread = list.filter(n => !n.read).length;
         badge.textContent = unread;
 
-        const box =
-            document.getElementById(
-                "notificationList"
-            );
+        const box = document.getElementById("notificationList");
 
         box.innerHTML = "";
 
         list
-            .sort((a,b)=>{
+            .sort((a,b)=> (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0))
+            .forEach(n => {
 
-                const ta =
-                    a.createdAt?.seconds || 0;
+                const div = document.createElement("div");
 
-                const tb =
-                    b.createdAt?.seconds || 0;
-
-                return tb - ta;
-
-            })
-            .forEach(n=>{
-
-                const div =
-                    document.createElement("div");
-
-                div.className =
-                    "notification-item";
+                div.className = "notification-item";
 
                 div.textContent =
                     `🔔 ${n.senderName} 님이 답글을 남겼습니다`;
 
-                div.onclick =
-                    ()=>openNotification(n);
+                div.onclick = () => openNotification(n);
 
                 box.appendChild(div);
-
             });
     }
 
@@ -895,36 +872,14 @@ watchAuth(user=>{
        BELL
     ========================= */
 
-    const bellBtn =
-        document.getElementById(
-            "bellBtn"
-        );
+    const bellBtn = document.getElementById("bellBtn");
+    const notificationList = document.getElementById("notificationList");
 
-    const notificationList =
-        document.getElementById(
-            "notificationList"
-        );
+    bellBtn.addEventListener("click", () => {
+        notificationList.classList.toggle("show");
+    });
 
-    bellBtn.addEventListener(
-        "click",
-        ()=>{
-
-            notificationList.classList.toggle(
-                "show"
-            );
-
-        }
-    );
-
-    userInfo.textContent = user.email;
-
-    loginBtn.style.display = "none";
-    logoutBtn.style.display = "inline-block";
-
-    // ★ 알림 시작
-    watchNotifications(user.uid);
-
-    init(); // 로그인 성공하면 목록 표시
+    init();
 });
 
 </script>
