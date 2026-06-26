@@ -186,35 +186,47 @@ function openReplyForm(c, commentEl) {
 EDIT (INLINE FIXED)
 ========================= */
 
-function openEditForm(c, commentEl) {
+function openEditForm(commentId, commentElement, oldText) {
 
-  document.querySelectorAll(".edit-form").forEach(e => e.remove());
+  document.querySelectorAll(".edit-form")
+    .forEach(el => el.remove());
+
+  const childArea = commentElement.querySelector(".child");
 
   const form = document.createElement("div");
   form.className = "edit-form";
 
   form.innerHTML = `
-    <textarea>${c.text}</textarea>
-    <button class="save">저장</button>
-    <button class="cancel">취소</button>
+    <textarea>${oldText}</textarea>
+    <div style="display:flex; gap:6px; margin-top:6px;">
+      <button class="save">저장</button>
+      <button class="cancel">취소</button>
+    </div>
   `;
 
-  commentEl.querySelector(".child").prepend(form);
+  // 🔥 핵심: 답글과 동일 위치
+  childArea.appendChild(form);
 
   requestAnimationFrame(() => {
-    form.scrollIntoView({ behavior: "smooth", block: "center" });
-    form.querySelector("textarea").focus();
+    form.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+    form.querySelector("textarea")?.focus();
   });
 
   form.querySelector(".save").onclick = async () => {
     const newText = form.querySelector("textarea").value.trim();
     if (!newText) return;
 
-    await updateComment(postId, c.id, newText);
+    await updateComment(postId, commentId, newText);
     form.remove();
   };
 
-  form.querySelector(".cancel").onclick = () => form.remove();
+  form.querySelector(".cancel").onclick = () => {
+    form.remove();
+  };
 }
 
 /* =========================
