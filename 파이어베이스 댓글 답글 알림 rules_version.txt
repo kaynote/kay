@@ -1,0 +1,119 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /* =====================
+       AUTH HELPERS
+    ===================== */
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn()
+        && request.auth.uid == "eEltgLaV6oN7MHUXTfQONc2wGAk1";
+    }
+
+    function isOwner(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    /* =====================
+       NOTIFICATIONS
+    ===================== */
+
+    match /notifications/{id} {
+
+      // 생성: 로그인 유저 누구나 가능
+      allow create: if isSignedIn();
+
+      // 읽기: 본인 알림 + 관리자만
+      allow read: if isSignedIn()
+        && (resource.data.targetUid == request.auth.uid || isAdmin());
+
+      // 수정 (읽음 처리)
+      allow update: if isSignedIn()
+        && (resource.data.targetUid == request.auth.uid || isAdmin());
+
+      // 삭제: 본인 or 관리자
+      allow delete: if isSignedIn()
+        && (resource.data.targetUid == request.auth.uid || isAdmin());
+    }
+
+    /* =====================
+       PEOPLE
+    ===================== */
+
+    match /people/{personId} {
+
+      allow read: if true;
+
+      /* =====================
+         LIKES
+      ===================== */
+
+      match /likes/{uid} {
+        allow read: if true;
+        allow create: if isSignedIn();
+        allow delete: if isSignedIn();
+      }
+
+      /* =====================
+         COMMENTS
+      ===================== */
+
+      match /comments/{commentId} {
+
+        allow read: if true;
+
+        allow create: if isSignedIn()
+          && request.resource.data.uid == request.auth.uid
+          && request.resource.data.text is string
+          && request.resource.data.text.size() > 0
+          && request.resource.data.text.size() <= 1000;
+
+        // 수정: 작성자만 가능 (내용만 수정 기준)
+        allow update: if isSignedIn()
+          && resource.data.uid == request.auth.uid;
+
+        allow delete: if isSignedIn()
+          && (resource.data.uid == request.auth.uid || isAdmin());
+
+        /* =====================
+           REPLIES
+        ===================== */
+
+        match /replies/{replyId} {
+
+          allow read: if true;
+
+          allow create: if isSignedIn()
+            && request.resource.data.uid == request.auth.uid
+            && request.resource.data.text is string
+            && request.resource.data.text.size() > 0
+            && request.resource.data.text.size() <= 1000;
+
+          allow delete: if isSignedIn()
+            && (resource.data.uid == request.auth.uid || isAdmin());
+
+          allow update: if false;
+        }
+      }
+
+      /* =====================
+         ADMIN NOTIFICATIONS
+      ===================== */
+
+      match /adminNotifications/{notificationId} {
+
+        allow create: if isSignedIn();
+
+        allow read: if isAdmin();
+
+        allow update: if isAdmin();
+      }
+    }
+  }
+}

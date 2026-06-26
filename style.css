@@ -401,16 +401,39 @@ NOTIFICATION
   gap: 4px;
 }
 
-.reply-form,
-.edit-form {
-  width: 100%;
-  margin-top: 8px;
+.reply-form button,
+.edit-form button {
+  margin-top: 6px;
+  margin-right: 6px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
 }
 
 .reply-form textarea,
 .edit-form textarea {
   width: 100%;
-  min-height: 80px;
+  min-height: 90px;   /* 답글 input과 동일 */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  resize: vertical;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.reply-form .send,
+.edit-form .save {
+  background: #2e7d32;
+  color: white;
+}
+
+.reply-form .cancel,
+.edit-form .cancel {
+  background: #d32f2f;
+  color: white;
 }
 
 .edit-form button {

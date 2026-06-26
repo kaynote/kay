@@ -396,10 +396,11 @@ async function sendComment() {
 
 function openReplyForm(commentId, commentElement) {
 
+  // 기존 폼 제거
   document.querySelectorAll(".reply-form")
     .forEach(el => el.remove());
 
-  commentElement.appendChild(form);
+  const childArea = commentElement.querySelector(".child");
   if (!childArea) return;
 
   const form = document.createElement("div");
@@ -413,14 +414,19 @@ function openReplyForm(commentId, commentElement) {
 
   childArea.appendChild(form);
 
-  setTimeout(() => {
-    form.scrollIntoView({ behavior: "smooth", block: "center" });
-  }, 50);
+  // 🔥 핵심: 확실하게 보이게
+  requestAnimationFrame(() => {
+    form.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+    form.querySelector("textarea")?.focus();
+  });
 
   const textarea = form.querySelector("textarea");
-  textarea.focus();
 
-  // 🔥 전송
+  // 전송
   form.querySelector(".send").onclick = async () => {
     const text = textarea.value.trim();
     if (!text) return;
@@ -444,6 +450,12 @@ function openReplyForm(commentId, commentElement) {
 
     form.remove();
   };
+
+  // 취소
+  form.querySelector(".cancel").onclick = () => {
+    form.remove();
+  };
+}
 
   // ❌ 취소
   form.querySelector(".cancel").onclick = () => {
