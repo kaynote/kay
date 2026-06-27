@@ -1,9 +1,9 @@
 import people from "./people.js";
-
 import {
   login,
-  addComment,
+  logout,
   watchAuth,
+  addComment,
   watchComments,
   watchNotifications,
   getParticipants,
@@ -15,11 +15,9 @@ import {
 STATE
 ========================= */
 
-const currentPost = people[people.length - 1];
-const postId = String(currentPost.no);
+const postId = String(people[people.length - 1].no);
 
 let currentUser = null;
-let firstSnapshot = true;
 
 /* =========================
 INIT
@@ -28,31 +26,23 @@ INIT
 window.addEventListener("load", () => {
 
   /* AUTH */
-  watchAuth((user) => {
+  watchAuth(user => {
     currentUser = user;
 
-    const userInfo = document.getElementById("userInfo");
-    if (userInfo) {
-      userInfo.textContent = user ? user.email : "로그인 안 됨";
+    const ui = document.getElementById("userInfo");
+    if (ui) ui.textContent = user ? user.email : "로그인 안 됨";
+
+    if (user) {
+      watchNotifications(user.uid, renderNotifications);
     }
-
-    if (!user) return;
-
-    watchNotifications(user.uid, renderNotifications);
   });
 
-  /* LOGIN */
-  const loginBtn = document.getElementById("loginBtn");
-
-  if (loginBtn) {
-    loginBtn.onclick = async () => {
-      currentUser = await login();
-    };
-  }
+  /* LOGIN/LOGOUT */
+  document.getElementById("loginBtn")?.addEventListener("click", login);
+  document.getElementById("logoutBtn")?.addEventListener("click", logout);
 
   /* COMMENTS */
   watchComments(postId, (data, changes) => {
-
     const box = document.getElementById("peopleContainer");
     if (!box) return;
 
@@ -60,14 +50,7 @@ window.addEventListener("load", () => {
 
     box.innerHTML = "";
     tree.forEach(c => box.appendChild(renderComment(c)));
-
-    if (!firstSnapshot && changes) {
-      detectNotifications(changes);
-    }
-
-    firstSnapshot = false;
   });
-
 });
 
 /* =========================
@@ -92,49 +75,40 @@ function buildTree(list) {
 }
 
 /* =========================
-COMMENT RENDER
+RENDER
 ========================= */
 
 function renderComment(c) {
-
   const div = document.createElement("div");
   div.className = "comment";
-  div.setAttribute("data-id", c.id);
+  div.dataset.id = c.id;
 
   div.innerHTML = `
     <b>${c.name}</b>
     <p>${c.text}</p>
-    <button class="reply-btn">답글</button>
+    <button class="reply">답글</button>
     <div class="child"></div>
   `;
 
-  div.querySelector(".reply-btn").onclick = () =>
-    openReplyForm(c, div);
+  div.querySelector(".reply").onclick = () => openReply(c, div);
 
   const child = div.querySelector(".child");
-
-  (c.replies || []).forEach(r => {
-    child.appendChild(renderComment(r));
-  });
+  (c.replies || []).forEach(r => child.appendChild(renderComment(r)));
 
   return div;
 }
 
 /* =========================
-COMMENT SEND
+COMMENT
 ========================= */
 
-async function sendComment(text) {
-
+async function send(text) {
   if (!currentUser || !text) return;
 
   const comment = await addComment(postId, text, currentUser);
 
-  const participants = await getParticipants(postId);
-
-  const targets = participants.filter(uid =>
-    uid !== currentUser.uid
-  );
+  const targets = (await getParticipants(postId))
+    .filter(uid => uid !== currentUser.uid);
 
   await addNotifications(
     targets,
@@ -149,10 +123,8 @@ async function sendComment(text) {
 REPLY
 ========================= */
 
-function openReplyForm(c, el) {
-
-  document.querySelectorAll(".reply-form")
-    .forEach(e => e.remove());
+function openReply(c, el) {
+  document.querySelectorAll(".reply-form").forEach(e => e.remove());
 
   const form = document.createElement("div");
   form.className = "reply-form";
@@ -166,22 +138,18 @@ function openReplyForm(c, el) {
   el.querySelector(".child").prepend(form);
 
   form.querySelector(".send").onclick = async () => {
-
     const text = form.querySelector("textarea").value.trim();
     if (!text) return;
 
-    const comment = await addComment(
-      postId,
-      text,
-      currentUser,
-      c.id
-    );
+    const comment = await addComment(postId, text, currentUser, c.id);
 
-    const parentUid = c.uid;
+    const targets = c.uid && c.uid !== currentUser.uid
+      ? [c.uid]
+      : [];
 
-    if (parentUid && parentUid !== currentUser.uid) {
+    if (targets.length) {
       await addNotifications(
-        [parentUid],
+        targets,
         currentUser.uid,
         currentUser.name,
         comment.id,
@@ -199,39 +167,7 @@ function openReplyForm(c, el) {
 NOTIFICATIONS
 ========================= */
 
-function detectNotifications(changes) {
-
-  changes.forEach(c => {
-
-    if (c.type !== "added") return;
-
-    const data = c.doc.data();
-
-    if (data.uid === currentUser.uid) return;
-
-    showPopup(data.parentId ? "새 답글" : "새 댓글");
-  });
-}
-
-function showPopup(msg) {
-
-  const el = document.getElementById("notify");
-  if (!el) return;
-
-  el.style.display = "block";
-  el.textContent = `🔔 ${msg}`;
-
-  setTimeout(() => {
-    el.style.display = "none";
-  }, 3000);
-}
-
-/* =========================
-NOTIFICATION UI
-========================= */
-
 function renderNotifications(list) {
-
   const box = document.getElementById("notificationList");
   if (!box) return;
 
@@ -242,7 +178,7 @@ function renderNotifications(list) {
     .forEach(n => {
 
       const div = document.createElement("div");
-      div.textContent = `🔔 ${n.senderName}`;
+      div.textContent = `${n.senderName} 알림`;
 
       div.onclick = async () => {
         await markNotificationRead(n.id);
@@ -253,4 +189,4 @@ function renderNotifications(list) {
 }
 
 /* export */
-window.sendComment = sendComment;
+window.sendComment = send;
