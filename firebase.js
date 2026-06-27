@@ -24,20 +24,28 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 /* =========================
-INIT
+CONFIG
 ========================= */
 
-const app = initializeApp({
+const firebaseConfig = {
   apiKey: "AIzaSyCAZzJdAB_a65dkJaL-XLQqzImzlSI8Gmw",
   authDomain: "kay-gallery.firebaseapp.com",
   projectId: "kay-gallery",
   storageBucket: "kay-gallery.firebasestorage.app",
   messagingSenderId: "276470297982",
   appId: "1:276470297982:web:838b8a57269b26cd3d6f2f",
-});
+  measurementId: "G-E61XXMZCHM"
+};
+
+/* =========================
+INIT
+========================= */
+
+const app = initializeApp(firebaseConfig);
 
 export const db = getFirestore(app);
 export const auth = getAuth(app);
+
 const provider = new GoogleAuthProvider();
 
 /* =========================
@@ -48,9 +56,13 @@ function normalizeUser(user) {
   if (!user) return null;
 
   return {
-    uid: user.uid,
-    email: user.email,
-    name: user.displayName || user.email,
+    uid: user.uid || "",
+    email: user.email || "",
+    name:
+      user.providerData?.[0]?.displayName ||
+      user.displayName ||
+      user.email ||
+      "익명 사용자",
     photo: user.photoURL || ""
   };
 }
@@ -60,80 +72,116 @@ AUTH
 ========================= */
 
 export async function login() {
-  if (auth.currentUser) return normalizeUser(auth.currentUser);
-  const res = await signInWithPopup(auth, provider);
-  return normalizeUser(res.user);
-}
+  if (auth.currentUser) {
+    return normalizeUser(auth.currentUser);
+  }
 
-export function watchAuth(cb) {
-  return onAuthStateChanged(auth, (u) => cb(normalizeUser(u)));
+  const result = await signInWithPopup(auth, provider);
+  return normalizeUser(result.user);
 }
 
 export async function logout() {
   await signOut(auth);
 }
 
-/* =========================
-COMMENTS (FIXED)
-========================= */
-
-export async function addComment(postId, text, user, parentId = null) {
-  return await addDoc(collection(db, "people", postId, "comments"), {
-    text,
-    parentId,
-    uid: user.uid,
-    name: user.name,
-    photo: user.photo,
-    createdAt: serverTimestamp()
+export function watchAuth(callback) {
+  return onAuthStateChanged(auth, (user) => {
+    callback(normalizeUser(user));
   });
 }
 
-export function watchComments(postId, cb) {
+/* =========================
+COMMENTS
+========================= */
+
+export async function addComment(postId, text, user, parentId = null) {
+  return await addDoc(
+    collection(db, "people", postId, "comments"),
+    {
+      text,
+      parentId,
+      uid: user.uid,
+      name: user.name,
+      photo: user.photo,
+      createdAt: serverTimestamp()
+    }
+  );
+}
+
+export async function updateComment(postId, commentId, text) {
+  await updateDoc(
+    doc(db, "people", postId, "comments", commentId),
+    { text }
+  );
+}
+
+export async function deleteComment(postId, commentId) {
+  await deleteDoc(
+    doc(db, "people", postId, "comments", commentId)
+  );
+}
+
+/* realtime comments */
+export function watchComments(postId, callback) {
   return onSnapshot(
     collection(db, "people", postId, "comments"),
-    (snap) => {
-      const list = [];
+    (snapshot) => {
+      const comments = [];
 
-      snap.forEach(d => {
-        list.push({ id: d.id, ...d.data() });
+      snapshot.forEach(docItem => {
+        comments.push({
+          id: docItem.id,
+          ...docItem.data()
+        });
       });
 
-      list.sort((a, b) =>
-        (a.createdAt?.seconds || 0) - (b.createdAt?.seconds || 0)
+      const filtered = arr.filter(n => !n.deleted);
+
+      callback(filtered);
+
+      comments.sort(
+        (a, b) =>
+          (a.createdAt?.seconds || 0) -
+          (b.createdAt?.seconds || 0)
       );
 
-      cb(list, snap.docChanges());
+      callback(comments, snapshot.docChanges());
     }
   );
 }
 
 /* =========================
-NOTIFICATIONS (STABLE CORE)
+NOTIFICATIONS (FIXED CORE)
 ========================= */
 
-export async function addNotification({
+export async function addNotification(
   targetUid,
   senderUid,
   senderName,
+  personId,
   commentId,
-  type
-}) {
+  type,
+  read = false
+) {
   if (!targetUid || targetUid === senderUid) return;
 
-  const q = query(
-    collection(db, "notifications"),
-    where("targetUid", "==", targetUid),
-    where("commentId", "==", commentId),
-    where("senderUid", "==", senderUid)
-  );
+  /* 🔥 중복 방지 핵심 */
+const q = query(
+  collection(db, "notifications"),
+  where("targetUid", "==", targetUid),
+  where("commentId", "==", commentId),
+  where("senderUid", "==", senderUid)
+);
 
   const snap = await getDocs(q);
+
   if (!snap.empty) return;
 
   await addDoc(collection(db, "notifications"), {
     targetUid,
     senderUid,
     senderName,
+    personId,
     commentId,
     type,
     read: false,
@@ -141,49 +189,87 @@ export async function addNotification({
   });
 }
 
-export async function addNotifications(list, data) {
+/* =========================
+PARTICIPANTS (SIMPLIFIED)
+========================= */
+
+export async function getParticipants(postId) {
+  const snap = await getDocs(
+    collection(db, "people", postId, "comments")
+  );
+
+  const users = new Set();
+
+  snap.forEach(docItem => {
+    const data = docItem.data();
+    if (data.uid) users.add(data.uid);
+  });
+
+  return [...users];
+}
+
+/* batch notifications */
+export async function addNotifications(
+  targetUids,
+  senderUid,
+  senderName,
+  commentId,
+  type
+) {
   const jobs = [];
 
-  list.forEach(uid => {
-    if (!uid || uid === data.senderUid) return;
+  targetUids.forEach(uid => {
+    if (!uid) return;
+    if (uid === senderUid) return;
 
     jobs.push(
-      addNotification({
-        targetUid: uid,
-        senderUid: data.senderUid,
-        senderName: data.senderName,
-        commentId: data.commentId,
-        type: data.type
-      })
+      addNotification(
+        uid,
+        senderUid,
+        senderName,
+        commentId,
+        type
+      )
     );
   });
 
   await Promise.all(jobs);
 }
 
-export function watchNotifications(uid, cb) {
+/* =========================
+WATCH NOTIFICATIONS
+========================= */
+
+export function watchNotifications(uid, callback) {
   return onSnapshot(
     query(
       collection(db, "notifications"),
       where("targetUid", "==", uid)
     ),
     (snap) => {
-      const list = [];
 
-      snap.forEach(d => {
-        list.push({ id: d.id, ...d.data() });
+      const arr = [];
+
+      snap.forEach(docItem => {
+        arr.push({
+          id: docItem.id,
+          ...docItem.data()
+        });
       });
 
-      list.sort(
-        (a, b) =>
-          (b.createdAt?.seconds || 0) -
-          (a.createdAt?.seconds || 0)
+      arr.sort((a, b) =>
+        (b.createdAt?.seconds || 0) -
+        (a.createdAt?.seconds || 0)
       );
 
-      cb(list);
+      callback(arr);
     }
   );
 }
+
+/* =========================
+READ NOTIFICATION
+========================= */
 
 export async function markNotificationRead(id) {
   await updateDoc(doc(db, "notifications", id), {
@@ -191,23 +277,19 @@ export async function markNotificationRead(id) {
   });
 }
 
-export async function deleteNotification(id) {
-  await deleteDoc(doc(db, "notifications", id));
-}
-
 /* =========================
 UTIL
 ========================= */
 
-export async function getParticipants(postId) {
-  const snap = await getDocs(collection(db, "people", postId, "comments"));
+export async function getCommentById(postId, commentId) {
+  const snap = await getDoc(
+    doc(db, "people", postId, "comments", commentId)
+  );
 
-  const set = new Set();
+  if (!snap.exists()) return null;
 
-  snap.forEach(d => {
-    const uid = d.data().uid;
-    if (uid) set.add(uid);
-  });
-
-  return [...set];
+  return {
+    id: snap.id,
+    ...snap.data()
+  };
 }

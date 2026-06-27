@@ -39,27 +39,11 @@
 <div id="list"></div>
 
 <button id="bellBtn">
-  🔔 <span id="badge">0</span>
+  🔔
+  <span id="badge">0</span>
 </button>
 
-<div id="notificationPanel" class="hidden">
-
-  <div class="notification-header">
-
-    <h3>알림</h3>
-
-    <div class="notification-actions">
-      <button id="closeNotificationPanel">닫기</button>
-      <button id="deleteAllNotificationsBtn">전체 삭제</button>
-    </div>
-
-  </div>
-
-  <div id="notificationList"></div>
-
-</div>
-
-<!-- 🔔 NOTIFICATION PANEL END -->
+<div id="notificationList"></div>
 
 <!-- MODAL -->
 <div id="modal" class="modal hidden">
@@ -969,37 +953,18 @@ watchAuth(user => {
     ========================= */
 
     init();
-    });
+});
 
 const bellBtn = document.getElementById("bellBtn");
-const panel = document.getElementById("notificationPanel");
-const closeBtn = document.getElementById("closeNotificationPanel");
-const deleteAllBtn = document.getElementById("deleteAllNotificationsBtn");
+const notificationList = document.getElementById("notificationList");
 
 bellBtn.addEventListener("click", () => {
     console.log("bell clicked");
-    panel.classList.toggle("show");
-});
+    console.log(notificationList.className);
 
-closeBtn.addEventListener("click", () => {
-    panel.classList.remove("show");
-});
+    notificationList.classList.toggle("show");
 
-deleteAllBtn.addEventListener("click", async () => {
-
-    const snap = await getDocs(collection(db, "notifications"));
-
-    const batch = writeBatch(db);
-
-    snap.forEach(d => {
-        const data = d.data();
-
-        if (data.targetUid === auth.currentUser.uid) {
-            batch.delete(doc(db, "notifications", d.id));
-        }
-    });
-
-    await batch.commit();
+    console.log(notificationList.className);
 });
 
 </script>
