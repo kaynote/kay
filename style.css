@@ -388,7 +388,7 @@ NOTIFICATION
     justify-content: space-between;
     align-items: center;
     gap: 8px;
-    font-size: 11px;
+    font-size: 12px;
 }
 
 .notification-delete{
