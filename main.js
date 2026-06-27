@@ -12,6 +12,19 @@ import {
   markNotificationRead
 } from "./firebase.js";
 
+import {
+  doc,
+  deleteDoc
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+import { db } from "./firebase.js";
+
+import {
+  collection,
+  getDocs,
+  writeBatch
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
 /* =========================
 STATE
 ========================= */
@@ -22,6 +35,22 @@ const postId = String(currentPost.no);
 let currentUser = null;
 let firstSnapshot = true;
 
+async function deleteAllNotifications(userId) {
+  const snapshot = await getDocs(collection(db, "notifications"));
+
+  const batch = writeBatch(db);
+
+  snapshot.forEach((docSnap) => {
+    const data = docSnap.data();
+
+    if (data.targetUid === userId) {
+      batch.delete(doc(db, "notifications", docSnap.id));
+    }
+  });
+
+  await batch.commit();
+}
+
 /* =========================
 INIT
 ========================= */
@@ -29,6 +58,11 @@ INIT
 window.addEventListener("load", async () => {
 
   currentUser = await login();
+  
+  document.getElementById("deleteAllNotificationsBtn").onclick = async () => {
+    if (!currentUser) return;
+    await deleteAllNotifications(currentUser.uid);
+  };
 
   document.getElementById("sendBtn").onclick = sendComment;
 
@@ -141,6 +175,7 @@ async function sendComment() {
     comment.id,
     "comment"
   );
+  } // ✅ 이게 반드시 있어야 함
 
 /* =========================
 REPLY
@@ -282,6 +317,8 @@ function renderNotifications(list){
   const myList = list.filter(n =>
     n.targetUid === currentUser.uid && !n.read
   );
+
+  myList.forEach(n => {
 
     const div = document.createElement("div");
     div.className = "notification-item";
