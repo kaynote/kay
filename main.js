@@ -30,6 +30,8 @@ window.addEventListener("load", async () => {
 
   currentUser = await login();
 
+  window.currentUser = currentUser; // 👈 여기 넣어야 함 (정답)
+
   document.getElementById("sendBtn").onclick = sendComment;
 
   watchComments(postId, (data, changes) => {
