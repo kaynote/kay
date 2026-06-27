@@ -33,8 +33,6 @@ window.addEventListener("load", async () => {
   console.log("LOGIN RESULT:", currentUser);
   window.currentUser = currentUser;
 
-  document.getElementById("sendBtn").onclick = sendComment;
-
   watchComments(postId, (data, changes) => {
     const tree = buildTree(data);
     const box = document.getElementById("comments");
