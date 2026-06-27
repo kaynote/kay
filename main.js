@@ -28,12 +28,6 @@ INIT
 
 window.addEventListener("load", () => {
 
-  // 1️⃣ 로그인 상태 감시
-  watchAuth((user) => {
-    currentUser = user;
-  });
-
-  // 2️⃣ 버튼 클릭 로그인
   const loginBtn = document.getElementById("loginBtn");
 
   if (loginBtn) {
@@ -41,8 +35,6 @@ window.addEventListener("load", () => {
       currentUser = await login();
     };
   }
-
-});
 
   console.log("LOGIN RESULT:", currentUser);
   window.currentUser = currentUser;
@@ -61,11 +53,10 @@ window.addEventListener("load", () => {
     firstSnapshot = false;
   });
 
-  // 🔥 여기 대신 이 구조 사용
   watchAuth((user) => {
-    if (!user) return;
-
     currentUser = user;
+
+    if (!user) return;
 
     watchNotifications(user.uid, renderNotifications);
   });
