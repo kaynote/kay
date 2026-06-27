@@ -735,17 +735,40 @@ async function openModal(p){
         // ======================
         // 재귀 렌더
         // ======================
-        c.replies.forEach(r => {
-            div.appendChild(renderComment(r, depth + 1));
-        });
+        function renderComment(c, depth = 0) {
+            const div = document.createElement("div");
+            div.className = "comment";
+            div.style.marginLeft = `${depth * 20}px`;
+            div.id = `comment-${c.id}`;
 
-        return div;
-    }
-    
-    await loadLikes();
-    await loadComments();
+            div.innerHTML = `
+                <div class="commentRow">
+                    <div class="left">
+                        <img src="${c.photo || 'images/no-image.jpg'}">
+                        <span class="name">${c.name}</span>
+                    </div>
 
-} // openModal 종료
+                    <div class="text">${c.text}</div>
+
+                    <div class="right">
+                        <span class="time">
+                            ${c.createdAt ? formatDate(c.createdAt) : ""}
+                        </span>
+                    </div>
+                </div>
+            `;
+
+            (c.replies || []).forEach(r => {
+                div.appendChild(renderComment(r, depth + 1));
+            });
+
+            return div;
+        }// ✔ renderComment 끝
+
+        async function openModal() {
+            await loadLikes();
+            await loadComments();
+        }   // ✔ openModal 끝
 
 /* =========================
    CLOSE MODAL
