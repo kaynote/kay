@@ -30,7 +30,8 @@ window.addEventListener("load", async () => {
 
   currentUser = await login();
 
-  window.currentUser = currentUser; // 👈 여기 넣어야 함 (정답)
+  console.log("LOGIN RESULT:", currentUser);
+  window.currentUser = currentUser;
 
   document.getElementById("sendBtn").onclick = sendComment;
 
