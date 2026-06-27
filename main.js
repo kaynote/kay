@@ -29,37 +29,42 @@ INIT
 
 window.addEventListener("load", () => {
 
+  // 1. 자동 로그인 감지 (핵심)
+  watchAuth((user) => {
+    currentUser = user;
+
+    if (!user) return;
+
+    watchNotifications(user.uid, renderNotifications);
+  });
+
+  // 2. 수동 로그인 버튼
   const loginBtn = document.getElementById("loginBtn");
 
   if (loginBtn) {
     loginBtn.onclick = async () => {
       currentUser = await login();
+      console.log("LOGIN RESULT:", currentUser);
     };
   }
 
-  console.log("LOGIN RESULT:", currentUser);
-  window.currentUser = currentUser;
-
+  // 3. 댓글 실시간 로드
   watchComments(postId, (data, changes) => {
+
     const tree = buildTree(data);
     const box = document.getElementById("comments");
+
+    if (!box) return;
 
     box.innerHTML = "";
     tree.forEach(c => box.appendChild(renderComment(c)));
 
+    // 🔥 알림 유지 (이거 중요)
     if (!firstSnapshot && changes) {
       detectNotifications(changes);
     }
 
     firstSnapshot = false;
-  });
-
-  watchAuth((user) => {
-    if (!user) return;
-
-    currentUser = user;
-
-    watchNotifications(user.uid, renderNotifications);
   });
 
 });
