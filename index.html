@@ -59,10 +59,15 @@
 
 <script type="module">
 
-import people from "./people.js";
+import people from "./people.js?v=10";
 
-import { db, auth, login, logout, watchAuth }
-from "./firebase.js";
+import {
+    db,
+    auth,
+    login,
+    logout,
+    watchAuth
+} from "./firebase.js";
 
 import {
     collection,
@@ -76,45 +81,9 @@ import {
     query,
     orderBy,
     serverTimestamp,
-    onSnapshot,
-    where,
-    writeBatch   // ★ 이거 반드시 추가
+    onSnapshot,   // ★ 추가
+    where         // ★ 추가
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
-
-// ================================
-// 🔥 여기 아래에 넣는 게 정답
-// ================================
-
-document.addEventListener("click", async (e) => {
-  if (!e.target.classList.contains("delete-btn")) return;
-
-  const commentId = e.target.dataset.id;
-  const postId = e.target.dataset.post;
-
-  const commentRef = doc(db, "people", postId, "comments", commentId);
-
-  const repliesRef = collection(
-    db,
-    "people",
-    postId,
-    "comments",
-    commentId,
-    "replies"
-  );
-
-  const repliesSnap = await getDocs(repliesRef);
-
-  const batch = writeBatch(db);
-
-  repliesSnap.forEach(docSnap => {
-    batch.delete(docSnap.ref);
-  });
-
-  batch.delete(commentRef);
-
-  await batch.commit();
-});
 
 /* =========================
    CONFIG
@@ -504,18 +473,13 @@ async function openModal(p){
         });
     }
 
-    function renderComment(c, depth = 0) {
+    function renderComment(c, depth = 0){
+
         const div = document.createElement("div");
         div.className = "comment";
+
         div.id = `comment-${c.id}`;
         div.style.marginLeft = `${depth * 20}px`;
-
-        const action = document.createElement("div");
-        action.className = "actions";
-
-        action.innerHTML = `
-            <button class="delete-btn">삭제</button>
-        `;
 
         div.innerHTML = `
             <div class="commentRow">
@@ -535,10 +499,8 @@ async function openModal(p){
             </div>
         `;
 
-        div.appendChild(action);
-
-        return div;
-    }
+        const action = document.createElement("div");
+        action.className = "actions";
 
         // ======================
         // 답글 버튼
@@ -735,40 +697,17 @@ async function openModal(p){
         // ======================
         // 재귀 렌더
         // ======================
-        function renderComment(c, depth = 0) {
-            const div = document.createElement("div");
-            div.className = "comment";
-            div.style.marginLeft = `${depth * 20}px`;
-            div.id = `comment-${c.id}`;
+        c.replies.forEach(r => {
+            div.appendChild(renderComment(r, depth + 1));
+        });
 
-            div.innerHTML = `
-                <div class="commentRow">
-                    <div class="left">
-                        <img src="${c.photo || 'images/no-image.jpg'}">
-                        <span class="name">${c.name}</span>
-                    </div>
+        return div;
+    }
+    
+    await loadLikes();
+    await loadComments();
 
-                    <div class="text">${c.text}</div>
-
-                    <div class="right">
-                        <span class="time">
-                            ${c.createdAt ? formatDate(c.createdAt) : ""}
-                        </span>
-                    </div>
-                </div>
-            `;
-
-            (c.replies || []).forEach(r => {
-                div.appendChild(renderComment(r, depth + 1));
-            });
-
-            return div;
-        }// ✔ renderComment 끝
-
-        async function openModal() {
-            await loadLikes();
-            await loadComments();
-        }   // ✔ openModal 끝
+} // openModal 종료
 
 /* =========================
    CLOSE MODAL
@@ -1017,20 +956,19 @@ watchAuth(user => {
        BELL
     ========================= */
 
-document.addEventListener("DOMContentLoaded", () => {
-
     init();
+});
 
-    const bellBtn = document.getElementById("bellBtn");
-    const notificationList = document.getElementById("notificationList");
+const bellBtn = document.getElementById("bellBtn");
+const notificationList = document.getElementById("notificationList");
 
-    if (bellBtn && notificationList) {
-        bellBtn.addEventListener("click", () => {
-            console.log("bell clicked");
-            notificationList.classList.toggle("show");
-        });
-    }
+bellBtn.addEventListener("click", () => {
+    console.log("bell clicked");
+    console.log(notificationList.className);
 
+    notificationList.classList.toggle("show");
+
+    console.log(notificationList.className);
 });
 
 </script>
