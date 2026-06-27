@@ -144,6 +144,9 @@ NOTIFICATIONS UI (FIXED)
 ========================= */
 
 function renderNotifications(list) {
+  
+  console.log("🔥 NOTIFICATIONS RAW:", list);
+  console.log("🔥 CURRENT USER:", currentUser?.uid);
 
   const box = document.getElementById("notificationList");
   box.innerHTML = "";
