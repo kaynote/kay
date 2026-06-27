@@ -81,9 +81,45 @@ import {
     query,
     orderBy,
     serverTimestamp,
-    onSnapshot,   // ★ 추가
-    where         // ★ 추가
+    onSnapshot,
+    where,
+    writeBatch   // ★ 이거 반드시 추가
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+
+// ================================
+// 🔥 여기 아래에 넣는 게 정답
+// ================================
+
+document.addEventListener("click", async (e) => {
+  if (!e.target.classList.contains("delete-btn")) return;
+
+  const commentId = e.target.dataset.id;
+  const postId = e.target.dataset.post;
+
+  const commentRef = doc(db, "people", postId, "comments", commentId);
+
+  const repliesRef = collection(
+    db,
+    "people",
+    postId,
+    "comments",
+    commentId,
+    "replies"
+  );
+
+  const repliesSnap = await getDocs(repliesRef);
+
+  const batch = writeBatch(db);
+
+  repliesSnap.forEach(docSnap => {
+    batch.delete(docSnap.ref);
+  });
+
+  batch.delete(commentRef);
+
+  await batch.commit();
+});
 
 /* =========================
    CONFIG
@@ -482,6 +518,10 @@ async function openModal(p){
         div.style.marginLeft = `${depth * 20}px`;
 
         div.innerHTML = `
+          <p>${comment.text}</p>
+          <button class="delete-btn">삭제</button>
+        `;
+        
             <div class="commentRow">
                 <div class="left">
                     <img src="${c.photo || 'images/no-image.jpg'}">
