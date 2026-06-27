@@ -128,19 +128,27 @@ function renderComment(c) {
 SEND COMMENT
 ========================= */
 
-const participants = await getParticipants(postId);
+async function sendComment() {
 
-const targets = participants.filter(uid =>
-  uid !== currentUser.uid
-);
+  const input = document.getElementById("commentInput");
+  const text = input.value.trim();
+  if (!text) return;
 
-await addNotifications(
-  targets,
-  currentUser.uid,
-  currentUser.name,
-  comment.id,
-  "comment"
-);
+  const comment = await addComment(postId, text, currentUser);
+
+  const participants = await getParticipants(postId);
+
+  const targets = participants.filter(uid =>
+    uid !== currentUser.uid
+  );
+
+  await addNotifications(
+    targets,
+    currentUser.uid,
+    currentUser.name,
+    comment.id,
+    "comment"
+  );
 
   input.value = "";
 }
