@@ -23,6 +23,25 @@ import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
+import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { db } from "./firebase.js";
+
+export async function deleteAllNotifications(uid) {
+  const snap = await getDocs(collection(db, "notifications"));
+
+  const deletes = [];
+
+  snap.forEach((d) => {
+    const data = d.data();
+
+    if (data.targetUid === uid) {
+      deletes.push(deleteDoc(doc(db, "notifications", d.id)));
+    }
+  });
+
+  await Promise.all(deletes);
+}
+
 /* =========================
 CONFIG
 ========================= */

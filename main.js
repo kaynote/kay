@@ -12,6 +12,8 @@ import {
   markNotificationRead
 } from "./firebase.js";
 
+import { deleteAllNotifications } from "./firebase.js";
+
 /* =========================
 STATE
 ========================= */

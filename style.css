@@ -554,3 +554,22 @@ COMMENT SYSTEM
   display: flex;
   gap: 6px;
 }
+
+.notification-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 6px 8px;
+}
+
+#deleteAllNotificationsBtn {
+  font-size: 11px;
+  padding: 4px 8px;
+  border: none;
+  background: #eee;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#deleteAllNotificationsBtn:hover {
+  background: #ddd;
+}
