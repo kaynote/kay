@@ -504,19 +504,13 @@ async function openModal(p){
         });
     }
 
-    function renderComment(c, depth = 0){
-
+    function renderComment(c, depth = 0) {
         const div = document.createElement("div");
         div.className = "comment";
-
         div.id = `comment-${c.id}`;
         div.style.marginLeft = `${depth * 20}px`;
 
         div.innerHTML = `
-          <p>${comment.text}</p>
-          <button class="delete-btn">삭제</button>
-        `;
-        
             <div class="commentRow">
                 <div class="left">
                     <img src="${c.photo || 'images/no-image.jpg'}">
@@ -531,8 +525,13 @@ async function openModal(p){
                     </span>
                     ${c.editedAt ? `<span class="edited">수정됨</span>` : ""}
                 </div>
+
+                <button class="delete-btn">삭제</button>
             </div>
         `;
+
+        return div;
+    }
 
         const action = document.createElement("div");
         action.className = "actions";
