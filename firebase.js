@@ -116,8 +116,7 @@ export async function updateComment(postId, commentId, text) {
 }
 
 export async function deleteComment(postId, commentId) {
-  await deleteDoc(
-    doc(db, "people", postId, "comments", commentId)
+  await deleteDoc(doc(db, "people", postId, "comments", commentId)
   );
 }
 
@@ -142,8 +141,8 @@ export function watchComments(postId, callback) {
       );
 
       const filtered = comments.filter(n => !n.deleted);
-      
-      callback(comments, snapshot.docChanges());
+
+      callback(filtered, snapshot.docChanges());
     }
   );
 }
