@@ -26,9 +26,23 @@ let firstSnapshot = true;
 INIT
 ========================= */
 
-window.addEventListener("load", async () => {
+window.addEventListener("load", () => {
 
-  currentUser = await login();
+  // 1️⃣ 로그인 상태 감시
+  watchAuth((user) => {
+    currentUser = user;
+  });
+
+  // 2️⃣ 버튼 클릭 로그인
+  const loginBtn = document.getElementById("loginBtn");
+
+  if (loginBtn) {
+    loginBtn.onclick = async () => {
+      currentUser = await login();
+    };
+  }
+
+});
 
   console.log("LOGIN RESULT:", currentUser);
   window.currentUser = currentUser;
