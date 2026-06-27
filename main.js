@@ -3,6 +3,8 @@ import people from "./people.js";
 import {
   login,
   addComment,
+  deleteDoc,
+  doc,
   updateComment,
   watchAuth,
   watchComments,
@@ -54,9 +56,9 @@ window.addEventListener("load", () => {
   });
 
   watchAuth((user) => {
-    currentUser = user;
-
     if (!user) return;
+
+    currentUser = user;
 
     watchNotifications(user.uid, renderNotifications);
   });
@@ -126,26 +128,19 @@ function renderComment(c) {
 SEND COMMENT
 ========================= */
 
-async function sendComment() {
+const participants = await getParticipants(postId);
 
-  const input = document.getElementById("commentInput");
-  const text = input.value.trim();
-  if (!text) return;
+const targets = participants.filter(uid =>
+  uid !== currentUser.uid
+);
 
-  const comment = await addComment(postId, text, currentUser);
-
-  // 🔥 여기만 핵심 수정
-  const targets = [currentPost.ownerUid]
-    .filter(uid => uid !== currentUser.uid);
-
-  // 🔥 댓글 알림 생성
-  await addNotifications(
-    targets,
-    currentUser.uid,
-    currentUser.name,
-    comment.id,
-    "comment"
-  );
+await addNotifications(
+  targets,
+  currentUser.uid,
+  currentUser.name,
+  comment.id,
+  "comment"
+);
 
   input.value = "";
 }
