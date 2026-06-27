@@ -3,8 +3,6 @@ import people from "./people.js";
 import {
   login,
   addComment,
-  doc,
-  updateComment,
   watchAuth,
   watchComments,
   watchNotifications,
@@ -29,37 +27,40 @@ INIT
 
 window.addEventListener("load", () => {
 
-  // 1. 자동 로그인 감지 (핵심)
+  /* AUTH */
   watchAuth((user) => {
     currentUser = user;
+
+    const userInfo = document.getElementById("userInfo");
+    if (userInfo) {
+      userInfo.textContent = user ? user.email : "로그인 안 됨";
+    }
 
     if (!user) return;
 
     watchNotifications(user.uid, renderNotifications);
   });
 
-  // 2. 수동 로그인 버튼
+  /* LOGIN */
   const loginBtn = document.getElementById("loginBtn");
 
   if (loginBtn) {
     loginBtn.onclick = async () => {
       currentUser = await login();
-      console.log("LOGIN RESULT:", currentUser);
     };
   }
 
-  // 3. 댓글 실시간 로드
+  /* COMMENTS */
   watchComments(postId, (data, changes) => {
 
-    const tree = buildTree(data);
-    const box = document.getElementById("comments");
-
+    const box = document.getElementById("peopleContainer");
     if (!box) return;
+
+    const tree = buildTree(data);
 
     box.innerHTML = "";
     tree.forEach(c => box.appendChild(renderComment(c)));
 
-    // 🔥 알림 유지 (이거 중요)
     if (!firstSnapshot && changes) {
       detectNotifications(changes);
     }
@@ -77,9 +78,7 @@ function buildTree(list) {
   const map = {};
   const roots = [];
 
-  list.forEach(c => {
-    map[c.id] = { ...c, replies: [] };
-  });
+  list.forEach(c => map[c.id] = { ...c, replies: [] });
 
   list.forEach(c => {
     if (c.parentId && map[c.parentId]) {
@@ -93,7 +92,7 @@ function buildTree(list) {
 }
 
 /* =========================
-RENDER COMMENT
+COMMENT RENDER
 ========================= */
 
 function renderComment(c) {
@@ -105,23 +104,16 @@ function renderComment(c) {
   div.innerHTML = `
     <b>${c.name}</b>
     <p>${c.text}</p>
-
-    <div class="actions">
-      <button class="reply-btn">답글</button>
-      <button class="edit-btn">수정</button>
-    </div>
-
-    <div class="reply-slot"></div>
-    <div class="edit-slot"></div>
+    <button class="reply-btn">답글</button>
     <div class="child"></div>
   `;
 
-  div.querySelector(".reply-btn").onclick = () => openReplyForm(c, div);
-  div.querySelector(".edit-btn").onclick = () => openEditForm(c, div);
+  div.querySelector(".reply-btn").onclick = () =>
+    openReplyForm(c, div);
 
   const child = div.querySelector(".child");
 
-  c.replies.forEach(r => {
+  (c.replies || []).forEach(r => {
     child.appendChild(renderComment(r));
   });
 
@@ -129,14 +121,12 @@ function renderComment(c) {
 }
 
 /* =========================
-SEND COMMENT
+COMMENT SEND
 ========================= */
 
-async function sendComment() {
+async function sendComment(text) {
 
-  const input = document.getElementById("commentInput");
-  const text = input.value.trim();
-  if (!text) return;
+  if (!currentUser || !text) return;
 
   const comment = await addComment(postId, text, currentUser);
 
@@ -153,15 +143,13 @@ async function sendComment() {
     comment.id,
     "comment"
   );
-
-  input.value = "";
 }
 
 /* =========================
 REPLY
 ========================= */
 
-function openReplyForm(c, commentEl) {
+function openReplyForm(c, el) {
 
   document.querySelectorAll(".reply-form")
     .forEach(e => e.remove());
@@ -170,22 +158,12 @@ function openReplyForm(c, commentEl) {
   form.className = "reply-form";
 
   form.innerHTML = `
-    <textarea placeholder="답글 입력"></textarea>
-    <div class="btns">
-      <button class="send">전송</button>
-      <button class="cancel">취소</button>
-    </div>
+    <textarea></textarea>
+    <button class="send">전송</button>
+    <button class="cancel">취소</button>
   `;
 
-  const child = commentEl.querySelector(".child");
-
-  // 🔥 여기 핵심
-  child.prepend(form);
-
-  requestAnimationFrame(() => {
-    form.scrollIntoView({ behavior: "smooth", block: "center" });
-    form.querySelector("textarea").focus();
-  });
+  el.querySelector(".child").prepend(form);
 
   form.querySelector(".send").onclick = async () => {
 
@@ -199,20 +177,17 @@ function openReplyForm(c, commentEl) {
       c.id
     );
 
-    const participants = await getParticipants(postId) || [];
+    const parentUid = c.uid;
 
-    const parentOwnerUid = c.uid;
-
-    const targets = [...new Set([parentOwnerUid])]
-      .filter(uid => uid !== currentUser.uid);
-
-    await addNotifications(
-      targets,
-      currentUser.uid,
-      currentUser.name,
-      comment.id,
-      "reply"
-    );
+    if (parentUid && parentUid !== currentUser.uid) {
+      await addNotifications(
+        [parentUid],
+        currentUser.uid,
+        currentUser.name,
+        comment.id,
+        "reply"
+      );
+    }
 
     form.remove();
   };
@@ -221,48 +196,16 @@ function openReplyForm(c, commentEl) {
 }
 
 /* =========================
-EDIT
-========================= */
-
-function openEditForm(c, commentEl, oldText) {
-
-  document.querySelectorAll(".edit-form")
-    .forEach(e => e.remove());
-
-  const form = document.createElement("div");
-  form.className = "edit-form";
-
-  form.innerHTML = `
-    <textarea>${oldText}</textarea>
-    <div>
-      <button class="save">저장</button>
-      <button class="cancel">취소</button>
-    </div>
-  `;
-
-  const zone = commentEl.querySelector(".reply-zone");
-  zone.innerHTML = "";
-  zone.appendChild(form);
-
-  requestAnimationFrame(() => {
-    form.scrollIntoView({ behavior: "smooth", block: "center" });
-    form.querySelector("textarea").focus();
-  });
-
-  form.querySelector(".cancel").onclick = () => form.remove();
-}
-
-/* =========================
-NOTIFICATIONS POPUP
+NOTIFICATIONS
 ========================= */
 
 function detectNotifications(changes) {
 
-  changes.forEach(change => {
+  changes.forEach(c => {
 
-    if (change.type !== "added") return;
+    if (c.type !== "added") return;
 
-    const data = change.doc.data();
+    const data = c.doc.data();
 
     if (data.uid === currentUser.uid) return;
 
@@ -278,71 +221,36 @@ function showPopup(msg) {
   el.style.display = "block";
   el.textContent = `🔔 ${msg}`;
 
-  clearTimeout(el.timer);
-
-  el.timer = setTimeout(() => {
+  setTimeout(() => {
     el.style.display = "none";
-  }, 4000);
+  }, 3000);
 }
 
 /* =========================
-NOTIFICATION LIST
+NOTIFICATION UI
 ========================= */
 
-function renderNotifications(list){
+function renderNotifications(list) {
 
   const box = document.getElementById("notificationList");
+  if (!box) return;
+
   box.innerHTML = "";
 
-  const myList = list.filter(n =>
-    n.targetUid === currentUser.uid && !n.read
-  );
+  list
+    .filter(n => n.targetUid === currentUser.uid && !n.read)
+    .forEach(n => {
 
-  myList.forEach(n => {
+      const div = document.createElement("div");
+      div.textContent = `🔔 ${n.senderName}`;
 
-    const div = document.createElement("div");
-    div.className = "notification-item";
+      div.onclick = async () => {
+        await markNotificationRead(n.id);
+      };
 
-    div.textContent =
-      `🔔 ${n.senderName} 님이 ${n.type === "reply" ? "답글" : "댓글"}을 남겼습니다`;
-
-    const delBtn = document.createElement("button");
-    delBtn.textContent = "✕";
-
-    delBtn.onclick = async (e) => {
-      e.stopPropagation();
-      await deleteDoc(doc(db, "notifications", n.id));
-    };
-
-    div.appendChild(delBtn);
-
-    div.onclick = async () => {
-      await markNotificationRead(n.id);
-      jumpToComment(n.commentId);
-    };
-
-    box.appendChild(div);
-  });
+      box.appendChild(div);
+    });
 }
 
-/* =========================
-SCROLL TO COMMENT
-========================= */
-
-function jumpToComment(id) {
-
-  const target = document.querySelector(`[data-id="${id}"]`);
-  if (!target) return;
-
-  target.scrollIntoView({ behavior: "smooth", block: "center" });
-
-  target.classList.add("highlight");
-
-  setTimeout(() => target.classList.remove("highlight"), 2000);
-}
-
-/* =========================
-EXPORT
-========================= */
-
+/* export */
 window.sendComment = sendComment;
