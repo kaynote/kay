@@ -128,11 +128,8 @@ async function sendComment() {
 
   const comment = await addComment(postId, text, currentUser);
 
-  // 🔥 게시물 참여자 목록 가져오기
-  const participants = (await getParticipants(postId)) || [];
-
-  // 본인 제외
-  const targets = [...new Set(participants)]
+  // 🔥 여기만 핵심 수정
+  const targets = [currentPost.ownerUid]
     .filter(uid => uid !== currentUser.uid);
 
   // 🔥 댓글 알림 생성
@@ -287,6 +284,8 @@ function renderNotifications(list){
   const myList = list.filter(n =>
     n.targetUid === currentUser.uid && !n.read
   );
+
+  myList.forEach(n => {
 
     const div = document.createElement("div");
     div.className = "notification-item";
