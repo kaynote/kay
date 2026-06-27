@@ -273,11 +273,23 @@ async function openModal(p){
         </div>
 
         <div class="commentArea">
-            <textarea class="commentInput" placeholder="댓글 입력 (최대 1000자)"></textarea>
+            <textarea class="commentInput"></textarea>
             <button class="commentBtn">등록</button>
             <div class="comments"></div>
         </div>
     `;
+
+    // 👇👇👇 여기 “바로 아래”에 붙이는 거야
+    const btn = modalBody.querySelector(".commentBtn");
+    const input = modalBody.querySelector(".commentInput");
+
+    btn.onclick = async () => {
+        const text = input.value.trim();
+        if (!text) return;
+
+        console.log("댓글:", text);
+    };
+}
 
     const likeBtn = modalBody.querySelector(".likeBtn");
     const likeCountEl = modalBody.querySelector(".likeCount");
