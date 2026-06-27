@@ -2347,4 +2347,11 @@ const people = [
   }
 ];
 
-export default people;
+const OWNER_UID = "eEltgLaV6oN7MHUXTfQONc2wGAk1";
+
+const peopleWithOwner = people.map(p => ({
+  ...p,
+  ownerUid: OWNER_UID
+}));
+
+export default peopleWithOwner;
