@@ -1017,19 +1017,20 @@ watchAuth(user => {
        BELL
     ========================= */
 
+document.addEventListener("DOMContentLoaded", () => {
+
     init();
-});
 
-const bellBtn = document.getElementById("bellBtn");
-const notificationList = document.getElementById("notificationList");
+    const bellBtn = document.getElementById("bellBtn");
+    const notificationList = document.getElementById("notificationList");
 
-bellBtn.addEventListener("click", () => {
-    console.log("bell clicked");
-    console.log(notificationList.className);
+    if (bellBtn && notificationList) {
+        bellBtn.addEventListener("click", () => {
+            console.log("bell clicked");
+            notificationList.classList.toggle("show");
+        });
+    }
 
-    notificationList.classList.toggle("show");
-
-    console.log(notificationList.className);
 });
 
 </script>
