@@ -40,13 +40,18 @@ async function deleteAllNotifications(userId) {
 
   const batch = writeBatch(db);
 
+  let hasDelete = false;
+
   snapshot.forEach((docSnap) => {
     const data = docSnap.data();
 
     if (data.targetUid === userId) {
       batch.delete(doc(db, "notifications", docSnap.id));
+      hasDelete = true;
     }
   });
+
+  if (!hasDelete) return;
 
   await batch.commit();
 }
@@ -58,9 +63,14 @@ INIT
 window.addEventListener("load", async () => {
 
   currentUser = await login();
-  
+
+  // ⭐ 여기 바로 아래가 정답 위치
   document.getElementById("deleteAllNotificationsBtn").onclick = async () => {
     if (!currentUser) return;
+
+    const confirmDelete = confirm("모든 알림을 삭제할까요?");
+    if (!confirmDelete) return;
+
     await deleteAllNotifications(currentUser.uid);
   };
 
@@ -80,7 +90,6 @@ window.addEventListener("load", async () => {
     firstSnapshot = false;
   });
 
-  // 🔥 여기 대신 이 구조 사용
   watchAuth((user) => {
     if (!user) return;
 
@@ -314,9 +323,8 @@ function renderNotifications(list){
   const box = document.getElementById("notificationList");
   box.innerHTML = "";
 
-  const myList = list.filter(n =>
-    n.targetUid === currentUser.uid && !n.read
-  );
+  await deleteAllNotifications(currentUser.uid);
+  await markNotificationReadRefresh(); // 또는 watchNotifications 자동 갱신
 
   myList.forEach(n => {
 
