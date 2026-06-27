@@ -3,7 +3,6 @@ import people from "./people.js";
 import {
   login,
   addComment,
-  deleteDoc,
   doc,
   updateComment,
   watchAuth,
