@@ -1,4 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
 import {
   getFirestore,
   collection,
@@ -32,45 +33,61 @@ const firebaseConfig = {
   projectId: "kay-gallery",
   storageBucket: "kay-gallery.firebasestorage.app",
   messagingSenderId: "276470297982",
-  appId: "1:276470297982:web:838b8a57269b26cd3d6f2f"
+  appId: "1:276470297982:web:838b8a57269b26cd3d6f2f",
+  measurementId: "G-E61XXMZCHM"
 };
 
+/* =========================
+INIT
+========================= */
+
 const app = initializeApp(firebaseConfig);
+
 export const db = getFirestore(app);
 export const auth = getAuth(app);
 
 const provider = new GoogleAuthProvider();
 
 /* =========================
-AUTH
+USER
 ========================= */
 
-function normalize(user) {
+function normalizeUser(user) {
   if (!user) return null;
 
   return {
-    uid: user.uid,
-    email: user.email,
+    uid: user.uid || "",
+    email: user.email || "",
     name:
-      user.displayName ||
       user.providerData?.[0]?.displayName ||
+      user.displayName ||
       user.email ||
-      "익명",
+      "익명 사용자",
     photo: user.photoURL || ""
   };
 }
 
+/* =========================
+AUTH
+========================= */
+
 export async function login() {
-  const res = await signInWithPopup(auth, provider);
-  return normalize(res.user);
+  if (auth.currentUser) {
+    return normalizeUser(auth.currentUser);
+  }
+
+  const result = await signInWithPopup(auth, provider);
+  return normalizeUser(result.user);
 }
 
 export async function logout() {
-  return signOut(auth);
+  await signOut(auth);
 }
 
-export function watchAuth(cb) {
-  return onAuthStateChanged(auth, (u) => cb(normalize(u)));
+export function watchAuth(callback) {
+  return onAuthStateChanged(auth, (user) => {
+    callback(normalizeUser(user));
+  });
 }
 
 /* =========================
@@ -78,7 +95,7 @@ COMMENTS
 ========================= */
 
 export async function addComment(postId, text, user, parentId = null) {
-  return addDoc(
+  return await addDoc(
     collection(db, "people", postId, "comments"),
     {
       text,
@@ -91,42 +108,76 @@ export async function addComment(postId, text, user, parentId = null) {
   );
 }
 
-export function watchComments(postId, cb) {
+export async function updateComment(postId, commentId, text) {
+  await updateDoc(
+    doc(db, "people", postId, "comments", commentId),
+    { text }
+  );
+}
+
+export async function deleteComment(postId, commentId) {
+  await deleteDoc(
+    doc(db, "people", postId, "comments", commentId)
+  );
+}
+
+/* realtime comments */
+export function watchComments(postId, callback) {
   return onSnapshot(
     collection(db, "people", postId, "comments"),
-    (snap) => {
-      const arr = snap.docs.map(d => ({
-        id: d.id,
-        ...d.data()
-      }));
+    (snapshot) => {
+      const comments = [];
 
-      arr.sort((a, b) =>
-        (a.createdAt?.seconds || 0) - (b.createdAt?.seconds || 0)
+      snapshot.forEach(docItem => {
+        comments.push({
+          id: docItem.id,
+          ...docItem.data()
+        });
+      });
+
+      const filtered = arr.filter(n => !n.deleted);
+
+      callback(filtered);
+
+      comments.sort(
+        (a, b) =>
+          (a.createdAt?.seconds || 0) -
+          (b.createdAt?.seconds || 0)
       );
 
-      cb(arr, snap.docChanges());
+      callback(comments, snapshot.docChanges());
     }
   );
 }
 
 /* =========================
-NOTIFICATIONS
+NOTIFICATIONS (FIXED CORE)
 ========================= */
 
-export async function addNotification(targetUid, senderUid, senderName, personId, commentId, type) {
+export async function addNotification(
+  targetUid,
+  senderUid,
+  senderName,
+  personId,
+  commentId,
+  type,
+  read = false
+) {
   if (!targetUid || targetUid === senderUid) return;
 
-  const q = query(
-    collection(db, "notifications"),
-    where("targetUid", "==", targetUid),
-    where("senderUid", "==", senderUid),
-    where("commentId", "==", commentId)
-  );
+  /* 🔥 중복 방지 핵심 */
+const q = query(
+  collection(db, "notifications"),
+  where("targetUid", "==", targetUid),
+  where("commentId", "==", commentId),
+  where("senderUid", "==", senderUid)
+);
 
   const snap = await getDocs(q);
+
   if (!snap.empty) return;
 
-  return addDoc(collection(db, "notifications"), {
+  await addDoc(collection(db, "notifications"), {
     targetUid,
     senderUid,
     senderName,
@@ -138,48 +189,107 @@ export async function addNotification(targetUid, senderUid, senderName, personId
   });
 }
 
-export async function addNotifications(targets, senderUid, senderName, commentId, type) {
-  await Promise.all(
-    targets.map(uid =>
-      addNotification(uid, senderUid, senderName, null, commentId, type)
-    )
+/* =========================
+PARTICIPANTS (SIMPLIFIED)
+========================= */
+
+export async function getParticipants(postId) {
+  const snap = await getDocs(
+    collection(db, "people", postId, "comments")
   );
+
+  const users = new Set();
+
+  snap.forEach(docItem => {
+    const data = docItem.data();
+    if (data.uid) users.add(data.uid);
+  });
+
+  return [...users];
 }
 
-export function watchNotifications(uid, cb) {
+/* batch notifications */
+export async function addNotifications(
+  targetUids,
+  senderUid,
+  senderName,
+  commentId,
+  type
+) {
+  const jobs = [];
+
+  targetUids.forEach(uid => {
+    if (!uid) return;
+    if (uid === senderUid) return;
+
+    jobs.push(
+      addNotification(
+        uid,
+        senderUid,
+        senderName,
+        commentId,
+        type
+      )
+    );
+  });
+
+  await Promise.all(jobs);
+}
+
+/* =========================
+WATCH NOTIFICATIONS
+========================= */
+
+export function watchNotifications(uid, callback) {
   return onSnapshot(
-    query(collection(db, "notifications"), where("targetUid", "==", uid)),
+    query(
+      collection(db, "notifications"),
+      where("targetUid", "==", uid)
+    ),
     (snap) => {
-      cb(
-        snap.docs.map(d => ({ id: d.id, ...d.data() }))
+
+      const arr = [];
+
+      snap.forEach(docItem => {
+        arr.push({
+          id: docItem.id,
+          ...docItem.data()
+        });
+      });
+
+      arr.sort((a, b) =>
+        (b.createdAt?.seconds || 0) -
+        (a.createdAt?.seconds || 0)
       );
+
+      callback(arr);
     }
   );
 }
 
+/* =========================
+READ NOTIFICATION
+========================= */
+
 export async function markNotificationRead(id) {
-  return updateDoc(doc(db, "notifications", id), { read: true });
+  await updateDoc(doc(db, "notifications", id), {
+    read: true
+  });
 }
 
 /* =========================
 UTIL
 ========================= */
 
-export async function getParticipants(postId) {
-  const snap = await getDocs(collection(db, "people", postId, "comments"));
-
-  const set = new Set();
-  snap.forEach(d => set.add(d.data().uid));
-
-  return [...set];
-}
-
 export async function getCommentById(postId, commentId) {
   const snap = await getDoc(
     doc(db, "people", postId, "comments", commentId)
   );
 
-  return snap.exists()
-    ? { id: snap.id, ...snap.data() }
-    : null;
+  if (!snap.exists()) return null;
+
+  return {
+    id: snap.id,
+    ...snap.data()
+  };
 }
