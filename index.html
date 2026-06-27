@@ -510,6 +510,13 @@ async function openModal(p){
         div.id = `comment-${c.id}`;
         div.style.marginLeft = `${depth * 20}px`;
 
+        const action = document.createElement("div");
+        action.className = "actions";
+
+        action.innerHTML = `
+            <button class="delete-btn">삭제</button>
+        `;
+
         div.innerHTML = `
             <div class="commentRow">
                 <div class="left">
@@ -525,16 +532,13 @@ async function openModal(p){
                     </span>
                     ${c.editedAt ? `<span class="edited">수정됨</span>` : ""}
                 </div>
-
-                <button class="delete-btn">삭제</button>
             </div>
         `;
 
+        div.appendChild(action);
+
         return div;
     }
-
-        const action = document.createElement("div");
-        action.className = "actions";
 
         // ======================
         // 답글 버튼
