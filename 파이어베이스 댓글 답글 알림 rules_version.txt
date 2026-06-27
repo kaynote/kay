@@ -3,10 +3,6 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    /* =====================
-       AUTH HELPERS
-    ===================== */
-
     function isSignedIn() {
       return request.auth != null;
     }
@@ -16,40 +12,43 @@ service cloud.firestore {
         request.auth.uid == "eEltgLaV6oN7MHUXTfQONc2wGAk1";
     }
 
-    function isOwner(uid) {
-      return isSignedIn() && request.auth.uid == uid;
-    }
-
-    function isValidString(field, maxSize) {
-      return field is string && field.size() > 0 && field.size() <= maxSize;
-    }
-
     /* =====================
-       NOTIFICATIONS (SECURE)
+       NOTIFICATIONS
     ===================== */
 
     match /notifications/{id} {
 
-      // CREATE: senderUid 반드시 본인이어야 함 (조작 방지 핵심)
+      // CREATE
       allow create: if isSignedIn()
+        // sender는 반드시 본인
         && request.resource.data.senderUid == request.auth.uid
-        && isValidString(request.resource.data.targetUid, 128)
-        && isValidString(request.resource.data.commentId, 128)
-        && isValidString(request.resource.data.type, 20)
+
+        // 🔥 targetUid 반드시 존재 + 문자열
+        && request.resource.data.targetUid is string
+
+        // 자기 자신에게 보내는 알림 방지 (선택)
+        && request.resource.data.targetUid != request.auth.uid
+
+        // read 기본값 false 강제
         && request.resource.data.read == false;
 
-      // READ: 본인 or 관리자만
+      // READ (본인만)
       allow read: if isSignedIn()
-        && (resource.data.targetUid == request.auth.uid || isAdmin());
+        && resource.data.targetUid == request.auth.uid;
 
-      // UPDATE: read 상태만 변경 가능 (나머지 필드 보호)
+      // UPDATE (read만 변경)
       allow update: if isSignedIn()
-        && (resource.data.targetUid == request.auth.uid || isAdmin())
-        && request.resource.data.diff(resource.data).affectedKeys()
-           .hasOnly(["read"]);
+        && resource.data.targetUid == request.auth.uid
+        && request.resource.data.diff(resource.data)
+            .affectedKeys()
+            .hasOnly(["read"]);
 
-      // DELETE: 관리자만 (유저 삭제 차단)
-      allow delete: if isAdmin();
+      // DELETE
+      allow delete: if isSignedIn()
+        && (
+          resource.data.targetUid == request.auth.uid
+          || isAdmin()
+        );
     }
 
     /* =====================
@@ -60,19 +59,13 @@ service cloud.firestore {
 
       allow read: if true;
 
-      /* =====================
-         COMMENTS
-      ===================== */
-
+      /* -------- COMMENTS -------- */
       match /comments/{commentId} {
 
         allow read: if true;
 
         allow create: if isSignedIn()
-          && request.resource.data.uid == request.auth.uid
-          && isValidString(request.resource.data.text, 1000)
-          && (request.resource.data.parentId == null
-              || request.resource.data.parentId is string);
+          && request.resource.data.uid == request.auth.uid;
 
         allow update: if isSignedIn()
           && (resource.data.uid == request.auth.uid || isAdmin());
@@ -81,10 +74,7 @@ service cloud.firestore {
           && (resource.data.uid == request.auth.uid || isAdmin());
       }
 
-      /* =====================
-         LIKES
-      ===================== */
-
+      /* -------- LIKES -------- */
       match /likes/{uid} {
 
         allow read: if true;

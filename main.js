@@ -128,19 +128,24 @@ async function sendComment() {
 
   const comment = await addComment(postId, text, currentUser);
 
+  // 🔥 게시물 참여자 목록 가져오기
   const participants = (await getParticipants(postId)) || [];
 
-  // 본인 제거 + 중복 제거
-  const uniqueParticipants = [...new Set(participants)]
+  // 본인 제외
+  const targets = [...new Set(participants)]
     .filter(uid => uid !== currentUser.uid);
 
+  // 🔥 댓글 알림 생성
   await addNotifications(
-    uniqueParticipants,
+    targets,
     currentUser.uid,
     currentUser.name,
     comment.id,
     "comment"
   );
+
+  input.value = "";
+}
 
 /* =========================
 REPLY
