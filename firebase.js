@@ -122,10 +122,12 @@ export async function deleteComment(postId, commentId) {
 }
 
 /* realtime comments */
+
 export function watchComments(postId, callback) {
   return onSnapshot(
     collection(db, "people", postId, "comments"),
     (snapshot) => {
+
       const comments = [];
 
       snapshot.forEach(docItem => {
@@ -135,17 +137,13 @@ export function watchComments(postId, callback) {
         });
       });
 
-      const filtered = arr.filter(n => !n.deleted);
-
-      callback(filtered);
-
       comments.sort(
         (a, b) =>
           (a.createdAt?.seconds || 0) -
           (b.createdAt?.seconds || 0)
       );
 
-      callback(comments, snapshot.docChanges());
+      callback(comments);
     }
   );
 }
