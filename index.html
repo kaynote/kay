@@ -945,7 +945,7 @@ watchAuth(user => {
         }
 
         const person = people.find(
-            p => String(p.no) === String(n.postId)
+            p => p.name === n.postId
         );
 
         if (!person) return;
