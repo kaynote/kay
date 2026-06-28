@@ -551,10 +551,26 @@ async function openModal(p){
                             "익명",
                         photo: user.photoURL,
                         text,
-                        parentId: c.id,
+                        parentId: null,
                         createdAt: serverTimestamp()
                     }
                 );
+
+                console.log("댓글 저장 성공");
+
+                /* ⭐ 여기부터 알림 */
+                const ownerUid = auth.currentUser.uid; // 관리자 = 게시글 작성자
+
+                await addDoc(collection(db, "notifications"), {
+                    targetUid: ownerUid,
+                    senderUid: user.uid,
+                    senderName: user.displayName || user.email || "익명",
+                    postId: p.id,
+                    commentId: null,
+                    type: "comment",
+                    read: false,
+                    createdAt: serverTimestamp()
+                });
 
                 // ★ 답글 알림 생성
                 if (c.uid !== user.uid) {
