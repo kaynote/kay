@@ -74,6 +74,9 @@ import {
     deleteAllNotifications
 } from "./firebase.js";
 
+// index.html 최상단
+const ADMIN_UID = "eEltgLaV6oN7MHUXTfQONc2wGAk1";
+
 import {
     collection,
     getDocs,
@@ -372,54 +375,54 @@ async function openModal(p){
        COMMENTS
     ===================== */
 
-    commentBtn.addEventListener("click", async () => {
-        try {
+  commentBtn.addEventListener("click", async () => {
+      try {
 
-            const text = commentInput.value.trim();
-            if (!text) return;
+          const text = commentInput.value.trim();
+          if (!text) return;
 
-            const user = auth.currentUser || await login();
+          const user = auth.currentUser || await login();
 
-            console.log("댓글 저장 시작", p.id);
+          console.log("댓글 저장 시작", p.id);
 
-            await addDoc(
-                collection(db, "people", p.id, "comments"),
-                {
-                    uid: user.uid,
-                    name:
-                        user.displayName ||
-                        user.email ||
-                        "익명",
-                    photo: user.photoURL,
-                    text,
-                    parentId: null,
-                    createdAt: serverTimestamp()
-                }
-            );
+          await addDoc(
+              collection(db, "people", p.id, "comments"),
+              {
+                  uid: user.uid,
+                  name:
+                      user.displayName ||
+                      user.email ||
+                      "익명",
+                  photo: user.photoURL,
+                  text,
+                  parentId: null,
+                  createdAt: serverTimestamp()
+              }
+          );
 
-            console.log("댓글 저장 성공");
+          console.log("댓글 저장 성공");
 
-            const ownerUid = auth.currentUser.uid;
+          const ownerUid = auth.currentUser.uid;
 
-            await addDoc(collection(db, "notifications"), {
-                targetUid: ownerUid,
-                senderUid: user.uid,
-                senderName: user.displayName || user.email || "익명",
-                postId: p.id,
-                commentId: null,
-                type: "comment",
-                read: false,
-                createdAt: serverTimestamp()
-            });
+          await addDoc(collection(db, "notifications"), {
+              targetUid: ADMIN_UID,
+              senderUid: user.uid,
+              senderName: user.displayName || user.email || "익명",
+              postId: p.id,
+              commentId: null,
+              type: "comment",
+              read: false,
+              createdAt: serverTimestamp()
+          });
 
-            commentInput.value = "";
-            loadComments();
+          commentInput.value = "";
+          loadComments();
 
-        } catch (err) {
-            console.error("댓글 저장 실패:", err);
-            alert("댓글 저장 실패: " + err.message);
-        }
-    });
+      } catch (err) {
+          console.error("댓글 저장 실패:", err);
+          alert("댓글 저장 실패: " + err.message);
+      }
+  });
 
     /* =====================
        LOAD COMMENTS
