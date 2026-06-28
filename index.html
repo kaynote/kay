@@ -385,13 +385,20 @@ async function openModal(p){
 
           console.log("댓글 저장 시작", p.id);
 
-          await addDoc(collection(db, "people", p.id, "comments"), {
-            uid: user.uid,
-            name: user.displayName || user.email || "익명",
-            text,
-            parentId: null,
-            createdAt: serverTimestamp()
-          });
+          await addDoc(
+            collection(db, "people", p.id, "comments"),
+            {
+              uid: user.uid,
+              name: user.displayName || user.email || "익명",
+              photo: user.photoURL,
+              text: text,
+
+              postId: p.id,        // ⭐ 이거 필수 (rules 때문에)
+              parentId: null,
+
+              createdAt: serverTimestamp()
+            }
+          );
 
           console.log("댓글 저장 성공");
 
@@ -529,7 +536,11 @@ async function openModal(p){
                 const text = textarea.value.trim();
                 if (!text) return;
 
-                const user = auth.currentUser || await login();
+                if (!auth.currentUser) {
+                  await login();
+                }
+
+                const user = auth.currentUser;
 
                 await addDoc(
                     collection(db, "people", p.id, "comments"),
