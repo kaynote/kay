@@ -55,7 +55,7 @@ function createUniqueId(base) {
 }
 
 /* =========================
-   timestamp formatter
+   format note
 ========================= */
 function formatNote(note) {
   if (!note) return "";
@@ -148,14 +148,14 @@ let people = lines.map((line, index) => {
   const key = normalize(name);
   const matchedImage = imageMap.get(key) || "no-image.jpg";
 
-return {
-  no: index + 1,
-  name,
-  ko,
-  displayName,
-  note: formatNote(note),
-  image: matchedImage
-};
+  return {
+    no: index + 1,
+    name,
+    ko,
+    displayName,
+    note: formatNote(note),
+    image: matchedImage
+  };
 });
 
 /* =========================
@@ -169,7 +169,7 @@ people.sort((a, b) =>
 );
 
 /* =========================
-   final build (no + id)
+   final build (id 생성)
 ========================= */
 people = people.map((p, i) => {
 

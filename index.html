@@ -402,14 +402,13 @@ async function openModal(p){
             console.log("댓글 저장 성공");
 
             // 🔥 수정
-            if (p.id && p.id !== user.uid) {
                 await addDoc(
                     collection(db, "notifications"),
                     {
-                        targetUid: p.ownerUid || p.uid,
+                        targetUid: p.uid,   // ⭐ 여기
                         senderUid: user.uid,
                         senderName: user.displayName || user.email || "익명",
-                        postId: p.id,   // 🔥 여기 수정
+                        postId: p.id,
                         commentId: null,
                         type: "comment",
                         read: false,
