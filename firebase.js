@@ -24,19 +24,21 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 export async function deleteAllNotifications(uid) {
-  const snap = await getDocs(collection(db, "notifications"));
 
-  const deletes = [];
+    const q = query(
+        collection(db, "notifications"),
+        where("targetUid", "==", uid)
+    );
 
-  snap.forEach((d) => {
-    const data = d.data();
+    const snap = await getDocs(q);
 
-    if (data.targetUid === uid) {
-      deletes.push(deleteDoc(doc(db, "notifications", d.id)));
-    }
-  });
+    const jobs = [];
 
-  await Promise.all(deletes);
+    snap.forEach((d) => {
+        jobs.push(deleteDoc(d.ref));
+    });
+
+    await Promise.all(jobs);
 }
 
 /* =========================
@@ -172,7 +174,6 @@ export async function addNotification(
   targetUid,
   senderUid,
   senderName,
-  personId,
   commentId,
   type,
   read = false
