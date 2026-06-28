@@ -684,14 +684,16 @@ async function openModal(p){
                     }
                 }
 
+                const deletePromises = [];
+
                 for (const id of targets) {
-                    await deleteDoc(
-                        doc(db, "people", p.name, "comments", id)
+                    deletePromises.push(
+                        deleteDoc(doc(db, "people", p.name, "comments", id))
                     );
                 }
 
+                await Promise.all(deletePromises);
                 await loadComments();
-            };
 
             action.appendChild(editBtn);
             action.appendChild(delBtn);
