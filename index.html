@@ -343,7 +343,12 @@ async function openModal(p){
 
     likeBtn.addEventListener("click", async ()=>{
 
-        const user = auth.currentUser || await login();
+        let user = auth.currentUser;
+
+        if (!user) {
+            await login();
+            user = auth.currentUser;
+        }
 
         const ref = doc(db, "people", p.id, "likes", user.uid);
 
@@ -375,63 +380,45 @@ async function openModal(p){
        COMMENTS
     ===================== */
 
-  commentBtn.addEventListener("click", async () => {
-      try {
+    commentBtn.addEventListener("click", async () => {
+        try {
 
-          const text = commentInput.value.trim();
-          if (!text) return;
+            const text = commentInput.value.trim();
+            if (!text) return;
 
-          const user = auth.currentUser || await login();
+            const user = auth.currentUser || await login();
 
-          console.log("댓글 저장 시작", p.id);
+            await addDoc(
+                collection(db, "people", p.id, "comments"),
+                {
+                    uid: user.uid,
+                    name: user.displayName || user.email || "익명",
+                    photo: user.photoURL,
+                    text,
+                    postId: p.id,
+                    parentId: null,
+                    createdAt: serverTimestamp()
+                }
+            );
 
-          await addDoc(
-            collection(db, "people", p.id, "comments"),
-            {
-              uid: user.uid,
-              name: user.displayName || user.email || "익명",
-              photo: user.photoURL,
-              text: text,
+            commentInput.value = "";
 
-              postId: p.id,        // ⭐ 이거 필수 (rules 때문에)
-              parentId: null,
+            // 🔥 중요: await 붙이기
+            await loadComments(p.id, commentsDiv, commentCountEl);
 
-              createdAt: serverTimestamp()
-            }
-          );
-
-          console.log("댓글 저장 성공");
-
-          const ownerUid = auth.currentUser.uid;
-
-          await addDoc(collection(db, "notifications"), {
-              targetUid: ADMIN_UID,
-              senderUid: user.uid,
-              senderName: user.displayName || user.email || "익명",
-              postId: p.id,
-              commentId: null,
-              type: "comment",
-              read: false,
-              createdAt: serverTimestamp()
-          });
-
-          commentInput.value = "";
-          loadComments();
-
-      } catch (err) {
-          console.error("댓글 저장 실패:", err);
-          alert("댓글 저장 실패: " + err.message);
-      }
-  });
+        } catch (err) {
+            console.error(err);
+        }
+    });
 
     /* =====================
        LOAD COMMENTS
     ===================== */
 
-    async function loadComments(){
+    async function loadComments(postId, commentsDiv, commentCountEl) {
 
         const q = query(
-            collection(db, "people", p.id, "comments"),
+            collection(db, "people", postId, "comments"),
             orderBy("createdAt", "asc")
         );
 
@@ -444,7 +431,6 @@ async function openModal(p){
 
         commentCountEl.textContent = list.length;
 
-        // 1. map 생성
         const map = {};
         const roots = [];
 
@@ -452,12 +438,9 @@ async function openModal(p){
             map[c.id] = { ...c, replies: [] };
         });
 
-        // 2. 트리 연결 (핵심 수정 버전)
         list.forEach(c => {
-
             const node = map[c.id];
 
-            // 부모가 존재하고, 자기 자신이 아닌 경우만 자식으로 연결
             if (c.parentId && map[c.parentId] && c.parentId !== c.id) {
                 map[c.parentId].replies.push(node);
             } else {
@@ -465,10 +448,8 @@ async function openModal(p){
             }
         });
 
-        // 3. 렌더 초기화
         commentsDiv.innerHTML = "";
 
-        // 4. 루트부터 렌더
         roots.forEach(c => {
             commentsDiv.appendChild(renderComment(c));
         });
@@ -708,7 +689,7 @@ async function openModal(p){
                 }
 
                 await Promise.all(deletePromises);
-                await loadComments();
+                await loadComments(p.id, commentsDiv, commentCountEl);
                 return; // ⭐ 중요: 이벤트 종료 강제;
             }; // ⭐⭐⭐ 여기서 끝
 
@@ -730,7 +711,7 @@ async function openModal(p){
     }
 
     await loadLikes();
-    await loadComments();
+    await loadComments(p.id, commentsDiv, commentCountEl);
 
 } // openModal 종료
 
