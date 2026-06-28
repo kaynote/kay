@@ -312,7 +312,7 @@ async function openModal(p){
 
     showLikesBtn.addEventListener("click", async ()=>{
         const snap = await getDocs(
-            collection(db, "people", p.name, "likes")
+            collection(db, "people", p.id, "likes")
         );
 
         const result = snap.docs
@@ -328,7 +328,7 @@ async function openModal(p){
 
     async function loadLikes(){
         const snap = await getDocs(
-            collection(db, "people", p.name, "likes")
+            collection(db, "people", p.id, "likes")
         );
 
         likeCountEl.textContent = snap.size;
@@ -386,7 +386,7 @@ async function openModal(p){
 
         // 1. 댓글 저장
         await addDoc(
-            collection(db, "people", p.name, "comments"),
+            collection(db, "people", p.id, "comments"),
             {
                 uid: user.uid,
                 name:
@@ -435,7 +435,7 @@ async function openModal(p){
     async function loadComments(){
 
         const q = query(
-            collection(db, "people", p.name, "comments"),
+            collection(db, "people", p.id, "comments"),
             orderBy("createdAt", "asc")
         );
 
@@ -543,7 +543,7 @@ async function openModal(p){
                 const user = auth.currentUser || await login();
 
                 await addDoc(
-                    collection(db, "people", p.name, "comments"),
+                    collection(db, "people", p.id, "comments"),
                     {
                         uid: user.uid,
                         name:
@@ -661,7 +661,7 @@ async function openModal(p){
                 if (!confirm("댓글과 답글을 삭제할까요?")) return;
 
                 const snap = await getDocs(
-                    collection(db, "people", p.name, "comments")
+                    collection(db, "people", p.id, "comments")
                 );
 
                 const all = snap.docs.map(d => ({
@@ -945,7 +945,7 @@ watchAuth(user => {
         }
 
         const person = people.find(
-            p => p.name === n.postId
+            p => p.id === n.postId
         );
 
         if (!person) return;
