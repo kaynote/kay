@@ -573,26 +573,3 @@ COMMENT SYSTEM
 #deleteAllNotificationsBtn:hover {
   background: #ddd;
 }
-
-.site-banner {
-    display: block;
-    max-width: 500px;
-    margin: 20px auto;
-    padding: 16px 24px;
-
-    background: linear-gradient(135deg, #4f8cff, #6b5cff);
-    color: white;
-    text-decoration: none;
-    text-align: center;
-    font-size: 22px;
-    font-weight: bold;
-    border-radius: 14px;
-
-    box-shadow: 0 8px 20px rgba(0,0,0,.2);
-    transition: .25s;
-}
-
-.site-banner:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 28px rgba(0,0,0,.3);
-}
