@@ -43,11 +43,15 @@
   <span id="badge">0</span>
 </button>
 
-<div class="notification-header">
-  <button id="deleteAllNotificationsBtn">전체 삭제</button>
-</div>
+<div id="notificationList">
 
-<div id="notificationList"></div>
+    <div class="notification-header">
+        <button id="deleteAllNotificationsBtn">
+            전체 삭제
+        </button>
+    </div>
+
+</div>
 
 <!-- MODAL -->
 <div id="modal" class="modal hidden">
@@ -868,7 +872,14 @@ watchAuth(user => {
         badge.textContent = unread;
 
         const box = document.getElementById("notificationList");
-        box.innerHTML = "";
+
+        box.innerHTML = `
+        <div class="notification-header">
+            <button id="deleteAllNotificationsBtn">
+                전체 삭제
+            </button>
+        </div>
+        `;
 
         list
             .sort((a,b)=> (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0))
@@ -972,6 +983,8 @@ document.getElementById("deleteAllNotificationsBtn").onclick = async () => {
 
     await deleteAllNotifications(auth.currentUser.uid);
 };
+
+box.appendChild(div);
 
 const bellBtn = document.getElementById("bellBtn");
 const notificationList = document.getElementById("notificationList");
