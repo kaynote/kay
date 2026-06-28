@@ -373,59 +373,57 @@ async function openModal(p){
     ===================== */
 
     commentBtn.addEventListener("click", async () => {
+        try {
 
-        const text = commentInput.value.trim();
-        if (!text) return;
+            const text = commentInput.value.trim();
+            if (!text) return;
 
-        if (text.length > 1000) {
-            alert("댓글은 1000자 이하만 가능합니다.");
-            return;
-        }
+            const user = auth.currentUser || await login();
 
-        const user = auth.currentUser || await login();
+            console.log("댓글 저장 시작", p.id);
 
-        // 1. 댓글 저장
-        await addDoc(
-            collection(db, "people", p.id, "comments"),
-            {
-                uid: user.uid,
-                name:
-                    user.providerData?.[0]?.displayName ||
-                    user.displayName ||
-                    user.email ||
-                    "익명",
-
-                photo: user.photoURL,
-                text,
-                parentId: null,
-                createdAt: serverTimestamp()
-            }
-        );
-
-        // 2. 댓글 알림 생성
-        if (p.uid && p.uid !== user.uid) {
             await addDoc(
-                collection(db, "notifications"),
+                collection(db, "people", p.id, "comments"),
                 {
-                    targetUid: p.uid,
-                    senderUid: user.uid,
-                    senderName:
+                    uid: user.uid,
+                    name:
                         user.providerData?.[0]?.displayName ||
                         user.displayName ||
                         user.email ||
                         "익명",
-
-                    postId: p.Id,
-                    commentId: null,
-                    type: "comment",
-                    read: false,
+                    photo: user.photoURL,
+                    text,
+                    parentId: null,
                     createdAt: serverTimestamp()
                 }
             );
-        }
 
-        commentInput.value = "";
-        loadComments();
+            console.log("댓글 저장 성공");
+
+            // 🔥 수정
+            if (p.id && p.id !== user.uid) {
+                await addDoc(
+                    collection(db, "notifications"),
+                    {
+                        targetUid: p.uid,
+                        senderUid: user.uid,
+                        senderName: user.displayName || user.email || "익명",
+                        postId: p.id,   // 🔥 여기 수정
+                        commentId: null,
+                        type: "comment",
+                        read: false,
+                        createdAt: serverTimestamp()
+                    }
+                );
+            }
+
+            commentInput.value = "";
+            loadComments();
+
+        } catch (err) {
+            console.error("댓글 저장 실패:", err);
+            alert("댓글 저장 실패: " + err.message);
+        }
     });
 
     /* =====================
