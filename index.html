@@ -415,7 +415,7 @@ async function openModal(p){
                         user.email ||
                         "익명",
 
-                    personId: p.no,
+                    postId: p.name,
                     commentId: null,
                     type: "comment",
                     read: false,
@@ -574,7 +574,7 @@ async function openModal(p){
                                 user.email ||
                                 "익명",
 
-                            personId: p.no,   // ⭐ 핵심 변경 (personName → personId)
+                            postId: p.name,   
 
                             commentId: c.id,
 
@@ -940,7 +940,7 @@ watchAuth(user => {
         }
 
         const person = people.find(
-            p => String(p.no) === String(n.personId)
+            p => p.name === n.postId
         );
 
         if (!person) return;
