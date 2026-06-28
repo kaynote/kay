@@ -66,7 +66,8 @@ import {
     auth,
     login,
     logout,
-    watchAuth
+    watchAuth,
+    deleteAllNotifications
 } from "./firebase.js";
 
 import {
@@ -958,6 +959,26 @@ watchAuth(user => {
 
     init();
 });
+
+    /* =========================
+       BELL
+    ========================= */
+
+    init();
+});
+
+// =========================
+// 전체 알림 삭제
+// =========================
+
+document.getElementById("deleteAllNotificationsBtn").onclick = async () => {
+
+    if (!auth.currentUser) return;
+
+    if (!confirm("모든 알림을 삭제하시겠습니까?")) return;
+
+    await deleteAllNotifications(auth.currentUser.uid);
+};
 
 const bellBtn = document.getElementById("bellBtn");
 const notificationList = document.getElementById("notificationList");
