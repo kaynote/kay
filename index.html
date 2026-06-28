@@ -383,39 +383,34 @@ async function openModal(p){
             console.log("댓글 저장 시작", p.id);
 
             await addDoc(
-              collection(db, "people", p.id, "comments"),
-              {
-                postId: p.id,   // 🔥 추가
-                uid: user.uid,
-                name:
-                  user.providerData?.[0]?.displayName ||
-                  user.displayName ||
-                  user.email ||
-                  "익명",
-                photo: user.photoURL,
-                text,
-                parentId: null,
-                createdAt: serverTimestamp()
-              }
+                collection(db, "people", p.id, "comments"),
+                {
+                    uid: user.uid,
+                    name:
+                        user.displayName ||
+                        user.email ||
+                        "익명",
+                    photo: user.photoURL,
+                    text,
+                    parentId: null,
+                    createdAt: serverTimestamp()
+                }
             );
 
             console.log("댓글 저장 성공");
 
-            // 🔥 수정
-                await addDoc(
-                    collection(db, "notifications"),
-                    {
-                        targetUid: p.uid,   // ⭐ 여기
-                        senderUid: user.uid,
-                        senderName: user.displayName || user.email || "익명",
-                        postId: p.id,
-                        commentId: null,
-                        type: "comment",
-                        read: false,
-                        createdAt: serverTimestamp()
-                    }
-                );
-            }
+            const ownerUid = auth.currentUser.uid;
+
+            await addDoc(collection(db, "notifications"), {
+                targetUid: ownerUid,
+                senderUid: user.uid,
+                senderName: user.displayName || user.email || "익명",
+                postId: p.id,
+                commentId: null,
+                type: "comment",
+                read: false,
+                createdAt: serverTimestamp()
+            });
 
             commentInput.value = "";
             loadComments();
