@@ -694,6 +694,7 @@ async function openModal(p){
 
                 await Promise.all(deletePromises);
                 await loadComments();
+                return; // ⭐ 중요: 이벤트 종료 강제;
             }; // ⭐⭐⭐ 여기서 끝
 
             action.appendChild(editBtn);
@@ -944,7 +945,7 @@ watchAuth(user => {
         }
 
         const person = people.find(
-            p => String(p.no) === String(n.personId)
+            p => String(p.no) === String(n.postId)
         );
 
         if (!person) return;
