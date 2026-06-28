@@ -388,18 +388,27 @@ async function openModal(p){
 
             const user = auth.currentUser || await login();
 
-            await addDoc(
-                collection(db, "people", p.id, "comments"),
-                {
-                    uid: user.uid,
-                    name: user.displayName || user.email || "익명",
-                    photo: user.photoURL,
-                    text,
-                    postId: p.id,
-                    parentId: null,
-                    createdAt: serverTimestamp()
-                }
+            const commentRef = await addDoc(
+              collection(db, "people", p.id, "comments"),
+              {
+                uid: user.uid,
+                text,
+                parentId: null,
+                postId: p.id,
+                createdAt: serverTimestamp()
+              }
             );
+
+            await addDoc(collection(db, "notifications"), {
+              targetUid: ADMIN_UID,
+              senderUid: user.uid,
+              senderName: user.displayName,
+              postId: p.id,
+              commentId: commentRef.id, // ⭐ 핵심
+              type: "comment",
+              read: false,
+              createdAt: serverTimestamp()
+            });
 
             commentInput.value = "";
 
@@ -532,7 +541,7 @@ async function openModal(p){
                     text: text,
 
                     postId: p.id,        // ⭐ 필수
-                    parentId: null,
+                    parentId: c.id,
 
                     createdAt: serverTimestamp()
                   }
@@ -548,7 +557,7 @@ async function openModal(p){
                   senderUid: user.uid,
                   senderName: user.displayName || user.email || "익명",
                   postId: p.id,
-                  commentId: null,
+                  commentId: newlyCreatedCommentId, // ⭐ 중요
                   type: "comment",
                   read: false,
                   createdAt: serverTimestamp()
