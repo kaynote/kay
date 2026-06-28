@@ -383,19 +383,20 @@ async function openModal(p){
             console.log("댓글 저장 시작", p.id);
 
             await addDoc(
-                collection(db, "people", p.id, "comments"),
-                {
-                    uid: user.uid,
-                    name:
-                        user.providerData?.[0]?.displayName ||
-                        user.displayName ||
-                        user.email ||
-                        "익명",
-                    photo: user.photoURL,
-                    text,
-                    parentId: null,
-                    createdAt: serverTimestamp()
-                }
+              collection(db, "people", p.id, "comments"),
+              {
+                postId: p.id,   // 🔥 추가
+                uid: user.uid,
+                name:
+                  user.providerData?.[0]?.displayName ||
+                  user.displayName ||
+                  user.email ||
+                  "익명",
+                photo: user.photoURL,
+                text,
+                parentId: null,
+                createdAt: serverTimestamp()
+              }
             );
 
             console.log("댓글 저장 성공");
@@ -405,7 +406,7 @@ async function openModal(p){
                 await addDoc(
                     collection(db, "notifications"),
                     {
-                        targetUid: p.uid,
+                        targetUid: p.ownerUid || p.uid,
                         senderUid: user.uid,
                         senderName: user.displayName || user.email || "익명",
                         postId: p.id,   // 🔥 여기 수정
