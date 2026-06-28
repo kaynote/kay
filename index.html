@@ -880,6 +880,15 @@ watchAuth(user => {
             </button>
         </div>
         `;
+        
+        document.getElementById("deleteAllNotificationsBtn").onclick = async () => {
+
+            if (!auth.currentUser) return;
+
+            if (!confirm("모든 알림을 삭제하시겠습니까?")) return;
+
+            await deleteAllNotifications(auth.currentUser.uid);
+        };
 
         list
             .sort((a,b)=> (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0))
@@ -970,21 +979,6 @@ watchAuth(user => {
 
     init();
 });
-
-// =========================
-// 전체 알림 삭제
-// =========================
-
-document.getElementById("deleteAllNotificationsBtn").onclick = async () => {
-
-    if (!auth.currentUser) return;
-
-    if (!confirm("모든 알림을 삭제하시겠습니까?")) return;
-
-    await deleteAllNotifications(auth.currentUser.uid);
-};
-
-box.appendChild(div);
 
 const bellBtn = document.getElementById("bellBtn");
 const notificationList = document.getElementById("notificationList");
