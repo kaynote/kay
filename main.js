@@ -57,6 +57,15 @@ window.addEventListener("load", async () => {
     watchNotifications(user.uid, renderNotifications);
   });
 
+  document.getElementById("deleteAllNotificationsBtn").onclick = async () => {
+
+    if (!currentUser) return;
+
+    if (!confirm("모든 알림을 삭제하시겠습니까?")) return;
+
+    await deleteAllNotifications(currentUser.uid);
+  };
+
 });
 
 /* =========================
