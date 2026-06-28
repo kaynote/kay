@@ -708,13 +708,17 @@ async function openModal(p){
             div.appendChild(renderComment(r, depth + 1));
         });
 
-        return div;
-    }
-    
-    await loadLikes();
-    await loadComments();
+        function renderComment(c, depth = 0) {
+            ...
+            return div;
+        }
 
-    } // openModal 종료
+        // 여기까지 renderComment 끝
+
+        await loadLikes();
+        await loadComments();
+
+        } // openModal 종료
 
 /* =========================
    CLOSE MODAL
@@ -942,7 +946,7 @@ watchAuth(user => {
         }
 
         const person = people.find(
-            p => p.name === n.postId
+            p => String(p.no) === String(n.personId)
         );
 
         if (!person) return;
