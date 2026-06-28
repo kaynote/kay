@@ -694,6 +694,7 @@ async function openModal(p){
 
                 await Promise.all(deletePromises);
                 await loadComments();
+            }; // ⭐⭐⭐ 여기서 끝
 
             action.appendChild(editBtn);
             action.appendChild(delBtn);
@@ -704,21 +705,18 @@ async function openModal(p){
         // ======================
         // 재귀 렌더
         // ======================
+
         c.replies.forEach(r => {
             div.appendChild(renderComment(r, depth + 1));
         });
 
-        function renderComment(c, depth = 0) {
-            ...
-            return div;
-        }
+        return div;
+    }
 
-        // 여기까지 renderComment 끝
+    await loadLikes();
+    await loadComments();
 
-        await loadLikes();
-        await loadComments();
-
-        } // openModal 종료
+} // openModal 종료
 
 /* =========================
    CLOSE MODAL
