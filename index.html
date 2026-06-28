@@ -415,7 +415,7 @@ async function openModal(p){
                         user.email ||
                         "익명",
 
-                    postId: p.name,
+                    postId: p.Id,
                     commentId: null,
                     type: "comment",
                     read: false,
@@ -688,7 +688,7 @@ async function openModal(p){
 
                 for (const id of targets) {
                     deletePromises.push(
-                        deleteDoc(doc(db, "people", p.name, "comments", id))
+                        deleteDoc(doc(db, "people", p.id, "comments", id))
                     );
                 }
 
