@@ -385,20 +385,13 @@ async function openModal(p){
 
           console.log("댓글 저장 시작", p.id);
 
-          await addDoc(
-              collection(db, "people", p.id, "comments"),
-              {
-                  uid: user.uid,
-                  name:
-                      user.displayName ||
-                      user.email ||
-                      "익명",
-                  photo: user.photoURL,
-                  text,
-                  parentId: null,
-                  createdAt: serverTimestamp()
-              }
-          );
+          await addDoc(collection(db, "people", p.id, "comments"), {
+            uid: user.uid,
+            name: user.displayName || user.email || "익명",
+            text,
+            parentId: null,
+            createdAt: serverTimestamp()
+          });
 
           console.log("댓글 저장 성공");
 
@@ -560,14 +553,14 @@ async function openModal(p){
                 const ownerUid = auth.currentUser.uid; // 관리자 = 게시글 작성자
 
                 await addDoc(collection(db, "notifications"), {
-                    targetUid: ownerUid,
-                    senderUid: user.uid,
-                    senderName: user.displayName || user.email || "익명",
-                    postId: p.id,
-                    commentId: null,
-                    type: "comment",
-                    read: false,
-                    createdAt: serverTimestamp()
+                  targetUid: ADMIN_UID,
+                  senderUid: user.uid,
+                  senderName: user.displayName || user.email || "익명",
+                  postId: p.id,
+                  commentId: null,
+                  type: "comment",
+                  read: false,
+                  createdAt: serverTimestamp()
                 });
 
                 // ★ 답글 알림 생성
