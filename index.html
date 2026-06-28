@@ -342,7 +342,7 @@ async function openModal(p){
 
         const user = auth.currentUser || await login();
 
-        const ref = doc(db, "people", p.name, "likes", user.uid);
+        const ref = doc(db, "people", p.id, "likes", user.uid);
 
         const liked = await getDoc(ref);
 
@@ -637,7 +637,7 @@ async function openModal(p){
                     if (!newText) return;
 
                     await updateDoc(
-                        doc(db, "people", p.name, "comments", c.id),
+                        doc(db, "people", p.id, "comments", c.id),
                         {
                             text: newText,
                             editedAt: serverTimestamp()

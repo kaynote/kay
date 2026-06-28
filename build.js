@@ -117,7 +117,7 @@ for (const file of imageFiles) {
 /* =========================
    build people
 ========================= */
-let people = lines.map((line) => {
+let people = lines.map((line, index) => {
 
   line = line.replace(/^\d+\.\s*/, "");
 
@@ -148,13 +148,14 @@ let people = lines.map((line) => {
   const key = normalize(name);
   const matchedImage = imageMap.get(key) || "no-image.jpg";
 
-  return {
-    name,
-    ko,
-    displayName,
-    note: formatNote(note),
-    image: matchedImage
-  };
+return {
+  no: index + 1,
+  name,
+  ko,
+  displayName,
+  note: formatNote(note),
+  image: matchedImage
+};
 });
 
 /* =========================
