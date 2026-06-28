@@ -195,7 +195,6 @@ const q = query(
     targetUid,
     senderUid,
     senderName,
-    personId,
     commentId,
     type,
     read: false,
