@@ -518,7 +518,10 @@ async function openModal(p){
         action.className = "actions";
         
         const isAdmin = auth.currentUser?.email === ADMIN_EMAIL;
-        const isOwner = isAdmin || (auth.currentUser?.uid === c.uid);
+
+        const isOwner =
+            auth.currentUser &&
+            (auth.currentUser.uid === c.uid || isAdmin);
 
         // ======================
         // 답글 버튼
@@ -617,8 +620,15 @@ async function openModal(p){
         // ======================
 
         // ❗ deleted 여부 상관없이 owner면 버튼 생성
+        const isAdmin = auth.currentUser?.email === ADMIN_EMAIL;
+
+        const isOwner =
+            auth.currentUser &&
+            (auth.currentUser.uid === c.uid || isAdmin);
+
         if (isOwner) {
 
+            // 수정 (삭제된 댓글이면 숨김)
             if (!c.deleted) {
                 const editBtn = document.createElement("button");
                 editBtn.textContent = "수정";
@@ -665,13 +675,13 @@ async function openModal(p){
                     };
                 };
             }
-        }
 
+            // 삭제 (관리자 + 작성자 모두 가능)
             const delBtn = document.createElement("button");
             delBtn.textContent = "삭제";
 
             delBtn.onclick = async () => {
-                // 삭제 로직
+                // 기존 삭제 로직 그대로 넣기
             };
 
             action.appendChild(delBtn);
