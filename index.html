@@ -561,6 +561,8 @@ async function openModal(p){
 
                 // ★ 답글 알림 생성
                 if (c.uid !== user.uid) {
+                
+                    console.log("targetUid =", c.uid, "senderUid =", user.uid);
 
                     await addDoc(
                         collection(db, "notifications"),
