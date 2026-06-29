@@ -116,7 +116,7 @@ function renderComment(c) {
   `;
 
   div.querySelector(".reply-btn").onclick = () => openReplyForm(c, div);
-  div.querySelector(".edit-btn").onclick = () => openEditForm(c, div);
+  div.querySelector(".edit-btn").onclick = () => openEditForm(c, div, c.text);
 
   const child = div.querySelector(".child");
 
@@ -146,12 +146,13 @@ async function sendComment() {
     .filter(uid => uid !== currentUser.uid);
 
   await addNotifications(
-    uniqueParticipants,
-    currentUser.uid,
-    currentUser.name,
-    comment.id,
-    "comment"
-    );
+      uniqueParticipants,
+      currentUser.uid,
+      currentUser.name,
+      postId,
+      comment.id,
+      "comment"
+  );
   }
 
 /* =========================
@@ -237,7 +238,7 @@ function openEditForm(c, commentEl, oldText) {
     </div>
   `;
 
-  const zone = commentEl.querySelector(".reply-zone");
+  const zone = commentEl.querySelector(".edit-slot");
   zone.innerHTML = "";
   zone.appendChild(form);
 
@@ -308,6 +309,13 @@ function renderNotifications(list){
         e.stopPropagation();
         await deleteDoc(doc(db, "notifications", n.id));
       };
+      
+      import { db } from "./firebase.js";
+
+      import {
+        doc,
+        deleteDoc
+      } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
       div.appendChild(delBtn);
 
