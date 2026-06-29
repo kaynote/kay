@@ -645,7 +645,7 @@ async function openModal(p){
                         }
                     );
 
-                    loadComments();
+                    await loadComments(p.id, commentsDiv, commentCountEl);    
                 };
 
                 form.querySelector(".cancel").onclick = () => {
