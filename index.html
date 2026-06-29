@@ -493,13 +493,23 @@ async function openModal(p){
                     <span class="name">${c.name}</span>
                 </div>
 
-                <div class="text">${c.text}</div>
+                <div class="text">
+                    ${
+                        c.deleted
+                        ? `<span class="deleted-comment">삭제된 댓글입니다.</span>`
+                        : c.text
+                    }
+                </div>
 
                 <div class="right">
                     <span class="time">
                         ${c.createdAt ? formatDate(c.createdAt) : ""}
                     </span>
-                    ${c.editedAt ? `<span class="edited">수정됨</span>` : ""}
+                    ${
+                        c.editedAt && !c.deleted
+                        ? `<span class="edited">수정됨</span>`
+                        : ""
+                    }
                 </div>
             </div>
         `;
@@ -510,6 +520,7 @@ async function openModal(p){
         // ======================
         // 답글 버튼
         // ======================
+        if (!c.deleted) {
         const replyBtn = document.createElement("button");
         const replyCount = c.replies?.length || 0;
         replyBtn.textContent = replyCount ? `답글 (${replyCount})` : "답글";
@@ -595,7 +606,8 @@ async function openModal(p){
             };
         };
 
-        action.appendChild(replyBtn);
+            action.appendChild(replyBtn);
+        }
 
         // ======================
         // 권한 체크 (삭제/수정)
@@ -605,7 +617,7 @@ async function openModal(p){
             (auth.currentUser.uid === c.uid ||
              auth.currentUser.email === ADMIN_EMAIL);
 
-        if (isOwner) {
+        if (isOwner && !c.deleted) {
 
             // 수정
             const editBtn = document.createElement("button");
