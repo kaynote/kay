@@ -481,10 +481,6 @@ async function openModal(p){
     function renderComment(c, depth = 0) {
         const div = document.createElement("div");
 
-        c.replies.forEach(r => {
-            div.appendChild(renderComment(r, depth + 1));
-        });
-
         return div;
     }
             
@@ -520,11 +516,6 @@ async function openModal(p){
                 </div>
             </div>
         `;
-
-        const isAdmin = auth.currentUser?.email === ADMIN_EMAIL;
-        const isOwner =
-            auth.currentUser &&
-            (auth.currentUser.uid === c.uid || isAdmin);
 
         const action = document.createElement("div");
         action.className = "actions";
@@ -627,10 +618,8 @@ async function openModal(p){
 
         // ❗ deleted 여부 상관없이 owner면 버튼 생성
         const user = auth.currentUser;
-
-        const isOwner =
-            user &&
-            (user.uid === c.uid || isAdmin);
+        const isAdmin = user?.email === ADMIN_EMAIL;
+        const isOwner = user && (user.uid === c.uid || isAdmin);
 
         if (isOwner) {
 
@@ -687,13 +676,28 @@ async function openModal(p){
             delBtn.textContent = "삭제";
 
             delBtn.onclick = async () => {
-                // 기존 삭제 로직 그대로 넣기
+
+                if (!confirm("삭제할까요?")) return;
+
+                await updateDoc(
+                    doc(db, "people", p.name, "comments", c.id),
+                    {
+                        deleted: true,
+                        text: ""
+                    }
+                );
+
+                loadComments();
             };
 
             action.appendChild(delBtn);
         }
 
         div.appendChild(action);
+        
+        c.replies.forEach(r => {
+            div.appendChild(renderComment(r, depth + 1));
+        });
 
         // ======================
         // 재귀 렌더
