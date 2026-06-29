@@ -162,7 +162,7 @@ export function watchComments(postId, callback) {
           (b.createdAt?.seconds || 0)
       );
 
-      callback(comments);
+      callback(comments, snapshot.docChanges());
     }
   );
 }
