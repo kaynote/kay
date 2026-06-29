@@ -478,32 +478,9 @@ async function openModal(p){
         });
     }
 
-        function renderComment(c, depth = 0) {
+    function renderComment(c, depth = 0){
 
-            const div = document.createElement("div");
-            div.className = "comment";
-
-            div.id = `comment-${c.id}`;
-            div.style.marginLeft = `${depth * 20}px`;
-
-            div.innerHTML = `
-                <div class="commentRow">
-                    <div class="left">
-                        <img src="${c.photo || 'images/no-image.jpg'}">
-                        <span class="name">${c.name}</span>
-                    </div>
-
-                    <div class="text">
-                        ${c.deleted
-                            ? `<span class="deleted-comment">삭제된 댓글입니다.</span>`
-                            : c.text}
-                    </div>
-                </div>
-            `;
-
-            return div;
-        }
-            
+        const div = document.createElement("div");
         div.className = "comment";
 
         div.id = `comment-${c.id}`;
@@ -539,7 +516,7 @@ async function openModal(p){
 
         const action = document.createElement("div");
         action.className = "actions";
-  
+
         // ======================
         // 답글 버튼
         // ======================
@@ -635,93 +612,140 @@ async function openModal(p){
         // ======================
         // 권한 체크 (삭제/수정)
         // ======================
+        const isOwner =
+            auth.currentUser &&
+            (auth.currentUser.uid === c.uid ||
+             auth.currentUser.email === ADMIN_EMAIL);
 
-        // ❗ deleted 여부 상관없이 owner면 버튼 생성
-        const user = auth.currentUser;
-        const isAdmin = user?.email === ADMIN_EMAIL;
-        const isOwner = user && (user.uid === c.uid || isAdmin);
+        if (isOwner && !c.deleted) {
 
-        if (isOwner) {
+            // 수정
+            const editBtn = document.createElement("button");
+            editBtn.textContent = "수정";
 
-            // 수정 (삭제된 댓글이면 숨김)
-            if (!c.deleted) {
-                const editBtn = document.createElement("button");
-                editBtn.textContent = "수정";
-                action.appendChild(editBtn);
+            editBtn.onclick = () => {
 
-                editBtn.onclick = async () => {
+                const old = div.querySelector(".inline-edit");
+                if (old) old.remove();
 
-                    const old = div.querySelector(".inline-edit");
-                    if (old) old.remove();
+                const form = document.createElement("div");
+                form.className = "inline-edit";
 
-                    const form = document.createElement("div");
-                    form.className = "inline-edit";
+                form.innerHTML = `
+                    <textarea>${c.text}</textarea>
+                    <div style="display:flex; gap:6px; margin-top:6px;">
+                        <button class="save">저장</button>
+                        <button class="cancel">취소</button>
+                    </div>
+                `;
 
-                    form.innerHTML = `
-                        <textarea>${c.text}</textarea>
-                        <div style="display:flex; gap:6px; margin-top:6px;">
-                            <button class="save">저장</button>
-                            <button class="cancel">취소</button>
-                        </div>
-                    `;
+                div.insertBefore(form, action);
 
-                    div.insertBefore(form, action);
+                const textarea = form.querySelector("textarea");
+                textarea.focus();
 
-                    const textarea = form.querySelector("textarea");
-                    textarea.focus();
+                form.querySelector(".save").onclick = async () => {
+                    const newText = textarea.value.trim();
+                    if (!newText) return;
 
-                    form.querySelector(".save").onclick = async () => {
-                        const newText = textarea.value.trim();
-                        if (!newText) return;
+                    await updateDoc(
+                        doc(db, "people", p.name, "comments", c.id),
+                        {
+                            text: newText,
+                            editedAt: serverTimestamp()
+                        }
+                    );
 
-                        await updateDoc(
-                            doc(db, "people", p.name, "comments", c.id),
-                            {
-                                text: newText,
-                                editedAt: serverTimestamp()
-                            }
-                        );
-
-                        loadComments();
-                    };
-
-                    form.querySelector(".cancel").onclick = () => {
-                        form.remove();
-                    };
+                    loadComments();
                 };
-            }
 
-            // 삭제 (관리자 + 작성자 모두 가능)
+                form.querySelector(".cancel").onclick = () => {
+                    form.remove();
+                };
+            };
+
+            // 삭제
             const delBtn = document.createElement("button");
             delBtn.textContent = "삭제";
 
             delBtn.onclick = async () => {
 
-                if (!confirm("삭제할까요?")) return;
+                if (!confirm("댓글과 답글을 삭제할까요?")) return;
 
-                await updateDoc(
-                    doc(db, "people", p.name, "comments", c.id),
-                    {
-                        deleted: true,
-                        text: ""
-                    }
+                const snap = await getDocs(
+                    collection(db, "people", p.name, "comments")
                 );
 
-                loadComments();
-            };
+                const all = snap.docs.map(d => ({
+                    id: d.id,
+                    ...d.data()
+                }));
 
+                const targets = new Set([c.id]);
+
+                let changed = true;
+
+                while (changed) {
+                    changed = false;
+
+                    for (const item of all) {
+                        if (targets.has(item.parentId) && !targets.has(item.id)) {
+                            targets.add(item.id);
+                            changed = true;
+                        }
+                    }
+                }
+
+                const hasReplies = all.some(item =>
+                  item.parentId === c.id && !item.deleted
+              );
+
+                if (!auth.currentUser) return;
+
+                const isAdmin = auth.currentUser?.email === ADMIN_EMAIL;
+
+                // 1) 답글 있음 + 일반유저 → 소프트 삭제
+                if (hasReplies && !isAdmin) {
+
+                    await updateDoc(
+                        doc(db, "people", p.name, "comments", c.id),
+                        {
+                            deleted: true,
+                            text: "",
+                            deletedAt: serverTimestamp()
+                        }
+                    );
+
+                    await loadComments();
+                    return;
+                }
+
+                // 2) 그 외 (답글 없음 or 관리자) → 하드 삭제
+                const deletePromises = [...targets].map(id =>
+                    deleteDoc(doc(db, "people", p.name, "comments", id))
+                );
+
+                await Promise.all(deletePromises);
+                await loadComments();
+                return; // ⭐ 중요: 이벤트 종료 강제;
+            }; // ⭐⭐⭐ 여기서 끝
+
+            action.appendChild(editBtn);
             action.appendChild(delBtn);
         }
 
         div.appendChild(action);
-        
-        c.replies.forEach(r => {
-            div.appendChild(renderComment(r, depth + 1));
-        });
 
         // ======================
         // 재귀 렌더
         // ======================
+
+        c.replies.forEach(r => {
+            div.appendChild(renderComment(r, depth + 1));
+        });
+
+        return div;
+    }
 
     await loadLikes();
     await loadComments();
