@@ -416,7 +416,8 @@ async function openModal(p){
             await loadComments(p.id, commentsDiv, commentCountEl);
 
         } catch (err) {
-            console.error(err);
+            console.error("댓글 등록 오류", err);
+            alert(err.code + "\n" + err.message);
         }
     });
 
