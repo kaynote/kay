@@ -77,15 +77,13 @@ service cloud.firestore {
       /* -------- LIKES -------- */
       match /likes/{uid} {
 
-          allow read: if true;
+        allow read: if true;
 
-          allow create: if isSignedIn()
-              && request.auth.uid == uid;
+        allow create: if isSignedIn()
+          && request.auth.uid == uid;
 
-          allow update: if false;
-
-          allow delete: if isSignedIn()
-              && request.auth.uid == uid;
+        allow delete: if isSignedIn()
+          && request.auth.uid == uid;
       }
     }
   }

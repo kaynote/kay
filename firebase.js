@@ -116,7 +116,6 @@ export async function addComment(postId, text, user, parentId = null) {
   return await addDoc(
     collection(db, "people", postId, "comments"),
     {
-      postId,
       text,
       parentId,
       uid: user.uid,
@@ -162,7 +161,7 @@ export function watchComments(postId, callback) {
           (b.createdAt?.seconds || 0)
       );
 
-      callback(comments, snapshot.docChanges());
+      callback(comments);
     }
   );
 }
@@ -172,7 +171,6 @@ NOTIFICATIONS (FIXED CORE)
 ========================= */
 
 export async function addNotification(
-  postId,
   targetUid,
   senderUid,
   senderName,
@@ -194,15 +192,14 @@ const q = query(
 
   if (!snap.empty) return;
 
-  await addDoc(collection(db,"notifications"),{
-      targetUid,
-      senderUid,
-      senderName,
-      postId,
-      commentId,
-      type,
-      read:false,
-      createdAt:serverTimestamp()
+  await addDoc(collection(db, "notifications"), {
+    targetUid,
+    senderUid,
+    senderName,
+    commentId,
+    type,
+    read: false,
+    createdAt: serverTimestamp()
   });
 }
 
@@ -241,7 +238,6 @@ export async function addNotifications(
 
     jobs.push(
       addNotification(
-        postId,
         uid,
         senderUid,
         senderName,

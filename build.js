@@ -23,39 +23,7 @@ function normalize(str) {
 }
 
 /* =========================
-   slug (id용)
-========================= */
-function slugify(str) {
-  return String(str)
-    .normalize("NFKC")
-    .toLowerCase()
-    .replace(/[^a-z0-9가-힣\s]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
-    .replace(/^-|-$/g, "")
-    .trim();
-}
-
-/* =========================
-   unique id generator
-========================= */
-const usedIds = new Map();
-
-function createUniqueId(base) {
-  let id = base;
-  let count = 1;
-
-  while (usedIds.has(id)) {
-    id = `${base}-${count}`;
-    count++;
-  }
-
-  usedIds.set(id, true);
-  return id;
-}
-
-/* =========================
-   format note
+   timestamp formatter
 ========================= */
 function formatNote(note) {
   if (!note) return "";
@@ -67,6 +35,7 @@ function formatNote(note) {
     (m) => `<span class="timestamp">${m}</span>`
   );
 
+  // ✅ 최종 콤마 공백 정리 (핵심)
   result = result.replace(/\s*,\s*/g, ", ");
 
   return result;
@@ -118,7 +87,6 @@ for (const file of imageFiles) {
    build people
 ========================= */
 let people = lines.map((line, index) => {
-
   line = line.replace(/^\d+\.\s*/, "");
 
   const noteMatch = line.match(/\((.*?)\)/);
@@ -146,6 +114,7 @@ let people = lines.map((line, index) => {
     : visibleName;
 
   const key = normalize(name);
+
   const matchedImage = imageMap.get(key) || "no-image.jpg";
 
   return {
@@ -169,19 +138,12 @@ people.sort((a, b) =>
 );
 
 /* =========================
-   final build (id 생성)
+   re-number after sort
 ========================= */
-people = people.map((p, i) => {
-
-  const baseId = `${slugify(p.name)}-${i + 1}`;
-  const id = createUniqueId(baseId);
-
-  return {
-    ...p,
-    id,
-    no: i + 1
-  };
-});
+people = people.map((p, i) => ({
+  ...p,
+  no: i + 1
+}));
 
 /* =========================
    output
