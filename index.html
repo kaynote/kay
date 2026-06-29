@@ -696,13 +696,30 @@ async function openModal(p){
                     }
                 }
 
-                const deletePromises = [];
+                const hasReplies = all.some(
+                    item => String(item.parentId) === String(c.id)
+                );
 
-                for (const id of targets) {
-                    deletePromises.push(
-                        deleteDoc(doc(db, "people", p.name, "comments", id))
-                    );
+                if (!auth.currentUser) return;
+
+                const isAdmin = auth.currentUser.email === ADMIN_EMAIL;
+
+                // 1) 답글 있음 + 일반유저 → 소프트 삭제
+                if (hasReplies && !isAdmin) {
+                    await updateDoc(doc(db, "people", p.name, "comments", c.id), {
+                        deleted: true,
+                        text: "",
+                        deletedAt: serverTimestamp()
+                    });
+
+                    await loadComments();
+                    return;
                 }
+
+                // 2) 답글 없음 or 관리자 → 하드 삭제
+                const deletePromises = targets.map(id =>
+                    deleteDoc(doc(db, "people", p.name, "comments", id))
+                );
 
                 await Promise.all(deletePromises);
                 await loadComments();
