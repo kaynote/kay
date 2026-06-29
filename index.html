@@ -521,14 +521,15 @@ async function openModal(p){
             </div>
         `;
 
-        const action = document.createElement("div");
-        action.className = "actions";
-        
         const isAdmin = auth.currentUser?.email === ADMIN_EMAIL;
-
         const isOwner =
             auth.currentUser &&
             (auth.currentUser.uid === c.uid || isAdmin);
+
+        const action = document.createElement("div");
+        action.className = "actions";
+        
+        
 
         // ======================
         // 답글 버튼
@@ -628,7 +629,6 @@ async function openModal(p){
 
         // ❗ deleted 여부 상관없이 owner면 버튼 생성
         const user = auth.currentUser;
-        const isAdmin = user?.email === ADMIN_EMAIL;
 
         const isOwner =
             user &&
