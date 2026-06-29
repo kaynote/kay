@@ -615,10 +615,6 @@ async function openModal(p){
         // ======================
         // 권한 체크 (삭제/수정)
         // ======================
-        const isOwner =
-            auth.currentUser &&
-            (auth.currentUser.uid === c.uid ||
-             auth.currentUser.email === ADMIN_EMAIL);
 
         // ❗ deleted 여부 상관없이 owner면 버튼 생성
         if (isOwner) {
