@@ -573,3 +573,8 @@ COMMENT SYSTEM
 #deleteAllNotificationsBtn:hover {
   background: #ddd;
 }
+
+.deleted-comment{
+    color:#888;
+    font-style:italic;
+}
