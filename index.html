@@ -696,8 +696,8 @@ async function openModal(p){
                     }
                 }
 
-                const hasReplies = all.some(
-                    item => String(item.parentId) === String(c.id)
+                const hasReplies = all.some(item =>
+                    item.parentId === c.id && !item.deleted
                 );
 
                 if (!auth.currentUser) return;
@@ -717,7 +717,7 @@ async function openModal(p){
                 }
 
                 // 2) 답글 없음 or 관리자 → 하드 삭제
-                const deletePromises = targets.map(id =>
+                const deletePromises = [...targets].map(id =>
                     deleteDoc(doc(db, "people", p.name, "comments", id))
                 );
 
