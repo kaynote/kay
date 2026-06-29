@@ -478,9 +478,16 @@ async function openModal(p){
         });
     }
 
-    function renderComment(c, depth = 0){
-
+    function renderComment(c, depth = 0) {
         const div = document.createElement("div");
+
+        c.replies.forEach(r => {
+            div.appendChild(renderComment(r, depth + 1));
+        });
+
+        return div;
+    }
+            
         div.className = "comment";
 
         div.id = `comment-${c.id}`;
@@ -620,11 +627,12 @@ async function openModal(p){
         // ======================
 
         // ❗ deleted 여부 상관없이 owner면 버튼 생성
-        const isAdmin = auth.currentUser?.email === ADMIN_EMAIL;
+        const user = auth.currentUser;
+        const isAdmin = user?.email === ADMIN_EMAIL;
 
         const isOwner =
-            auth.currentUser &&
-            (auth.currentUser.uid === c.uid || isAdmin);
+            user &&
+            (user.uid === c.uid || isAdmin);
 
         if (isOwner) {
 
@@ -686,24 +694,12 @@ async function openModal(p){
 
             action.appendChild(delBtn);
         }
-        }
 
         div.appendChild(action);
 
         // ======================
         // 재귀 렌더
         // ======================
-
-        function renderComment(c, depth = 0) {
-
-            const div = document.createElement("div");
-
-            c.replies.forEach(r => {
-                div.appendChild(renderComment(r, depth + 1));
-            });
-
-            return div;
-        }
 
     await loadLikes();
     await loadComments();
