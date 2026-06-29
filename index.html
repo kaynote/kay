@@ -388,6 +388,8 @@ async function openModal(p){
 
             const user = auth.currentUser || await login();
 
+            console.log("1. 댓글 저장 시작");
+
             const commentRef = await addDoc(
               collection(db, "people", p.id, "comments"),
               {
@@ -399,25 +401,29 @@ async function openModal(p){
               }
             );
 
+            console.log("2. 댓글 저장 완료");
+
             await addDoc(collection(db, "notifications"), {
-              targetUid: ADMIN_UID,
-              senderUid: user.uid,
-              senderName: user.displayName,
-              postId: p.id,
-              commentId: commentRef.id, // ⭐ 핵심
-              type: "comment",
-              read: false,
-              createdAt: serverTimestamp()
+                targetUid: ADMIN_UID,
+                senderUid: user.uid,
+                senderName: user.displayName,
+                postId: p.id,
+                commentId: commentRef.id,
+                type: "comment",
+                read: false,
+                createdAt: serverTimestamp()
             });
+
+            console.log("3. 알림 저장 완료");
 
             commentInput.value = "";
 
-            // 🔥 중요: await 붙이기
             await loadComments(p.id, commentsDiv, commentCountEl);
+
+            console.log("4. 댓글 다시 불러오기 완료");
 
         } catch (err) {
             console.error("댓글 등록 오류", err);
-            alert(err.code + "\n" + err.message);
         }
     });
 
