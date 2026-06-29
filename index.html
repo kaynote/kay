@@ -572,10 +572,7 @@ async function openModal(p){
                             senderUid: user.uid,
 
                             senderName:
-                                user.providerData?.[0]?.displayName ||
-                                user.displayName ||
-                                user.email ||
-                                "익명",
+                                user.displayName || user.email || "익명"
 
                             postId: p.id,   
 
