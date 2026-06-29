@@ -561,30 +561,37 @@ async function openModal(p){
 
                 // ★ 답글 알림 생성
                 if (c.uid !== user.uid) {
-                
-                    console.log("targetUid =", c.uid, "senderUid =", user.uid);
 
-                    await addDoc(
-                        collection(db, "notifications"),
-                        {
-                            targetUid: c.uid,
+                    try {
 
-                            senderUid: user.uid,
+                        await addDoc(
+                            collection(db, "notifications"),
+                            {
+                                targetUid: c.uid,
 
-                            senderName:
-                                user.displayName || user.email || "익명"
+                                senderUid: user.uid,
 
-                            postId: p.id,   
+                                senderName:
+                                    user.displayName ||
+                                    user.providerData?.[0]?.displayName ||
+                                    user.email ||
+                                    "익명",
 
-                            commentId: c.id,
+                                postId: p.id,
 
-                            type: "reply",
+                                commentId: c.id,
 
-                            read: false,
+                                type: "reply",
 
-                            createdAt: serverTimestamp()
-                        }
-                    );
+                                read: false,
+
+                                createdAt: serverTimestamp()
+                            }
+                        );
+
+                    } catch (e) {
+                        console.error("답글 알림 저장 실패", e);
+                    }
                 }
 
                 await loadComments(p.id, commentsDiv, commentCountEl);
