@@ -74,9 +74,6 @@ import {
     deleteAllNotifications
 } from "./firebase.js";
 
-// index.html 최상단
-const ADMIN_UID = "eEltgLaV6oN7MHUXTfQONc2wGAk1";
-
 import {
     collection,
     getDocs,
@@ -92,10 +89,6 @@ import {
     onSnapshot,   // ★ 추가
     where         // ★ 추가
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
-
-import { updateProfile }
-from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 /* =========================
    CONFIG
@@ -319,7 +312,7 @@ async function openModal(p){
 
     showLikesBtn.addEventListener("click", async ()=>{
         const snap = await getDocs(
-            collection(db, "people", p.id, "likes")
+            collection(db, "people", p.name, "likes")
         );
 
         const result = snap.docs
@@ -335,7 +328,7 @@ async function openModal(p){
 
     async function loadLikes(){
         const snap = await getDocs(
-            collection(db, "people", p.id, "likes")
+            collection(db, "people", p.name, "likes")
         );
 
         likeCountEl.textContent = snap.size;
@@ -347,14 +340,9 @@ async function openModal(p){
 
     likeBtn.addEventListener("click", async ()=>{
 
-        let user = auth.currentUser;
+        const user = auth.currentUser || await login();
 
-        if (!user) {
-            await login();
-            user = auth.currentUser;
-        }
-
-        const ref = doc(db, "people", p.id, "likes", user.uid);
+        const ref = doc(db, "people", p.name, "likes", user.uid);
 
         const liked = await getDoc(ref);
 
@@ -385,74 +373,69 @@ async function openModal(p){
     ===================== */
 
     commentBtn.addEventListener("click", async () => {
-        try {
 
-            const text = commentInput.value.trim();
-            if (!text) return;
+        const text = commentInput.value.trim();
+        if (!text) return;
 
-            const user = auth.currentUser || await login();
+        if (text.length > 1000) {
+            alert("댓글은 1000자 이하만 가능합니다.");
+            return;
+        }
 
-            console.log("1. 댓글 저장 시작");
+        const user = auth.currentUser || await login();
 
-            const commentRef = await addDoc(
-              collection(db, "people", p.id, "comments"),
-              {
+        // 1. 댓글 저장
+        await addDoc(
+            collection(db, "people", p.name, "comments"),
+            {
                 uid: user.uid,
+                name:
+                    user.providerData?.[0]?.displayName ||
+                    user.displayName ||
+                    user.email ||
+                    "익명",
+
+                photo: user.photoURL,
                 text,
                 parentId: null,
-                postId: p.id,
                 createdAt: serverTimestamp()
-              }
-            );
+            }
+        );
 
-            console.log("2. 댓글 저장 완료");
-
-            console.log({
-                targetUid: ADMIN_UID,
-                senderUid: user.uid,
-                senderName: user.displayName,
-                postId: p.id,
-                commentId: commentRef.id,
-                type: "comment",
-                read: false
-            });
-
-            if (user.uid !== ADMIN_UID) {
-
-                await addDoc(collection(db, "notifications"), {
-                    targetUid: ADMIN_UID,
+        // 2. 댓글 알림 생성
+        if (p.uid && p.uid !== user.uid) {
+            await addDoc(
+                collection(db, "notifications"),
+                {
+                    targetUid: p.uid,
                     senderUid: user.uid,
-                    senderName: user.displayName,
-                    postId: p.id,
-                    commentId: commentRef.id,
+                    senderName:
+                        user.providerData?.[0]?.displayName ||
+                        user.displayName ||
+                        user.email ||
+                        "익명",
+
+                    postId: p.name,
+                    commentId: null,
                     type: "comment",
                     read: false,
                     createdAt: serverTimestamp()
-                });
-
-            }
-
-            console.log("3. 알림 저장 완료");
-
-            commentInput.value = "";
-
-            await loadComments(p.id, commentsDiv, commentCountEl);
-
-            console.log("4. 댓글 다시 불러오기 완료");
-
-        } catch (err) {
-            console.error("댓글 등록 오류", err);
+                }
+            );
         }
+
+        commentInput.value = "";
+        loadComments();
     });
 
     /* =====================
        LOAD COMMENTS
     ===================== */
 
-    async function loadComments(postId, commentsDiv, commentCountEl) {
+    async function loadComments(){
 
         const q = query(
-            collection(db, "people", postId, "comments"),
+            collection(db, "people", p.name, "comments"),
             orderBy("createdAt", "asc")
         );
 
@@ -465,6 +448,7 @@ async function openModal(p){
 
         commentCountEl.textContent = list.length;
 
+        // 1. map 생성
         const map = {};
         const roots = [];
 
@@ -472,9 +456,12 @@ async function openModal(p){
             map[c.id] = { ...c, replies: [] };
         });
 
+        // 2. 트리 연결 (핵심 수정 버전)
         list.forEach(c => {
+
             const node = map[c.id];
 
+            // 부모가 존재하고, 자기 자신이 아닌 경우만 자식으로 연결
             if (c.parentId && map[c.parentId] && c.parentId !== c.id) {
                 map[c.parentId].replies.push(node);
             } else {
@@ -482,8 +469,10 @@ async function openModal(p){
             }
         });
 
+        // 3. 렌더 초기화
         commentsDiv.innerHTML = "";
 
+        // 4. 루트부터 렌더
         roots.forEach(c => {
             commentsDiv.appendChild(renderComment(c));
         });
@@ -551,75 +540,54 @@ async function openModal(p){
                 const text = textarea.value.trim();
                 if (!text) return;
 
-                if (!auth.currentUser) {
-                  await login();
-                }
+                const user = auth.currentUser || await login();
 
-                const user = auth.currentUser;
-
-                const replyRef = await addDoc(
-                  collection(db, "people", p.id, "comments"),
-                  {
-                    uid: user.uid,
-                    name: user.displayName || user.email || "익명",
-                    photo: user.photoURL,
-                    text: text,
-                    postId: p.id,
-                    parentId: c.id,
-                    createdAt: serverTimestamp()
-                  }
+                await addDoc(
+                    collection(db, "people", p.name, "comments"),
+                    {
+                        uid: user.uid,
+                        name:
+                            user.providerData?.[0]?.displayName ||
+                            user.displayName ||
+                            user.email ||
+                            "익명",
+                        photo: user.photoURL,
+                        text,
+                        parentId: c.id,
+                        createdAt: serverTimestamp()
+                    }
                 );
-
-                console.log("댓글 저장 성공");
-
-                /* ⭐ 여기부터 알림 */
-                await addDoc(collection(db, "notifications"), {
-                  targetUid: ADMIN_UID,
-                  senderUid: user.uid,
-                  senderName: user.displayName || user.email || "익명",
-                  postId: p.id,
-                  commentId: replyRef.id,   // ← 여기만 변경
-                  type: "comment",
-                  read: false,
-                  createdAt: serverTimestamp()
-                });
 
                 // ★ 답글 알림 생성
                 if (c.uid !== user.uid) {
 
-                    try {
+                    await addDoc(
+                        collection(db, "notifications"),
+                        {
+                            targetUid: c.uid,
 
-                        await addDoc(
-                            collection(db, "notifications"),
-                            {
-                                targetUid: c.uid,
+                            senderUid: user.uid,
 
-                                senderUid: user.uid,
+                            senderName:
+                                user.providerData?.[0]?.displayName ||
+                                user.displayName ||
+                                user.email ||
+                                "익명",
 
-                                senderName:
-                                    user.displayName ||
-                                    user.providerData?.[0]?.displayName ||
-                                    user.email ||
-                                    "익명",
+                            postId: p.name,   
 
-                                postId: p.id,
+                            commentId: c.id,
 
-                                commentId: c.id,
+                            type: "reply",
 
-                                type: "reply",
+                            read: false,
 
-                                read: false,
-
-                                createdAt: serverTimestamp()
-                            }
-                        );
-
-                    } catch (e) {
-                        console.error("답글 알림 저장 실패", e);
-                    }
+                            createdAt: serverTimestamp()
+                        }
+                    );
                 }
 
-                await loadComments(p.id, commentsDiv, commentCountEl);
+                loadComments();
             };
 
             form.querySelector(".cancel").onclick = () => {
@@ -669,14 +637,14 @@ async function openModal(p){
                     if (!newText) return;
 
                     await updateDoc(
-                        doc(db, "people", p.id, "comments", c.id),
+                        doc(db, "people", p.name, "comments", c.id),
                         {
                             text: newText,
                             editedAt: serverTimestamp()
                         }
                     );
 
-                    await loadComments(p.id, commentsDiv, commentCountEl);    
+                    loadComments();
                 };
 
                 form.querySelector(".cancel").onclick = () => {
@@ -693,7 +661,7 @@ async function openModal(p){
                 if (!confirm("댓글과 답글을 삭제할까요?")) return;
 
                 const snap = await getDocs(
-                    collection(db, "people", p.id, "comments")
+                    collection(db, "people", p.name, "comments")
                 );
 
                 const all = snap.docs.map(d => ({
@@ -720,12 +688,12 @@ async function openModal(p){
 
                 for (const id of targets) {
                     deletePromises.push(
-                        deleteDoc(doc(db, "people", p.id, "comments", id))
+                        deleteDoc(doc(db, "people", p.name, "comments", id))
                     );
                 }
 
                 await Promise.all(deletePromises);
-                await loadComments(p.id, commentsDiv, commentCountEl);
+                await loadComments();
                 return; // ⭐ 중요: 이벤트 종료 강제;
             }; // ⭐⭐⭐ 여기서 끝
 
@@ -747,7 +715,7 @@ async function openModal(p){
     }
 
     await loadLikes();
-    await loadComments(p.id, commentsDiv, commentCountEl);
+    await loadComments();
 
 } // openModal 종료
 
@@ -786,7 +754,7 @@ logoutBtn.addEventListener("click", logout);
 
 let notifUnsub = null;
 
-watchAuth(async user => {
+watchAuth(user => {
 
     const userInfo = document.getElementById("userInfo");
 
@@ -861,14 +829,6 @@ watchAuth(async user => {
             ?.addEventListener("click", login);
 
         return;
-    }
-
-    // ⭐ 한 번만 실행
-    if (user.displayName !== "Kay") {
-        await updateProfile(user, {
-            displayName: "Kay"
-        });
-        await user.reload();
     }
 
     userInfo.textContent = user.email;
@@ -985,7 +945,7 @@ watchAuth(async user => {
         }
 
         const person = people.find(
-            p => p.id === n.postId
+            p => p.name === n.postId
         );
 
         if (!person) return;
