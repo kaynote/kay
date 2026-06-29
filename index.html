@@ -786,7 +786,7 @@ logoutBtn.addEventListener("click", logout);
 
 let notifUnsub = null;
 
-watchAuth(user => {
+watchAuth(async user => {
 
     const userInfo = document.getElementById("userInfo");
 
