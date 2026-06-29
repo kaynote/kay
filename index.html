@@ -624,8 +624,48 @@ async function openModal(p){
                 editBtn.textContent = "수정";
                 action.appendChild(editBtn);
 
-                editBtn.onclick = ...
+                editBtn.onclick = async () => {
+
+                    const old = div.querySelector(".inline-edit");
+                    if (old) old.remove();
+
+                    const form = document.createElement("div");
+                    form.className = "inline-edit";
+
+                    form.innerHTML = `
+                        <textarea>${c.text}</textarea>
+                        <div style="display:flex; gap:6px; margin-top:6px;">
+                            <button class="save">저장</button>
+                            <button class="cancel">취소</button>
+                        </div>
+                    `;
+
+                    div.insertBefore(form, action);
+
+                    const textarea = form.querySelector("textarea");
+                    textarea.focus();
+
+                    form.querySelector(".save").onclick = async () => {
+                        const newText = textarea.value.trim();
+                        if (!newText) return;
+
+                        await updateDoc(
+                            doc(db, "people", p.name, "comments", c.id),
+                            {
+                                text: newText,
+                                editedAt: serverTimestamp()
+                            }
+                        );
+
+                        loadComments();
+                    };
+
+                    form.querySelector(".cancel").onclick = () => {
+                        form.remove();
+                    };
+                };
             }
+        }
 
             const delBtn = document.createElement("button");
             delBtn.textContent = "삭제";
