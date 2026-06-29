@@ -48,8 +48,3 @@ people/{postId}
   └─ likes/{uid}
 
 notifications/{notificationId}
-
-
-
-
-
