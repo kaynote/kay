@@ -684,12 +684,16 @@ async function openModal(p){
         // 재귀 렌더
         // ======================
 
-        c.replies.forEach(r => {
-            div.appendChild(renderComment(r, depth + 1));
-        });
+        function renderComment(c, depth = 0) {
 
-        return div;
-    }
+            const div = document.createElement("div");
+
+            c.replies.forEach(r => {
+                div.appendChild(renderComment(r, depth + 1));
+            });
+
+            return div;
+        }
 
     await loadLikes();
     await loadComments();
