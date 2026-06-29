@@ -403,6 +403,16 @@ async function openModal(p){
 
             console.log("2. 댓글 저장 완료");
 
+            console.log({
+                targetUid: ADMIN_UID,
+                senderUid: user.uid,
+                senderName: user.displayName,
+                postId: p.id,
+                commentId: commentRef.id,
+                type: "comment",
+                read: false
+            });
+
             await addDoc(collection(db, "notifications"), {
                 targetUid: ADMIN_UID,
                 senderUid: user.uid,
