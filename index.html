@@ -478,11 +478,31 @@ async function openModal(p){
         });
     }
 
-    function renderComment(c, depth = 0) {
-        const div = document.createElement("div");
+        function renderComment(c, depth = 0) {
 
-        return div;
-    }
+            const div = document.createElement("div");
+            div.className = "comment";
+
+            div.id = `comment-${c.id}`;
+            div.style.marginLeft = `${depth * 20}px`;
+
+            div.innerHTML = `
+                <div class="commentRow">
+                    <div class="left">
+                        <img src="${c.photo || 'images/no-image.jpg'}">
+                        <span class="name">${c.name}</span>
+                    </div>
+
+                    <div class="text">
+                        ${c.deleted
+                            ? `<span class="deleted-comment">삭제된 댓글입니다.</span>`
+                            : c.text}
+                    </div>
+                </div>
+            `;
+
+            return div;
+        }
             
         div.className = "comment";
 
