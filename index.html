@@ -516,6 +516,33 @@ async function openModal(p){
 
         const action = document.createElement("div");
         action.className = "actions";
+        
+        // ======================
+        // 권한 체크 (삭제/수정)
+        // ======================
+        const isOwner =
+            auth.currentUser &&
+            (auth.currentUser.uid === c.uid ||
+             auth.currentUser.email === ADMIN_EMAIL);
+        
+        if (isOwner && c.deleted) {
+
+    const forceDelBtn = document.createElement("button");
+    forceDelBtn.textContent = "완전삭제";
+
+    forceDelBtn.onclick = async () => {
+        await deleteDoc(
+            doc(db, "people", p.name, "comments", c.id)
+        );
+        loadComments();
+    };
+
+    action.appendChild(forceDelBtn);
+
+    // 🔥 여기서 return 추천 (깔끔)
+    div.appendChild(action);
+    return div;  // ⭐ 이건 꼭 유지
+}
 
         // ======================
         // 답글 버튼
@@ -609,15 +636,7 @@ async function openModal(p){
             action.appendChild(replyBtn);
         }
 
-        // ======================
-        // 권한 체크 (삭제/수정)
-        // ======================
-        const isOwner =
-            auth.currentUser &&
-            (auth.currentUser.uid === c.uid ||
-             auth.currentUser.email === ADMIN_EMAIL);
-
-        if (isOwner && !c.deleted) {
+        if (isOwner) {
 
             // 수정
             const editBtn = document.createElement("button");
@@ -670,8 +689,20 @@ async function openModal(p){
 
             delBtn.onclick = async () => {
 
-                if (!confirm("댓글과 답글을 삭제할까요?")) return;
+                if (!confirm("댓글을 삭제할까요?")) return;
 
+                const isAdmin = auth.currentUser?.email === ADMIN_EMAIL;
+
+                // 🔥 이미 soft delete된 댓글이면 → 무조건 hard delete (관리자 기능)
+                if (c.deleted && isAdmin) {
+                    await deleteDoc(
+                        doc(db, "people", p.name, "comments", c.id)
+                    );
+                    await loadComments();
+                    return;
+                }
+
+                // 🔥 기존 로직 그대로
                 const snap = await getDocs(
                     collection(db, "people", p.name, "comments")
                 );
@@ -697,14 +728,10 @@ async function openModal(p){
                 }
 
                 const hasReplies = all.some(item =>
-                  item.parentId === c.id && !item.deleted
-              );
+                    item.parentId === c.id && !item.deleted
+                );
 
-                if (!auth.currentUser) return;
-
-                const isAdmin = auth.currentUser?.email === ADMIN_EMAIL;
-
-                // 1) 답글 있음 + 일반유저 → 소프트 삭제
+                // 일반 유저 soft delete 유지
                 if (hasReplies && !isAdmin) {
 
                     await updateDoc(
@@ -720,15 +747,14 @@ async function openModal(p){
                     return;
                 }
 
-                // 2) 그 외 (답글 없음 or 관리자) → 하드 삭제
+                // hard delete
                 const deletePromises = [...targets].map(id =>
                     deleteDoc(doc(db, "people", p.name, "comments", id))
                 );
 
                 await Promise.all(deletePromises);
                 await loadComments();
-                return; // ⭐ 중요: 이벤트 종료 강제;
-            }; // ⭐⭐⭐ 여기서 끝
+            };
 
             action.appendChild(editBtn);
             action.appendChild(delBtn);
