@@ -568,6 +568,26 @@ async function openModal(p){
 
             const forceDelBtn = document.createElement("button");
             forceDelBtn.textContent = "완전삭제";
+            
+            const restoreBtn = document.createElement("button");
+            restoreBtn.textContent = "복구";
+
+            restoreBtn.onclick = async () => {
+
+                await updateDoc(
+                    doc(db, "people", p.name, "comments", c.id),
+                    {
+                        deleted: false,
+                        text: c.originalText,
+                        originalText: "",
+                        deletedAt: null
+                    }
+                );
+
+                await loadComments();
+            };
+
+            action.appendChild(restoreBtn);
 
             forceDelBtn.onclick = async () => {
 
