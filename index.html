@@ -386,7 +386,7 @@ async function openModal(p){
         const user = auth.currentUser || await login();
 
         // 1. 댓글 저장
-        await addDoc(
+        const commentRef = await addDoc(
             collection(db, "people", p.name, "comments"),
             {
                 uid: user.uid,
@@ -448,7 +448,7 @@ async function openModal(p){
 
                     postId: p.name,
 
-                    commentId: null,
+                    commentId: commentRef.id,
 
                     type: "comment",
 
@@ -1003,8 +1003,17 @@ watchAuth(user => {
 
                 // 알림 내용
                 const text = document.createElement("span");
-                text.textContent =
-                    `🔔 ${n.senderName} 님이 답글을 남겼습니다`;
+                if (n.type === "comment") {
+
+                    text.textContent =
+                        `🔔 ${n.senderName} 님이 "${n.postId}" 게시글에 댓글을 남겼습니다`;
+
+                } else {
+
+                    text.textContent =
+                        `🔔 ${n.senderName} 님이 "${n.postId}" 게시글에 답글을 남겼습니다`;
+
+                }
 
                 // X 버튼
                 const delBtn = document.createElement("button");
