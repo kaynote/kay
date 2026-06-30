@@ -10,6 +10,7 @@ import {
   updateDoc,
   deleteDoc,
   serverTimestamp,
+  setDoc,
   onSnapshot,
   query,
   where
@@ -90,12 +91,29 @@ AUTH
 ========================= */
 
 export async function login() {
+
   if (auth.currentUser) {
     return normalizeUser(auth.currentUser);
   }
 
   const result = await signInWithPopup(auth, provider);
-  return normalizeUser(result.user);
+
+  const user = result.user;
+
+  await setDoc(
+    doc(db, "users", user.uid),
+    {
+      uid: user.uid,
+      name: user.displayName || "",
+      email: user.email || "",
+      photo: user.photoURL || "",
+      notifyAdminComment: true,
+      updatedAt: serverTimestamp()
+    },
+    { merge: true }
+  );
+
+  return normalizeUser(user);
 }
 
 export async function logout() {
