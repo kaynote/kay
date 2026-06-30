@@ -3,20 +3,16 @@ import people from "./people.js";
 import {
   login,
   addComment,
+  updateComment,
   watchAuth,
   watchComments,
   watchNotifications,
   getParticipants,
   addNotifications,
-  markNotificationRead,
-  deleteAllNotifications,
-  db
+  markNotificationRead
 } from "./firebase.js";
 
-import {
-  doc,
-  deleteDoc
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+import { deleteAllNotifications } from "./firebase.js";
 
 /* =========================
 STATE
@@ -26,6 +22,7 @@ const currentPost = people[people.length - 1];
 const postId = String(currentPost.no);
 
 let currentUser = null;
+let firstSnapshot = true;
 
 /* =========================
 INIT
@@ -37,17 +34,21 @@ window.addEventListener("load", async () => {
 
   document.getElementById("sendBtn").onclick = sendComment;
 
-  /* COMMENTS */
-  watchComments(postId, (comments) => {
-    const tree = buildTree(comments);
-
+  watchComments(postId, (data, changes) => {
+    const tree = buildTree(data);
     const box = document.getElementById("comments");
-    box.innerHTML = "";
 
+    box.innerHTML = "";
     tree.forEach(c => box.appendChild(renderComment(c)));
+
+    if (!firstSnapshot && changes) {
+      detectNotifications(changes);
+    }
+
+    firstSnapshot = false;
   });
 
-  /* AUTH + NOTIFICATIONS */
+  // 🔥 여기 대신 이 구조 사용
   watchAuth((user) => {
     if (!user) return;
 
@@ -56,13 +57,15 @@ window.addEventListener("load", async () => {
     watchNotifications(user.uid, renderNotifications);
   });
 
-  /* DELETE ALL NOTIFICATIONS */
   document.getElementById("deleteAllNotificationsBtn").onclick = async () => {
+
     if (!currentUser) return;
+
     if (!confirm("모든 알림을 삭제하시겠습니까?")) return;
 
     await deleteAllNotifications(currentUser.uid);
   };
+
 });
 
 /* =========================
@@ -96,7 +99,7 @@ function renderComment(c) {
 
   const div = document.createElement("div");
   div.className = "comment";
-  div.dataset.id = c.id;
+  div.setAttribute("data-id", c.id);
 
   div.innerHTML = `
     <b>${c.name}</b>
@@ -107,14 +110,13 @@ function renderComment(c) {
       <button class="edit-btn">수정</button>
     </div>
 
+    <div class="reply-slot"></div>
+    <div class="edit-slot"></div>
     <div class="child"></div>
   `;
 
-  div.querySelector(".reply-btn").onclick = () =>
-    openReplyForm(c, div);
-
-  div.querySelector(".edit-btn").onclick = () =>
-    openEditForm(c, div);
+  div.querySelector(".reply-btn").onclick = () => openReplyForm(c, div);
+  div.querySelector(".edit-btn").onclick = () => openEditForm(c, div);
 
   const child = div.querySelector(".child");
 
@@ -137,21 +139,20 @@ async function sendComment() {
 
   const comment = await addComment(postId, text, currentUser);
 
-  const participants = await getParticipants(postId);
+  const participants = (await getParticipants(postId)) || [];
 
-  const targets = [...new Set(participants)]
+  // 본인 제거 + 중복 제거
+  const uniqueParticipants = [...new Set(participants)]
     .filter(uid => uid !== currentUser.uid);
 
   await addNotifications(
-    targets,
+    uniqueParticipants,
     currentUser.uid,
     currentUser.name,
     comment.id,
     "comment"
-  );
-
-  input.value = "";
-}
+    );
+  }
 
 /* =========================
 REPLY
@@ -166,14 +167,22 @@ function openReplyForm(c, commentEl) {
   form.className = "reply-form";
 
   form.innerHTML = `
-    <textarea></textarea>
-    <div>
+    <textarea placeholder="답글 입력"></textarea>
+    <div class="btns">
       <button class="send">전송</button>
       <button class="cancel">취소</button>
     </div>
   `;
 
-  commentEl.querySelector(".child").prepend(form);
+  const child = commentEl.querySelector(".child");
+
+  // 🔥 여기 핵심
+  child.prepend(form);
+
+  requestAnimationFrame(() => {
+    form.scrollIntoView({ behavior: "smooth", block: "center" });
+    form.querySelector("textarea").focus();
+  });
 
   form.querySelector(".send").onclick = async () => {
 
@@ -187,8 +196,12 @@ function openReplyForm(c, commentEl) {
       c.id
     );
 
-    const targets = [c.uid]
-      .filter(uid => uid && uid !== currentUser.uid);
+    const participants = await getParticipants(postId) || [];
+
+    const parentOwnerUid = c.uid;
+
+    const targets = [...new Set([parentOwnerUid])]
+      .filter(uid => uid !== currentUser.uid);
 
     await addNotifications(
       targets,
@@ -205,10 +218,10 @@ function openReplyForm(c, commentEl) {
 }
 
 /* =========================
-EDIT (FIXED BASIC)
+EDIT
 ========================= */
 
-function openEditForm(c, commentEl) {
+function openEditForm(c, commentEl, oldText) {
 
   document.querySelectorAll(".edit-form")
     .forEach(e => e.remove());
@@ -217,23 +230,63 @@ function openEditForm(c, commentEl) {
   form.className = "edit-form";
 
   form.innerHTML = `
-    <textarea>${c.text}</textarea>
+    <textarea>${oldText}</textarea>
     <div>
       <button class="save">저장</button>
       <button class="cancel">취소</button>
     </div>
   `;
 
-  commentEl.appendChild(form);
+  const zone = commentEl.querySelector(".reply-zone");
+  zone.innerHTML = "";
+  zone.appendChild(form);
+
+  requestAnimationFrame(() => {
+    form.scrollIntoView({ behavior: "smooth", block: "center" });
+    form.querySelector("textarea").focus();
+  });
 
   form.querySelector(".cancel").onclick = () => form.remove();
 }
 
 /* =========================
-NOTIFICATIONS RENDER
+NOTIFICATIONS POPUP
 ========================= */
 
-function renderNotifications(list) {
+function detectNotifications(changes) {
+
+  changes.forEach(change => {
+
+    if (change.type !== "added") return;
+
+    const data = change.doc.data();
+
+    if (data.uid === currentUser.uid) return;
+
+    showPopup(data.parentId ? "새 답글" : "새 댓글");
+  });
+}
+
+function showPopup(msg) {
+
+  const el = document.getElementById("notify");
+  if (!el) return;
+
+  el.style.display = "block";
+  el.textContent = `🔔 ${msg}`;
+
+  clearTimeout(el.timer);
+
+  el.timer = setTimeout(() => {
+    el.style.display = "none";
+  }, 4000);
+}
+
+/* =========================
+NOTIFICATION LIST
+========================= */
+
+function renderNotifications(list){
 
   const box = document.getElementById("notificationList");
   box.innerHTML = "";
@@ -246,17 +299,17 @@ function renderNotifications(list) {
       div.className = "notification-item";
 
       div.textContent =
-        `🔔 ${n.senderName} → ${n.type === "reply" ? "답글" : "댓글"}`;
+        `🔔 ${n.senderName} 님이 ${n.type === "reply" ? "답글" : "댓글"}을 남겼습니다`;
 
-      const del = document.createElement("button");
-      del.textContent = "✕";
+      const delBtn = document.createElement("button");
+      delBtn.textContent = "✕";
 
-      del.onclick = async (e) => {
+      delBtn.onclick = async (e) => {
         e.stopPropagation();
         await deleteDoc(doc(db, "notifications", n.id));
       };
 
-      div.appendChild(del);
+      div.appendChild(delBtn);
 
       div.onclick = async () => {
         await markNotificationRead(n.id);
@@ -268,19 +321,19 @@ function renderNotifications(list) {
 }
 
 /* =========================
-SCROLL
+SCROLL TO COMMENT
 ========================= */
 
 function jumpToComment(id) {
 
-  const el = document.querySelector(`[data-id="${id}"]`);
-  if (!el) return;
+  const target = document.querySelector(`[data-id="${id}"]`);
+  if (!target) return;
 
-  el.scrollIntoView({ behavior: "smooth", block: "center" });
+  target.scrollIntoView({ behavior: "smooth", block: "center" });
 
-  el.classList.add("highlight");
+  target.classList.add("highlight");
 
-  setTimeout(() => el.classList.remove("highlight"), 2000);
+  setTimeout(() => target.classList.remove("highlight"), 2000);
 }
 
 /* =========================
