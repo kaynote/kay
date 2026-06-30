@@ -720,7 +720,7 @@ async function openModal(p){
             action.appendChild(replyBtn);
         }
 
-        if (isOwner) {
+        if (isOwner && !c.deleted) {
 
             // 수정
             const editBtn = document.createElement("button");
