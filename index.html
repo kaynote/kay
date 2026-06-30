@@ -95,6 +95,7 @@ import {
 ========================= */
 
 const ADMIN_EMAIL = "ektjttnfp5@gmail.com";
+const ADMIN_UID = "eEltgLaV6oN7MHUXTfQONc2wGAk1";
 
 /* =========================
    DOM
@@ -402,13 +403,43 @@ async function openModal(p){
             }
         );
 
-        // 2. 댓글 알림 생성
-        if (p.uid && p.uid !== user.uid) {
+        // 2. 댓글 알림 생성 (관리자 + 기존 참여자)
+
+        const targets = new Map();
+
+        // 관리자 추가
+        if (user.uid !== ADMIN_UID) {
+            targets.set(ADMIN_UID, true);
+        }
+
+        // 현재 게시글의 댓글 작성자 모두 조회
+        const commentsSnap = await getDocs(
+            collection(db, "people", p.name, "comments")
+        );
+
+        commentsSnap.forEach(docSnap => {
+
+            const data = docSnap.data();
+
+            if (
+                data.uid &&
+                data.uid !== user.uid
+            ) {
+                targets.set(data.uid, true);
+            }
+
+        });
+
+        // 알림 생성
+        for (const targetUid of targets.keys()) {
+
             await addDoc(
                 collection(db, "notifications"),
                 {
-                    targetUid: p.uid,
+                    targetUid,
+
                     senderUid: user.uid,
+
                     senderName:
                         user.providerData?.[0]?.displayName ||
                         user.displayName ||
@@ -416,12 +447,17 @@ async function openModal(p){
                         "익명",
 
                     postId: p.name,
+
                     commentId: null,
+
                     type: "comment",
+
                     read: false,
+
                     createdAt: serverTimestamp()
                 }
             );
+
         }
 
         commentInput.value = "";
