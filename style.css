@@ -16,15 +16,6 @@ header {
   margin-bottom: 20px;
 }
 
-#searchBox {
-  width: 100%;
-  padding: 14px;
-  font-size: 17px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  box-sizing: border-box;
-}
-
 /* =========================
 GRID / CARD
 ========================= */
@@ -50,7 +41,6 @@ GRID / CARD
   transform: translateY(-2px);
 }
 
-/* PHOTO */
 .photo {
   width: 100%;
   aspect-ratio: 3/4;
@@ -64,67 +54,12 @@ GRID / CARD
   object-fit: cover;
 }
 
-/* INFO */
 .info {
   padding: 14px;
 }
 
-.name {
-  margin-bottom: 8px;
-  word-break: keep-all;
-}
-
-.name .en {
-  display: flex;
-  gap: 8px;
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.name .en .num {
-  width: 42px;
-  text-align: right;
-  color: #777;
-}
-
-.name .en .txt {
-  flex: 1;
-}
-
-.name .ko {
-  display: block;
-  margin-top: 4px;
-  padding-left: 50px;
-  font-size: 14px;
-  color: #666;
-}
-
-.meta {
-  font-size: 14px;
-  color: #666;
-}
-
-.desc {
-  font-size: 14px;
-  line-height: 1.6;
-  white-space: pre-line;
-}
-
-.tag {
-  display: inline-block;
-  background: #eee;
-  border-radius: 999px;
-  padding: 4px 9px;
-  font-size: 11px;
-  margin: 2px;
-}
-
-.timestamp {
-  color: #707070 !important;
-}
-
 /* =========================
-MODAL (핵심 정리)
+MODAL
 ========================= */
 
 .modal {
@@ -161,7 +96,6 @@ MODAL (핵심 정리)
   cursor: pointer;
 }
 
-/* MOBILE */
 @media (max-width:700px) {
   .modal-content {
     width: 100vw;
@@ -169,27 +103,6 @@ MODAL (핵심 정리)
     margin: 0;
     border-radius: 0;
   }
-}
-
-/* =========================
-MODAL CONTENT
-========================= */
-
-.modal-photo {
-  width: 100%;
-  max-width: 320px;
-  margin: 0 auto 20px;
-  border-radius: 12px;
-}
-
-.modal-name {
-  font-size: 24px;
-  font-weight: 700;
-}
-
-.modal-desc {
-  line-height: 1.8;
-  white-space: pre-line;
 }
 
 /* =========================
@@ -224,7 +137,7 @@ LIKE / LOGIN
 }
 
 /* =========================
-COMMENTS
+COMMENTS SYSTEM (CLEAN)
 ========================= */
 
 .commentArea {
@@ -261,50 +174,98 @@ COMMENTS
   padding: 12px;
   margin: 10px 0;
   border-radius: 10px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 /* TEXT */
-.commentName {
+.comment b {
   font-weight: bold;
 }
 
-.commentText {
+.comment p {
+  margin: 0;
   line-height: 1.6;
 }
 
-/* ACTIONS */
+/* ACTION BUTTONS */
 .actions {
   display: flex;
   gap: 6px;
-  margin-top: 6px;
 }
 
 .actions button {
   font-size: 11px;
-  padding: 3px 8px;
+  padding: 4px 8px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
 }
 
-.editBtn {
+.reply-btn {
   background: #1976d2;
   color: #fff;
 }
 
-.deleteBtn {
-  background: #d32f2f;
+.edit-btn {
+  background: #ff9800;
   color: #fff;
 }
 
-/* INLINE REPLY */
-.inline-reply {
-  margin-top: 10px;
+/* CHILD COMMENTS */
+.child {
+  margin-left: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.inline-reply textarea {
+/* =========================
+REPLY / EDIT FORMS (JS 기준 통일)
+========================= */
+
+.reply-form,
+.edit-form {
   width: 100%;
-  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.reply-form textarea,
+.edit-form textarea {
+  width: 100%;
+  min-height: 120px;
+  box-sizing: border-box;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  resize: vertical;
+}
+
+.reply-form button,
+.edit-form button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  margin-right: 6px;
+}
+
+.reply-form .send,
+.edit-form .save {
+  background: #2e7d32;
+  color: white;
+}
+
+.reply-form .cancel,
+.edit-form .cancel {
+  background: #d32f2f;
+  color: white;
 }
 
 /* =========================
@@ -315,17 +276,10 @@ AUTH
   display: flex;
   gap: 6px;
   align-items: center;
-  overflow: hidden;
-}
-
-.authArea span {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 /* =========================
-NOTIFICATION
+NOTIFICATIONS
 ========================= */
 
 .notify {
@@ -377,188 +331,28 @@ NOTIFICATION
   padding: 10px;
   border-bottom: 1px solid #eee;
   cursor: pointer;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  gap: 8px;
 }
 
 .notification-item:hover {
   background: #f5f5f5;
 }
 
-.notification-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-}
-
-.notification-delete{
-    border:none;
-    background:transparent;
-    cursor:pointer;
-    font-size:16px;
-    color:#999;
-    padding:4px 6px;
-    flex-shrink:0;
-}
-
-.notification-delete:hover{
-    color:#e53935;
-}
-
-/* =========================
-COMMENT SYSTEM
-========================= */
-
-/* 이미지 통일 */
-.comment img,
-.replies img,
-.child img,
-.notification-item img {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  object-fit: cover;
-  flex-shrink: 0;
-}
-
-/* 댓글 기본 구조 */
-.comment {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  align-items: stretch;
-}
-
-/* reply / edit 공통 컨테이너 */
-.reply-form,
-.edit-form {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  margin-top: 8px;
-}
-
-/* textarea 통합 스타일 */
-.reply-form textarea,
-.edit-form textarea {
-  width: 100%;
-  min-height: 140px;
-  box-sizing: border-box;
-}
-
-/* 버튼 공통 */
-.reply-form button,
-.edit-form button {
-  margin-top: 6px;
-  margin-right: 6px;
-  padding: 8px 12px;
+.notification-delete {
   border: none;
-  border-radius: 8px;
-  font-size: 12px;
+  background: transparent;
   cursor: pointer;
+  font-size: 14px;
+  color: #999;
 }
 
-/* 버튼 색상 */
-.reply-form .send,
-.edit-form .save {
-  background: #2e7d32;
-  color: white;
-}
-
-.reply-form .cancel,
-.edit-form .cancel {
-  background: #d32f2f;
-  color: white;
-}
-
-/* 댓글 구조 확장 */
-.comment > .edit-form,
-.comment > .reply-form {
-  width: 100%;
-  align-self: stretch;
-}
-
-/* 내부 레이아웃 안정화 */
-.comment > div {
-  min-width: 0;
-}
-
-/* 대댓글 영역 */
-.child {
-  width: 100%;
-  display: block;
-}
-
-/* wrapper zone */
-.reply-zone,
-.edit-zone {
-  width: 100%;
-  margin-top: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-/* form area */
-.form-area {
-  width: 100%;
-  margin-top: 8px;
-}
-
-.inline-edit {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.inline-edit textarea {
-  width: 100%;
-  min-height: 140px;
-  box-sizing: border-box;
-}
-
-/* reply / edit 동일 높이 기준 통일 */
-.inline-reply textarea,
-.inline-edit textarea {
-  width: 100%;
-  min-height: 80px;   /* 답글 기준 */
-  max-height: 120px;  /* 너무 커지는 것 방지 */
-  resize: vertical;
-  box-sizing: border-box;
-}
-
-.inline-reply > div,
-.inline-edit > div {
-  display: flex;
-  gap: 6px;
-  margin-top: 6px;
-}
-
-#notificationPanel {
-  position: absolute;
-  right: 20px;
-  top: 60px;
-  width: 320px;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  display: none;
-}
-
-#notificationPanel.show {
-  display: block;
-}
-
-.notification-actions {
-  display: flex;
-  gap: 6px;
-}
-
-.notification-header {
-  display: flex;
-  justify-content: flex-end;
-  padding: 6px 8px;
+.notification-delete:hover {
+  color: #e53935;
 }
 
 #deleteAllNotificationsBtn {
@@ -572,4 +366,17 @@ COMMENT SYSTEM
 
 #deleteAllNotificationsBtn:hover {
   background: #ddd;
+}
+
+/* =========================
+HIGHLIGHT (SCROLL TARGET)
+========================= */
+
+.highlight {
+  animation: flash 2s ease;
+}
+
+@keyframes flash {
+  0% { background: #fff3cd; }
+  100% { background: transparent; }
 }
