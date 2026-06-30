@@ -569,25 +569,39 @@ async function openModal(p){
             const forceDelBtn = document.createElement("button");
             forceDelBtn.textContent = "완전삭제";
             
-            const restoreBtn = document.createElement("button");
-            restoreBtn.textContent = "복구";
+            const viewBtn = document.createElement("button");
+            viewBtn.textContent = "원문 보기";
 
-            restoreBtn.onclick = async () => {
+            viewBtn.onclick = () => {
 
-                await updateDoc(
-                    doc(db, "people", p.name, "comments", c.id),
-                    {
-                        deleted: false,
-                        text: c.originalText,
-                        originalText: "",
-                        deletedAt: null
-                    }
-                );
+                const old = div.querySelector(".original-comment");
 
-                await loadComments();
+                if (old) {
+                    old.remove();
+                    viewBtn.textContent = "원문 보기";
+                    return;
+                }
+
+                const box = document.createElement("div");
+                box.className = "original-comment";
+
+                box.style.margin = "10px 0";
+                box.style.padding = "10px";
+                box.style.background = "#fff8dc";
+                box.style.border = "1px solid #e0c97f";
+                box.style.borderRadius = "8px";
+
+                box.innerHTML = `
+                    <b>원래 댓글</b><br><br>
+                    ${c.originalText || "(내용 없음)"}
+                `;
+
+                div.insertBefore(box, action);
+
+                viewBtn.textContent = "원문 숨기기";
             };
 
-            action.appendChild(restoreBtn);
+            action.appendChild(viewBtn);
 
             forceDelBtn.onclick = async () => {
 
