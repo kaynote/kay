@@ -616,21 +616,22 @@ async function openModal(p){
 
                 const user = auth.currentUser || await login();
 
-                await addDoc(
-                    collection(db, "people", p.name, "comments"),
-                    {
-                        uid: user.uid,
-                        name:
-                            user.providerData?.[0]?.displayName ||
-                            user.displayName ||
-                            user.email ||
-                            "익명",
-                        photo: user.photoURL,
-                        text,
-                        parentId: c.id,
-                        createdAt: serverTimestamp()
-                    }
-                );
+                    const replyRef = await addDoc(
+        collection(db, "people", p.name, "comments"),
+        {
+            uid: user.uid,
+            name:
+                user.providerData?.[0]?.displayName ||
+                user.displayName ||
+                user.email ||
+                "익명",
+
+            photo: user.photoURL,
+            text,
+            parentId: c.id,
+            createdAt: serverTimestamp()
+        }
+    );
 
                 // ★ 답글 알림 생성
                 if (c.uid !== user.uid) {
@@ -650,7 +651,7 @@ async function openModal(p){
 
                             postId: p.name,   
 
-                            commentId: c.id,
+                            commentId: replyRef.id,
 
                             type: "reply",
 
