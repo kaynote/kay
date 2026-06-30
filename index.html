@@ -561,7 +561,10 @@ async function openModal(p){
             (auth.currentUser.uid === c.uid ||
              auth.currentUser.email === ADMIN_EMAIL);
         
-        if (isOwner && c.deleted) {
+        const isAdmin =
+            auth.currentUser?.email === ADMIN_EMAIL;
+
+        if (isAdmin && c.deleted) {
 
             const forceDelBtn = document.createElement("button");
             forceDelBtn.textContent = "완전삭제";
