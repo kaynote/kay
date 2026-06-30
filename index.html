@@ -821,6 +821,7 @@ async function openModal(p){
                         doc(db, "people", p.name, "comments", c.id),
                         {
                             deleted: true,
+                            originalText: c.text,
                             text: "",
                             deletedAt: serverTimestamp()
                         }
