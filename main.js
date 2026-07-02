@@ -136,6 +136,11 @@ async function sendComment() {
   const input = document.getElementById("commentInput");
   const text = input.value.trim();
   if (!text) return;
+  
+    if (text.length > 1000) {
+      alert("댓글은 최대 1000자까지 입력할 수 있습니다.");
+      return;
+    }
 
   const comment = await addComment(postId, text, currentUser);
 
@@ -187,6 +192,11 @@ function openReplyForm(c, commentEl) {
   form.querySelector(".send").onclick = async () => {
 
     const text = form.querySelector("textarea").value.trim();
+    
+    if (text.length > 1000) {
+        alert("댓글은 최대 1000자까지 입력할 수 있습니다.");
+        return;
+    }
     if (!text) return;
 
     const comment = await addComment(
