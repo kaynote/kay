@@ -1390,7 +1390,7 @@ const people = [
     "name": "Lola Jhara",
     "ko": "롤라 자라",
     "displayName": "Lola Jhara 롤라 자라",
-    "note": "자라의 외할머니, 이름의 철자가 Jhara 선생님과 같은지는 불분명, <span class=\"timestamp\">정주행 2021.12.30 17:06</span>",
+    "note": "자라의 외할머니, 이름의 철자가 Jhara 자라 선생님과 같은지는 불분명, <span class=\"timestamp\">정주행 2021.12.30 17:06</span>",
     "image": "Lola Jhara.jpg"
   },
   {
@@ -2126,7 +2126,7 @@ const people = [
     "name": "Sir. Jerry",
     "ko": "남준현",
     "displayName": "Sir. Jerry 남준현",
-    "note": "라이브 방송 도중에 음소거가 되어 채팅 메시지를 남기신 적이 있다, @jerryinmanila8609: ​​소리 나게 하려면 다시 시작해야 해요, <span class=\"timestamp\"> 2025.03.22 채팅 1:29:34</span>",
+    "note": "채널의 주인장, 라이브 방송 도중에 음소거가 되어 채팅 메시지를 남기신 적이 있다, @jerryinmanila8609: ​​소리 나게 하려면 다시 시작해야 해요, <span class=\"timestamp\"> 2025.03.22 채팅 1:29:34</span>",
     "image": "Sir. Jerry.jpg"
   },
   {
