@@ -1627,11 +1627,11 @@ const people = [
   },
   {
     "no": 204,
-    "name": "naomi turingan",
+    "name": "Naomi Turingan",
     "ko": "나오미 투링간",
-    "displayName": "naomi turingan 나오미 투링간",
+    "displayName": "Naomi Turingan 나오미 투링간",
     "note": "카시의 친언니인 듯, 카시가 맹장수술을 받았을 때 제리님이 올린 영상에 댓글을 단 적이 있다, @naomituringan5352: salamat sayo sir jerry.dahil sayo at sa mga Sponsor marami kayong natutulungan na mga nangangailangan. LEGIT 제리님, 감사합니다. 당신과 후원자분들 덕분에 많은 어려운 사람들을 도울 수 있었습니다. 정말 훌륭합니다. <span class=\"timestamp\">정주행 2022.09.07</span>",
-    "image": "Naomi turingan.jpg"
+    "image": "Naomi Turingan.jpg"
   },
   {
     "no": 205,
@@ -2299,11 +2299,11 @@ const people = [
   },
   {
     "no": 288,
-    "name": "yoonjoowoong",
+    "name": "Yoonjoowoong",
     "ko": "윤주웅",
-    "displayName": "yoonjoowoong 윤주웅",
+    "displayName": "Yoonjoowoong 윤주웅",
     "note": "메리안이 길에서 주워온 흰색의 암컷 고양이로 제이 후원자의 이름을 붙였다, <span class=\"timestamp\">정주행 2025.10.28 11:51</span>",
-    "image": "yoonjoowoong.jpg"
+    "image": "Yoonjoowoong.jpg"
   },
   {
     "no": 289,
