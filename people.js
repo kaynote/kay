@@ -436,8 +436,8 @@ const people = [
   {
     "no": 55,
     "name": "Charles",
-    "ko": "찰스 # 이름 추가",
-    "displayName": "Charles 찰스 # 이름 추가",
+    "ko": "찰스",
+    "displayName": "Charles 찰스",
     "note": "제리님 동네에 사는 잘생긴 남자아이, <span class=\"timestamp\"> 2025.11.29 30:44</span>, <span class=\"timestamp\"> 2026.07.04 35:43</span>",
     "image": "Charles.jpg"
   },
