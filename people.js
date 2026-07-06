@@ -1070,7 +1070,7 @@ const people = [
     "name": "Joel",
     "ko": "조엘",
     "displayName": "Joel 조엘",
-    "note": "바랑가이 157에 사는 시니어 할아버지, <span class=\"timestamp\"> 2026.07.05</span> 06.15",
+    "note": "바랑가이 157에 사는 시니어 할아버지, <span class=\"timestamp\"> 2026.07.05 06:15</span>",
     "image": "Joel.jpg"
   },
   {
