@@ -118,7 +118,7 @@ const people = [
     "name": "Angela",
     "ko": "안젤라",
     "displayName": "Angela 안젤라",
-    "note": "제리님 동네에 사는 예쁜 여자아이, <span class=\"timestamp\"> 2025.11.29 30:40</span>, <span class=\"timestamp\"> 2026.06.20 48:39</span>",
+    "note": "제리님 동네에 사는 예쁜 여자아이, <span class=\"timestamp\"> 2026.06.20 48:39</span>",
     "image": "Angela.jpg"
   },
   {
@@ -435,14 +435,6 @@ const people = [
   },
   {
     "no": 55,
-    "name": "Charles",
-    "ko": "찰스",
-    "displayName": "Charles 찰스",
-    "note": "제리님 동네에 사는 잘생긴 남자아이, <span class=\"timestamp\"> 2025.11.29 30:44</span>, <span class=\"timestamp\"> 2026.07.04 35:43</span>",
-    "image": "Charles.jpg"
-  },
-  {
-    "no": 56,
     "name": "Charmaine",
     "ko": "샬메인",
     "displayName": "Charmaine 샬메인",
@@ -450,7 +442,7 @@ const people = [
     "image": "Charmaine.jpg"
   },
   {
-    "no": 57,
+    "no": 56,
     "name": "Chesca Nicole",
     "ko": "체스카 니콜",
     "displayName": "Chesca Nicole 체스카 니콜",
@@ -458,7 +450,7 @@ const people = [
     "image": "Chesca Nicole.jpg"
   },
   {
-    "no": 58,
+    "no": 57,
     "name": "Chris Ahlem Mahinay",
     "ko": "크리스 알렘 마히나이",
     "displayName": "Chris Ahlem Mahinay 크리스 알렘 마히나이",
@@ -466,7 +458,7 @@ const people = [
     "image": "Chris Ahlem Mahinay.jpg"
   },
   {
-    "no": 59,
+    "no": 58,
     "name": "Chris Jack Niño P. Baccay",
     "ko": "크리스 작 니뇨 P. 바카이",
     "displayName": "Chris Jack Niño P. Baccay 크리스 작 니뇨 P. 바카이",
@@ -474,7 +466,7 @@ const people = [
     "image": "Chris Jack Niño P. Baccay.jpg"
   },
   {
-    "no": 60,
+    "no": 59,
     "name": "Christine Kate",
     "ko": "크리스틴 케이트",
     "displayName": "Christine Kate 크리스틴 케이트",
@@ -482,7 +474,7 @@ const people = [
     "image": "Christine Kate.jpg"
   },
   {
-    "no": 61,
+    "no": 60,
     "name": "Cipriano F. Nuñez",
     "ko": "시프리아노 F. 누녜스",
     "displayName": "Cipriano F. Nuñez 시프리아노 F. 누녜스",
@@ -490,7 +482,7 @@ const people = [
     "image": "Cipriano F. Nuñez.jpg"
   },
   {
-    "no": 62,
+    "no": 61,
     "name": "CJ",
     "ko": "씨제이",
     "displayName": "CJ 씨제이",
@@ -498,7 +490,7 @@ const people = [
     "image": "CJ.jpg"
   },
   {
-    "no": 63,
+    "no": 62,
     "name": "CJ-2",
     "ko": "씨제이",
     "displayName": "CJ 씨제이",
@@ -506,7 +498,7 @@ const people = [
     "image": "CJ-2.jpg"
   },
   {
-    "no": 64,
+    "no": 63,
     "name": "Colin N. mora",
     "ko": "콜린 N. 모라",
     "displayName": "Colin N. mora 콜린 N. 모라",
@@ -514,7 +506,7 @@ const people = [
     "image": "Colin N. mora.jpg"
   },
   {
-    "no": 65,
+    "no": 64,
     "name": "Crissa",
     "ko": "크리사",
     "displayName": "Crissa 크리사",
@@ -522,7 +514,7 @@ const people = [
     "image": "Crissa.jpg"
   },
   {
-    "no": 66,
+    "no": 65,
     "name": "Crystal Joy V. Accad",
     "ko": "크리스탈 조이 V. 아카드",
     "displayName": "Crystal Joy V. Accad 크리스탈 조이 V. 아카드",
@@ -530,7 +522,7 @@ const people = [
     "image": "Crystal Joy V. Accad.jpg"
   },
   {
-    "no": 67,
+    "no": 66,
     "name": "Cyrus",
     "ko": "사이로스",
     "displayName": "Cyrus 사이로스",
@@ -538,7 +530,7 @@ const people = [
     "image": "Cyrus.jpg"
   },
   {
-    "no": 68,
+    "no": 67,
     "name": "Dali",
     "ko": "달리",
     "displayName": "Dali 달리",
@@ -546,7 +538,7 @@ const people = [
     "image": "Dali.jpg"
   },
   {
-    "no": 69,
+    "no": 68,
     "name": "Dang",
     "ko": "당",
     "displayName": "Dang 당",
@@ -554,7 +546,7 @@ const people = [
     "image": "Dang.jpg"
   },
   {
-    "no": 70,
+    "no": 69,
     "name": "Danica S. Dogillo",
     "ko": "다니카 S. 도길료",
     "displayName": "Danica S. Dogillo 다니카 S. 도길료",
@@ -562,7 +554,7 @@ const people = [
     "image": "Danica S. Dogillo.jpg"
   },
   {
-    "no": 71,
+    "no": 70,
     "name": "Dave",
     "ko": "데이브",
     "displayName": "Dave 데이브",
@@ -570,7 +562,7 @@ const people = [
     "image": "Dave.jpg"
   },
   {
-    "no": 72,
+    "no": 71,
     "name": "Diana",
     "ko": "다이아나",
     "displayName": "Diana 다이아나",
@@ -578,7 +570,7 @@ const people = [
     "image": "Diana.jpg"
   },
   {
-    "no": 73,
+    "no": 72,
     "name": "DJ Bryle",
     "ko": "디제이 브라일",
     "displayName": "DJ Bryle 디제이 브라일",
@@ -586,7 +578,7 @@ const people = [
     "image": "DJ Bryle.jpg"
   },
   {
-    "no": 74,
+    "no": 73,
     "name": "Dolores Villasan",
     "ko": "돌로레스 빌라산",
     "displayName": "Dolores Villasan 돌로레스 빌라산",
@@ -594,7 +586,7 @@ const people = [
     "image": "Dolores Villasan.jpg"
   },
   {
-    "no": 75,
+    "no": 74,
     "name": "Domingo G. Garvin",
     "ko": "도밍고 G. 가빈",
     "displayName": "Domingo G. Garvin 도밍고 G. 가빈",
@@ -602,7 +594,7 @@ const people = [
     "image": "Domingo G. Garvin.jpg"
   },
   {
-    "no": 76,
+    "no": 75,
     "name": "Dongmin",
     "ko": "동민",
     "displayName": "Dongmin 동민",
@@ -610,7 +602,7 @@ const people = [
     "image": "Dongmin.jpg"
   },
   {
-    "no": 77,
+    "no": 76,
     "name": "Eddie Boy A. Boticario",
     "ko": "이디 보이 A. 보티카리오",
     "displayName": "Eddie Boy A. Boticario 이디 보이 A. 보티카리오",
@@ -618,7 +610,7 @@ const people = [
     "image": "Eddie Boy A. Boticario.jpg"
   },
   {
-    "no": 78,
+    "no": 77,
     "name": "Elena Todil",
     "ko": "엘레나 또딜",
     "displayName": "Elena Todil 엘레나 또딜",
@@ -626,7 +618,7 @@ const people = [
     "image": "Elena Todil.jpg"
   },
   {
-    "no": 79,
+    "no": 78,
     "name": "Ella",
     "ko": "엘라",
     "displayName": "Ella 엘라",
@@ -634,7 +626,7 @@ const people = [
     "image": "Ella.jpg"
   },
   {
-    "no": 80,
+    "no": 79,
     "name": "Ella C. Roja",
     "ko": "엘라 C. 로하",
     "displayName": "Ella C. Roja 엘라 C. 로하",
@@ -642,7 +634,7 @@ const people = [
     "image": "Ella C. Roja.jpg"
   },
   {
-    "no": 81,
+    "no": 80,
     "name": "Elliana Mae Besana",
     "ko": "엘리아나 미 베사나",
     "displayName": "Elliana Mae Besana 엘리아나 미 베사나",
@@ -650,7 +642,7 @@ const people = [
     "image": "Elliana Mae Besana.jpg"
   },
   {
-    "no": 82,
+    "no": 81,
     "name": "Elvis Raya Quidol",
     "ko": "엘비스 라야 키돌",
     "displayName": "Elvis Raya Quidol 엘비스 라야 키돌",
@@ -658,7 +650,7 @@ const people = [
     "image": "Elvis Raya Quidol.jpg"
   },
   {
-    "no": 83,
+    "no": 82,
     "name": "Emeliana A. Daclan",
     "ko": "에멜리아나 A. 다클란",
     "displayName": "Emeliana A. Daclan 에멜리아나 A. 다클란",
@@ -666,7 +658,7 @@ const people = [
     "image": "Emeliana A. Daclan.jpg"
   },
   {
-    "no": 84,
+    "no": 83,
     "name": "Empay Mendoza",
     "ko": "엠빠이 멘도자",
     "displayName": "Empay Mendoza 엠빠이 멘도자",
@@ -674,7 +666,7 @@ const people = [
     "image": "Empay Mendoza.jpg"
   },
   {
-    "no": 85,
+    "no": 84,
     "name": "Erich Khate S. De Jesus",
     "ko": "에리치 케이트 S. 데 헤수스",
     "displayName": "Erich Khate S. De Jesus 에리치 케이트 S. 데 헤수스",
@@ -682,7 +674,7 @@ const people = [
     "image": "Erich Khate S. De Jesus.jpg"
   },
   {
-    "no": 86,
+    "no": 85,
     "name": "Erickah Anjhey S. De Jesus",
     "ko": "에리카 안제이 S. 데 헤수스",
     "displayName": "Erickah Anjhey S. De Jesus 에리카 안제이 S. 데 헤수스",
@@ -690,7 +682,7 @@ const people = [
     "image": "Erickah Anjhey S. De Jesus.jpg"
   },
   {
-    "no": 87,
+    "no": 86,
     "name": "Erlito D. Rubis",
     "ko": "얼리토 D. 루비스",
     "displayName": "Erlito D. Rubis 얼리토 D. 루비스",
@@ -698,7 +690,7 @@ const people = [
     "image": "Erlito D. Rubis.jpg"
   },
   {
-    "no": 88,
+    "no": 87,
     "name": "Eviana",
     "ko": "이비아나",
     "displayName": "Eviana 이비아나",
@@ -706,7 +698,7 @@ const people = [
     "image": "Eviana.jpg"
   },
   {
-    "no": 89,
+    "no": 88,
     "name": "Gail",
     "ko": "게일",
     "displayName": "Gail 게일",
@@ -714,7 +706,7 @@ const people = [
     "image": "Gail.jpg"
   },
   {
-    "no": 90,
+    "no": 89,
     "name": "Gerald N. Villaruel",
     "ko": "제럴드 N. 빌라루엘",
     "displayName": "Gerald N. Villaruel 제럴드 N. 빌라루엘",
@@ -722,7 +714,7 @@ const people = [
     "image": "Gerald N. Villaruel.jpg"
   },
   {
-    "no": 91,
+    "no": 90,
     "name": "Hannah Kim",
     "ko": "아나 킴",
     "displayName": "Hannah Kim 아나 킴",
@@ -730,7 +722,7 @@ const people = [
     "image": "Hannah Kim.jpg"
   },
   {
-    "no": 92,
+    "no": 91,
     "name": "Ice Cream Kuya",
     "ko": "아이스크림 꾸야",
     "displayName": "Ice Cream Kuya 아이스크림 꾸야",
@@ -738,7 +730,7 @@ const people = [
     "image": "Ice Cream Kuya.jpg"
   },
   {
-    "no": 93,
+    "no": 92,
     "name": "Imelda Calixto-Rubiano",
     "ko": "이멜다 칼릭스토-루비아노",
     "displayName": "Imelda Calixto-Rubiano 이멜다 칼릭스토-루비아노",
@@ -746,7 +738,7 @@ const people = [
     "image": "Imelda Calixto-Rubiano.jpg"
   },
   {
-    "no": 94,
+    "no": 93,
     "name": "Inday",
     "ko": "인다이",
     "displayName": "Inday 인다이",
@@ -754,7 +746,7 @@ const people = [
     "image": "Inday.jpg"
   },
   {
-    "no": 95,
+    "no": 94,
     "name": "Ivan",
     "ko": "아이반",
     "displayName": "Ivan 아이반",
@@ -762,7 +754,7 @@ const people = [
     "image": "Ivan.jpg"
   },
   {
-    "no": 96,
+    "no": 95,
     "name": "Iverson H. Longcop",
     "ko": "아이버슨 H. 롱콥",
     "displayName": "Iverson H. Longcop 아이버슨 H. 롱콥",
@@ -770,7 +762,7 @@ const people = [
     "image": "Iverson H. Longcop.jpg"
   },
   {
-    "no": 97,
+    "no": 96,
     "name": "Jack Baccay",
     "ko": "작 바카이",
     "displayName": "Jack Baccay 작 바카이",
@@ -778,7 +770,7 @@ const people = [
     "image": "Jack Baccay.jpg"
   },
   {
-    "no": 98,
+    "no": 97,
     "name": "Jackielou Cabintoy",
     "ko": "자키루 카빈토이",
     "displayName": "Jackielou Cabintoy 자키루 카빈토이",
@@ -786,7 +778,7 @@ const people = [
     "image": "Jackielou Cabintoy.jpg"
   },
   {
-    "no": 99,
+    "no": 98,
     "name": "Jackielyn Ampalayohan",
     "ko": "자클린 암팔라요한",
     "displayName": "Jackielyn Ampalayohan 자클린 암팔라요한",
@@ -794,7 +786,7 @@ const people = [
     "image": "Jackielyn Ampalayohan.jpg"
   },
   {
-    "no": 100,
+    "no": 99,
     "name": "James",
     "ko": "제임스",
     "displayName": "James 제임스",
@@ -802,7 +794,7 @@ const people = [
     "image": "James.jpg"
   },
   {
-    "no": 101,
+    "no": 100,
     "name": "Jamjam C. Flores",
     "ko": "잠잠 C. 플로레스",
     "displayName": "Jamjam C. Flores 잠잠 C. 플로레스",
@@ -810,7 +802,7 @@ const people = [
     "image": "Jamjam C. Flores.jpg"
   },
   {
-    "no": 102,
+    "no": 101,
     "name": "Janaica A. Daclan",
     "ko": "자나이카 A. 다클란",
     "displayName": "Janaica A. Daclan 자나이카 A. 다클란",
@@ -818,7 +810,7 @@ const people = [
     "image": "Janaica A. Daclan.jpg"
   },
   {
-    "no": 103,
+    "no": 102,
     "name": "Jane Pearl A. Daclan",
     "ko": "제인 펄 A. 다클란",
     "displayName": "Jane Pearl A. Daclan 제인 펄 A. 다클란",
@@ -826,7 +818,7 @@ const people = [
     "image": "Jane Pearl A. Daclan.jpg"
   },
   {
-    "no": 104,
+    "no": 103,
     "name": "Janella",
     "ko": "자넬라",
     "displayName": "Janella 자넬라",
@@ -834,7 +826,7 @@ const people = [
     "image": "Janella.jpg"
   },
   {
-    "no": 105,
+    "no": 104,
     "name": "Janine",
     "ko": "자닌",
     "displayName": "Janine 자닌",
@@ -842,7 +834,7 @@ const people = [
     "image": "Janine.jpg"
   },
   {
-    "no": 106,
+    "no": 105,
     "name": "Japhet",
     "ko": "자펫",
     "displayName": "Japhet 자펫",
@@ -850,7 +842,7 @@ const people = [
     "image": "Japhet.jpg"
   },
   {
-    "no": 107,
+    "no": 106,
     "name": "Jasmine",
     "ko": "자스민",
     "displayName": "Jasmine 자스민",
@@ -858,7 +850,7 @@ const people = [
     "image": "Jasmine.jpg"
   },
   {
-    "no": 108,
+    "no": 107,
     "name": "Jasper",
     "ko": "자스퍼",
     "displayName": "Jasper 자스퍼",
@@ -866,7 +858,7 @@ const people = [
     "image": "Jasper.jpg"
   },
   {
-    "no": 109,
+    "no": 108,
     "name": "Jassvina",
     "ko": "자스비나",
     "displayName": "Jassvina 자스비나",
@@ -874,7 +866,7 @@ const people = [
     "image": "Jassvina.jpg"
   },
   {
-    "no": 110,
+    "no": 109,
     "name": "Jayson",
     "ko": "제이슨",
     "displayName": "Jayson 제이슨",
@@ -882,7 +874,7 @@ const people = [
     "image": "Jayson.jpg"
   },
   {
-    "no": 111,
+    "no": 110,
     "name": "Jayson-2",
     "ko": "제이슨",
     "displayName": "Jayson 제이슨",
@@ -890,7 +882,7 @@ const people = [
     "image": "Jayson-2.jpg"
   },
   {
-    "no": 112,
+    "no": 111,
     "name": "Je C. Roja",
     "ko": "제이 C. 로하",
     "displayName": "Je C. Roja 제이 C. 로하",
@@ -898,7 +890,7 @@ const people = [
     "image": "Je C. Roja.jpg"
   },
   {
-    "no": 113,
+    "no": 112,
     "name": "Jego",
     "ko": "제고",
     "displayName": "Jego 제고",
@@ -906,7 +898,7 @@ const people = [
     "image": "Jego.jpg"
   },
   {
-    "no": 114,
+    "no": 113,
     "name": "Jenai",
     "ko": "제나이",
     "displayName": "Jenai 제나이",
@@ -914,7 +906,7 @@ const people = [
     "image": "Jenai.jpg"
   },
   {
-    "no": 115,
+    "no": 114,
     "name": "Jerebel",
     "ko": "제레벨",
     "displayName": "Jerebel 제레벨",
@@ -922,7 +914,7 @@ const people = [
     "image": "Jerebel.jpg"
   },
   {
-    "no": 116,
+    "no": 115,
     "name": "Jericho",
     "ko": "제리코",
     "displayName": "Jericho 제리코",
@@ -930,7 +922,7 @@ const people = [
     "image": "Jericho.jpg"
   },
   {
-    "no": 117,
+    "no": 116,
     "name": "Jericho-2",
     "ko": "제리코",
     "displayName": "Jericho 제리코",
@@ -938,7 +930,7 @@ const people = [
     "image": "Jericho-2.jpg"
   },
   {
-    "no": 118,
+    "no": 117,
     "name": "Jerome",
     "ko": "제롬",
     "displayName": "Jerome 제롬",
@@ -946,7 +938,7 @@ const people = [
     "image": "Jerome.jpg"
   },
   {
-    "no": 119,
+    "no": 118,
     "name": "Jerome-2",
     "ko": "제롬",
     "displayName": "Jerome 제롬",
@@ -954,7 +946,7 @@ const people = [
     "image": "Jerome-2.jpg"
   },
   {
-    "no": 120,
+    "no": 119,
     "name": "Jessa",
     "ko": "제싸",
     "displayName": "Jessa 제싸",
@@ -962,7 +954,7 @@ const people = [
     "image": "Jessa.jpg"
   },
   {
-    "no": 121,
+    "no": 120,
     "name": "Jessie Azul",
     "ko": "제시 아줄",
     "displayName": "Jessie Azul 제시 아줄",
@@ -970,7 +962,7 @@ const people = [
     "image": "Jessie Azul.jpg"
   },
   {
-    "no": 122,
+    "no": 121,
     "name": "Jetreil Renomeron",
     "ko": "제트릴 리노메론",
     "displayName": "Jetreil Renomeron 제트릴 리노메론",
@@ -978,7 +970,7 @@ const people = [
     "image": "Jetreil Renomeron.jpg"
   },
   {
-    "no": 123,
+    "no": 122,
     "name": "Jewel",
     "ko": "즈웰",
     "displayName": "Jewel 즈웰",
@@ -986,7 +978,7 @@ const people = [
     "image": "Jewel.jpg"
   },
   {
-    "no": 124,
+    "no": 123,
     "name": "Jhara Mae Manatad",
     "ko": "자라 미 마나타드",
     "displayName": "Jhara Mae Manatad 자라 미 마나타드",
@@ -994,7 +986,7 @@ const people = [
     "image": "Jhara Mae Manatad.jpg"
   },
   {
-    "no": 125,
+    "no": 124,
     "name": "Jill Casil",
     "ko": "질 카실",
     "displayName": "Jill Casil 질 카실",
@@ -1002,7 +994,7 @@ const people = [
     "image": "Jill Casil.jpg"
   },
   {
-    "no": 126,
+    "no": 125,
     "name": "Jillian",
     "ko": "질리언",
     "displayName": "Jillian 질리언",
@@ -1010,7 +1002,7 @@ const people = [
     "image": "Jillian.jpg"
   },
   {
-    "no": 127,
+    "no": 126,
     "name": "Jillian D. Gilbero",
     "ko": "질리언 D. 길베로",
     "displayName": "Jillian D. Gilbero 질리언 D. 길베로",
@@ -1018,7 +1010,7 @@ const people = [
     "image": "Jillian D. Gilbero.jpg"
   },
   {
-    "no": 128,
+    "no": 127,
     "name": "Jillian Rose C. Llano",
     "ko": "질리언 로즈 C. 라노",
     "displayName": "Jillian Rose C. Llano 질리언 로즈 C. 라노",
@@ -1026,7 +1018,7 @@ const people = [
     "image": "Jillian Rose C. Llano.jpg"
   },
   {
-    "no": 129,
+    "no": 128,
     "name": "Jingjing",
     "ko": "징징",
     "displayName": "Jingjing 징징",
@@ -1034,7 +1026,7 @@ const people = [
     "image": "Jingjing.jpg"
   },
   {
-    "no": 130,
+    "no": 129,
     "name": "Jinjin",
     "ko": "진진",
     "displayName": "Jinjin 진진",
@@ -1042,7 +1034,7 @@ const people = [
     "image": "Jinjin.jpg"
   },
   {
-    "no": 131,
+    "no": 130,
     "name": "Joan H. Flores",
     "ko": "조안 H. 플로레스",
     "displayName": "Joan H. Flores 조안 H. 플로레스",
@@ -1050,7 +1042,7 @@ const people = [
     "image": "Joan H. Flores.jpg"
   },
   {
-    "no": 132,
+    "no": 131,
     "name": "Joaquin",
     "ko": "호아킨",
     "displayName": "Joaquin 호아킨",
@@ -1058,7 +1050,7 @@ const people = [
     "image": "Joaquin.jpg"
   },
   {
-    "no": 133,
+    "no": 132,
     "name": "Joar C. Masamayor",
     "ko": "조알 C. 마사마요르",
     "displayName": "Joar C. Masamayor 조알 C. 마사마요르",
@@ -1066,15 +1058,7 @@ const people = [
     "image": "Joar C. Masamayor.jpg"
   },
   {
-    "no": 134,
-    "name": "Joel",
-    "ko": "조엘",
-    "displayName": "Joel 조엘",
-    "note": "바랑가이 157에 사는 시니어 할아버지, <span class=\"timestamp\"> 2026.07.05 06:15</span>",
-    "image": "Joel.jpg"
-  },
-  {
-    "no": 135,
+    "no": 133,
     "name": "Johan",
     "ko": "요한",
     "displayName": "Johan 요한",
@@ -1082,7 +1066,7 @@ const people = [
     "image": "Johan.jpg"
   },
   {
-    "no": 136,
+    "no": 134,
     "name": "John Darrel N. Rioflorido",
     "ko": "존 다렐 N. 리오플로리도",
     "displayName": "John Darrel N. Rioflorido 존 다렐 N. 리오플로리도",
@@ -1090,7 +1074,7 @@ const people = [
     "image": "John Darrel N. Rioflorido.jpg"
   },
   {
-    "no": 137,
+    "no": 135,
     "name": "Josileen Masamayor",
     "ko": "조슬린 마사마요르",
     "displayName": "Josileen Masamayor 조슬린 마사마요르",
@@ -1098,7 +1082,7 @@ const people = [
     "image": "Josileen Masamayor.jpg"
   },
   {
-    "no": 138,
+    "no": 136,
     "name": "Jowa",
     "ko": "조와",
     "displayName": "Jowa 조와",
@@ -1106,7 +1090,7 @@ const people = [
     "image": "Jowa.jpg"
   },
   {
-    "no": 139,
+    "no": 137,
     "name": "Joy Tampan",
     "ko": "조이 탐판",
     "displayName": "Joy Tampan 조이 탐판",
@@ -1114,7 +1098,7 @@ const people = [
     "image": "Joy Tampan.jpg"
   },
   {
-    "no": 140,
+    "no": 138,
     "name": "JR",
     "ko": "제이알",
     "displayName": "JR 제이알",
@@ -1122,7 +1106,7 @@ const people = [
     "image": "JR.jpg"
   },
   {
-    "no": 141,
+    "no": 139,
     "name": "Juana",
     "ko": "후아나",
     "displayName": "Juana 후아나",
@@ -1130,7 +1114,7 @@ const people = [
     "image": "no-image.jpg"
   },
   {
-    "no": 142,
+    "no": 140,
     "name": "Junalyn",
     "ko": "쥬날린",
     "displayName": "Junalyn 쥬날린",
@@ -1138,7 +1122,7 @@ const people = [
     "image": "Junalyn.jpg"
   },
   {
-    "no": 143,
+    "no": 141,
     "name": "Justin",
     "ko": "저스틴",
     "displayName": "Justin 저스틴",
@@ -1146,7 +1130,7 @@ const people = [
     "image": "Justin.jpg"
   },
   {
-    "no": 144,
+    "no": 142,
     "name": "Kagawad - Diosdado F. Fabella",
     "ko": "까가왓 디오스다도 F. 파벨라",
     "displayName": "Kagawad - Diosdado F. Fabella 까가왓 디오스다도 F. 파벨라",
@@ -1154,7 +1138,7 @@ const people = [
     "image": "Kagawad - Diosdado F. Fabella.jpg"
   },
   {
-    "no": 145,
+    "no": 143,
     "name": "Kagawad - Gina M. Tampan",
     "ko": "까가왓 지나 M. 탐판",
     "displayName": "Kagawad - Gina M. Tampan 까가왓 지나 M. 탐판",
@@ -1162,7 +1146,7 @@ const people = [
     "image": "Kagawad - Gina M. Tampan.jpg"
   },
   {
-    "no": 146,
+    "no": 144,
     "name": "Kagawad - Raul V. Esquillo",
     "ko": "까가왓 라울 V. 에스킬로",
     "displayName": "Kagawad - Raul V. Esquillo 까가왓 라울 V. 에스킬로",
@@ -1170,7 +1154,7 @@ const people = [
     "image": "Kagawad - Raul V. Esquillo.jpg"
   },
   {
-    "no": 147,
+    "no": 145,
     "name": "Kagawad - Regulo A. Montes JR.",
     "ko": "까가왓 레굴로 A. 몬테스 주니어",
     "displayName": "Kagawad - Regulo A. Montes JR. 까가왓 레굴로 A. 몬테스 주니어",
@@ -1178,7 +1162,7 @@ const people = [
     "image": "Kagawad - Regulo A. Montes JR..jpg"
   },
   {
-    "no": 148,
+    "no": 146,
     "name": "Kagawad - Toto",
     "ko": "까가왓 또또",
     "displayName": "Kagawad - Toto 까가왓 또또",
@@ -1186,7 +1170,7 @@ const people = [
     "image": "Kagawad - Toto.jpg"
   },
   {
-    "no": 149,
+    "no": 147,
     "name": "Kagawad - Vilma O. Odonel",
     "ko": "까가왓 빌마 O. 오도넬",
     "displayName": "Kagawad - Vilma O. Odonel 까가왓 빌마 O. 오도넬",
@@ -1194,7 +1178,7 @@ const people = [
     "image": "Kagawad - Vilma O. Odonel.jpg"
   },
   {
-    "no": 150,
+    "no": 148,
     "name": "Kate",
     "ko": "케이트",
     "displayName": "Kate 케이트",
@@ -1202,7 +1186,7 @@ const people = [
     "image": "Kate.jpg"
   },
   {
-    "no": 151,
+    "no": 149,
     "name": "Katherine",
     "ko": "캐서린",
     "displayName": "Katherine 캐서린",
@@ -1210,7 +1194,7 @@ const people = [
     "image": "Katherine.jpg"
   },
   {
-    "no": 152,
+    "no": 150,
     "name": "Kenzie",
     "ko": "켄지",
     "displayName": "Kenzie 켄지",
@@ -1218,7 +1202,7 @@ const people = [
     "image": "Kenzie.jpg"
   },
   {
-    "no": 153,
+    "no": 151,
     "name": "Kerry",
     "ko": "케리",
     "displayName": "Kerry 케리",
@@ -1226,7 +1210,7 @@ const people = [
     "image": "Kerry.jpg"
   },
   {
-    "no": 154,
+    "no": 152,
     "name": "Kevin",
     "ko": "케빈",
     "displayName": "Kevin 케빈",
@@ -1234,7 +1218,7 @@ const people = [
     "image": "Kevin.jpg"
   },
   {
-    "no": 155,
+    "no": 153,
     "name": "Khenik",
     "ko": "케닉",
     "displayName": "Khenik 케닉",
@@ -1242,7 +1226,7 @@ const people = [
     "image": "Khenik.jpg"
   },
   {
-    "no": 156,
+    "no": 154,
     "name": "Kiandra",
     "ko": "키안드라",
     "displayName": "Kiandra 키안드라",
@@ -1250,7 +1234,7 @@ const people = [
     "image": "Kiandra.jpg"
   },
   {
-    "no": 157,
+    "no": 155,
     "name": "Kikay",
     "ko": "끼께",
     "displayName": "Kikay 끼께",
@@ -1258,7 +1242,7 @@ const people = [
     "image": "Kikay.jpg"
   },
   {
-    "no": 158,
+    "no": 156,
     "name": "Kiko",
     "ko": "끼꼬",
     "displayName": "Kiko 끼꼬",
@@ -1266,7 +1250,7 @@ const people = [
     "image": "Kiko.jpg"
   },
   {
-    "no": 159,
+    "no": 157,
     "name": "Kimberley Audrey",
     "ko": "킴벌리 오드리",
     "displayName": "Kimberley Audrey 킴벌리 오드리",
@@ -1274,7 +1258,7 @@ const people = [
     "image": "Kimberley Audrey.jpg"
   },
   {
-    "no": 160,
+    "no": 158,
     "name": "Kisha May B. Cerenado",
     "ko": "키샤 미 B. 세레나도",
     "displayName": "Kisha May B. Cerenado 키샤 미 B. 세레나도",
@@ -1282,7 +1266,7 @@ const people = [
     "image": "Kisha May B. Cerenado.jpg"
   },
   {
-    "no": 161,
+    "no": 159,
     "name": "Krisel Samson",
     "ko": "크리셀 삼손",
     "displayName": "Krisel Samson 크리셀 삼손",
@@ -1290,7 +1274,7 @@ const people = [
     "image": "Krisel Samson.jpg"
   },
   {
-    "no": 162,
+    "no": 160,
     "name": "Kristal Mae Sanchez",
     "ko": "크리스탈 미 산체스",
     "displayName": "Kristal Mae Sanchez 크리스탈 미 산체스",
@@ -1298,7 +1282,7 @@ const people = [
     "image": "Kristal Mae Sanchez.jpg"
   },
   {
-    "no": 163,
+    "no": 161,
     "name": "Kutang",
     "ko": "꼬땅",
     "displayName": "Kutang 꼬땅",
@@ -1306,7 +1290,7 @@ const people = [
     "image": "Kutang.jpg"
   },
   {
-    "no": 164,
+    "no": 162,
     "name": "Kuya Ijing",
     "ko": "꾸야 이징",
     "displayName": "Kuya Ijing 꾸야 이징",
@@ -1314,7 +1298,7 @@ const people = [
     "image": "Kuya Ijing.jpg"
   },
   {
-    "no": 165,
+    "no": 163,
     "name": "Kuya Jerome",
     "ko": "꾸야 제롬",
     "displayName": "Kuya Jerome 꾸야 제롬",
@@ -1322,7 +1306,7 @@ const people = [
     "image": "Kuya Jerome.jpg"
   },
   {
-    "no": 166,
+    "no": 164,
     "name": "Kuya Louie",
     "ko": "꾸야 루이",
     "displayName": "Kuya Louie 꾸야 루이",
@@ -1330,7 +1314,7 @@ const people = [
     "image": "Kuya Louie.jpg"
   },
   {
-    "no": 167,
+    "no": 165,
     "name": "Kuya Marvin",
     "ko": "꾸야 마빈",
     "displayName": "Kuya Marvin 꾸야 마빈",
@@ -1338,7 +1322,7 @@ const people = [
     "image": "Kuya Marvin.jpg"
   },
   {
-    "no": 168,
+    "no": 166,
     "name": "Lara",
     "ko": "라라",
     "displayName": "Lara 라라",
@@ -1346,7 +1330,7 @@ const people = [
     "image": "Lara.jpg"
   },
   {
-    "no": 169,
+    "no": 167,
     "name": "Laura",
     "ko": "라우라",
     "displayName": "Laura 라우라",
@@ -1354,7 +1338,7 @@ const people = [
     "image": "Laura.jpg"
   },
   {
-    "no": 170,
+    "no": 168,
     "name": "Leonora D. Lopos",
     "ko": "레오노라 D. 로포스",
     "displayName": "Leonora D. Lopos 레오노라 D. 로포스",
@@ -1362,7 +1346,7 @@ const people = [
     "image": "Leonora D. Lopos.jpg"
   },
   {
-    "no": 171,
+    "no": 169,
     "name": "Lerio L. Dungca",
     "ko": "레리오 L. 둥카",
     "displayName": "Lerio L. Dungca 레리오 L. 둥카",
@@ -1370,7 +1354,7 @@ const people = [
     "image": "Lerio L. Dungca.jpg"
   },
   {
-    "no": 172,
+    "no": 170,
     "name": "Lia",
     "ko": "리아",
     "displayName": "Lia 리아",
@@ -1378,7 +1362,7 @@ const people = [
     "image": "Lia.jpg"
   },
   {
-    "no": 173,
+    "no": 171,
     "name": "Lily",
     "ko": "릴리",
     "displayName": "Lily 릴리",
@@ -1386,7 +1370,7 @@ const people = [
     "image": "Lily.jpg"
   },
   {
-    "no": 174,
+    "no": 172,
     "name": "LJ",
     "ko": "엘제이",
     "displayName": "LJ 엘제이",
@@ -1394,7 +1378,7 @@ const people = [
     "image": "LJ.jpg"
   },
   {
-    "no": 175,
+    "no": 173,
     "name": "Lola Diday",
     "ko": "롤라 디다이",
     "displayName": "Lola Diday 롤라 디다이",
@@ -1402,15 +1386,15 @@ const people = [
     "image": "Lola Diday.jpg"
   },
   {
-    "no": 176,
+    "no": 174,
     "name": "Lola Jhara",
     "ko": "롤라 자라",
     "displayName": "Lola Jhara 롤라 자라",
-    "note": "자라의 외할머니, 이름의 철자가 Jhara 자라 선생님과 같은지는 불분명, <span class=\"timestamp\">정주행 2021.12.30 17:06</span>",
+    "note": "자라의 외할머니, 이름의 철자가 Jhara 선생님과 같은지는 불분명, <span class=\"timestamp\">정주행 2021.12.30 17:06</span>",
     "image": "Lola Jhara.jpg"
   },
   {
-    "no": 177,
+    "no": 175,
     "name": "Louis G",
     "ko": "루이 지",
     "displayName": "Louis G 루이 지",
@@ -1418,7 +1402,7 @@ const people = [
     "image": "Louis G.jpg"
   },
   {
-    "no": 178,
+    "no": 176,
     "name": "Lovely Ma. Cabintoy",
     "ko": "러블리 마리아 카빈토이",
     "displayName": "Lovely Ma. Cabintoy 러블리 마리아 카빈토이",
@@ -1426,7 +1410,7 @@ const people = [
     "image": "Lovely Ma. Cabintoy.jpg"
   },
   {
-    "no": 179,
+    "no": 177,
     "name": "Lucas",
     "ko": "루카스",
     "displayName": "Lucas 루카스",
@@ -1434,7 +1418,7 @@ const people = [
     "image": "Lucas.jpg"
   },
   {
-    "no": 180,
+    "no": 178,
     "name": "Lyka C. Dela cruz",
     "ko": "라이카 C. 델라 크루즈",
     "displayName": "Lyka C. Dela cruz 라이카 C. 델라 크루즈",
@@ -1442,7 +1426,7 @@ const people = [
     "image": "Lyka C. Dela cruz.jpg"
   },
   {
-    "no": 181,
+    "no": 179,
     "name": "Maimai",
     "ko": "마이마이",
     "displayName": "Maimai 마이마이",
@@ -1450,7 +1434,7 @@ const people = [
     "image": "Maimai.jpg"
   },
   {
-    "no": 182,
+    "no": 180,
     "name": "Maimai-2",
     "ko": "마이마이",
     "displayName": "Maimai 마이마이",
@@ -1458,7 +1442,7 @@ const people = [
     "image": "Maimai-2.jpg"
   },
   {
-    "no": 183,
+    "no": 181,
     "name": "Majorie",
     "ko": "마조리",
     "displayName": "Majorie 마조리",
@@ -1466,7 +1450,7 @@ const people = [
     "image": "Majorie.jpg"
   },
   {
-    "no": 184,
+    "no": 182,
     "name": "Margie Morales",
     "ko": "마지 모랄레스",
     "displayName": "Margie Morales 마지 모랄레스",
@@ -1474,7 +1458,7 @@ const people = [
     "image": "Margie Morales.jpg"
   },
   {
-    "no": 185,
+    "no": 183,
     "name": "Marian A. Boticario",
     "ko": "마리안 A. 보티카리오",
     "displayName": "Marian A. Boticario 마리안 A. 보티카리오",
@@ -1482,7 +1466,7 @@ const people = [
     "image": "Marian A. Boticario.jpg"
   },
   {
-    "no": 186,
+    "no": 184,
     "name": "Mary Grace Cardona",
     "ko": "메리 그레이스 카르도나",
     "displayName": "Mary Grace Cardona 메리 그레이스 카르도나",
@@ -1490,7 +1474,7 @@ const people = [
     "image": "Mary Grace Cardona.jpg"
   },
   {
-    "no": 187,
+    "no": 185,
     "name": "Mary Grace T. Lim",
     "ko": "메리 그레이스 T. 림",
     "displayName": "Mary Grace T. Lim 메리 그레이스 T. 림",
@@ -1498,7 +1482,7 @@ const people = [
     "image": "Mary Grace T. Lim.jpg"
   },
   {
-    "no": 188,
+    "no": 186,
     "name": "Mary Jane Tañote Lim",
     "ko": "메리 제인 타뇨테 림",
     "displayName": "Mary Jane Tañote Lim 메리 제인 타뇨테 림",
@@ -1506,7 +1490,7 @@ const people = [
     "image": "Mary Jane Tañote Lim.jpg"
   },
   {
-    "no": 189,
+    "no": 187,
     "name": "Mary Lyn Noble",
     "ko": "메리 린 노블",
     "displayName": "Mary Lyn Noble 메리 린 노블",
@@ -1514,7 +1498,7 @@ const people = [
     "image": "Mary Lyn Noble.jpg"
   },
   {
-    "no": 190,
+    "no": 188,
     "name": "Matilde Badeo",
     "ko": "마틸데 바데오",
     "displayName": "Matilde Badeo 마틸데 바데오",
@@ -1522,7 +1506,7 @@ const people = [
     "image": "Matilde Badeo.jpg"
   },
   {
-    "no": 191,
+    "no": 189,
     "name": "Matt",
     "ko": "맷",
     "displayName": "Matt 맷",
@@ -1530,7 +1514,7 @@ const people = [
     "image": "Matt.jpg"
   },
   {
-    "no": 192,
+    "no": 190,
     "name": "Melissa",
     "ko": "멜리사",
     "displayName": "Melissa 멜리사",
@@ -1538,7 +1522,7 @@ const people = [
     "image": "Melissa.jpg"
   },
   {
-    "no": 193,
+    "no": 191,
     "name": "Melria Mhae Q. Mahusay",
     "ko": "멜리아 미 Q. 마우사이",
     "displayName": "Melria Mhae Q. Mahusay 멜리아 미 Q. 마우사이",
@@ -1546,7 +1530,7 @@ const people = [
     "image": "Melria Mhae Q. Mahusay.jpg"
   },
   {
-    "no": 194,
+    "no": 192,
     "name": "Merie Ann Cauba",
     "ko": "메리 안 카우바",
     "displayName": "Merie Ann Cauba 메리 안 카우바",
@@ -1554,7 +1538,7 @@ const people = [
     "image": "Merie Ann Cauba.jpg"
   },
   {
-    "no": 195,
+    "no": 193,
     "name": "Meyamesi",
     "ko": "메야메시",
     "displayName": "Meyamesi 메야메시",
@@ -1562,7 +1546,7 @@ const people = [
     "image": "Meyamesi.jpg"
   },
   {
-    "no": 196,
+    "no": 194,
     "name": "Michaela Quintera Montes",
     "ko": "미카엘라 퀸테라 몬테스",
     "displayName": "Michaela Quintera Montes 미카엘라 퀸테라 몬테스",
@@ -1570,7 +1554,7 @@ const people = [
     "image": "Michaela Quintera Montes.jpg"
   },
   {
-    "no": 197,
+    "no": 195,
     "name": "Migi",
     "ko": "미기",
     "displayName": "Migi 미기",
@@ -1578,7 +1562,7 @@ const people = [
     "image": "Migi.jpg"
   },
   {
-    "no": 198,
+    "no": 196,
     "name": "Miguel",
     "ko": "미구엘",
     "displayName": "Miguel 미구엘",
@@ -1586,7 +1570,7 @@ const people = [
     "image": "Miguel.jpg"
   },
   {
-    "no": 199,
+    "no": 197,
     "name": "Miguela",
     "ko": "미겔라",
     "displayName": "Miguela 미겔라",
@@ -1594,7 +1578,7 @@ const people = [
     "image": "Miguela.jpg"
   },
   {
-    "no": 200,
+    "no": 198,
     "name": "Mikay",
     "ko": "미까이",
     "displayName": "Mikay 미까이",
@@ -1602,7 +1586,7 @@ const people = [
     "image": "Mikay.jpg"
   },
   {
-    "no": 201,
+    "no": 199,
     "name": "Mikha Q. Ruñez",
     "ko": "미카 Q. 루녜스",
     "displayName": "Mikha Q. Ruñez 미카 Q. 루녜스",
@@ -1610,7 +1594,7 @@ const people = [
     "image": "Mikha Q. Ruñez.jpg"
   },
   {
-    "no": 202,
+    "no": 200,
     "name": "Milagros Rubis",
     "ko": "밀라그로스 루비스",
     "displayName": "Milagros Rubis 밀라그로스 루비스",
@@ -1618,7 +1602,7 @@ const people = [
     "image": "Milagros Rubis.jpg"
   },
   {
-    "no": 203,
+    "no": 201,
     "name": "MJ",
     "ko": "엠제이",
     "displayName": "MJ 엠제이",
@@ -1626,7 +1610,7 @@ const people = [
     "image": "MJ.jpg"
   },
   {
-    "no": 204,
+    "no": 202,
     "name": "Mona",
     "ko": "모나",
     "displayName": "Mona 모나",
@@ -1634,7 +1618,7 @@ const people = [
     "image": "Mona.jpg"
   },
   {
-    "no": 205,
+    "no": 203,
     "name": "Moris",
     "ko": "모리스",
     "displayName": "Moris 모리스",
@@ -1642,15 +1626,15 @@ const people = [
     "image": "Moris.jpg"
   },
   {
-    "no": 206,
-    "name": "Naomi Turingan",
+    "no": 204,
+    "name": "naomi turingan",
     "ko": "나오미 투링간",
-    "displayName": "Naomi Turingan 나오미 투링간",
+    "displayName": "naomi turingan 나오미 투링간",
     "note": "카시의 친언니인 듯, 카시가 맹장수술을 받았을 때 제리님이 올린 영상에 댓글을 단 적이 있다, @naomituringan5352: salamat sayo sir jerry.dahil sayo at sa mga Sponsor marami kayong natutulungan na mga nangangailangan. LEGIT 제리님, 감사합니다. 당신과 후원자분들 덕분에 많은 어려운 사람들을 도울 수 있었습니다. 정말 훌륭합니다. <span class=\"timestamp\">정주행 2022.09.07</span>",
-    "image": "Naomi Turingan.jpg"
+    "image": "naomi turingan.jpg"
   },
   {
-    "no": 207,
+    "no": 205,
     "name": "Nathan",
     "ko": "네이탄 or 네이든",
     "displayName": "Nathan 네이탄 or 네이든",
@@ -1658,7 +1642,7 @@ const people = [
     "image": "Nathan.jpg"
   },
   {
-    "no": 208,
+    "no": 206,
     "name": "Negra",
     "ko": "네그라",
     "displayName": "Negra 네그라",
@@ -1666,7 +1650,7 @@ const people = [
     "image": "Negra.jpg"
   },
   {
-    "no": 209,
+    "no": 207,
     "name": "Nicole Kate N. Mora",
     "ko": "니콜 케이트 N. 모라",
     "displayName": "Nicole Kate N. Mora 니콜 케이트 N. 모라",
@@ -1674,7 +1658,7 @@ const people = [
     "image": "Nicole Kate N. Mora.jpg"
   },
   {
-    "no": 210,
+    "no": 208,
     "name": "Niko",
     "ko": "니코",
     "displayName": "Niko 니코",
@@ -1682,7 +1666,7 @@ const people = [
     "image": "Niko.jpg"
   },
   {
-    "no": 211,
+    "no": 209,
     "name": "Olive",
     "ko": "올리브",
     "displayName": "Olive 올리브",
@@ -1690,7 +1674,7 @@ const people = [
     "image": "Olive.jpg"
   },
   {
-    "no": 212,
+    "no": 210,
     "name": "Patricia",
     "ko": "파트리샤",
     "displayName": "Patricia 파트리샤",
@@ -1698,7 +1682,7 @@ const people = [
     "image": "Patricia.jpg"
   },
   {
-    "no": 213,
+    "no": 211,
     "name": "Paulo",
     "ko": "파울로",
     "displayName": "Paulo 파울로",
@@ -1706,7 +1690,7 @@ const people = [
     "image": "Paulo.jpg"
   },
   {
-    "no": 214,
+    "no": 212,
     "name": "Perlito J. Rubis",
     "ko": "펄리토 J. 루비스",
     "displayName": "Perlito J. Rubis 펄리토 J. 루비스",
@@ -1714,7 +1698,7 @@ const people = [
     "image": "Perlito J. Rubis.jpg"
   },
   {
-    "no": 215,
+    "no": 213,
     "name": "Pia",
     "ko": "피아",
     "displayName": "Pia 피아",
@@ -1722,7 +1706,7 @@ const people = [
     "image": "Pia.jpg"
   },
   {
-    "no": 216,
+    "no": 214,
     "name": "Polmarc",
     "ko": "폴마크",
     "displayName": "Polmarc 폴마크",
@@ -1730,7 +1714,7 @@ const people = [
     "image": "Polmarc.jpg"
   },
   {
-    "no": 217,
+    "no": 215,
     "name": "Ppeonppeoni",
     "ko": "뻔뻔이",
     "displayName": "Ppeonppeoni 뻔뻔이",
@@ -1738,7 +1722,7 @@ const people = [
     "image": "Ppeonppeoni.jpg"
   },
   {
-    "no": 218,
+    "no": 216,
     "name": "Ppeonsuni",
     "ko": "뻔순이",
     "displayName": "Ppeonsuni 뻔순이",
@@ -1746,7 +1730,7 @@ const people = [
     "image": "Ppeonsuni.jpg"
   },
   {
-    "no": 219,
+    "no": 217,
     "name": "Precious Althea V. Lopos",
     "ko": "프리셔스 알티아 V. 로포스",
     "displayName": "Precious Althea V. Lopos 프리셔스 알티아 V. 로포스",
@@ -1754,7 +1738,7 @@ const people = [
     "image": "Precious Althea V. Lopos.jpg"
   },
   {
-    "no": 220,
+    "no": 218,
     "name": "Prince Arthur O. Calso",
     "ko": "프린스 아서 O. 칼소",
     "displayName": "Prince Arthur O. Calso 프린스 아서 O. 칼소",
@@ -1762,7 +1746,7 @@ const people = [
     "image": "Prince Arthur O. Calso.jpg"
   },
   {
-    "no": 221,
+    "no": 219,
     "name": "Prince Ashly Melmar J. Bobis",
     "ko": "프린스 애쉴리 멜마 J. 보비스",
     "displayName": "Prince Ashly Melmar J. Bobis 프린스 애쉴리 멜마 J. 보비스",
@@ -1770,7 +1754,7 @@ const people = [
     "image": "Prince Ashly Melmar J. Bobis.jpg"
   },
   {
-    "no": 222,
+    "no": 220,
     "name": "Prince Noegie G. Quidol",
     "ko": "프린스 노이지 G. 키돌",
     "displayName": "Prince Noegie G. Quidol 프린스 노이지 G. 키돌",
@@ -1778,7 +1762,7 @@ const people = [
     "image": "Prince Noegie G. Quidol.jpg"
   },
   {
-    "no": 223,
+    "no": 221,
     "name": "Princess",
     "ko": "프린세스",
     "displayName": "Princess 프린세스",
@@ -1786,7 +1770,7 @@ const people = [
     "image": "Princess.jpg"
   },
   {
-    "no": 224,
+    "no": 222,
     "name": "Princess Alliah V. Lopos",
     "ko": "프린세스 알리야 V. 로포스",
     "displayName": "Princess Alliah V. Lopos 프린세스 알리야 V. 로포스",
@@ -1794,7 +1778,7 @@ const people = [
     "image": "Princess Alliah V. Lopos.jpg"
   },
   {
-    "no": 225,
+    "no": 223,
     "name": "Princess Rhian O. Calso",
     "ko": "프린세스 리안 O. 칼소",
     "displayName": "Princess Rhian O. Calso 프린세스 리안 O. 칼소",
@@ -1802,7 +1786,7 @@ const people = [
     "image": "Princess Rhian O. Calso.jpg"
   },
   {
-    "no": 226,
+    "no": 224,
     "name": "Princess-2",
     "ko": "프린세스",
     "displayName": "Princess 프린세스",
@@ -1810,7 +1794,7 @@ const people = [
     "image": "Princess-2.jpg"
   },
   {
-    "no": 227,
+    "no": 225,
     "name": "Princess-3",
     "ko": "프린세스",
     "displayName": "Princess 프린세스",
@@ -1818,7 +1802,7 @@ const people = [
     "image": "Princess-3.jpg"
   },
   {
-    "no": 228,
+    "no": 226,
     "name": "Princess-4",
     "ko": "프린세스",
     "displayName": "Princess 프린세스",
@@ -1826,7 +1810,7 @@ const people = [
     "image": "Princess-4.jpg"
   },
   {
-    "no": 229,
+    "no": 227,
     "name": "Rachel Ann M. Tegerero",
     "ko": "레이첼 안 M. 테게레로",
     "displayName": "Rachel Ann M. Tegerero 레이첼 안 M. 테게레로",
@@ -1834,7 +1818,7 @@ const people = [
     "image": "Rachel Ann M. Tegerero.jpg"
   },
   {
-    "no": 230,
+    "no": 228,
     "name": "Rainmark",
     "ko": "레인마크",
     "displayName": "Rainmark 레인마크",
@@ -1842,7 +1826,7 @@ const people = [
     "image": "Rainmark.jpg"
   },
   {
-    "no": 231,
+    "no": 229,
     "name": "Ranell",
     "ko": "라넬",
     "displayName": "Ranell 라넬",
@@ -1850,7 +1834,7 @@ const people = [
     "image": "Ranell.jpg"
   },
   {
-    "no": 232,
+    "no": 230,
     "name": "Raymond Salut",
     "ko": "레이몬드 살룻",
     "displayName": "Raymond Salut 레이몬드 살룻",
@@ -1858,7 +1842,7 @@ const people = [
     "image": "Raymond Salut.jpg"
   },
   {
-    "no": 233,
+    "no": 231,
     "name": "Recca Cajipo",
     "ko": "리카 카지포",
     "displayName": "Recca Cajipo 리카 카지포",
@@ -1866,7 +1850,7 @@ const people = [
     "image": "Recca Cajipo.jpg"
   },
   {
-    "no": 234,
+    "no": 232,
     "name": "Reina",
     "ko": "레이나",
     "displayName": "Reina 레이나",
@@ -1874,7 +1858,7 @@ const people = [
     "image": "Reina.jpg"
   },
   {
-    "no": 235,
+    "no": 233,
     "name": "Renelyn Cabintoy",
     "ko": "레닐린 카빈토이",
     "displayName": "Renelyn Cabintoy 레닐린 카빈토이",
@@ -1882,7 +1866,7 @@ const people = [
     "image": "Renelyn Cabintoy.jpg"
   },
   {
-    "no": 236,
+    "no": 234,
     "name": "Reynaldo P. Flores",
     "ko": "레이날도 P. 플로레스",
     "displayName": "Reynaldo P. Flores 레이날도 P. 플로레스",
@@ -1890,7 +1874,7 @@ const people = [
     "image": "Reynaldo P. Flores.jpg"
   },
   {
-    "no": 237,
+    "no": 235,
     "name": "Rhian Besana",
     "ko": "리안 베사나",
     "displayName": "Rhian Besana 리안 베사나",
@@ -1898,7 +1882,7 @@ const people = [
     "image": "Rhian Besana.jpg"
   },
   {
-    "no": 238,
+    "no": 236,
     "name": "Rhian Murcia Rey",
     "ko": "리안 무르시아 레이",
     "displayName": "Rhian Murcia Rey 리안 무르시아 레이",
@@ -1906,7 +1890,7 @@ const people = [
     "image": "Rhian Murcia Rey.jpg"
   },
   {
-    "no": 239,
+    "no": 237,
     "name": "Rica Lyn",
     "ko": "리카 린",
     "displayName": "Rica Lyn 리카 린",
@@ -1914,7 +1898,7 @@ const people = [
     "image": "Rica Lyn.jpg"
   },
   {
-    "no": 240,
+    "no": 238,
     "name": "Rihanna",
     "ko": "리아나",
     "displayName": "Rihanna 리아나",
@@ -1922,7 +1906,7 @@ const people = [
     "image": "Rihanna.jpg"
   },
   {
-    "no": 241,
+    "no": 239,
     "name": "Rinalyn P. Cajontoy, LPT",
     "ko": "리날린 P. 카존토이, Licensed Professional Teacher",
     "displayName": "Rinalyn P. Cajontoy, LPT 리날린 P. 카존토이, Licensed Professional Teacher",
@@ -1930,7 +1914,7 @@ const people = [
     "image": "Rinalyn P. Cajontoy, LPT.jpg"
   },
   {
-    "no": 242,
+    "no": 240,
     "name": "Ringo",
     "ko": "링고",
     "displayName": "Ringo 링고",
@@ -1938,7 +1922,7 @@ const people = [
     "image": "Ringo.jpg"
   },
   {
-    "no": 243,
+    "no": 241,
     "name": "RJ",
     "ko": "알제이",
     "displayName": "RJ 알제이",
@@ -1946,7 +1930,7 @@ const people = [
     "image": "RJ.jpg"
   },
   {
-    "no": 244,
+    "no": 242,
     "name": "Roberto Fabella",
     "ko": "로베르토 파벨라",
     "displayName": "Roberto Fabella 로베르토 파벨라",
@@ -1954,7 +1938,7 @@ const people = [
     "image": "Roberto Fabella.jpg"
   },
   {
-    "no": 245,
+    "no": 243,
     "name": "Rochelle",
     "ko": "로쉘",
     "displayName": "Rochelle 로쉘",
@@ -1962,7 +1946,7 @@ const people = [
     "image": "Rochelle.jpg"
   },
   {
-    "no": 246,
+    "no": 244,
     "name": "Rodes",
     "ko": "로데스",
     "displayName": "Rodes 로데스",
@@ -1970,7 +1954,7 @@ const people = [
     "image": "Rodes.jpg"
   },
   {
-    "no": 247,
+    "no": 245,
     "name": "Rogelio Cruz Lim",
     "ko": "로헤리오 크루즈 림",
     "displayName": "Rogelio Cruz Lim 로헤리오 크루즈 림",
@@ -1978,7 +1962,7 @@ const people = [
     "image": "Rogelio Cruz Lim.jpg"
   },
   {
-    "no": 248,
+    "no": 246,
     "name": "Rona Alapide",
     "ko": "로나 알라피데",
     "displayName": "Rona Alapide 로나 알라피데",
@@ -1986,7 +1970,7 @@ const people = [
     "image": "Rona Alapide.jpg"
   },
   {
-    "no": 249,
+    "no": 247,
     "name": "Ronalyn Acata",
     "ko": "로날린 아카타",
     "displayName": "Ronalyn Acata 로날린 아카타",
@@ -1994,7 +1978,7 @@ const people = [
     "image": "Ronalyn Acata.jpg"
   },
   {
-    "no": 250,
+    "no": 248,
     "name": "Rosaly",
     "ko": "로살리",
     "displayName": "Rosaly 로살리",
@@ -2002,7 +1986,7 @@ const people = [
     "image": "Rosaly.jpg"
   },
   {
-    "no": 251,
+    "no": 249,
     "name": "Rosbeth",
     "ko": "로즈벳",
     "displayName": "Rosbeth 로즈벳",
@@ -2010,7 +1994,7 @@ const people = [
     "image": "Rosbeth.jpg"
   },
   {
-    "no": 252,
+    "no": 250,
     "name": "Rosie L. Alvares",
     "ko": "로지 L. 알바레스",
     "displayName": "Rosie L. Alvares 로지 L. 알바레스",
@@ -2018,7 +2002,7 @@ const people = [
     "image": "Rosie L. Alvares.jpg"
   },
   {
-    "no": 253,
+    "no": 251,
     "name": "Ryzza May D. Rubis",
     "ko": "라이사 메이 D. 루비스",
     "displayName": "Ryzza May D. Rubis 라이사 메이 D. 루비스",
@@ -2026,7 +2010,7 @@ const people = [
     "image": "Ryzza May D. Rubis.jpg"
   },
   {
-    "no": 254,
+    "no": 252,
     "name": "Sabrina",
     "ko": "사브리나",
     "displayName": "Sabrina 사브리나",
@@ -2034,7 +2018,7 @@ const people = [
     "image": "Sabrina.jpg"
   },
   {
-    "no": 255,
+    "no": 253,
     "name": "Sarah",
     "ko": "사라 선생님",
     "displayName": "Sarah 사라 선생님",
@@ -2042,7 +2026,7 @@ const people = [
     "image": "Sarah.jpg"
   },
   {
-    "no": 256,
+    "no": 254,
     "name": "Senior President",
     "ko": "시니어 회장님",
     "displayName": "Senior President 시니어 회장님",
@@ -2050,7 +2034,7 @@ const people = [
     "image": "Senior President.jpg"
   },
   {
-    "no": 257,
+    "no": 255,
     "name": "Sexy",
     "ko": "섹시",
     "displayName": "Sexy 섹시",
@@ -2058,7 +2042,7 @@ const people = [
     "image": "Sexy.jpg"
   },
   {
-    "no": 258,
+    "no": 256,
     "name": "Shaika Morales Quirao",
     "ko": "샤이카 모랄레스 키라오",
     "displayName": "Shaika Morales Quirao 샤이카 모랄레스 키라오",
@@ -2066,7 +2050,7 @@ const people = [
     "image": "Shaika Morales Quirao.jpg"
   },
   {
-    "no": 259,
+    "no": 257,
     "name": "Shaina Mae Quirao Ordista",
     "ko": "샤이나 미 키라오 오르디스타",
     "displayName": "Shaina Mae Quirao Ordista 샤이나 미 키라오 오르디스타",
@@ -2074,7 +2058,7 @@ const people = [
     "image": "Shaina Mae Quirao Ordista.jpg"
   },
   {
-    "no": 260,
+    "no": 258,
     "name": "Shane Maven A. Esteves",
     "ko": "쉐인 메이븐 A. 에스테베스",
     "displayName": "Shane Maven A. Esteves 쉐인 메이븐 A. 에스테베스",
@@ -2082,7 +2066,7 @@ const people = [
     "image": "Shane Maven A. Esteves.jpg"
   },
   {
-    "no": 261,
+    "no": 259,
     "name": "Shantel A. Esteves",
     "ko": "샨텔 A. 에스테베스",
     "displayName": "Shantel A. Esteves 샨텔 A. 에스테베스",
@@ -2090,7 +2074,7 @@ const people = [
     "image": "Shantel A. Esteves.jpg"
   },
   {
-    "no": 262,
+    "no": 260,
     "name": "Sherelyn Tagudan",
     "ko": "셰렐린 타구단",
     "displayName": "Sherelyn Tagudan 셰렐린 타구단",
@@ -2098,7 +2082,7 @@ const people = [
     "image": "Sherelyn Tagudan.jpg"
   },
   {
-    "no": 263,
+    "no": 261,
     "name": "Sherlyn",
     "ko": "셜린 선생님",
     "displayName": "Sherlyn 셜린 선생님",
@@ -2106,7 +2090,7 @@ const people = [
     "image": "Sherlyn.jpg"
   },
   {
-    "no": 264,
+    "no": 262,
     "name": "Shiela Mae Quirao Ordista",
     "ko": "실라 미 키라오 오르디스타",
     "displayName": "Shiela Mae Quirao Ordista 실라 미 키라오 오르디스타",
@@ -2114,7 +2098,7 @@ const people = [
     "image": "Shiela Mae Quirao Ordista.jpg"
   },
   {
-    "no": 265,
+    "no": 263,
     "name": "Shiela Marie Accad",
     "ko": "실라 마리 아카드",
     "displayName": "Shiela Marie Accad 실라 마리 아카드",
@@ -2122,7 +2106,7 @@ const people = [
     "image": "Shiela Marie Accad.jpg"
   },
   {
-    "no": 266,
+    "no": 264,
     "name": "Sinae",
     "ko": "신애",
     "displayName": "Sinae 신애",
@@ -2130,7 +2114,7 @@ const people = [
     "image": "Sinae.jpg"
   },
   {
-    "no": 267,
+    "no": 265,
     "name": "Singing Contest Champion",
     "ko": "싱잉 콘테스트 챔피언",
     "displayName": "Singing Contest Champion 싱잉 콘테스트 챔피언",
@@ -2138,15 +2122,15 @@ const people = [
     "image": "Singing Contest Champion.jpg"
   },
   {
-    "no": 268,
+    "no": 266,
     "name": "Sir. Jerry",
     "ko": "남준현",
     "displayName": "Sir. Jerry 남준현",
-    "note": "채널 운영자님, 라이브 방송 도중에 음소거가 되어 채팅 메시지를 남기신 적이 있다, @jerryinmanila8609: ​​소리 나게 하려면 다시 시작해야 해요, <span class=\"timestamp\"> 2025.03.22 채팅 1:29:34</span>",
+    "note": "라이브 방송 도중에 음소거가 되어 채팅 메시지를 남기신 적이 있다, @jerryinmanila8609: ​​소리 나게 하려면 다시 시작해야 해요, <span class=\"timestamp\"> 2025.03.22 채팅 1:29:34</span>",
     "image": "Sir. Jerry.jpg"
   },
   {
-    "no": 269,
+    "no": 267,
     "name": "Sitti Aina",
     "ko": "시티 아이나",
     "displayName": "Sitti Aina 시티 아이나",
@@ -2154,7 +2138,7 @@ const people = [
     "image": "Sitti Aina.jpg"
   },
   {
-    "no": 270,
+    "no": 268,
     "name": "SK Chairman - MJ",
     "ko": "청년의회 의장 엠제이",
     "displayName": "SK Chairman - MJ 청년의회 의장 엠제이",
@@ -2162,7 +2146,7 @@ const people = [
     "image": "SK Chairman - MJ.jpg"
   },
   {
-    "no": 271,
+    "no": 269,
     "name": "SK Chairwoman - Apple",
     "ko": "여성 청년의회 의장 애플",
     "displayName": "SK Chairwoman - Apple 여성 청년의회 의장 애플",
@@ -2170,7 +2154,7 @@ const people = [
     "image": "SK Chairwoman - Apple.jpg"
   },
   {
-    "no": 272,
+    "no": 270,
     "name": "SK Kagawad - Chael",
     "ko": "청년의회 의원 체일",
     "displayName": "SK Kagawad - Chael 청년의회 의원 체일",
@@ -2178,7 +2162,7 @@ const people = [
     "image": "SK Kagawad - Chael.jpg"
   },
   {
-    "no": 273,
+    "no": 271,
     "name": "SK Kagawad - J. Alegora",
     "ko": "청년의회 의원 J. 알레고라",
     "displayName": "SK Kagawad - J. Alegora 청년의회 의원 J. 알레고라",
@@ -2186,7 +2170,7 @@ const people = [
     "image": "SK Kagawad - J. Alegora.jpg"
   },
   {
-    "no": 274,
+    "no": 272,
     "name": "SK Kagawad - Mardong",
     "ko": "청년의회 의원 마르동",
     "displayName": "SK Kagawad - Mardong 청년의회 의원 마르동",
@@ -2194,7 +2178,7 @@ const people = [
     "image": "SK Kagawad - Mardong.jpg"
   },
   {
-    "no": 275,
+    "no": 273,
     "name": "Sonjay",
     "ko": "손제이",
     "displayName": "Sonjay 손제이",
@@ -2202,7 +2186,7 @@ const people = [
     "image": "Sonjay.jpg"
   },
   {
-    "no": 276,
+    "no": 274,
     "name": "Stan",
     "ko": "스탄",
     "displayName": "Stan 스탄",
@@ -2210,7 +2194,7 @@ const people = [
     "image": "Stan.jpg"
   },
   {
-    "no": 277,
+    "no": 275,
     "name": "Tantin",
     "ko": "딴띤",
     "displayName": "Tantin 딴띤",
@@ -2218,7 +2202,7 @@ const people = [
     "image": "Tantin.jpg"
   },
   {
-    "no": 278,
+    "no": 276,
     "name": "Tarzan",
     "ko": "타잔",
     "displayName": "Tarzan 타잔",
@@ -2226,7 +2210,7 @@ const people = [
     "image": "Tarzan.jpg"
   },
   {
-    "no": 279,
+    "no": 277,
     "name": "Thansie Alvares",
     "ko": "딴시 알바레스",
     "displayName": "Thansie Alvares 딴시 알바레스",
@@ -2234,7 +2218,7 @@ const people = [
     "image": "Thansie Alvares.jpg"
   },
   {
-    "no": 280,
+    "no": 278,
     "name": "Thea",
     "ko": "테아",
     "displayName": "Thea 테아",
@@ -2242,7 +2226,7 @@ const people = [
     "image": "Thea.jpg"
   },
   {
-    "no": 281,
+    "no": 279,
     "name": "Tiger",
     "ko": "타이거",
     "displayName": "Tiger 타이거",
@@ -2250,7 +2234,7 @@ const people = [
     "image": "Tiger.jpg"
   },
   {
-    "no": 282,
+    "no": 280,
     "name": "Tongtong",
     "ko": "통통",
     "displayName": "Tongtong 통통",
@@ -2258,7 +2242,7 @@ const people = [
     "image": "Tongtong.jpg"
   },
   {
-    "no": 283,
+    "no": 281,
     "name": "Tony",
     "ko": "토니",
     "displayName": "Tony 토니",
@@ -2266,7 +2250,7 @@ const people = [
     "image": "Tony.jpg"
   },
   {
-    "no": 284,
+    "no": 282,
     "name": "Trisha",
     "ko": "트리샤",
     "displayName": "Trisha 트리샤",
@@ -2274,7 +2258,7 @@ const people = [
     "image": "Trisha.jpg"
   },
   {
-    "no": 285,
+    "no": 283,
     "name": "Tyron",
     "ko": "타이런",
     "displayName": "Tyron 타이런",
@@ -2282,7 +2266,7 @@ const people = [
     "image": "Tyron.jpg"
   },
   {
-    "no": 286,
+    "no": 284,
     "name": "Unknown Bakla",
     "ko": "이름모를 바클라",
     "displayName": "Unknown Bakla 이름모를 바클라",
@@ -2290,7 +2274,7 @@ const people = [
     "image": "Unknown Bakla.jpg"
   },
   {
-    "no": 287,
+    "no": 285,
     "name": "Veniese",
     "ko": "베니스",
     "displayName": "Veniese 베니스",
@@ -2298,7 +2282,7 @@ const people = [
     "image": "Veniese.jpg"
   },
   {
-    "no": 288,
+    "no": 286,
     "name": "Viena",
     "ko": "베나",
     "displayName": "Viena 베나",
@@ -2306,7 +2290,7 @@ const people = [
     "image": "Viena.jpg"
   },
   {
-    "no": 289,
+    "no": 287,
     "name": "Yan Yan",
     "ko": "얀얀",
     "displayName": "Yan Yan 얀얀",
@@ -2314,15 +2298,15 @@ const people = [
     "image": "Yan Yan.jpg"
   },
   {
-    "no": 290,
-    "name": "Yoonjoowoong",
+    "no": 288,
+    "name": "yoonjoowoong",
     "ko": "윤주웅",
-    "displayName": "Yoonjoowoong 윤주웅",
+    "displayName": "yoonjoowoong 윤주웅",
     "note": "메리안이 길에서 주워온 흰색의 암컷 고양이로 제이 후원자의 이름을 붙였다, <span class=\"timestamp\">정주행 2025.10.28 11:51</span>",
-    "image": "Yoonjoowoong.jpg"
+    "image": "yoonjoowoong.jpg"
   },
   {
-    "no": 291,
+    "no": 289,
     "name": "Yoyoy",
     "ko": "요요이",
     "displayName": "Yoyoy 요요이",
@@ -2330,7 +2314,7 @@ const people = [
     "image": "Yoyoy.jpg"
   },
   {
-    "no": 292,
+    "no": 290,
     "name": "Zack",
     "ko": "싹",
     "displayName": "Zack 싹",
@@ -2338,7 +2322,7 @@ const people = [
     "image": "Zack.jpg"
   },
   {
-    "no": 293,
+    "no": 291,
     "name": "Zaira",
     "ko": "자이라",
     "displayName": "Zaira 자이라",
@@ -2346,7 +2330,7 @@ const people = [
     "image": "Zaira.jpg"
   },
   {
-    "no": 294,
+    "no": 292,
     "name": "Zaira Mae",
     "ko": "자이라 미",
     "displayName": "Zaira Mae 자이라 미",
@@ -2354,7 +2338,7 @@ const people = [
     "image": "Zaira Mae.jpg"
   },
   {
-    "no": 295,
+    "no": 293,
     "name": "Zyra Mae",
     "ko": "자일라 미",
     "displayName": "Zyra Mae 자일라 미",
