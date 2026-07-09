@@ -31,7 +31,7 @@ const people = [
     "ko": "알덴",
     "displayName": "Alden 알덴",
     "note": "낫낫의 둘째 남동생, 2026년 4세, <span class=\"timestamp\"> 2026.03.15 31:23</span>, 2024년 크리스마스 파티에서 ALDEN이라는 명찰 목걸이를 달고 있었다, <span class=\"timestamp\"> 2024.12.14 20:30</span>, <span class=\"timestamp\"> 2026.04.25 30:25</span>",
-    "image": "Alden.jpg"
+    "image": "no-image.jpg"
   },
   {
     "no": 5,
