@@ -264,6 +264,8 @@ function formatDate(ts){
             
 async function openModal(p){
 
+    history.pushState({ modal: true }, "");
+
     modal.classList.remove("hidden");
 
     modalBody.innerHTML = `
@@ -901,13 +903,35 @@ async function openModal(p){
 ========================= */
 
 closeModal.addEventListener("click", ()=>{
+
     modal.classList.add("hidden");
+
+    if (history.state?.modal) {
+        history.back();
+    }
+
+});
+
+window.addEventListener("popstate", () => {
+
+    if (!modal.classList.contains("hidden")) {
+        modal.classList.add("hidden");
+    }
+
 });
 
 modal.addEventListener("click", e=>{
+
     if(e.target === modal){
+
         modal.classList.add("hidden");
+
+        if(history.state?.modal){
+            history.back();
+        }
+
     }
+
 });
 
 document.addEventListener("keydown", (e)=>{
