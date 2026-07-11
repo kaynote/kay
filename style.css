@@ -151,24 +151,40 @@ MODAL (핵심 정리)
   position: relative;
 }
 
-.closeBtn {
-  position: absolute;
-  right: 15px;
-  top: 15px;
-  border: none;
-  background: none;
-  font-size: 24px;
-  cursor: pointer;
+.closeBtn{
+
+    position:absolute;
+
+    top:8px;
+    right:8px;
+
+    width:48px;
+    height:48px;
+
+    font-size:30px;
+
+    border:none;
+    background:rgba(255,255,255,.9);
+
+    border-radius:50%;
+
+    z-index:10002;
 }
 
 /* MOBILE */
 @media (max-width:700px) {
+
   .modal-content {
-    width: 100vw;
-    height: 100vh;
-    margin: 0;
-    border-radius: 0;
+
+    width: calc(100vw - 16px);
+    height: calc(100vh - 16px);
+
+    margin: 8px;
+
+    border-radius: 12px;
+
   }
+
 }
 
 /* =========================
