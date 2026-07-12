@@ -240,6 +240,18 @@ export async function getParticipants(postId) {
   return [...users];
 }
 
+export async function getAllUsers() {
+  const snap = await getDocs(collection(db, "users"));
+
+  const users = [];
+
+  snap.forEach(docItem => {
+    users.push(docItem.id);
+  });
+
+  return users;
+}
+
 /* batch notifications */
 export async function addNotifications(
   targetUids,

@@ -8,6 +8,7 @@ import {
   watchComments,
   watchNotifications,
   getParticipants,
+  getAllUsers,
   addNotifications,
   markNotificationRead
 } from "./firebase.js";
@@ -144,19 +145,30 @@ async function sendComment() {
 
   const comment = await addComment(postId, text, currentUser);
 
-  const participants = (await getParticipants(postId)) || [];
+  const ADMIN_UID = "eEltgLaV6oN7MHUXTfQONc2wGAk1";
 
-  // 본인 제거 + 중복 제거
-  const uniqueParticipants = [...new Set(participants)]
-    .filter(uid => uid !== currentUser.uid);
+  let targets;
+
+  if (currentUser.uid === ADMIN_UID) {
+
+      targets = await getAllUsers();
+
+  } else {
+
+      targets = await getParticipants(postId);
+
+  }
+
+  targets = [...new Set(targets)]
+      .filter(uid => uid !== currentUser.uid);
 
   await addNotifications(
-    uniqueParticipants,
-    currentUser.uid,
-    currentUser.name,
-    comment.id,
-    "comment"
-    );
+      targets,
+      currentUser.uid,
+      currentUser.name,
+      comment.id,
+      "comment"
+  );
   }
 
 /* =========================
@@ -206,19 +218,29 @@ function openReplyForm(c, commentEl) {
       c.id
     );
 
-    const participants = await getParticipants(postId) || [];
+    const ADMIN_UID = "eEltgLaV6oN7MHUXTfQONc2wGAk1";
 
-    const parentOwnerUid = c.uid;
+    let targets;
 
-    const targets = [...new Set([parentOwnerUid])]
-      .filter(uid => uid !== currentUser.uid);
+    if (currentUser.uid === ADMIN_UID) {
+
+        targets = await getAllUsers();
+
+    } else {
+
+        targets = [c.uid];
+
+    }
+
+    targets = [...new Set(targets)]
+        .filter(uid => uid !== currentUser.uid);
 
     await addNotifications(
-      targets,
-      currentUser.uid,
-      currentUser.name,
-      comment.id,
-      "reply"
+        targets,
+        currentUser.uid,
+        currentUser.name,
+        comment.id,
+        "reply"
     );
 
     form.remove();
