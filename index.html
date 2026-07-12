@@ -410,27 +410,37 @@ async function openModal(p){
         const targets = new Map();
 
         // 관리자 추가
-        if (user.uid !== ADMIN_UID) {
+        const targets = new Map();
+
+        if (user.uid === ADMIN_UID) {
+
+            // 관리자는 모든 users 컬렉션 사용자에게 알림
+            const usersSnap = await getDocs(collection(db, "users"));
+
+            usersSnap.forEach(docSnap => {
+                if (docSnap.id !== user.uid) {
+                    targets.set(docSnap.id, true);
+                }
+            });
+
+        } else {
+
+            // 일반 사용자는 관리자 + 참여자
             targets.set(ADMIN_UID, true);
+
+            const commentsSnap = await getDocs(
+                collection(db, "people", p.name, "comments")
+            );
+
+            commentsSnap.forEach(docSnap => {
+                const data = docSnap.data();
+
+                if (data.uid && data.uid !== user.uid) {
+                    targets.set(data.uid, true);
+                }
+            });
+
         }
-
-        // 현재 게시글의 댓글 작성자 모두 조회
-        const commentsSnap = await getDocs(
-            collection(db, "people", p.name, "comments")
-        );
-
-        commentsSnap.forEach(docSnap => {
-
-            const data = docSnap.data();
-
-            if (
-                data.uid &&
-                data.uid !== user.uid
-            ) {
-                targets.set(data.uid, true);
-            }
-
-        });
 
         // 알림 생성
         for (const targetUid of targets.keys()) {
@@ -716,32 +726,47 @@ async function openModal(p){
     );
 
                 // ★ 답글 알림 생성
-                if (c.uid !== user.uid) {
+                if (user.uid === ADMIN_UID) {
 
-                    await addDoc(
-                        collection(db, "notifications"),
-                        {
-                            targetUid: c.uid,
+                    const usersSnap = await getDocs(collection(db, "users"));
 
+                    for (const u of usersSnap.docs) {
+
+                        if (u.id === user.uid) continue;
+
+                        await addDoc(collection(db, "notifications"), {
+                            targetUid: u.id,
                             senderUid: user.uid,
-
                             senderName:
                                 user.providerData?.[0]?.displayName ||
                                 user.displayName ||
                                 user.email ||
                                 "익명",
-
-                            postId: p.name,   
-
+                            postId: p.name,
                             commentId: replyRef.id,
-
                             type: "reply",
-
                             read: false,
-
                             createdAt: serverTimestamp()
-                        }
-                    );
+                        });
+                    }
+
+                } else if (c.uid !== user.uid) {
+
+                    await addDoc(collection(db, "notifications"), {
+                        targetUid: c.uid,
+                        senderUid: user.uid,
+                        senderName:
+                            user.providerData?.[0]?.displayName ||
+                            user.displayName ||
+                            user.email ||
+                            "익명",
+                        postId: p.name,
+                        commentId: replyRef.id,
+                        type: "reply",
+                        read: false,
+                        createdAt: serverTimestamp()
+                    });
+
                 }
 
                 loadComments();
