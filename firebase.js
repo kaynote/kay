@@ -192,6 +192,7 @@ export async function addNotification(
   targetUid,
   senderUid,
   senderName,
+  postId,
   commentId,
   type,
   read = false
@@ -214,6 +215,7 @@ const q = query(
     targetUid,
     senderUid,
     senderName,
+    postId,
     commentId,
     type,
     read: false,
@@ -257,6 +259,7 @@ export async function addNotifications(
   targetUids,
   senderUid,
   senderName,
+  postId,
   commentId,
   type
 ) {
@@ -271,6 +274,7 @@ export async function addNotifications(
         uid,
         senderUid,
         senderName,
+        postId,
         commentId,
         type
       )
@@ -305,6 +309,8 @@ export function watchNotifications(uid, callback) {
         (b.createdAt?.seconds || 0) -
         (a.createdAt?.seconds || 0)
       );
+
+      console.log("notifications:", arr); 
 
       callback(arr);
     }

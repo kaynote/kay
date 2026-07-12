@@ -166,6 +166,7 @@ async function sendComment() {
       targets,
       currentUser.uid,
       currentUser.name,
+      postId,
       comment.id,
       "comment"
   );
@@ -239,6 +240,7 @@ function openReplyForm(c, commentEl) {
         targets,
         currentUser.uid,
         currentUser.name,
+        postId,
         comment.id,
         "reply"
     );
