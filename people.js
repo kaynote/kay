@@ -1763,11 +1763,11 @@ const people = [
   },
   {
     "no": 221,
-    "name": "Prince Arthur O. Calso",
-    "ko": "프린스 아서 O. 칼소",
-    "displayName": "Prince Arthur O. Calso 프린스 아서 O. 칼소",
+    "name": "Prince Arthur O. Calsa",
+    "ko": "프린스 아서 O. 칼사",
+    "displayName": "Prince Arthur O. Calsa 프린스 아서 O. 칼사",
     "note": "프린이의 남동생, 2025년 5월 18일생이지만 2026년 1월 29일 사망, <span class=\"timestamp\"> 2026.02.01 19:10</span>",
-    "image": "Prince Arthur O. Calso.jpg"
+    "image": "Prince Arthur O. Calsa.jpg"
   },
   {
     "no": 222,
@@ -1803,11 +1803,11 @@ const people = [
   },
   {
     "no": 226,
-    "name": "Princess Rhian O. Calso",
-    "ko": "프린세스 리안 O. 칼소",
-    "displayName": "Princess Rhian O. Calso 프린세스 리안 O. 칼소",
+    "name": "Princess Rhian O. Calsa",
+    "ko": "프린세스 리안 O. 칼사",
+    "displayName": "Princess Rhian O. Calsa 프린세스 리안 O. 칼사",
     "note": "어릴 때부터 동생들을 돌보느라 힘들었던 코리아 빌딩 공부방 소속의 여학생이며 줄여서 '프린이'라고 부른다, <span class=\"timestamp\">정주행 2021.11.10 가정방문 2부 23:42</span>, 2024년 크리스마스 댄스 경연대회에서 1등 수상, <span class=\"timestamp\"> 2024.12.14 1:37:24</span>",
-    "image": "Princess Rhian O. Calso.jpg"
+    "image": "Princess Rhian O. Calsa.jpg"
   },
   {
     "no": 227,
