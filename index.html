@@ -464,10 +464,35 @@ async function openModal(p){
 
         closeBtn.onclick=closeGallery;
 
-        bg.onclick=e=>{
+        img.onclick=e=>{
 
-            // galleryBox 안쪽을 클릭한 경우는 무시
-            if(e.target.closest(".galleryBox")) return;
+            e.stopPropagation();
+            next();
+
+        };
+
+        prevBtn.onclick=e=>{
+
+            e.stopPropagation();
+            prev();
+
+        };
+
+        nextBtn.onclick=e=>{
+
+            e.stopPropagation();
+            next();
+
+        };
+
+        closeBtn.onclick=e=>{
+
+            e.stopPropagation();
+            closeGallery();
+
+        };
+
+        bg.onclick=()=>{
 
             closeGallery();
 
