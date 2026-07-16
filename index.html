@@ -337,7 +337,41 @@ async function openModal(p){
     
     function openGallery(photos){
 
-        let index = 0;
+        let index=0;
+        let touchX=0;
+        
+        img.ontouchstart=e=>{
+
+            touchX=e.touches[0].clientX;
+
+        };
+
+        img.ontouchend=e=>{
+
+            const dx=e.changedTouches[0].clientX-touchX;
+
+            if(Math.abs(dx)<50)
+                return;
+
+            if(dx<0){
+
+                index++;
+
+                if(index>=photos.length)
+                    index=0;
+
+            }else{
+
+                index--;
+
+                if(index<0)
+                    index=photos.length-1;
+
+            }
+
+            show();
+
+        };
 
         const bg = document.createElement("div");
         bg.className = "galleryOverlay";
@@ -367,10 +401,15 @@ async function openModal(p){
 
         function show(){
 
-            img.src = "images/" + photos[index];
+            img.src="images/"+photos[index];
 
-            count.textContent =
+            count.textContent=
                 `${index+1} / ${photos.length}`;
+
+            const next=new Image();
+
+            next.src=
+                "images/"+photos[(index+1)%photos.length];
 
         }
 
@@ -400,21 +439,24 @@ async function openModal(p){
 
         bg.querySelector(".galleryClose").onclick=()=>{
 
-            bg.remove();
+            document.onkeydown=null;
+            bg.remove;();
 
         };
 
         bg.onclick=e=>{
 
             if(e.target===bg)
-                bg.remove();
+                document.onkeydown=null;
+                bg.remove;();
 
         };
 
         document.onkeydown=e=>{
 
             if(e.key==="Escape")
-                bg.remove();
+                document.onkeydown=null;
+                bg.remove;();
 
             if(e.key==="ArrowLeft")
                 bg.querySelector(".galleryPrev").click();
@@ -425,6 +467,41 @@ async function openModal(p){
         };
 
     }
+    
+    bg.onwheel=e=>{
+
+        e.preventDefault();
+
+        if(e.deltaY>0){
+
+            index++;
+
+            if(index>=photos.length)
+                index=0;
+
+        }else{
+
+            index--;
+
+            if(index<0)
+                index=photos.length-1;
+
+        }
+
+        show();
+
+    };
+    
+    img.onclick=()=>{
+
+        index++;
+
+        if(index>=photos.length)
+            index=0;
+
+        show();
+
+    };
 
     /* =====================
        SHOW LIKES (한 번만 등록)

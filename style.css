@@ -634,16 +634,26 @@ font-size:22px;
 }
 
 .galleryPrev{
-left:-70px;
-top:45%;
+left:15px;
 }
 
 .galleryNext{
-right:-70px;
-top:45%;
+right:15px;
 }
 
 .galleryClose{
 top:-55px;
 right:0;
+}
+
+.galleryPrev,
+.galleryNext,
+.galleryClose{
+background:rgba(255,255,255,.85);
+border-radius:50%;
+}
+
+.galleryImg{
+user-select:none;
+-webkit-user-drag:none;
 }
