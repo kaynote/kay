@@ -466,8 +466,10 @@ async function openModal(p){
 
         bg.onclick=e=>{
 
-        if(e.target===bg)
-        closeGallery();
+            // galleryBox 안쪽을 클릭한 경우는 무시
+            if(e.target.closest(".galleryBox")) return;
+
+            closeGallery();
 
         };
 
