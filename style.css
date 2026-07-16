@@ -608,16 +608,20 @@ z-index:999999;
 }
 
 .galleryBox{
+display:flex;
+align-items:center;
+justify-content:center;
 position:relative;
+width:100vw;
+height:100vh;
 }
 
 .galleryImg{
+display:block;
+margin:auto;
 max-width:90vw;
 max-height:90vh;
-border-radius:12px;
-cursor:pointer;
-user-select:none;
--webkit-user-drag:none;
+object-fit:contain;
 }
 
 .galleryCount{
