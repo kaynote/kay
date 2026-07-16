@@ -440,7 +440,7 @@ async function openModal(p){
         bg.querySelector(".galleryClose").onclick=()=>{
 
             document.onkeydown=null;
-            bg.remove;();
+            bg.remove();
 
         };
 
@@ -448,7 +448,7 @@ async function openModal(p){
 
             if(e.target===bg)
                 document.onkeydown=null;
-                bg.remove;();
+                bg.remove();
 
         };
 
@@ -456,7 +456,7 @@ async function openModal(p){
 
             if(e.key==="Escape")
                 document.onkeydown=null;
-                bg.remove;();
+                bg.remove();
 
             if(e.key==="ArrowLeft")
                 bg.querySelector(".galleryPrev").click();
