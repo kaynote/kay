@@ -608,20 +608,20 @@ z-index:999999;
 }
 
 .galleryBox{
-display:flex;
-align-items:center;
-justify-content:center;
 position:relative;
 width:100vw;
 height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
 }
 
 .galleryImg{
 display:block;
-margin:auto;
 max-width:90vw;
 max-height:90vh;
 object-fit:contain;
+margin:auto;
 }
 
 .galleryCount{
@@ -643,16 +643,20 @@ border-radius:50%;
 }
 
 .galleryPrev{
-left:15px;
+left:25px;
+top:50%;
+transform:translateY(-50%);
 }
 
 .galleryNext{
-right:15px;
+right:25px;
+top:50%;
+transform:translateY(-50%);
 }
 
 .galleryClose{
-top:-55px;
-right:0;
+top:20px;
+right:20px;
 }
 
 .galleryImg{
