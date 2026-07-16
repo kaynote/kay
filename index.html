@@ -273,6 +273,8 @@ async function openModal(p){
         ...(p.gallery || [])
     ];
 
+    console.log(photos);
+
     modalBody.innerHTML = `
         <img
             class="modal-photo"
