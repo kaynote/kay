@@ -268,10 +268,26 @@ async function openModal(p){
 
     modal.classList.remove("hidden");
 
+    const photos = [
+        p.image || "no-image.jpg",
+        ...(p.gallery || [])
+    ];
+
     modalBody.innerHTML = `
-        <img class="modal-photo" src="images/${p.image || 'no-image.jpg'}">
+        <img
+            class="modal-photo"
+            src="images/${photos[0]}"
+            data-index="0"
+        >
+
+        ${
+            photos.length > 1
+            ? `<div class="galleryHint">📷 사진 ${photos.length}장 (클릭하여 보기)</div>`
+            : ""
+        }
 
         <div class="modal-name">${p.displayName || p.name}</div>
+        
         <div class="modal-desc">${p.note || ""}</div>
 
         <div class="likeArea">
@@ -302,12 +318,113 @@ async function openModal(p){
     } else {
         showLikesBtn.style.display = "none";
     }
+    
+    const photo = modalBody.querySelector(".modal-photo");
+
+    photo.onclick = () => {
+
+        if (photos.length <= 1) return;
+
+        openGallery(photos);
+
+    };
 
     const commentBtn = modalBody.querySelector(".commentBtn");
     const commentInput = modalBody.querySelector(".commentInput");
     const commentsDiv = modalBody.querySelector(".comments");
     
     let replyTarget = null;
+    
+    function openGallery(photos){
+
+        let index = 0;
+
+        const bg = document.createElement("div");
+        bg.className = "galleryOverlay";
+
+        bg.innerHTML = `
+
+            <div class="galleryBox">
+
+                <button class="galleryClose">✕</button>
+
+                <button class="galleryPrev">◀</button>
+
+                <img class="galleryImg">
+
+                <button class="galleryNext">▶</button>
+
+                <div class="galleryCount"></div>
+
+            </div>
+
+        `;
+
+        document.body.appendChild(bg);
+
+        const img = bg.querySelector(".galleryImg");
+        const count = bg.querySelector(".galleryCount");
+
+        function show(){
+
+            img.src = "images/" + photos[index];
+
+            count.textContent =
+                `${index+1} / ${photos.length}`;
+
+        }
+
+        show();
+
+        bg.querySelector(".galleryPrev").onclick=()=>{
+
+            index--;
+
+            if(index<0)
+                index=photos.length-1;
+
+            show();
+
+        };
+
+        bg.querySelector(".galleryNext").onclick=()=>{
+
+            index++;
+
+            if(index>=photos.length)
+                index=0;
+
+            show();
+
+        };
+
+        bg.querySelector(".galleryClose").onclick=()=>{
+
+            bg.remove();
+
+        };
+
+        bg.onclick=e=>{
+
+            if(e.target===bg)
+                bg.remove();
+
+        };
+
+        document.onkeydown=e=>{
+
+            if(e.key==="Escape")
+                bg.remove();
+
+            if(e.key==="ArrowLeft")
+                bg.querySelector(".galleryPrev").click();
+
+            if(e.key==="ArrowRight")
+                bg.querySelector(".galleryNext").click();
+
+        };
+
+    }
 
     /* =====================
        SHOW LIKES (한 번만 등록)
