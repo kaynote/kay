@@ -625,9 +625,21 @@ margin:auto;
 }
 
 .galleryCount{
+position:absolute;
+left:50%;
+bottom:70px;
+
+transform:translateX(-50%);
+
 color:#fff;
+font-size:18px;
+font-weight:bold;
+
 text-align:center;
-margin-top:12px;
+
+background:rgba(0,0,0,.45);
+padding:4px 12px;
+border-radius:20px;
 }
 
 .galleryPrev,
@@ -668,23 +680,19 @@ user-select:none;
 position:absolute;
 left:50%;
 bottom:30px;
+
 transform:translateX(-50%);
 
 width:min(90vw,700px);
 
-padding:10px 18px;
+text-align:center;
 
 color:#fff;
-font-size:16px;
-text-align:center;
 line-height:1.6;
 
 background:rgba(0,0,0,.45);
+padding:8px 15px;
 border-radius:10px;
-
-white-space:normal;
-word-break:keep-all;
-overflow-wrap:break-word;
 
 box-sizing:border-box;
 }
