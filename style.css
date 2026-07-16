@@ -615,6 +615,9 @@ position:relative;
 max-width:90vw;
 max-height:90vh;
 border-radius:12px;
+cursor:pointer;
+user-select:none;
+-webkit-user-drag:none;
 }
 
 .galleryCount{
@@ -631,6 +634,8 @@ border:none;
 cursor:pointer;
 padding:12px;
 font-size:22px;
+background:rgba(255,255,255,.85);
+border-radius:50%;
 }
 
 .galleryPrev{
@@ -644,13 +649,6 @@ right:15px;
 .galleryClose{
 top:-55px;
 right:0;
-}
-
-.galleryPrev,
-.galleryNext,
-.galleryClose{
-background:rgba(255,255,255,.85);
-border-radius:50%;
 }
 
 .galleryImg{
