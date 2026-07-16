@@ -75,7 +75,7 @@ if(fs.existsSync(galleryPath)){
 
     for(const line of galleryLines){
 
-        const [file, caption] = line.split("\t");
+        const [file, caption] = line.split("=");
 
         if(file && caption){
 
