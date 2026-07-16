@@ -655,3 +655,12 @@ right:0;
 user-select:none;
 -webkit-user-drag:none;
 }
+
+.galleryCaption{
+margin-top:10px;
+color:#fff;
+font-size:15px;
+text-align:center;
+max-width:90vw;
+line-height:1.5;
+}

@@ -268,9 +268,12 @@ async function openModal(p){
 
     modal.classList.remove("hidden");
 
-    const photos = [
-        p.image || "no-image.jpg",
-        ...(p.gallery || [])
+    const photos=[
+        {
+            image:p.image,
+            caption:p.note
+        },
+        ...(p.gallery||[])
     ];
 
     console.log(photos);
@@ -364,6 +367,8 @@ async function openModal(p){
 
         <div class="galleryCount"></div>
 
+        <div class="galleryCaption"></div>
+
         </div>
         `;
 
@@ -371,18 +376,21 @@ async function openModal(p){
 
         const img=bg.querySelector(".galleryImg");
         const count=bg.querySelector(".galleryCount");
+        const caption=bg.querySelector(".galleryCaption");
         const prevBtn=bg.querySelector(".galleryPrev");
         const nextBtn=bg.querySelector(".galleryNext");
         const closeBtn=bg.querySelector(".galleryClose");
 
         function show(){
 
-        img.src="images/"+photos[index];
+        img.src="images/"+photos[index].image;
 
         count.textContent=`${index+1} / ${photos.length}`;
 
+        caption.innerHTML=photos[index].caption || "";
+
         const preload=new Image();
-        preload.src="images/"+photos[(index+1)%photos.length];
+        preload.src="images/"+photos[(index+1)%photos.length].image;
 
         }
 

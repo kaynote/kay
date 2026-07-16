@@ -7,6 +7,7 @@ const path = require("path");
 const txtPath = path.join(__dirname, "names.txt");
 const imagesDir = path.join(__dirname, "images");
 const outputPath = path.join(__dirname, "people.js");
+const galleryPath = path.join(__dirname, "gallery.txt");
 
 /* =========================
    normalize
@@ -57,6 +58,37 @@ const lines = raw
   .filter(Boolean);
 
 console.log("📄 names:", lines.length);
+
+/* =========================
+   read gallery captions
+========================= */
+
+const galleryCaptionMap = new Map();
+
+if(fs.existsSync(galleryPath)){
+
+    const galleryLines = fs
+        .readFileSync(galleryPath,"utf8")
+        .split(/\r?\n/)
+        .map(v=>v.trim())
+        .filter(Boolean);
+
+    for(const line of galleryLines){
+
+        const [file,caption]=line.split("|");
+
+        if(file && caption){
+
+            galleryCaptionMap.set(
+                file.trim(),
+                caption.trim()
+            );
+
+        }
+
+    }
+
+}
 
 /* =========================
    read images
@@ -145,16 +177,19 @@ let people = lines.map((line, index) => {
   const key = normalize(name);
 
   const matchedImage = imageMap.get(key) || "no-image.jpg";
-  const gallery = galleryMap.get(key) || [];
 
   return {
-    no: index + 1,
-    name,
-    ko,
-    displayName,
-    note: formatNote(note),
-    image: matchedImage,
-    gallery
+      no: index + 1,
+      name,
+      ko,
+      displayName,
+      note: formatNote(note),
+      image: matchedImage,
+
+      gallery: (galleryMap.get(key) || []).map(file => ({
+          image: file,
+          caption: galleryCaptionMap.get(file) || ""
+      }))
   };
 });
 
