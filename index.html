@@ -385,7 +385,10 @@ async function openModal(p){
 
         count.textContent=`${index+1} / ${photos.length}`;
 
-        caption.innerHTML=photos[index].caption || "";
+        caption.innerHTML =
+            index===0
+                ? ""
+                : (photos[index].caption || "");
 
         const preload=new Image();
         preload.src="images/"+photos[(index+1)%photos.length].image;
