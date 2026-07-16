@@ -7,7 +7,10 @@ const people = [
     "ko": "아델린 오라바오",
     "displayName": "Adeline Orabao 아델린 오라바오",
     "note": "프린세스의 엄마, 'Adeline'은 ‘고귀한’이라는 의미를 가진 이름, 서 있는 상태로 부모님 동의서에 이름을 적을 때 프린세스가 허리에 매달려 흔들었는데도 글씨체가 가독성 높고 예쁘고 바르다, <span class=\"timestamp\">정주행 2021.11.10 가정방문 2부 23:42</span>",
-    "image": "Adeline Orabao.jpg"
+    "image": "Adeline Orabao.jpg",
+    "gallery": [
+      "Adeline Orabao_2.jpg"
+    ]
   },
   {
     "no": 2,
@@ -15,7 +18,8 @@ const people = [
     "ko": "에이시 카르타헤나 로자노",
     "displayName": "Aeshee Cartagena Lozano 에이시 카르타헤나 로자노",
     "note": "일명 '크라잉 에이시', '안경 큰 거 쓴 애'로 불린다, <span class=\"timestamp\">정주행 2025.11.21 22:49</span>",
-    "image": "Aeshee Cartagena Lozano.jpg"
+    "image": "Aeshee Cartagena Lozano.jpg",
+    "gallery": []
   },
   {
     "no": 3,
@@ -23,7 +27,8 @@ const people = [
     "ko": "아키샤",
     "displayName": "Akisha 아키샤",
     "note": "세 자매 중에서 둘째인 여자아이로 2024년 7세, <span class=\"timestamp\"> 2024.03.03 채팅 24:55</span>, 제리님이 '샨샨'이라고 부른다, <span class=\"timestamp\"> 2024.12.14 13:25</span>, 크리스마스 댄스 경연대회에 까를라 미와 팀을 이뤄 참가한 적이 있다, <span class=\"timestamp\"> 2024.12.14 15:28</span>",
-    "image": "Akisha.jpg"
+    "image": "Akisha.jpg",
+    "gallery": []
   },
   {
     "no": 4,
@@ -31,7 +36,8 @@ const people = [
     "ko": "알덴",
     "displayName": "Alden 알덴",
     "note": "낫낫의 둘째 남동생, 2026년 4세, <span class=\"timestamp\"> 2026.03.15 31:23</span>, 2024년 크리스마스 파티에서 ALDEN이라는 명찰 목걸이를 달고 있었다, <span class=\"timestamp\"> 2024.12.14 20:30</span>, <span class=\"timestamp\"> 2026.04.25 30:25</span>",
-    "image": "Alden.jpg"
+    "image": "Alden.jpg",
+    "gallery": []
   },
   {
     "no": 5,
@@ -39,7 +45,8 @@ const people = [
     "ko": "알렉스",
     "displayName": "Alex 알렉스",
     "note": "간식 나눔이나 피딩 프로그램의 도우미이자 PWD 장애인, <span class=\"timestamp\"> 2025.01.05 57:14</span>",
-    "image": "Alex.jpg"
+    "image": "Alex.jpg",
+    "gallery": []
   },
   {
     "no": 6,
@@ -47,7 +54,8 @@ const people = [
     "ko": "알렉사 선생님",
     "displayName": "Alexa 알렉사 선생님",
     "note": "아우라의 첫째 언니, 2020년 17세로 11학년, 먹방여신 혹은 먹방요정이라 불린다, <span class=\"timestamp\">정주행 2020.08.15 00:15</span>",
-    "image": "Alexa.jpg"
+    "image": "Alexa.jpg",
+    "gallery": []
   },
   {
     "no": 7,
@@ -55,7 +63,8 @@ const people = [
     "ko": "알렉사 미",
     "displayName": "Alexa Mae 알렉사 미",
     "note": "크리스틴 케이트의 여동생, 2024년 크리스마스 댄스 경연대회에서 1등 수상, <span class=\"timestamp\"> 2024.12.14 1:37:24</span>",
-    "image": "Alexa Mae.jpg"
+    "image": "Alexa Mae.jpg",
+    "gallery": []
   },
   {
     "no": 8,
@@ -63,7 +72,8 @@ const people = [
     "ko": "알피",
     "displayName": "Alfie 알피",
     "note": "메리안의 형부, <span class=\"timestamp\">정주행 2021.02.02 02:07</span>",
-    "image": "Alfie.jpg"
+    "image": "Alfie.jpg",
+    "gallery": []
   },
   {
     "no": 9,
@@ -71,7 +81,8 @@ const people = [
     "ko": "알리바이맨",
     "displayName": "Alibi Man 알리바이맨",
     "note": "'Alibi'는 라틴어에서 유래된 말이고 '범행 당시 그 자리에 없었다는 증거'를 의미한다, '샤'라는 애칭으로 불리며 제리님이 알리바이맨으로 이름을 바꾸라고 말한 적이 있는 가라의 조카, <span class=\"timestamp\"> 2024.06.01 14:52</span>, <span class=\"timestamp\"> 2024.06.01 15:55</span>",
-    "image": "Alibi Man.jpg"
+    "image": "Alibi Man.jpg",
+    "gallery": []
   },
   {
     "no": 10,
@@ -79,7 +90,8 @@ const people = [
     "ko": "알티아 니콜 N. 레예스",
     "displayName": "Althea Nicole N. Reyes 알티아 니콜 N. 레예스",
     "note": "일명 'Mumay' 무마이, 'Althea'는 그리스어로 '치유하는 사람'이라는 뜻, <span class=\"timestamp\">정주행 2020.02.22 13:00</span>",
-    "image": "Althea Nicole N. Reyes.jpg"
+    "image": "Althea Nicole N. Reyes.jpg",
+    "gallery": []
   },
   {
     "no": 11,
@@ -87,7 +99,8 @@ const people = [
     "ko": "알리아나",
     "displayName": "Alyana 알리아나",
     "note": "제리님 동네에 사는 여자아이, <span class=\"timestamp\"> 2026.06.20 48:59</span>, <span class=\"timestamp\"> 2026.06.27 44:40</span>",
-    "image": "Alyana.jpg"
+    "image": "Alyana.jpg",
+    "gallery": []
   },
   {
     "no": 12,
@@ -95,7 +108,8 @@ const people = [
     "ko": "안드레아",
     "displayName": "Andrea 안드레아",
     "note": "친언니인 알렉사의 카메라를 향해 \"하이, 대디!\"라 말하며 미래의 한국 아빠를 꿈꿨으나 정작 한국 아빠가 생긴 것은 여동생 아우라, <span class=\"timestamp\">정주행 2020.08.15 10:41</span>",
-    "image": "Andrea.jpg"
+    "image": "Andrea.jpg",
+    "gallery": []
   },
   {
     "no": 13,
@@ -103,7 +117,8 @@ const people = [
     "ko": "안드레아 미 로블레스",
     "displayName": "Andrea Mae Robles 안드레아 미 로블레스",
     "note": "이름을 줄여서 '안딩'이라 불리며 별명은 'magagandang chopsticks' 마간당 찹스틱스 = 예쁜 젓가락, 생일은 10월 5일, <span class=\"timestamp\"> 2024.10.05 09:27</span>",
-    "image": "Andrea Mae Robles.jpg"
+    "image": "Andrea Mae Robles.jpg",
+    "gallery": []
   },
   {
     "no": 14,
@@ -111,7 +126,8 @@ const people = [
     "ko": "안드레이",
     "displayName": "Andrei 안드레이",
     "note": "무마이의 할머니인 달리의 손자, <span class=\"timestamp\">정주행 2020.02.22 16:04</span>",
-    "image": "Andrei.jpg"
+    "image": "Andrei.jpg",
+    "gallery": []
   },
   {
     "no": 15,
@@ -119,7 +135,8 @@ const people = [
     "ko": "안젤라",
     "displayName": "Angela 안젤라",
     "note": "제리님 동네에 사는 예쁜 여자아이, <span class=\"timestamp\"> 2025.11.29 30:40</span>, <span class=\"timestamp\"> 2026.06.20 48:39</span>",
-    "image": "Angela.jpg"
+    "image": "Angela.jpg",
+    "gallery": []
   },
   {
     "no": 16,
@@ -127,7 +144,8 @@ const people = [
     "ko": "안젤리카",
     "displayName": "Angelika 안젤리카",
     "note": "마리안의 친언니, 미숙아로 태어나 인큐베이터에 있었던 아기의 엄마, <span class=\"timestamp\"> 2024.03.02 51:22</span>",
-    "image": "Angelika.jpg"
+    "image": "Angelika.jpg",
+    "gallery": []
   },
   {
     "no": 17,
@@ -135,7 +153,8 @@ const people = [
     "ko": "아니타 로하",
     "displayName": "Anita Roja 아니타 로하",
     "note": "제이와 엘라의 할머니, <span class=\"timestamp\">정주행 2021.11.10 23:42</span>",
-    "image": "Anita Roja.jpg"
+    "image": "Anita Roja.jpg",
+    "gallery": []
   },
   {
     "no": 18,
@@ -143,7 +162,8 @@ const people = [
     "ko": "아나 미",
     "displayName": "Anna Mae 아나 미",
     "note": "애칭은 'Anamay' 아나미 선생님, 아버지가 다른 리안의 언니, 필리핀의 서울대급으로 불리는 Tytana 타이타나 간호대학교의 고등학교 간호학과 과정에 편입 입학하였으나 집안사정으로 인해 그만둔 듯하다, <span class=\"timestamp\">정주행 2022.03.02 00:46</span>",
-    "image": "Anna Mae.jpg"
+    "image": "Anna Mae.jpg",
+    "gallery": []
   },
   {
     "no": 19,
@@ -151,7 +171,8 @@ const people = [
     "ko": "안 제니카 V. 아시나스",
     "displayName": "Anne jenica V. Asinas 안 제니카 V. 아시나스",
     "note": "위드 오너 성적 우수상을 습관적으로 받는 코리아 빌딩 공부방 소속의 학생이자 선생님, 댄스 실력도 뛰어나다, <span class=\"timestamp\"> 2024.06.15 52:02</span>",
-    "image": "Anne jenica V. Asinas.jpg"
+    "image": "Anne jenica V. Asinas.jpg",
+    "gallery": []
   },
   {
     "no": 20,
@@ -159,7 +180,8 @@ const people = [
     "ko": "안토넷 A. 아시스",
     "displayName": "Anthonette A. Asis 안토넷 A. 아시스",
     "note": "킴벌리의 언니, <span class=\"timestamp\">정주행 2020.06.18 08:59</span>",
-    "image": "Anthonette A. Asis.jpg"
+    "image": "Anthonette A. Asis.jpg",
+    "gallery": []
   },
   {
     "no": 21,
@@ -167,7 +189,8 @@ const people = [
     "ko": "알키샤 앤 N. 모라",
     "displayName": "Arkesia Ann N. Mora 알키샤 앤 N. 모라",
     "note": "제리님의 마이 프렌드이자 니콜의 둘째 여동생, <span class=\"timestamp\">정주행 2021.06.10 11:44</span>, 이름의 철자는 'Arkesia', <span class=\"timestamp\">정주행 2023.04.18 04:59</span>, 줄여서 '알키'라 부른다, <span class=\"timestamp\"> 2024.05.05 36:09</span>, 생일은 2월 17일, <span class=\"timestamp\"> 2026.06.07 01:12</span>",
-    "image": "Arkesia Ann N. Mora.jpg"
+    "image": "Arkesia Ann N. Mora.jpg",
+    "gallery": []
   },
   {
     "no": 22,
@@ -175,7 +198,8 @@ const people = [
     "ko": "아리아나 데 키로스",
     "displayName": "Arriana De Quiros 아리아나 데 키로스",
     "note": "초창기 코리아 빌딩 공부방 멤버, <span class=\"timestamp\">정주행 2021.04.06 19:39</span>",
-    "image": "Arriana De Quiros.jpg"
+    "image": "Arriana De Quiros.jpg",
+    "gallery": []
   },
   {
     "no": 23,
@@ -183,7 +207,8 @@ const people = [
     "ko": "애쉴리 O. 노블",
     "displayName": "Ashley O. Noble 애쉴리 O. 노블",
     "note": "여자 애쉴리, <span class=\"timestamp\">정주행 2020.07.11 10:52</span>, 생일은 9월 19일, <span class=\"timestamp\"> 2024.09.14 1:05:57</span>",
-    "image": "Ashley O. Noble.jpg"
+    "image": "Ashley O. Noble.jpg",
+    "gallery": []
   },
   {
     "no": 24,
@@ -191,7 +216,8 @@ const people = [
     "ko": "아떼 아날루스",
     "displayName": "Ate Analuz 아떼 아날루스",
     "note": "아떼 루시의 딸, 2020년 32세, <span class=\"timestamp\">정주행 2021.12.30 18:57</span>",
-    "image": "Ate Analuz.jpg"
+    "image": "Ate Analuz.jpg",
+    "gallery": []
   },
   {
     "no": 25,
@@ -199,7 +225,8 @@ const people = [
     "ko": "아떼 아날린",
     "displayName": "Ate Analyn 아떼 아날린",
     "note": "베나의 엄마이자 자라의 이모, <span class=\"timestamp\">정주행 2021.06.08 16:45</span>, <span class=\"timestamp\">정주행 2021.07.27 06:43</span>, 바랑가이 157 사무소에서 근무하지만 제리님의 스펠링 Jerry를 Gerry로 오표기, <span class=\"timestamp\"> 2025.11.29 1부 37:12</span>, <span class=\"timestamp\"> 2025.12.06 41:52</span>",
-    "image": "Ate Analyn.jpg"
+    "image": "Ate Analyn.jpg",
+    "gallery": []
   },
   {
     "no": 26,
@@ -207,7 +234,8 @@ const people = [
     "ko": "아떼 다다",
     "displayName": "Ate Dada 아떼 다다",
     "note": "춤을 잘 추는 자라의 엄마, <span class=\"timestamp\">정주행 2022.05.31 06:28</span>",
-    "image": "Ate Dada.jpg"
+    "image": "Ate Dada.jpg",
+    "gallery": []
   },
   {
     "no": 27,
@@ -215,7 +243,8 @@ const people = [
     "ko": "아떼 엘사",
     "displayName": "Ate Elsa 아떼 엘사",
     "note": "싱잉 콘테스트에서 참가번호 6번으로 나와 챔피언이 된 여자아이의 엄마, <span class=\"timestamp\">정주행 2021.08.03 07:21</span>",
-    "image": "Ate Elsa.jpg"
+    "image": "Ate Elsa.jpg",
+    "gallery": []
   },
   {
     "no": 28,
@@ -223,7 +252,8 @@ const people = [
     "ko": "아떼 페",
     "displayName": "Ate Fe 아떼 페",
     "note": "실라미의 외할머니, <span class=\"timestamp\">정주행 2021.12.30 19:12</span>",
-    "image": "Ate Fe.jpg"
+    "image": "Ate Fe.jpg",
+    "gallery": []
   },
   {
     "no": 29,
@@ -231,7 +261,8 @@ const people = [
     "ko": "아떼 인다이",
     "displayName": "Ate Inday 아떼 인다이",
     "note": "마리안과 이보이의 엄마, <span class=\"timestamp\">정주행 2021.12.30 17:50</span>",
-    "image": "Ate Inday.jpg"
+    "image": "Ate Inday.jpg",
+    "gallery": []
   },
   {
     "no": 30,
@@ -239,7 +270,8 @@ const people = [
     "ko": "아떼 줄리",
     "displayName": "Ate Julie 아떼 줄리",
     "note": "카시의 엄마, <span class=\"timestamp\"> 2025.12.24 55:35</span>",
-    "image": "Ate Julie.jpg"
+    "image": "Ate Julie.jpg",
+    "gallery": []
   },
   {
     "no": 31,
@@ -247,7 +279,8 @@ const people = [
     "ko": "아떼 라나",
     "displayName": "Ate Lana 아떼 라나",
     "note": "손주들 도시락까지 챙기느라 바쁜 2020년 68세 할머니, '말하지 않는 신기한 아이' 다이아나의 할머니 또는 증조 할머니로 추정된다, <span class=\"timestamp\">정주행 2020.08.04 05:11</span>",
-    "image": "Ate Lana.jpg"
+    "image": "Ate Lana.jpg",
+    "gallery": []
   },
   {
     "no": 32,
@@ -255,7 +288,8 @@ const people = [
     "ko": "아떼 레야",
     "displayName": "Ate Leia 아떼 레야",
     "note": "겡겡의 엄마, <span class=\"timestamp\">정주행 2021.11.10 가정방문 1부 06:03</span>",
-    "image": "Ate Leia.jpg"
+    "image": "Ate Leia.jpg",
+    "gallery": []
   },
   {
     "no": 33,
@@ -263,7 +297,8 @@ const people = [
     "ko": "아떼 로데",
     "displayName": "Ate Lode 아떼 로데",
     "note": "바랑가이 157의 앞에 있는 다리 근처에서 핸드폰 액세서리를 파는 돈맛을 알아버린 멍멍이 타이거와 타잔의 주인, <span class=\"timestamp\"> 2025.01.19 06:53</span>, 엠빠이의 할머니, <span class=\"timestamp\"> 2025.06.14 32:50</span>",
-    "image": "Ate Lode.jpg"
+    "image": "Ate Lode.jpg",
+    "gallery": []
   },
   {
     "no": 34,
@@ -271,7 +306,8 @@ const people = [
     "ko": "아떼 루시",
     "displayName": "Ate Lucy 아떼 루시",
     "note": "본명은 'Lucia Gonzaga' 루시아 곤자가, <span class=\"timestamp\"> 2019.12.20, 아날루스의 엄마이자 닉녹의 외할머니, 정주행 2021.09.07 15:46</span>, 생일은 4월 13일, <span class=\"timestamp\"> 2025.04.12 채팅 09:07</span>",
-    "image": "Ate Lucy.jpg"
+    "image": "Ate Lucy.jpg",
+    "gallery": []
   },
   {
     "no": 35,
@@ -279,7 +315,8 @@ const people = [
     "ko": "아떼 마리",
     "displayName": "Ate Marie 아떼 마리",
     "note": "데이브의 엄마이자 무마이의 고모, <span class=\"timestamp\">정주행 2021.12.30 17:29</span>",
-    "image": "Ate Marie.jpg"
+    "image": "Ate Marie.jpg",
+    "gallery": []
   },
   {
     "no": 36,
@@ -287,7 +324,8 @@ const people = [
     "ko": "아떼 마리빅",
     "displayName": "Ate Marivic 아떼 마리빅",
     "note": "민지 선생님의 엄마, 본명은 'Marivic Historillo' 마리빅 히스토리요, <span class=\"timestamp\">정주행 2022.03.02 0:28</span>",
-    "image": "Ate Marivic.jpg"
+    "image": "Ate Marivic.jpg",
+    "gallery": []
   },
   {
     "no": 37,
@@ -295,7 +333,8 @@ const people = [
     "ko": "아떼 머시",
     "displayName": "Ate Mercy 아떼 머시",
     "note": "본명은 'Mercy Labro' 머시 라브로, 딴시의 외할머니, 2020년 63세, <span class=\"timestamp\">정주행 2020.02.08 2부, 00:28</span>, <span class=\"timestamp\">정주행 2021.12.30 19:08</span>",
-    "image": "Ate Mercy.jpg"
+    "image": "Ate Mercy.jpg",
+    "gallery": []
   },
   {
     "no": 38,
@@ -303,7 +342,8 @@ const people = [
     "ko": "아떼 네네",
     "displayName": "Ate Nene 아떼 네네",
     "note": "실라미의 엄마, 본명은 'Roselyn A. Quirao' 로즐린 A. 키라오, <span class=\"timestamp\">정주행 2022.03.02 0:44</span>",
-    "image": "Ate Nene.jpg"
+    "image": "Ate Nene.jpg",
+    "gallery": []
   },
   {
     "no": 39,
@@ -311,7 +351,8 @@ const people = [
     "ko": "아떼 띤띤",
     "displayName": "Ate Tintin 아떼 띤띤",
     "note": "제임스의 엄마이자 니콜의 이모, <span class=\"timestamp\"> 2025.06.22 1:32:22</span>",
-    "image": "Ate Tintin.jpg"
+    "image": "Ate Tintin.jpg",
+    "gallery": []
   },
   {
     "no": 40,
@@ -319,7 +360,8 @@ const people = [
     "ko": "아떼 유닐라",
     "displayName": "Ate Yunila 아떼 유닐라",
     "note": "본명은 'Leonila Baliluya Tañote' 레오닐라 발릴루야 타뇨테, 메리 제인 타뇨테 림의 친엄마이자 가라의 할머니, <span class=\"timestamp\">정주행 2020.07.07 03:16</span>",
-    "image": "Ate Yunila.jpg"
+    "image": "Ate Yunila.jpg",
+    "gallery": []
   },
   {
     "no": 41,
@@ -327,7 +369,8 @@ const people = [
     "ko": "오드리 로하",
     "displayName": "Audrey Roja 오드리 로하",
     "note": "제이의 이복 누나, 2026년 1월 기준 15세 고1, <span class=\"timestamp\"> 2026.01.03 18:59</span>, <span class=\"timestamp\"> 2026.01.04 58:36</span>",
-    "image": "Audrey Roja.jpg"
+    "image": "Audrey Roja.jpg",
+    "gallery": []
   },
   {
     "no": 42,
@@ -335,7 +378,8 @@ const people = [
     "ko": "아우라 이사벨 F. 로하스",
     "displayName": "Aura Ysabel F. Roxas 아우라 이사벨 F. 로하스",
     "note": "알렉사 선생님의 둘째 여동생이자 코리아 빌딩 공부방 소속 학생이었으나 이사 갔다, <span class=\"timestamp\">정주행 2020.06.18 11:09</span>",
-    "image": "Aura Ysabel F. Roxas.jpg"
+    "image": "Aura Ysabel F. Roxas.jpg",
+    "gallery": []
   },
   {
     "no": 43,
@@ -343,7 +387,8 @@ const people = [
     "ko": "아야샤 A. 아일로",
     "displayName": "Ayesha A. Aylo 아야샤 A. 아일로",
     "note": "안토넷과 킴벌리와는 사촌지간, <span class=\"timestamp\">정주행 2021.11.10 가정방문 2부 23:42</span>",
-    "image": "Ayesha A. Aylo.jpg"
+    "image": "Ayesha A. Aylo.jpg",
+    "gallery": []
   },
   {
     "no": 44,
@@ -351,7 +396,8 @@ const people = [
     "ko": "에일라",
     "displayName": "Ayla 에일라",
     "note": "시니어 회장님의 손녀 혹은 증손녀로 추정되는 꼬땅의 친구, 2026년 6세, <span class=\"timestamp\"> 2026.03.01 44:51</span>",
-    "image": "Ayla.jpg"
+    "image": "Ayla.jpg",
+    "gallery": []
   },
   {
     "no": 45,
@@ -359,7 +405,8 @@ const people = [
     "ko": "뱀뱀",
     "displayName": "Bambam 뱀뱀",
     "note": "프린세스의 친구, 2023년 크리스마스 댄스 경연대회에서 1등 수상, <span class=\"timestamp\"> 2023.12.16 1:34:15</span>, 2024년 크리스마스 댄스 경연대회에서 1등 수상, <span class=\"timestamp\"> 2024.12.14 1:37:24</span>, 2024년 1월 기준 초4, <span class=\"timestamp\"> 2024.01.13 49:04</span>",
-    "image": "Bambam.jpg"
+    "image": "Bambam.jpg",
+    "gallery": []
   },
   {
     "no": 46,
@@ -367,7 +414,8 @@ const people = [
     "ko": "뱀뱀",
     "displayName": "Bambam 뱀뱀",
     "note": "릴리의 바나나마을 친구, <span class=\"timestamp\">정주행 2024.12.28 05:24</span>",
-    "image": "Bambam-2.jpg"
+    "image": "Bambam-2.jpg",
+    "gallery": []
   },
   {
     "no": 47,
@@ -375,7 +423,8 @@ const people = [
     "ko": "밤밤",
     "displayName": "Bambam 밤밤",
     "note": "제리님 동네에 사는 여자아이, <span class=\"timestamp\"> 2026.03.14 04:14</span>",
-    "image": "Bambam-3.jpg"
+    "image": "Bambam-3.jpg",
+    "gallery": []
   },
   {
     "no": 48,
@@ -383,7 +432,8 @@ const people = [
     "ko": "밤비",
     "displayName": "Bambi 밤비",
     "note": "동근이의 막내 동생, 남자로 태어났지만 여자처럼 살고 있다, <span class=\"timestamp\"> 2026.06.05 40:36</span>",
-    "image": "Bambi.jpg"
+    "image": "Bambi.jpg",
+    "gallery": []
   },
   {
     "no": 49,
@@ -391,7 +441,8 @@ const people = [
     "ko": "빠양",
     "displayName": "Bayang 빠양",
     "note": "바랑가이 157 캡틴 레이날도 P. 플로레스의 아들, 2020년 19세 고3, <span class=\"timestamp\"> 2020.11.21 공부방 시험 2부 13:12</span>",
-    "image": "Bayang.jpg"
+    "image": "Bayang.jpg",
+    "gallery": []
   },
   {
     "no": 50,
@@ -399,7 +450,8 @@ const people = [
     "ko": "까를라 미 발렌시아",
     "displayName": "Carla Mae Valencia 까를라 미 발렌시아",
     "note": "2020년 초2, <span class=\"timestamp\">정주행 2020.09.29 02:37</span>",
-    "image": "Carla Mae Valencia.jpg"
+    "image": "Carla Mae Valencia.jpg",
+    "gallery": []
   },
   {
     "no": 51,
@@ -407,7 +459,8 @@ const people = [
     "ko": "카산드라 G. 타기노드",
     "displayName": "Cassandra G. Taguinod 카산드라 G. 타기노드",
     "note": "애칭은 'Cassie' 카시, 코리아 빌딩 공부방 소속 먹깨비 2호, 생일은 4월 10일, <span class=\"timestamp\"> 2023.04.02 37:23</span>, 2024년 크리스마스 댄스 경연대회에서 1등 수상, <span class=\"timestamp\"> 2024.12.14 1:37:24</span>",
-    "image": "Cassandra G. Taguinod.jpg"
+    "image": "Cassandra G. Taguinod.jpg",
+    "gallery": []
   },
   {
     "no": 52,
@@ -415,7 +468,8 @@ const people = [
     "ko": "카트리오나 그레이",
     "displayName": "Catriona Gray 카트리오나 그레이",
     "note": "제리님이 '말하지 않는 신기한 아이'로 지목했으나 아니다, 샐러드를 파는 소녀 로쉘의 여동생, <span class=\"timestamp\"> 2026.03.01 30:14</span>",
-    "image": "Catriona Gray.jpg"
+    "image": "Catriona Gray.jpg",
+    "gallery": []
   },
   {
     "no": 53,
@@ -423,7 +477,8 @@ const people = [
     "ko": "세드릭",
     "displayName": "Cedric 세드릭",
     "note": "30명의 스태프들이 회식을 할 때 같이 있었던 청년, <span class=\"timestamp\">정주행 2021.12.30 17:35</span>",
-    "image": "Cedric.jpg"
+    "image": "Cedric.jpg",
+    "gallery": []
   },
   {
     "no": 54,
@@ -431,7 +486,8 @@ const people = [
     "ko": "세스카",
     "displayName": "Cesca 세스카",
     "note": "11남매 중 셋째, 2025년 11세, 2023년 크리스마스 댄스 경연대회 3등 수상, <span class=\"timestamp\"> 2023.12.16 1:32:21</span>, 2024년 크리스마스 댄스 경연대회 2등 수상, <span class=\"timestamp\"> 2024.12.14 1:37:13</span>, Cesca는 Francesca의 줄임말인 듯.",
-    "image": "Cesca.jpg"
+    "image": "Cesca.jpg",
+    "gallery": []
   },
   {
     "no": 55,
@@ -439,7 +495,8 @@ const people = [
     "ko": "찰스",
     "displayName": "Charles 찰스",
     "note": "제리님 동네에 사는 잘생긴 남자아이, <span class=\"timestamp\"> 2025.11.29 30:44</span>, <span class=\"timestamp\"> 2026.07.04 35:43</span>",
-    "image": "Charles.jpg"
+    "image": "Charles.jpg",
+    "gallery": []
   },
   {
     "no": 56,
@@ -447,7 +504,8 @@ const people = [
     "ko": "샬메인",
     "displayName": "Charmaine 샬메인",
     "note": "피아의 사촌, 2019년 17세, 2018년 고1 때 아기를 낳고 고등학교 중퇴, <span class=\"timestamp\">정주행 2019.12.22 01:14</span>",
-    "image": "Charmaine.jpg"
+    "image": "Charmaine.jpg",
+    "gallery": []
   },
   {
     "no": 57,
@@ -455,7 +513,8 @@ const people = [
     "ko": "체스카 니콜",
     "displayName": "Chesca Nicole 체스카 니콜",
     "note": "세 자매 중에서 막내인 여자아이, <span class=\"timestamp\"> 2024.12.14 01:20</span>",
-    "image": "Chesca Nicole.jpg"
+    "image": "Chesca Nicole.jpg",
+    "gallery": []
   },
   {
     "no": 58,
@@ -463,7 +522,8 @@ const people = [
     "ko": "크리스 알렘 마히나이",
     "displayName": "Chris Ahlem Mahinay 크리스 알렘 마히나이",
     "note": "일명 '작은 용철이'라 불리는 코리아 빌딩 공부방 소속 남학생이었으나 이사 갔다, <span class=\"timestamp\">정주행 2020.06.18 02:40</span>",
-    "image": "Chris Ahlem Mahinay.jpg"
+    "image": "Chris Ahlem Mahinay.jpg",
+    "gallery": []
   },
   {
     "no": 59,
@@ -471,7 +531,8 @@ const people = [
     "ko": "크리스 작 니뇨 P. 바카이",
     "displayName": "Chris Jack Niño P. Baccay 크리스 작 니뇨 P. 바카이",
     "note": "필리핀에서 드물게 부지런하고 성실하며 일을 열심히 하는 제리님의 최고의 조력자 작 바카이의 첫째 아들, <span class=\"timestamp\">정주행 2020.04.18 08:06</span>, 생일은 11월 30일, <span class=\"timestamp\"> 2024.11.30 채팅 34:23</span>",
-    "image": "Chris Jack Niño P. Baccay.jpg"
+    "image": "Chris Jack Niño P. Baccay.jpg",
+    "gallery": []
   },
   {
     "no": 60,
@@ -479,7 +540,8 @@ const people = [
     "ko": "크리스틴 케이트",
     "displayName": "Christine Kate 크리스틴 케이트",
     "note": "2023년 크리스마스 댄스 경연대회에서 1등 수상, <span class=\"timestamp\"> 2023.12.16 1:34:15</span>, 생일은 12월 5일, <span class=\"timestamp\"> 2024.11.30 채팅 17:12</span>, 2024년 크리스마스 댄스 경연대회에서 1등 수상, <span class=\"timestamp\"> 2024.12.14 1:37:24</span>",
-    "image": "Christine Kate.jpg"
+    "image": "Christine Kate.jpg",
+    "gallery": []
   },
   {
     "no": 61,
@@ -487,7 +549,8 @@ const people = [
     "ko": "시프리아노 F. 누녜스",
     "displayName": "Cipriano F. Nuñez 시프리아노 F. 누녜스",
     "note": "존 다렐의 할아버지, 1962년 8월 13일생으로 2021년 1월 16일 사망, <span class=\"timestamp\">정주행 2021.01.19 00:24</span>",
-    "image": "Cipriano F. Nuñez.jpg"
+    "image": "Cipriano F. Nuñez.jpg",
+    "gallery": []
   },
   {
     "no": 62,
@@ -495,7 +558,8 @@ const people = [
     "ko": "씨제이",
     "displayName": "CJ 씨제이",
     "note": "께까이의 오빠, <span class=\"timestamp\"> 2025.05.18 1:00:16</span>",
-    "image": "CJ.jpg"
+    "image": "CJ.jpg",
+    "gallery": []
   },
   {
     "no": 63,
@@ -503,7 +567,8 @@ const people = [
     "ko": "씨제이",
     "displayName": "CJ 씨제이",
     "note": "여자 애쉴리의 남동생, 2021년 어린이 크리스마스 파티 댄스 경연대회 1등 수상, 상금은 1등 3500페소 / 2등 2500페소 / 3등 1500페소 / 참가상 500페소, <span class=\"timestamp\">정주행 2021.12.22 19:51</span>, <span class=\"timestamp\"> 2024.05.04 채팅 40:38</span>",
-    "image": "CJ-2.jpg"
+    "image": "CJ-2.jpg",
+    "gallery": []
   },
   {
     "no": 64,
@@ -511,7 +576,8 @@ const people = [
     "ko": "콜린 N. 모라",
     "displayName": "Colin N. mora 콜린 N. 모라",
     "note": "니콜의 첫째 여동생, <span class=\"timestamp\"> 2026.02.15 48:13</span>, 생일은 1월 6일, <span class=\"timestamp\"> 2026.06.07 48:25</span>",
-    "image": "Colin N. mora.jpg"
+    "image": "Colin N. mora.jpg",
+    "gallery": []
   },
   {
     "no": 65,
@@ -519,7 +585,8 @@ const people = [
     "ko": "크리사",
     "displayName": "Crissa 크리사",
     "note": "세 자매 중에서 첫째인 여자아이, <span class=\"timestamp\"> 2024.12.14 13:00</span>",
-    "image": "Crissa.jpg"
+    "image": "Crissa.jpg",
+    "gallery": []
   },
   {
     "no": 66,
@@ -527,7 +594,8 @@ const people = [
     "ko": "크리스탈 조이 V. 아카드",
     "displayName": "Crystal Joy V. Accad 크리스탈 조이 V. 아카드",
     "note": "실라마리의 첫째 여동생이자 코리아 빌딩 공부방 소속 학생이자 선생님, <span class=\"timestamp\">정주행 2021.11.10 가정방문 2부 10:53</span>, 생일은 2월 1일, <span class=\"timestamp\"> 2025.02.01 05:28</span>",
-    "image": "Crystal Joy V. Accad.jpg"
+    "image": "Crystal Joy V. Accad.jpg",
+    "gallery": []
   },
   {
     "no": 67,
@@ -535,7 +603,8 @@ const people = [
     "ko": "사이로스",
     "displayName": "Cyrus 사이로스",
     "note": "별명이 '떼쟁이'인 프린이의 첫째 남동생, 영어식 발음은 '사이러스'지만 필리핀식 발음은 '사이로스', <span class=\"timestamp\"> 2025.03.02 36:44</span>",
-    "image": "Cyrus.jpg"
+    "image": "Cyrus.jpg",
+    "gallery": []
   },
   {
     "no": 68,
@@ -543,7 +612,8 @@ const people = [
     "ko": "달리",
     "displayName": "Dali 달리",
     "note": "무마이의 할머니, <span class=\"timestamp\">정주행 2020.02.22 15:58</span>",
-    "image": "Dali.jpg"
+    "image": "Dali.jpg",
+    "gallery": []
   },
   {
     "no": 69,
@@ -551,7 +621,8 @@ const people = [
     "ko": "당",
     "displayName": "Dang 당",
     "note": "Barangay Secretary 바랑가이의 행정 담당 서기, <span class=\"timestamp\"> 2020.02.11 08:57</span>",
-    "image": "Dang.jpg"
+    "image": "Dang.jpg",
+    "gallery": []
   },
   {
     "no": 70,
@@ -559,7 +630,8 @@ const people = [
     "ko": "다니카 S. 도길료",
     "displayName": "Danica S. Dogillo 다니카 S. 도길료",
     "note": "초창기 코리아 빌딩 공부방 소속 학생이었으나 이사 갔다, <span class=\"timestamp\">정주행 2020.07.11 11:02</span>",
-    "image": "Danica S. Dogillo.jpg"
+    "image": "Danica S. Dogillo.jpg",
+    "gallery": []
   },
   {
     "no": 71,
@@ -567,7 +639,8 @@ const people = [
     "ko": "데이브",
     "displayName": "Dave 데이브",
     "note": "시험문제 빵점 맞아 코리아 빌딩 학생이 되지 못한 아떼 마리의 아들, <span class=\"timestamp\">정주행 2020.06.27 13:56</span>",
-    "image": "Dave.jpg"
+    "image": "Dave.jpg",
+    "gallery": []
   },
   {
     "no": 72,
@@ -575,7 +648,8 @@ const people = [
     "ko": "다이아나",
     "displayName": "Diana 다이아나",
     "note": "일명 '말하지 않는 신기한 아이', 2026년 4세, <span class=\"timestamp\"> 2026.03.01 57:41</span>",
-    "image": "Diana.jpg"
+    "image": "Diana.jpg",
+    "gallery": []
   },
   {
     "no": 73,
@@ -583,7 +657,8 @@ const people = [
     "ko": "디제이 브라일",
     "displayName": "DJ Bryle 디제이 브라일",
     "note": "두 눈을 감고 인사하는 남자아이, <span class=\"timestamp\"> 2023.05.21 14:51</span>, <span class=\"timestamp\"> 2024.12.14 56:12</span>",
-    "image": "DJ Bryle.jpg"
+    "image": "DJ Bryle.jpg",
+    "gallery": []
   },
   {
     "no": 74,
@@ -591,7 +666,8 @@ const people = [
     "ko": "돌로레스 빌라산",
     "displayName": "Dolores Villasan 돌로레스 빌라산",
     "note": "조이의 할머니, <span class=\"timestamp\">정주행 2021.11.10 가정방문 2부 15:48</span>",
-    "image": "Dolores Villasan.jpg"
+    "image": "Dolores Villasan.jpg",
+    "gallery": []
   },
   {
     "no": 75,
@@ -599,7 +675,8 @@ const people = [
     "ko": "도밍고 G. 가빈",
     "displayName": "Domingo G. Garvin 도밍고 G. 가빈",
     "note": "자존심이 강한 오른팔이 없는 외팔이 빠작 기사, 1968년 9월 8일생, 평소에 신장이 안 좋고 당뇨로 다리가 부었는데 매일 술을 마시다 2026년 3월 14일 갑자기 사망, <span class=\"timestamp\"> 2026.03.14 29:42</span>",
-    "image": "Domingo G. Garvin.jpg"
+    "image": "Domingo G. Garvin.jpg",
+    "gallery": []
   },
   {
     "no": 76,
@@ -607,7 +684,8 @@ const people = [
     "ko": "동민",
     "displayName": "Dongmin 동민",
     "note": "메리안이 길에서 주워온 치즈색 수컷 고양이로 가라 후원자의 이름을 붙였다, <span class=\"timestamp\">정주행 2025.10.28 04:49</span>",
-    "image": "Dongmin.jpg"
+    "image": "Dongmin.jpg",
+    "gallery": []
   },
   {
     "no": 77,
@@ -615,7 +693,8 @@ const people = [
     "ko": "이디 보이 A. 보티카리오",
     "displayName": "Eddie Boy A. Boticario 이디 보이 A. 보티카리오",
     "note": "일명 이보이, <span class=\"timestamp\"> 2022.04.23 19:50</span>",
-    "image": "Eddie Boy A. Boticario.jpg"
+    "image": "Eddie Boy A. Boticario.jpg",
+    "gallery": []
   },
   {
     "no": 78,
@@ -623,7 +702,8 @@ const people = [
     "ko": "엘레나 또딜",
     "displayName": "Elena Todil 엘레나 또딜",
     "note": "크리스마스 시니어 파티에서 500페소 가치의 상품권에 당첨된 할머니, <span class=\"timestamp\">정주행 2019.12.20 09:17</span>",
-    "image": "Elena Todil.jpg"
+    "image": "Elena Todil.jpg",
+    "gallery": []
   },
   {
     "no": 79,
@@ -631,7 +711,8 @@ const people = [
     "ko": "엘라",
     "displayName": "Ella 엘라",
     "note": "프린세스의 여동생, <span class=\"timestamp\"> 2025.07.05 10:15</span>",
-    "image": "Ella.jpg"
+    "image": "Ella.jpg",
+    "gallery": []
   },
   {
     "no": 80,
@@ -639,7 +720,8 @@ const people = [
     "ko": "엘라 C. 로하",
     "displayName": "Ella C. Roja 엘라 C. 로하",
     "note": "윙크공주, <span class=\"timestamp\">정주행 2020.10.22 10:49</span>",
-    "image": "Ella C. Roja.jpg"
+    "image": "Ella C. Roja.jpg",
+    "gallery": []
   },
   {
     "no": 81,
@@ -647,7 +729,8 @@ const people = [
     "ko": "엘리아나 미 베사나",
     "displayName": "Elliana Mae Besana 엘리아나 미 베사나",
     "note": "리안의 친언니인 아나미의 풀네임인 듯, 유튜브 채널 이름이 Anamie Flores라고 써 있고 라이브 채팅 메시지를 남긴 적이 있다, @EllianamaeBesana: ​​annyeonghaseyo sir jerry~ 안녕하세요 제리님, <span class=\"timestamp\"> 2024.08.10 채팅 48:09</span>",
-    "image": "Elliana Mae Besana.jpg"
+    "image": "Elliana Mae Besana.jpg",
+    "gallery": []
   },
   {
     "no": 82,
@@ -655,7 +738,8 @@ const people = [
     "ko": "엘비스 라야 키돌",
     "displayName": "Elvis Raya Quidol 엘비스 라야 키돌",
     "note": "싱잉 콘테스트 챔피언의 아버지, 2021년 7월 29일 48세에 사망, <span class=\"timestamp\">정주행 2021.08.03 07:32</span>",
-    "image": "Elvis Raya Quidol.jpg"
+    "image": "Elvis Raya Quidol.jpg",
+    "gallery": []
   },
   {
     "no": 83,
@@ -663,7 +747,8 @@ const people = [
     "ko": "에멜리아나 A. 다클란",
     "displayName": "Emeliana A. Daclan 에멜리아나 A. 다클란",
     "note": "자나이카의 여동생, '미야나'라고도 불린다, <span class=\"timestamp\"> 2024.12.14 51:40</span>, <span class=\"timestamp\"> 2025.12.06 36:20</span>",
-    "image": "Emeliana A. Daclan.jpg"
+    "image": "Emeliana A. Daclan.jpg",
+    "gallery": []
   },
   {
     "no": 84,
@@ -671,7 +756,8 @@ const people = [
     "ko": "엠빠이 멘도자",
     "displayName": "Empay Mendoza 엠빠이 멘도자",
     "note": "2026년 8세, 돈맛을 알아버린 멍멍이 타잔의 주인, <span class=\"timestamp\"> 2024.08.17 1:16:50</span>, <span class=\"timestamp\"> 2024.12.14 05:03</span>",
-    "image": "Empay Mendoza.jpg"
+    "image": "Empay Mendoza.jpg",
+    "gallery": []
   },
   {
     "no": 85,
@@ -679,7 +765,8 @@ const people = [
     "ko": "에리치 케이트 S. 데 헤수스",
     "displayName": "Erich Khate S. De Jesus 에리치 케이트 S. 데 헤수스",
     "note": "별명은 '주방이', 에리치의 한국 아빠인 요한아빠님이 \"​​에리치 사진 있는 박스 중 제일 큰 건 주방용품입니다.\"라고 썼으나 제리님의 반응이 없자 \"에리치 사진 붙은 것 중 제일 큰 것은 주방용품인데 공부방에서 쓰라고 하시네요.\"라는 의미의 문장을 구독자들이 51번 썼던 적이 있다. 하지만 제리님의 핸드폰 채팅창이 멈춰 있어 구독자들과 실시간 소통이 안 돼 해프닝이 벌어졌었는데 이를 두고 '주방대첩'이라 부른다, <span class=\"timestamp\"> 2021.04.17 채팅 31:28</span>",
-    "image": "Erich Khate S. De Jesus.jpg"
+    "image": "Erich Khate S. De Jesus.jpg",
+    "gallery": []
   },
   {
     "no": 86,
@@ -687,7 +774,8 @@ const people = [
     "ko": "에리카 안제이 S. 데 헤수스",
     "displayName": "Erickah Anjhey S. De Jesus 에리카 안제이 S. 데 헤수스",
     "note": "에리치의 친언니, <span class=\"timestamp\"> 2024.06.15 06:49</span>",
-    "image": "Erickah Anjhey S. De Jesus.jpg"
+    "image": "Erickah Anjhey S. De Jesus.jpg",
+    "gallery": []
   },
   {
     "no": 87,
@@ -695,7 +783,8 @@ const people = [
     "ko": "얼리토 D. 루비스",
     "displayName": "Erlito D. Rubis 얼리토 D. 루비스",
     "note": "라이사의 둘째 큰아버지, 1972년 1월 17일생으로 2023년 10월 31일 심장마비로 사망, <span class=\"timestamp\">정주행 2023.11.02 01:33</span>",
-    "image": "Erlito D. Rubis.jpg"
+    "image": "Erlito D. Rubis.jpg",
+    "gallery": []
   },
   {
     "no": 88,
@@ -703,7 +792,8 @@ const people = [
     "ko": "이비아나",
     "displayName": "Eviana 이비아나",
     "note": "리안의 여동생, 필리핀 발음은 '에'를 '이'라고도 발음하기 때문에 제리님이 이비아나라고 발음하시지만 리안의 한국 아빠인 딸기아빠님이 에비아나라고 발음하므로 이름이 Iviana보다 Eviana일 확률이 더 높다, @cineart7_딸기아빠: 이제 걷나보네요. 에비아나, <span class=\"timestamp\"> 2025.03.02 채팅 43:47</span>",
-    "image": "Eviana.jpg"
+    "image": "Eviana.jpg",
+    "gallery": []
   },
   {
     "no": 89,
@@ -711,7 +801,8 @@ const people = [
     "ko": "게일",
     "displayName": "Gail 게일",
     "note": "단발머리 소녀, <span class=\"timestamp\"> 2025.02.01 25:52</span>, 명찰 목걸이, <span class=\"timestamp\"> 2024.12.14 1:02:37</span>",
-    "image": "Gail.jpg"
+    "image": "Gail.jpg",
+    "gallery": []
   },
   {
     "no": 90,
@@ -719,7 +810,8 @@ const people = [
     "ko": "제럴드 N. 빌라루엘",
     "displayName": "Gerald N. Villaruel 제럴드 N. 빌라루엘",
     "note": "로날린의 오빠, <span class=\"timestamp\">정주행 2020.07.11 11:01</span>, 실시간 라이브 채팅에 @GeraldVillaruel이라는 아이디로 'Wow'라는 채팅 메시지를 남긴 적이 있다, <span class=\"timestamp\"> 2025.06.07 19:44</span>",
-    "image": "Gerald N. Villaruel.jpg"
+    "image": "Gerald N. Villaruel.jpg",
+    "gallery": []
   },
   {
     "no": 91,
@@ -727,7 +819,8 @@ const people = [
     "ko": "아나 킴",
     "displayName": "Hannah Kim 아나 킴",
     "note": "댄스 경연대회에 참가하면 무조건 1등을 하지만 다른 곳으로 이사 갔다. 줄여서 '아나'라 부른다, 2020년 초3, <span class=\"timestamp\">정주행 2020.09.15 07:23</span>",
-    "image": "Hannah Kim.jpg"
+    "image": "Hannah Kim.jpg",
+    "gallery": []
   },
   {
     "no": 92,
@@ -735,7 +828,8 @@ const people = [
     "ko": "아이스크림 꾸야",
     "displayName": "Ice Cream Kuya 아이스크림 꾸야",
     "note": "이동식 아이스크림 통을 가지고 바랑가이 157에 와서 한 번에 200명~300명분을 파는 행운아, <span class=\"timestamp\"> 2025.05.03 00:51</span>",
-    "image": "Ice Cream Kuya.jpg"
+    "image": "Ice Cream Kuya.jpg",
+    "gallery": []
   },
   {
     "no": 93,
@@ -743,7 +837,8 @@ const people = [
     "ko": "이멜다 칼릭스토-루비아노",
     "displayName": "Imelda Calixto-Rubiano 이멜다 칼릭스토-루비아노",
     "note": "제리님과 만난 적이 있는 Pasay City 파사이시티 시장, <span class=\"timestamp\">정주행 2019.12.17 08:10</span>, 2019년 시장 당선, 2022년 재선 성공, 2025년 3선 성공, <span class=\"timestamp\">정주행 2022.05.11 11:45</span>",
-    "image": "Imelda Calixto-Rubiano.jpg"
+    "image": "Imelda Calixto-Rubiano.jpg",
+    "gallery": []
   },
   {
     "no": 94,
@@ -751,7 +846,8 @@ const people = [
     "ko": "인다이",
     "displayName": "Inday 인다이",
     "note": "귀여운 단발머리 여자아이, <span class=\"timestamp\"> 2024.05.04 32:10</span>",
-    "image": "Inday.jpg"
+    "image": "Inday.jpg",
+    "gallery": []
   },
   {
     "no": 95,
@@ -759,7 +855,8 @@ const people = [
     "ko": "아이반",
     "displayName": "Ivan 아이반",
     "note": "께까이의 첫째 남동생, 제리님에게 'Daddy' 다디라고 부른다, <span class=\"timestamp\"> 2025.03.08 44:30</span>",
-    "image": "Ivan.jpg"
+    "image": "Ivan.jpg",
+    "gallery": []
   },
   {
     "no": 96,
@@ -767,7 +864,8 @@ const people = [
     "ko": "아이버슨 H. 롱콥",
     "displayName": "Iverson H. Longcop 아이버슨 H. 롱콥",
     "note": "코리아 빌딩 공부방 소속 학생이자 크리스 알렘과 사촌지간이지만 이사 갔다, 생일은 5월 10일, <span class=\"timestamp\"> 2021.04.24 2부_졸리비 채팅 08:38</span>, <span class=\"timestamp\">정주행 2021.11.10 가정방문 2부 10:53</span>",
-    "image": "Iverson H. Longcop.jpg"
+    "image": "Iverson H. Longcop.jpg",
+    "gallery": []
   },
   {
     "no": 97,
@@ -775,7 +873,8 @@ const people = [
     "ko": "작 바카이",
     "displayName": "Jack Baccay 작 바카이",
     "note": "제리님의 최고의 조력자, 성실하고 부지런하며 맡은 바 일에 최선을 다하는 스타일, 생일은 12월 1일, <span class=\"timestamp\"> 2024.12.01 09:19</span>",
-    "image": "Jack Baccay.jpg"
+    "image": "Jack Baccay.jpg",
+    "gallery": []
   },
   {
     "no": 98,
@@ -783,7 +882,8 @@ const people = [
     "ko": "자키루 카빈토이",
     "displayName": "Jackielou Cabintoy 자키루 카빈토이",
     "note": "자키루 선생님, <span class=\"timestamp\"> 2021.05.17 01:26</span>",
-    "image": "Jackielou Cabintoy.jpg"
+    "image": "Jackielou Cabintoy.jpg",
+    "gallery": []
   },
   {
     "no": 99,
@@ -791,7 +891,8 @@ const people = [
     "ko": "자클린 암팔라요한",
     "displayName": "Jackielyn Ampalayohan 자클린 암팔라요한",
     "note": "그림을 잘 그리는 크루, 2019년 31세, 2019년 12월 03일 정주행 동영상에 댓글을 달았고, 2020년 12월 17일 정주행 동영상에도 댓글을 달았다, @Jackyampalayohan926: Thank you sir Jerry, it was really a good experience and we enjoyed it so much.Thank you everyone☺️. 제리 선생님 감사합니다. 정말 좋은 경험이었고 저희는 아주 즐겁게 보냈습니다. 모두에게 감사합니다, Jackielyn은 프랑스어 Jacqueline을 현대식으로 변형한 이름으로 줄여서 Jacky라 부른다, <span class=\"timestamp\">정주행 2021.12.27 06:41</span>",
-    "image": "Jackielyn Ampalayohan.jpg"
+    "image": "Jackielyn Ampalayohan.jpg",
+    "gallery": []
   },
   {
     "no": 100,
@@ -799,7 +900,8 @@ const people = [
     "ko": "제임스",
     "displayName": "James 제임스",
     "note": "니콜의 사촌 동생, <span class=\"timestamp\"> 2026.02.15 48:32</span>, 생일은 8월 17일, <span class=\"timestamp\"> 2026.06.07 48:37</span>",
-    "image": "James.jpg"
+    "image": "James.jpg",
+    "gallery": []
   },
   {
     "no": 101,
@@ -807,7 +909,8 @@ const people = [
     "ko": "잠잠 C. 플로레스",
     "displayName": "Jamjam C. Flores 잠잠 C. 플로레스",
     "note": "바랑가이 157의 캡틴 레이날도 P. 플로레스가 큰아버지, <span class=\"timestamp\"> 2026.03.15 54:53</span>",
-    "image": "Jamjam C. Flores.jpg"
+    "image": "Jamjam C. Flores.jpg",
+    "gallery": []
   },
   {
     "no": 102,
@@ -815,7 +918,8 @@ const people = [
     "ko": "자나이카 A. 다클란",
     "displayName": "Janaica A. Daclan 자나이카 A. 다클란",
     "note": "제인의 첫째 여동생, <span class=\"timestamp\"> 2020.11.21 공부방 시험 2부 18:36</span>",
-    "image": "Janaica A. Daclan.jpg"
+    "image": "Janaica A. Daclan.jpg",
+    "gallery": []
   },
   {
     "no": 103,
@@ -823,7 +927,8 @@ const people = [
     "ko": "제인 펄 A. 다클란",
     "displayName": "Jane Pearl A. Daclan 제인 펄 A. 다클란",
     "note": "자나이카의 언니, 생일은 12월 14일, <span class=\"timestamp\"> 2024.12.14 1:03:06</span>, 2024년 크리스마스 댄스 경연대회에서 1등 수상, <span class=\"timestamp\"> 2024.12.14 1:37:24</span>",
-    "image": "Jane Pearl A. Daclan.jpg"
+    "image": "Jane Pearl A. Daclan.jpg",
+    "gallery": []
   },
   {
     "no": 104,
@@ -831,7 +936,8 @@ const people = [
     "ko": "자넬라",
     "displayName": "Janella 자넬라",
     "note": "2026년 중1, <span class=\"timestamp\"> 2026.03.28 34:58</span>",
-    "image": "Janella.jpg"
+    "image": "Janella.jpg",
+    "gallery": []
   },
   {
     "no": 105,
@@ -839,7 +945,8 @@ const people = [
     "ko": "자닌",
     "displayName": "Janine 자닌",
     "note": "댄싱 남매 중 여동생, <span class=\"timestamp\">정주행 2019.12.24 06:02</span>",
-    "image": "Janine.jpg"
+    "image": "Janine.jpg",
+    "gallery": []
   },
   {
     "no": 106,
@@ -847,7 +954,8 @@ const people = [
     "ko": "자펫",
     "displayName": "Japhet 자펫",
     "note": "Siomai 시오마이를 파는 소년, 2020년 13세 중2, <span class=\"timestamp\">정주행 2020.01.19 01:26</span>",
-    "image": "Japhet.jpg"
+    "image": "Japhet.jpg",
+    "gallery": []
   },
   {
     "no": 107,
@@ -855,7 +963,8 @@ const people = [
     "ko": "자스민",
     "displayName": "Jasmine 자스민",
     "note": "사리사리 스토어에서 밤에는 장사하고 아침에는 자는 소녀, <span class=\"timestamp\"> 2021.04.18 06:48</span>",
-    "image": "Jasmine.jpg"
+    "image": "Jasmine.jpg",
+    "gallery": []
   },
   {
     "no": 108,
@@ -863,7 +972,8 @@ const people = [
     "ko": "자스퍼",
     "displayName": "Jasper 자스퍼",
     "note": "자라의 첫째 남동생, <span class=\"timestamp\">정주행 2021.06.24 05:00</span>",
-    "image": "Jasper.jpg"
+    "image": "Jasper.jpg",
+    "gallery": []
   },
   {
     "no": 109,
@@ -871,7 +981,8 @@ const people = [
     "ko": "자스비나",
     "displayName": "Jassvina 자스비나",
     "note": "손제이의 누나, 2022년 9세 초4, <span class=\"timestamp\">정주행 2022.09.20 04:19</span>, 2024년 11세이고 생일은 4월 8일, <span class=\"timestamp\">정주행 2024.04.06 08:08</span>",
-    "image": "Jassvina.jpg"
+    "image": "Jassvina.jpg",
+    "gallery": []
   },
   {
     "no": 110,
@@ -879,7 +990,8 @@ const people = [
     "ko": "제이슨",
     "displayName": "Jayson 제이슨",
     "note": "코리아 빌딩 공부방 소속 남학생이며 다니카와 같은 학급이다, <span class=\"timestamp\">정주행 2020.10.10 04:44</span>",
-    "image": "Jayson.jpg"
+    "image": "Jayson.jpg",
+    "gallery": []
   },
   {
     "no": 111,
@@ -887,7 +999,8 @@ const people = [
     "ko": "제이슨",
     "displayName": "Jayson 제이슨",
     "note": "바랑가이 157에 사는 남자아이, <span class=\"timestamp\"> 2024.12.14 1:21:56</span>",
-    "image": "Jayson-2.jpg"
+    "image": "Jayson-2.jpg",
+    "gallery": []
   },
   {
     "no": 112,
@@ -895,7 +1008,8 @@ const people = [
     "ko": "제이 C. 로하",
     "displayName": "Je C. Roja 제이 C. 로하",
     "note": "의좋은 남매 중 오빠, <span class=\"timestamp\">정주행 2020.10.22 10:47</span>",
-    "image": "Je C. Roja.jpg"
+    "image": "Je C. Roja.jpg",
+    "gallery": []
   },
   {
     "no": 113,
@@ -903,7 +1017,8 @@ const people = [
     "ko": "제고",
     "displayName": "Jego 제고",
     "note": "질리언의 친오빠, 2026년 17세, <span class=\"timestamp\"> 2026.03.01 40:55</span>",
-    "image": "Jego.jpg"
+    "image": "Jego.jpg",
+    "gallery": []
   },
   {
     "no": 114,
@@ -911,7 +1026,8 @@ const people = [
     "ko": "제나이",
     "displayName": "Jenai 제나이",
     "note": "일명 '먹고는 싶은데 키가 커서 슬픈 사슴'이라 불린다, <span class=\"timestamp\">정주행 2020.03.06 08:22</span>, 리카의 친언니, <span class=\"timestamp\">정주행 2021.12.23 14:18</span>",
-    "image": "Jenai.jpg"
+    "image": "Jenai.jpg",
+    "gallery": []
   },
   {
     "no": 115,
@@ -919,7 +1035,8 @@ const people = [
     "ko": "제레벨",
     "displayName": "Jerebel 제레벨",
     "note": "메리안의 언니, <span class=\"timestamp\">정주행 2024.03.14 01:49</span>",
-    "image": "Jerebel.jpg"
+    "image": "Jerebel.jpg",
+    "gallery": []
   },
   {
     "no": 116,
@@ -927,7 +1044,8 @@ const people = [
     "ko": "제리코",
     "displayName": "Jericho 제리코",
     "note": "자라의 둘째 남동생, 알키샤 이전에 제리님의 베스트 프렌드였다, <span class=\"timestamp\">정주행 2020.02.13 07:46</span>",
-    "image": "Jericho.jpg"
+    "image": "Jericho.jpg",
+    "gallery": []
   },
   {
     "no": 117,
@@ -935,7 +1053,8 @@ const people = [
     "ko": "제리코",
     "displayName": "Jericho 제리코",
     "note": "작 바카이의 둘째 아들, <span class=\"timestamp\"> 2021.06.19 51:23</span>",
-    "image": "Jericho-2.jpg"
+    "image": "Jericho-2.jpg",
+    "gallery": []
   },
   {
     "no": 118,
@@ -943,7 +1062,8 @@ const people = [
     "ko": "제롬",
     "displayName": "Jerome 제롬",
     "note": "로즈벳의 남편, <span class=\"timestamp\">정주행 2019.12.10 00:23</span>",
-    "image": "Jerome.jpg"
+    "image": "Jerome.jpg",
+    "gallery": []
   },
   {
     "no": 119,
@@ -951,7 +1071,8 @@ const people = [
     "ko": "제롬",
     "displayName": "Jerome 제롬",
     "note": "신애의 사촌 오빠, <span class=\"timestamp\">정주행 2025.11.14 12:16</span>",
-    "image": "Jerome-2.jpg"
+    "image": "Jerome-2.jpg",
+    "gallery": []
   },
   {
     "no": 120,
@@ -959,7 +1080,8 @@ const people = [
     "ko": "제싸",
     "displayName": "Jessa 제싸",
     "note": "한국인과 결혼한 필리핀 유튜버이자 아이들에게 인기가 많은 바랑가이 157의 1일 나눔 봉사자, <span class=\"timestamp\">정주행 2020.03.01</span>",
-    "image": "Jessa.jpg"
+    "image": "Jessa.jpg",
+    "gallery": []
   },
   {
     "no": 121,
@@ -967,7 +1089,8 @@ const people = [
     "ko": "제시 아줄",
     "displayName": "Jessie Azul 제시 아줄",
     "note": "쉐인과 샨텔의 외할머니이며 2023년 53세, <span class=\"timestamp\"> 2023.04.02 15:39</span>, 가끔 라이브 채팅에 글을 남긴다, @JessieAzul-d9o: ​​thank you sir jerry, to give food and money to my grand child shane & shantel GOD BLESS YOU more. 저희 손주 쉐인과 샨텔에게 음식과 돈을 주셔서 감사합니다, 제리님. 하나님의 더 큰 축복이 함께하시길 바랍니다, <span class=\"timestamp\"> 2026.01.10 채팅 36:10</span>",
-    "image": "Jessie Azul.jpg"
+    "image": "Jessie Azul.jpg",
+    "gallery": []
   },
   {
     "no": 122,
@@ -975,7 +1098,8 @@ const people = [
     "ko": "제트릴 리노메론",
     "displayName": "Jetreil Renomeron 제트릴 리노메론",
     "note": "'제트릴'을 줄여서 '젯'이라고 부른다, 생일은 6월 30일, <span class=\"timestamp\"> 2023.07.16 42:09</span>, <span class=\"timestamp\">정주행 2023.07.18 메리안 고향방문기 1편 19:14</span>, <span class=\"timestamp\"> 2025.01.19 40:31</span>",
-    "image": "Jetreil Renomeron.jpg"
+    "image": "Jetreil Renomeron.jpg",
+    "gallery": []
   },
   {
     "no": 123,
@@ -983,7 +1107,8 @@ const people = [
     "ko": "즈웰",
     "displayName": "Jewel 즈웰",
     "note": "니콜의 사촌 큰언니, <span class=\"timestamp\"> 2024.05.05 35:31</span>",
-    "image": "Jewel.jpg"
+    "image": "Jewel.jpg",
+    "gallery": []
   },
   {
     "no": 124,
@@ -991,7 +1116,8 @@ const people = [
     "ko": "자라 미 마나타드",
     "displayName": "Jhara Mae Manatad 자라 미 마나타드",
     "note": "코리아 빌딩의 선생님들 중에서 가장 힘이 세어 궂은 일을 도맡아 했던 선생님, <span class=\"timestamp\">정주행 2021.06.24 00:37</span>",
-    "image": "Jhara Mae Manatad.jpg"
+    "image": "Jhara Mae Manatad.jpg",
+    "gallery": []
   },
   {
     "no": 125,
@@ -999,7 +1125,8 @@ const people = [
     "ko": "질 카실",
     "displayName": "Jill Casil 질 카실",
     "note": "아이디는 ynachelle, <span class=\"timestamp\"> 2025.03.08 09:09</span>",
-    "image": "Jill Casil.jpg"
+    "image": "Jill Casil.jpg",
+    "gallery": []
   },
   {
     "no": 126,
@@ -1007,7 +1134,8 @@ const people = [
     "ko": "질리언",
     "displayName": "Jillian 질리언",
     "note": "먹깨비 질리언과 이름만 같은 꼬마 여자아이, 산체스배 댄스 콘테스트에 참가 신청했으나 순번을 놓쳐 대회 포기, <span class=\"timestamp\"> 2026.06.05 36:29</span>",
-    "image": "Jillian.jpg"
+    "image": "Jillian.jpg",
+    "gallery": []
   },
   {
     "no": 127,
@@ -1015,7 +1143,8 @@ const people = [
     "ko": "질리언 D. 길베로",
     "displayName": "Jillian D. Gilbero 질리언 D. 길베로",
     "note": "코리아 빌딩 공부방 소속 먹깨비 1호, 착하고 인사성이 밝다, <span class=\"timestamp\">정주행 2020.07.11 11:17</span>, 출생 연월일은 2011년 1월 4일, <span class=\"timestamp\"> 2024.01.13 채팅 24:00</span>",
-    "image": "Jillian D. Gilbero.jpg"
+    "image": "Jillian D. Gilbero.jpg",
+    "gallery": []
   },
   {
     "no": 128,
@@ -1023,7 +1152,8 @@ const people = [
     "ko": "질리언 로즈 C. 라노",
     "displayName": "Jillian Rose C. Llano 질리언 로즈 C. 라노",
     "note": "아나 킴의 여동생, 2020년 초2, <span class=\"timestamp\">정주행 2020.09.15 07:23</span>",
-    "image": "Jillian Rose C. Llano.jpg"
+    "image": "Jillian Rose C. Llano.jpg",
+    "gallery": []
   },
   {
     "no": 129,
@@ -1031,7 +1161,8 @@ const people = [
     "ko": "징징",
     "displayName": "Jingjing 징징",
     "note": "머시 라브로의 딸, 제리님에게 아빠라 부른다, <span class=\"timestamp\">정주행 2020.01.29 03:40</span>",
-    "image": "Jingjing.jpg"
+    "image": "Jingjing.jpg",
+    "gallery": []
   },
   {
     "no": 130,
@@ -1039,7 +1170,8 @@ const people = [
     "ko": "진진",
     "displayName": "Jinjin 진진",
     "note": "산체스배 댄스 콘테스트에 테아와 한 팀으로 참가한 여자아이, <span class=\"timestamp\"> 2026.06.05 25:14</span>",
-    "image": "Jinjin.jpg"
+    "image": "Jinjin.jpg",
+    "gallery": []
   },
   {
     "no": 131,
@@ -1047,7 +1179,8 @@ const people = [
     "ko": "조안 H. 플로레스",
     "displayName": "Joan H. Flores 조안 H. 플로레스",
     "note": "바랑가이 157 캡틴의 부인, 인정이 많아 피딩 프로그램에서 남은 음식을 PWD 장애인에게 나눠주고 그래도 남으면 국가로부터 도움을 전혀 받지 못하는 무허가 도로변 건물에 사는 사람들과 바나나마을이라 불리는 곳에 사는 사람들에게 나눠주지만 마약판매 단속 강화에 앙심을 품은 사람이 쏜 총에 가슴과 머리를 맞아 2020년 11월 30일 사망, <span class=\"timestamp\">정주행 2020.12.03 01:10</span>",
-    "image": "Joan H. Flores.jpg"
+    "image": "Joan H. Flores.jpg",
+    "gallery": []
   },
   {
     "no": 132,
@@ -1055,7 +1188,8 @@ const people = [
     "ko": "호아킨",
     "displayName": "Joaquin 호아킨",
     "note": "가라가 친엄마가 살고 있는 필리핀 Eastern Visayas 동비사야스에 있는 Samar 사마르에서 채팅을 한 적이 있다, @Joaquin-u6l5u: ​​hi daddyjack 하이 다디 작, <span class=\"timestamp\"> 2025.05.17 44:21</span>",
-    "image": "Joaquin.jpg"
+    "image": "Joaquin.jpg",
+    "gallery": []
   },
   {
     "no": 133,
@@ -1063,7 +1197,8 @@ const people = [
     "ko": "조알 C. 마사마요르",
     "displayName": "Joar C. Masamayor 조알 C. 마사마요르",
     "note": "여성스러운 성격의 코리아 빌딩 공부방 소속 남학생이자 선생님, <span class=\"timestamp\"> 2025.01.18 45:29</span>",
-    "image": "Joar C. Masamayor.jpg"
+    "image": "Joar C. Masamayor.jpg",
+    "gallery": []
   },
   {
     "no": 134,
@@ -1071,7 +1206,8 @@ const people = [
     "ko": "조엘",
     "displayName": "Joel 조엘",
     "note": "바랑가이 157에 사는 시니어 할아버지, <span class=\"timestamp\"> 2026.07.05 06:15</span>",
-    "image": "Joel.jpg"
+    "image": "Joel.jpg",
+    "gallery": []
   },
   {
     "no": 135,
@@ -1079,7 +1215,8 @@ const people = [
     "ko": "요한",
     "displayName": "Johan 요한",
     "note": "스탄의 둘째 남동생, <span class=\"timestamp\"> 2024.12.01 1:10:26</span>",
-    "image": "Johan.jpg"
+    "image": "Johan.jpg",
+    "gallery": []
   },
   {
     "no": 136,
@@ -1087,7 +1224,8 @@ const people = [
     "ko": "존 다렐 N. 리오플로리도",
     "displayName": "John Darrel N. Rioflorido 존 다렐 N. 리오플로리도",
     "note": "코리아 빌딩 공부방 소속의 남학생, <span class=\"timestamp\">정주행 2020.07.11 10:13</span>, 라이사의 조카, <span class=\"timestamp\">정주행 2021.04.06 10:17</span>",
-    "image": "John Darrel N. Rioflorido.jpg"
+    "image": "John Darrel N. Rioflorido.jpg",
+    "gallery": []
   },
   {
     "no": 137,
@@ -1095,7 +1233,8 @@ const people = [
     "ko": "조슬린 마사마요르",
     "displayName": "Josileen Masamayor 조슬린 마사마요르",
     "note": "조알의 엄마, <span class=\"timestamp\">정주행 2021.11.10 가정방문 2부 23:42</span>",
-    "image": "Josileen Masamayor.jpg"
+    "image": "Josileen Masamayor.jpg",
+    "gallery": []
   },
   {
     "no": 138,
@@ -1103,7 +1242,8 @@ const people = [
     "ko": "조와",
     "displayName": "Jowa 조와",
     "note": "2026년 4월 8일 기준 9.88만 명의 구독자를 보유한 '조와부부 필리핀 JOWATV' 채널을 운영하는 유튜버, 바랑가이 157의 1일 나눔 봉사자, <span class=\"timestamp\">정주행 2020.03.03 01:46</span>",
-    "image": "Jowa.jpg"
+    "image": "Jowa.jpg",
+    "gallery": []
   },
   {
     "no": 139,
@@ -1111,7 +1251,8 @@ const people = [
     "ko": "조이 탐판",
     "displayName": "Joy Tampan 조이 탐판",
     "note": "꾸야 작의 2020년에 사망한 친구의 아내, <span class=\"timestamp\">정주행 2021.08.17 01:37</span>",
-    "image": "Joy Tampan.jpg"
+    "image": "Joy Tampan.jpg",
+    "gallery": []
   },
   {
     "no": 140,
@@ -1119,7 +1260,8 @@ const people = [
     "ko": "제이알",
     "displayName": "JR 제이알",
     "note": "징징의 아들, <span class=\"timestamp\"> 2024.07.13 1:44:36</span>",
-    "image": "JR.jpg"
+    "image": "JR.jpg",
+    "gallery": []
   },
   {
     "no": 141,
@@ -1127,7 +1269,8 @@ const people = [
     "ko": "후아나",
     "displayName": "Juana 후아나",
     "note": "산체스배 댄스 콘테스트에 참가 신청했으나 순번을 놓쳐 대회 포기, <span class=\"timestamp\"> 2026.06.05 37:16</span>",
-    "image": "no-image.jpg"
+    "image": "no-image.jpg",
+    "gallery": []
   },
   {
     "no": 142,
@@ -1135,7 +1278,8 @@ const people = [
     "ko": "쥬날린",
     "displayName": "Junalyn 쥬날린",
     "note": "눈이 예쁘고 인형 같은 외모의 여자아이, <span class=\"timestamp\"> 2023.10.07 39:18</span>",
-    "image": "Junalyn.jpg"
+    "image": "Junalyn.jpg",
+    "gallery": []
   },
   {
     "no": 143,
@@ -1143,7 +1287,8 @@ const people = [
     "ko": "저스틴",
     "displayName": "Justin 저스틴",
     "note": "신애의 사촌 오빠, <span class=\"timestamp\">정주행 2025.11.14 12:16</span>",
-    "image": "Justin.jpg"
+    "image": "Justin.jpg",
+    "gallery": []
   },
   {
     "no": 144,
@@ -1151,7 +1296,8 @@ const people = [
     "ko": "까가왓 디오스다도 F. 파벨라",
     "displayName": "Kagawad - Diosdado F. Fabella 까가왓 디오스다도 F. 파벨라",
     "note": "줄여서 Dado '다도'라고 하며 한국인에게는 '다두'로 들린다, 넘버원 까가왓, 미네랄 워터 가게 주인, <span class=\"timestamp\">정주행 2023.11.01 04:16</span>",
-    "image": "Kagawad - Diosdado F. Fabella.jpg"
+    "image": "Kagawad - Diosdado F. Fabella.jpg",
+    "gallery": []
   },
   {
     "no": 145,
@@ -1159,7 +1305,8 @@ const people = [
     "ko": "까가왓 지나 M. 탐판",
     "displayName": "Kagawad - Gina M. Tampan 까가왓 지나 M. 탐판",
     "note": "넘버쓰리 까가왓, 제리님과 동갑, <span class=\"timestamp\"> 2025.01.19 16:56</span>",
-    "image": "Kagawad - Gina M. Tampan.jpg"
+    "image": "Kagawad - Gina M. Tampan.jpg",
+    "gallery": []
   },
   {
     "no": 146,
@@ -1167,7 +1314,8 @@ const people = [
     "ko": "까가왓 라울 V. 에스킬로",
     "displayName": "Kagawad - Raul V. Esquillo 까가왓 라울 V. 에스킬로",
     "note": "별명은 'Coach' 코치, <span class=\"timestamp\">정주행 2023.11.01 05:14</span>",
-    "image": "Kagawad - Raul V. Esquillo.jpg"
+    "image": "Kagawad - Raul V. Esquillo.jpg",
+    "gallery": []
   },
   {
     "no": 147,
@@ -1175,7 +1323,8 @@ const people = [
     "ko": "까가왓 레굴로 A. 몬테스 주니어",
     "displayName": "Kagawad - Regulo A. Montes JR. 까가왓 레굴로 A. 몬테스 주니어",
     "note": "별명은 'Boyet' 보옛, <span class=\"timestamp\">정주행 2023.11.01 05:12</span>",
-    "image": "Kagawad - Regulo A. Montes JR..jpg"
+    "image": "Kagawad - Regulo A. Montes JR..jpg",
+    "gallery": []
   },
   {
     "no": 148,
@@ -1183,7 +1332,8 @@ const people = [
     "ko": "까가왓 또또",
     "displayName": "Kagawad - Toto 까가왓 또또",
     "note": "2023년과 2024년 크리스마스 시니어 파티 사회자, <span class=\"timestamp\"> 2024.12.15 00:02</span>",
-    "image": "Kagawad - Toto.jpg"
+    "image": "Kagawad - Toto.jpg",
+    "gallery": []
   },
   {
     "no": 149,
@@ -1191,7 +1341,8 @@ const people = [
     "ko": "까가왓 빌마 O. 오도넬",
     "displayName": "Kagawad - Vilma O. Odonel 까가왓 빌마 O. 오도넬",
     "note": "넘버투 까가왓, 약을 파는 범죄자들과의 마찰로 마약 판매 조직에서 척살령이 내려져 아무도 모르는 곳에서 숨어 산다, <span class=\"timestamp\"> 2021.06.19 48:30</span>",
-    "image": "Kagawad - Vilma O. Odonel.jpg"
+    "image": "Kagawad - Vilma O. Odonel.jpg",
+    "gallery": []
   },
   {
     "no": 150,
@@ -1199,7 +1350,8 @@ const people = [
     "ko": "케이트",
     "displayName": "Kate 케이트",
     "note": "항상 선글라스를 끼고 오는 오른쪽 눈 내사시인 소녀로 2026년 기준 7세, <span class=\"timestamp\"> 2026.06.07 24:56</span>",
-    "image": "Kate.jpg"
+    "image": "Kate.jpg",
+    "gallery": []
   },
   {
     "no": 151,
@@ -1207,7 +1359,8 @@ const people = [
     "ko": "캐서린",
     "displayName": "Katherine 캐서린",
     "note": "실라미의 친구, 바랑가이 165에서 핫도그 나눔 행사를 할 때 헬퍼로 참여, <span class=\"timestamp\">정주행 2024.03.26 09:51</span>",
-    "image": "Katherine.jpg"
+    "image": "Katherine.jpg",
+    "gallery": []
   },
   {
     "no": 152,
@@ -1215,7 +1368,8 @@ const people = [
     "ko": "까이엔",
     "displayName": "Kayen 까이엔",
     "note": "제리님 동네에 사는 여자아이, <span class=\"timestamp\"> 2026.07.11 26:28</span>",
-    "image": "Kayen.jpg"
+    "image": "Kayen.jpg",
+    "gallery": []
   },
   {
     "no": 153,
@@ -1223,7 +1377,8 @@ const people = [
     "ko": "켄지",
     "displayName": "Kenzie 켄지",
     "note": "실라미의 사촌 남동생, <span class=\"timestamp\">정주행 2020.08.22 09:45</span>",
-    "image": "Kenzie.jpg"
+    "image": "Kenzie.jpg",
+    "gallery": []
   },
   {
     "no": 154,
@@ -1231,7 +1386,8 @@ const people = [
     "ko": "케리",
     "displayName": "Kerry 케리",
     "note": "메리안이 길에서 주워온 치즈색 수컷 고양이로 리카 후원자의 이름을 붙였다, <span class=\"timestamp\">정주행 2025.10.28 08:53</span>",
-    "image": "Kerry.jpg"
+    "image": "Kerry.jpg",
+    "gallery": []
   },
   {
     "no": 155,
@@ -1239,7 +1395,8 @@ const people = [
     "ko": "케빈",
     "displayName": "Kevin 케빈",
     "note": "라이카의 남동생이자 뱀뱀의 남자친구, <span class=\"timestamp\"> 2024.06.02 35:59</span>",
-    "image": "Kevin.jpg"
+    "image": "Kevin.jpg",
+    "gallery": []
   },
   {
     "no": 156,
@@ -1247,7 +1404,8 @@ const people = [
     "ko": "케닉",
     "displayName": "Khenik 케닉",
     "note": "샤이카의 남동생, <span class=\"timestamp\">정주행 2021.11.10 가정방문 1부 13:54</span>, <span class=\"timestamp\"> 2024.12.14 1:33:15</span>",
-    "image": "Khenik.jpg"
+    "image": "Khenik.jpg",
+    "gallery": []
   },
   {
     "no": 157,
@@ -1255,7 +1413,8 @@ const people = [
     "ko": "키안드라",
     "displayName": "Kiandra 키안드라",
     "note": "별명 '댄싱퀸', <span class=\"timestamp\"> 2024.12.14 51:44</span>",
-    "image": "Kiandra.jpg"
+    "image": "Kiandra.jpg",
+    "gallery": []
   },
   {
     "no": 158,
@@ -1263,7 +1422,8 @@ const people = [
     "ko": "끼께",
     "displayName": "Kikay 끼께",
     "note": "제이의 사촌 여동생, Kikay는 스페인식 이름 Francisca 프란시스카가 Kika를 거쳐 Kikay로 변한 애칭, <span class=\"timestamp\"> 2024.03.16 1:16:03</span>",
-    "image": "Kikay.jpg"
+    "image": "Kikay.jpg",
+    "gallery": []
   },
   {
     "no": 159,
@@ -1271,7 +1431,8 @@ const people = [
     "ko": "끼꼬",
     "displayName": "Kiko 끼꼬",
     "note": "제이의 사촌 남동생, Kiko는 스페인식 이름 Francisco 프란시스코의 애칭, <span class=\"timestamp\"> 2024.03.16 1:16:03</span>",
-    "image": "Kiko.jpg"
+    "image": "Kiko.jpg",
+    "gallery": []
   },
   {
     "no": 160,
@@ -1279,7 +1440,8 @@ const people = [
     "ko": "킴벌리 오드리",
     "displayName": "Kimberley Audrey 킴벌리 오드리",
     "note": "일명 킴, 'Audrey'는 '고귀한 힘'이라는 뜻, <span class=\"timestamp\"> 2021.07.31 1:17:29</span>",
-    "image": "Kimberley Audrey.jpg"
+    "image": "Kimberley Audrey.jpg",
+    "gallery": []
   },
   {
     "no": 161,
@@ -1287,7 +1449,8 @@ const people = [
     "ko": "키샤 미 B. 세레나도",
     "displayName": "Kisha May B. Cerenado 키샤 미 B. 세레나도",
     "note": "일명 '맨발의 키샤미'로 불리는 코리아 빌딩 공부방 소속의 여학생, <span class=\"timestamp\">정주행 2020.11.21 16:06</span>",
-    "image": "Kisha May B. Cerenado.jpg"
+    "image": "Kisha May B. Cerenado.jpg",
+    "gallery": []
   },
   {
     "no": 162,
@@ -1295,7 +1458,8 @@ const people = [
     "ko": "크리셀 삼손",
     "displayName": "Krisel Samson 크리셀 삼손",
     "note": "예명은 'Kekay' 께까이, <span class=\"timestamp\"> 2026.04.18 14:55</span>",
-    "image": "Krisel Samson.jpg"
+    "image": "Krisel Samson.jpg",
+    "gallery": []
   },
   {
     "no": 163,
@@ -1303,7 +1467,8 @@ const people = [
     "ko": "크리스탈 미 산체스",
     "displayName": "Kristal Mae Sanchez 크리스탈 미 산체스",
     "note": "라이카의 여동생, <span class=\"timestamp\">정주행 2020.06.18 11:39</span>",
-    "image": "Kristal Mae Sanchez.jpg"
+    "image": "Kristal Mae Sanchez.jpg",
+    "gallery": []
   },
   {
     "no": 164,
@@ -1311,7 +1476,8 @@ const people = [
     "ko": "꼬땅",
     "displayName": "Kutang 꼬땅",
     "note": "일명 쪽쪽이, 필리핀 발음은 쿠탕, 실라미의 사촌 여동생이며 생일은 5월 6일, <span class=\"timestamp\"> 2024.05.04 35:59</span>, 2026년 6세, <span class=\"timestamp\"> 2026.03.01 44:18</span>",
-    "image": "Kutang.jpg"
+    "image": "Kutang.jpg",
+    "gallery": []
   },
   {
     "no": 165,
@@ -1319,7 +1485,8 @@ const people = [
     "ko": "꾸야 이징",
     "displayName": "Kuya Ijing 꾸야 이징",
     "note": "당뇨로 왼쪽다리를 잃어 의족 착용, 교원 자격증을 취득한 리날린 P. 카존토이의 아버지, <span class=\"timestamp\">정주행 2022.10.25 0:50</span>",
-    "image": "Kuya Ijing.jpg"
+    "image": "Kuya Ijing.jpg",
+    "gallery": []
   },
   {
     "no": 166,
@@ -1327,7 +1494,8 @@ const people = [
     "ko": "꾸야 제롬",
     "displayName": "Kuya Jerome 꾸야 제롬",
     "note": "민지 선생님의 아빠, <span class=\"timestamp\">정주행 2021.09.07 17:15</span>",
-    "image": "Kuya Jerome.jpg"
+    "image": "Kuya Jerome.jpg",
+    "gallery": []
   },
   {
     "no": 167,
@@ -1335,7 +1503,8 @@ const people = [
     "ko": "꾸야 루이",
     "displayName": "Kuya Louie 꾸야 루이",
     "note": "꾸야 작의 장인어른이자 마이마이의 아버지, <span class=\"timestamp\">정주행 2021.12.30 19:28</span>",
-    "image": "Kuya Louie.jpg"
+    "image": "Kuya Louie.jpg",
+    "gallery": []
   },
   {
     "no": 168,
@@ -1343,7 +1512,8 @@ const people = [
     "ko": "꾸야 마빈",
     "displayName": "Kuya Marvin 꾸야 마빈",
     "note": "마리안과 이보이의 아빠, <span class=\"timestamp\">정주행 2021.12.30 17:46</span>",
-    "image": "Kuya Marvin.jpg"
+    "image": "Kuya Marvin.jpg",
+    "gallery": []
   },
   {
     "no": 169,
@@ -1351,7 +1521,8 @@ const people = [
     "ko": "라라",
     "displayName": "Lara 라라",
     "note": "코리아 빌딩 공부방 소속은 아니지만 2022년 크리스마스 댄스 경연대회에 나온 적이 있다, <span class=\"timestamp\">정주행 2022.12.15 06:21</span>",
-    "image": "Lara.jpg"
+    "image": "Lara.jpg",
+    "gallery": []
   },
   {
     "no": 170,
@@ -1359,7 +1530,8 @@ const people = [
     "ko": "라우라",
     "displayName": "Laura 라우라",
     "note": "샨텔의 외할아버지의 조카로 샨텔에게는 이모뻘, 2023년 15세, <span class=\"timestamp\">정주행 2023.03.14 11:52</span>",
-    "image": "Laura.jpg"
+    "image": "Laura.jpg",
+    "gallery": []
   },
   {
     "no": 171,
@@ -1367,7 +1539,8 @@ const people = [
     "ko": "레오노라 D. 로포스",
     "displayName": "Leonora D. Lopos 레오노라 D. 로포스",
     "note": "알리야와 아다나의 친할머니, <span class=\"timestamp\">정주행 2021.11.10 15:48</span>",
-    "image": "Leonora D. Lopos.jpg"
+    "image": "Leonora D. Lopos.jpg",
+    "gallery": []
   },
   {
     "no": 172,
@@ -1375,7 +1548,8 @@ const people = [
     "ko": "레리오 L. 둥카",
     "displayName": "Lerio L. Dungca 레리오 L. 둥카",
     "note": "5월 3일생인 라이사의 친엄마, 라이브 채팅에 참여하여 번역기를 돌려 채팅 메시지를 남긴 적이 있다, ​​@lerioldungca9731: Jollibee에서 치료해 주셔서 감사합니다 Jery 선생님 ryzza의 생일을 위해 저는 ryzza의 엄마이기 때문에 ryzza를 후원해 주셔서 대단히 감사합니다, <span class=\"timestamp\"> 2025.05.04 41:41</span>",
-    "image": "Lerio L. Dungca.jpg"
+    "image": "Lerio L. Dungca.jpg",
+    "gallery": []
   },
   {
     "no": 173,
@@ -1383,7 +1557,8 @@ const people = [
     "ko": "리아",
     "displayName": "Lia 리아",
     "note": "김세훈 씨가 사진을 붙여 선물 박스를 보내준 여자아이, <span class=\"timestamp\"> 2024.11.02 59:16</span>",
-    "image": "Lia.jpg"
+    "image": "Lia.jpg",
+    "gallery": []
   },
   {
     "no": 174,
@@ -1391,7 +1566,8 @@ const people = [
     "ko": "릴리",
     "displayName": "Lily 릴리",
     "note": "바랑가이 157 최고의 귀염둥이, 실라마리의 둘째 여동생, <span class=\"timestamp\"> 2022.07.02 08:47</span>",
-    "image": "Lily.jpg"
+    "image": "Lily.jpg",
+    "gallery": []
   },
   {
     "no": 175,
@@ -1399,7 +1575,8 @@ const people = [
     "ko": "엘제이",
     "displayName": "LJ 엘제이",
     "note": "김세훈 씨가 사진을 붙여 선물 박스를 보내준 통통한 여자아이, <span class=\"timestamp\"> 2024.11.02 1:07:49</span>",
-    "image": "LJ.jpg"
+    "image": "LJ.jpg",
+    "gallery": []
   },
   {
     "no": 176,
@@ -1407,7 +1584,8 @@ const people = [
     "ko": "롤라 디다이",
     "displayName": "Lola Diday 롤라 디다이",
     "note": "항상 길가에 나와 앉아 계시던 할머니, <span class=\"timestamp\">정주행 2021.08.16 14:07</span>, 또는 Aling Diday 알링 디다이라 불린다, Aling은 아주머니나 이모 느낌의 존칭, <span class=\"timestamp\">정주행 2021.12.27 16:48</span>",
-    "image": "Lola Diday.jpg"
+    "image": "Lola Diday.jpg",
+    "gallery": []
   },
   {
     "no": 177,
@@ -1415,7 +1593,8 @@ const people = [
     "ko": "롤라 자라",
     "displayName": "Lola Jhara 롤라 자라",
     "note": "자라의 외할머니, 이름의 철자가 Jhara 자라 선생님과 같은지는 불분명, <span class=\"timestamp\">정주행 2021.12.30 17:06</span>",
-    "image": "Lola Jhara.jpg"
+    "image": "Lola Jhara.jpg",
+    "gallery": []
   },
   {
     "no": 178,
@@ -1423,7 +1602,8 @@ const people = [
     "ko": "루이 지",
     "displayName": "Louis G 루이 지",
     "note": "메리안의 남동생, 대학교를 졸업하고 초등학교 교사와 결혼하였다, <span class=\"timestamp\">정주행 2021.01.28 15:57</span>",
-    "image": "Louis G.jpg"
+    "image": "Louis G.jpg",
+    "gallery": []
   },
   {
     "no": 179,
@@ -1431,7 +1611,8 @@ const people = [
     "ko": "러블리 마리아 카빈토이",
     "displayName": "Lovely Ma. Cabintoy 러블리 마리아 카빈토이",
     "note": "자키루의 엄마, <span class=\"timestamp\">정주행 2022.03.02 0:30</span>",
-    "image": "Lovely Ma. Cabintoy.jpg"
+    "image": "Lovely Ma. Cabintoy.jpg",
+    "gallery": []
   },
   {
     "no": 180,
@@ -1439,7 +1620,8 @@ const people = [
     "ko": "루카스",
     "displayName": "Lucas 루카스",
     "note": "산체스배 댄스 콘테스트에 참가한 남자아이, <span class=\"timestamp\"> 2026.06.05 08:19</span>",
-    "image": "Lucas.jpg"
+    "image": "Lucas.jpg",
+    "gallery": []
   },
   {
     "no": 181,
@@ -1447,7 +1629,8 @@ const people = [
     "ko": "라이카 C. 델라 크루즈",
     "displayName": "Lyka C. Dela cruz 라이카 C. 델라 크루즈",
     "note": "코리아 빌딩 공부방 소속의 여학생이자 크리스탈 미와 자매지간, <span class=\"timestamp\">정주행 2020.06.18 14:53</span>, 생일은 4월 9일, <span class=\"timestamp\"> 2023.04.02 46:54</span>, 2026년 16세, <span class=\"timestamp\"> 2026.02.15 33:55</span>",
-    "image": "Lyka C. Dela cruz.jpg"
+    "image": "Lyka C. Dela cruz.jpg",
+    "gallery": []
   },
   {
     "no": 182,
@@ -1455,7 +1638,8 @@ const people = [
     "ko": "마이마이",
     "displayName": "Maimai 마이마이",
     "note": "꾸야 작의 와이프, <span class=\"timestamp\">정주행 2020.12.08 01:00</span>",
-    "image": "Maimai.jpg"
+    "image": "Maimai.jpg",
+    "gallery": []
   },
   {
     "no": 183,
@@ -1463,7 +1647,8 @@ const people = [
     "ko": "마이마이",
     "displayName": "Maimai 마이마이",
     "note": "2020년 22세이고 두 살짜리 아들 카일의 엄마이자 엠빠이의 엄마, <span class=\"timestamp\">정주행 2020.05.19 06:00</span>",
-    "image": "Maimai-2.jpg"
+    "image": "Maimai-2.jpg",
+    "gallery": []
   },
   {
     "no": 184,
@@ -1471,7 +1656,8 @@ const people = [
     "ko": "마조리",
     "displayName": "Majorie 마조리",
     "note": "민지 선생님, <span class=\"timestamp\"> 2021.05.17 01:30</span>",
-    "image": "Majorie.jpg"
+    "image": "Majorie.jpg",
+    "gallery": []
   },
   {
     "no": 185,
@@ -1479,7 +1665,8 @@ const people = [
     "ko": "마지 모랄레스",
     "displayName": "Margie Morales 마지 모랄레스",
     "note": "낫낫의 엄마, <span class=\"timestamp\">정주행 2024.06.22 26:00</span>, 생일은 5월 25일, <span class=\"timestamp\"> 2026.05.23 채팅 08:45</span>",
-    "image": "Margie Morales.jpg"
+    "image": "Margie Morales.jpg",
+    "gallery": []
   },
   {
     "no": 186,
@@ -1487,7 +1674,8 @@ const people = [
     "ko": "마리안 A. 보티카리오",
     "displayName": "Marian A. Boticario 마리안 A. 보티카리오",
     "note": "'Boticario'는 스페인어로 '약사'를 의미, <span class=\"timestamp\">정주행 2020.07.11 04:29</span>, 2021년 13세, <span class=\"timestamp\">정주행 2021.03.04 02:34</span>, 생일은 2월 28일, <span class=\"timestamp\"> 2026.02.28 14:41</span>",
-    "image": "Marian A. Boticario.jpg"
+    "image": "Marian A. Boticario.jpg",
+    "gallery": []
   },
   {
     "no": 187,
@@ -1495,7 +1683,8 @@ const people = [
     "ko": "메리 그레이스 카르도나",
     "displayName": "Mary Grace Cardona 메리 그레이스 카르도나",
     "note": "미구엘의 어머니, 2023년 9월 28일 사망, <span class=\"timestamp\"> 2023.09.30 10:33</span>",
-    "image": "Mary Grace Cardona.jpg"
+    "image": "Mary Grace Cardona.jpg",
+    "gallery": []
   },
   {
     "no": 188,
@@ -1503,7 +1692,8 @@ const people = [
     "ko": "메리 그레이스 T. 림",
     "displayName": "Mary Grace T. Lim 메리 그레이스 T. 림",
     "note": "일명 가라, Grace는 라틴어로 '신의 은총'을 의미, <span class=\"timestamp\">정주행 2020.07.07 12:11</span>",
-    "image": "Mary Grace T. Lim.jpg"
+    "image": "Mary Grace T. Lim.jpg",
+    "gallery": []
   },
   {
     "no": 189,
@@ -1511,7 +1701,8 @@ const people = [
     "ko": "메리 제인 타뇨테 림",
     "displayName": "Mary Jane Tañote Lim 메리 제인 타뇨테 림",
     "note": "직접 낳지는 않았으나 가라를 키워준 1976년 5월 3일생 엄마, 교도소에서 2020년 6월 23일 사망, <span class=\"timestamp\">정주행 2020.07.07 03:14</span>",
-    "image": "Mary Jane Tañote Lim.jpg"
+    "image": "Mary Jane Tañote Lim.jpg",
+    "gallery": []
   },
   {
     "no": 190,
@@ -1519,7 +1710,8 @@ const people = [
     "ko": "메리 린 노블",
     "displayName": "Mary Lyn Noble 메리 린 노블",
     "note": "여자 애쉴리의 엄마, 라이브 채팅 메시지를 남긴 적이 있다, @MaryLynNoble: hello po sir jerry thank you po sa pa fedding sa mga bata sa apelo 안녕하세요 제리 선생님, 아펠로에서 아이들에게 먹을 것을 제공해 주셔서 감사합니다, <span class=\"timestamp\"> 2025.05.18 채팅 35:17</span>, @MaryLynNoble: yes po mama po ni ashley watching from vigan🥰 네, 저는 애쉴리 엄마예요. 비간에서 보고 있어요, <span class=\"timestamp\"> 2025.08.03 채팅 07:24</span>",
-    "image": "Mary Lyn Noble.jpg"
+    "image": "Mary Lyn Noble.jpg",
+    "gallery": []
   },
   {
     "no": 191,
@@ -1527,7 +1719,8 @@ const people = [
     "ko": "마틸데 바데오",
     "displayName": "Matilde Badeo 마틸데 바데오",
     "note": "바랑가이 157 사무소에서 근무, <span class=\"timestamp\">정주행 2019.12.19 07:16</span>",
-    "image": "Matilde Badeo.jpg"
+    "image": "Matilde Badeo.jpg",
+    "gallery": []
   },
   {
     "no": 192,
@@ -1535,7 +1728,8 @@ const people = [
     "ko": "맷",
     "displayName": "Matt 맷",
     "note": "바나나마을에 사는 키가 큰 남자아이, <span class=\"timestamp\"> 2026.06.21 1:07:53</span>",
-    "image": "Matt.jpg"
+    "image": "Matt.jpg",
+    "gallery": []
   },
   {
     "no": 193,
@@ -1543,7 +1737,8 @@ const people = [
     "ko": "멜리사",
     "displayName": "Melissa 멜리사",
     "note": "미겔라와 자매지간, <span class=\"timestamp\"> 2010.10.15 18:22</span>, 혹은 Michelle 미셸, <span class=\"timestamp\">정주행 2021.05.04 19:59</span>",
-    "image": "Melissa.jpg"
+    "image": "Melissa.jpg",
+    "gallery": []
   },
   {
     "no": 194,
@@ -1551,7 +1746,8 @@ const people = [
     "ko": "멜리아 미 Q. 마우사이",
     "displayName": "Melria Mhae Q. Mahusay 멜리아 미 Q. 마우사이",
     "note": "일명 마리아, 별명은 양양, Mhvsay는 Mahusay의 오타인 듯, <span class=\"timestamp\">정주행 2020.07.11 09:22</span>, 2024년 크리스마스 댄스 경연대회에서 1등 수상, <span class=\"timestamp\"> 2024.12.14 1:37:24</span>",
-    "image": "Melria Mhae Q. Mahusay.jpg"
+    "image": "Melria Mhae Q. Mahusay.jpg",
+    "gallery": []
   },
   {
     "no": 195,
@@ -1559,7 +1755,8 @@ const people = [
     "ko": "메리 안 카우바",
     "displayName": "Merie Ann Cauba 메리 안 카우바",
     "note": "제리님의 매니저이자 통역가이자 핫도그 가게 사장님, 생일은 5월 17일, <span class=\"timestamp\"> 2024.05.18 채팅 20:02</span>",
-    "image": "Merie Ann Cauba.jpg"
+    "image": "Merie Ann Cauba.jpg",
+    "gallery": []
   },
   {
     "no": 196,
@@ -1567,7 +1764,8 @@ const people = [
     "ko": "메야메시",
     "displayName": "Meyamesi 메야메시",
     "note": "2025년 11세 초6, <span class=\"timestamp\"> 2025.05.04 41:42</span>",
-    "image": "Meyamesi.jpg"
+    "image": "Meyamesi.jpg",
+    "gallery": []
   },
   {
     "no": 197,
@@ -1575,7 +1773,8 @@ const people = [
     "ko": "미카엘라 퀸테라 몬테스",
     "displayName": "Michaela Quintera Montes 미카엘라 퀸테라 몬테스",
     "note": "통통한 여자아이, <span class=\"timestamp\">정주행 2020.06.18 15:24</span>",
-    "image": "Michaela Quintera Montes.jpg"
+    "image": "Michaela Quintera Montes.jpg",
+    "gallery": []
   },
   {
     "no": 198,
@@ -1583,7 +1782,8 @@ const people = [
     "ko": "미기",
     "displayName": "Migi 미기",
     "note": "미구엘의 쌍둥이 첫째 아들, <span class=\"timestamp\"> 2024.03.16 44:42</span>",
-    "image": "Migi.jpg"
+    "image": "Migi.jpg",
+    "gallery": []
   },
   {
     "no": 199,
@@ -1591,7 +1791,8 @@ const people = [
     "ko": "미구엘",
     "displayName": "Miguel 미구엘",
     "note": "왜소증으로 키가 작지만 열심히 사는 남자, <span class=\"timestamp\">정주행 2020.04.23 00:16</span>",
-    "image": "Miguel.jpg"
+    "image": "Miguel.jpg",
+    "gallery": []
   },
   {
     "no": 200,
@@ -1599,7 +1800,8 @@ const people = [
     "ko": "미겔라",
     "displayName": "Miguela 미겔라",
     "note": "멜리사와 자매지간, <span class=\"timestamp\"> 2010.10.15 18:22</span>, 혹은 Michelle 미셸, <span class=\"timestamp\">정주행 2021.05.04 19:59</span>",
-    "image": "Miguela.jpg"
+    "image": "Miguela.jpg",
+    "gallery": []
   },
   {
     "no": 201,
@@ -1607,7 +1809,8 @@ const people = [
     "ko": "미까이",
     "displayName": "Mikay 미까이",
     "note": "제리님 동네에 사는 여자아이, <span class=\"timestamp\"> 2026.03.14 04:14</span>",
-    "image": "Mikay.jpg"
+    "image": "Mikay.jpg",
+    "gallery": []
   },
   {
     "no": 202,
@@ -1615,7 +1818,8 @@ const people = [
     "ko": "미카 Q. 루녜스",
     "displayName": "Mikha Q. Ruñez 미카 Q. 루녜스",
     "note": "코리아 빌딩 공부방에서 시험을 보고 선물을 받아간 적이 있다, <span class=\"timestamp\">정주행 2020.06.18 02:24</span>, 2021년 크리스마스 댄스 경연대회에서 1등을 한 적이 있다, <span class=\"timestamp\"> 2021.12.19 3부 11:37</span>",
-    "image": "Mikha Q. Ruñez.jpg"
+    "image": "Mikha Q. Ruñez.jpg",
+    "gallery": []
   },
   {
     "no": 203,
@@ -1623,7 +1827,8 @@ const people = [
     "ko": "밀라그로스 루비스",
     "displayName": "Milagros Rubis 밀라그로스 루비스",
     "note": "라이사의 친할머니, 'Milagros'는 스페인어로 '기적'이라는 뜻, <span class=\"timestamp\">정주행 2019.12.20 07:26</span>",
-    "image": "Milagros Rubis.jpg"
+    "image": "Milagros Rubis.jpg",
+    "gallery": []
   },
   {
     "no": 204,
@@ -1631,7 +1836,8 @@ const people = [
     "ko": "엠제이",
     "displayName": "MJ 엠제이",
     "note": "프린스 애쉴리의 여동생, <span class=\"timestamp\"> 2022.07.09 47:44</span>",
-    "image": "MJ.jpg"
+    "image": "MJ.jpg",
+    "gallery": []
   },
   {
     "no": 205,
@@ -1639,7 +1845,8 @@ const people = [
     "ko": "모나",
     "displayName": "Mona 모나",
     "note": "제리님 동네에 사는 꼬마 여자아이, <span class=\"timestamp\"> 2026.06.20 49:02</span>",
-    "image": "Mona.jpg"
+    "image": "Mona.jpg",
+    "gallery": []
   },
   {
     "no": 206,
@@ -1647,7 +1854,8 @@ const people = [
     "ko": "모리스",
     "displayName": "Moris 모리스",
     "note": "겡겡의 조카, <span class=\"timestamp\"> 2026.05.09 채팅 39:16</span>",
-    "image": "Moris.jpg"
+    "image": "Moris.jpg",
+    "gallery": []
   },
   {
     "no": 207,
@@ -1655,7 +1863,8 @@ const people = [
     "ko": "나오미 투링간",
     "displayName": "Naomi Turingan 나오미 투링간",
     "note": "카시의 친언니인 듯, 카시가 맹장수술을 받았을 때 제리님이 올린 영상에 댓글을 단 적이 있다, @naomituringan5352: salamat sayo sir jerry.dahil sayo at sa mga Sponsor marami kayong natutulungan na mga nangangailangan. LEGIT 제리님, 감사합니다. 당신과 후원자분들 덕분에 많은 어려운 사람들을 도울 수 있었습니다. 정말 훌륭합니다. <span class=\"timestamp\">정주행 2022.09.07</span>",
-    "image": "Naomi Turingan.jpg"
+    "image": "Naomi Turingan.jpg",
+    "gallery": []
   },
   {
     "no": 208,
@@ -1663,7 +1872,8 @@ const people = [
     "ko": "네이탄 or 네이든",
     "displayName": "Nathan 네이탄 or 네이든",
     "note": "별명 동근이, 2023년 10세 초4, <span class=\"timestamp\">정주행 2023.03.07 03:29</span>",
-    "image": "Nathan.jpg"
+    "image": "Nathan.jpg",
+    "gallery": []
   },
   {
     "no": 209,
@@ -1671,7 +1881,8 @@ const people = [
     "ko": "네그라",
     "displayName": "Negra 네그라",
     "note": "엠빠이의 여동생이자 돈맛을 알아버린 멍멍이 타잔의 주인, <span class=\"timestamp\"> 2024.08.17 1:16:50</span>, <span class=\"timestamp\"> 2025.06.21 08:19</span>",
-    "image": "Negra.jpg"
+    "image": "Negra.jpg",
+    "gallery": []
   },
   {
     "no": 210,
@@ -1679,7 +1890,8 @@ const people = [
     "ko": "니콜 케이트 N. 모라",
     "displayName": "Nicole Kate N. Mora 니콜 케이트 N. 모라",
     "note": "니콜 패밀리 6인 완전체의 중심 인물, <span class=\"timestamp\"> 2020.11.21 공부방 시험 2부 18:07</span>, 생일은 6월 30일, <span class=\"timestamp\"> 2022.06.30</span>",
-    "image": "Nicole Kate N. Mora.jpg"
+    "image": "Nicole Kate N. Mora.jpg",
+    "gallery": []
   },
   {
     "no": 211,
@@ -1687,7 +1899,8 @@ const people = [
     "ko": "니코",
     "displayName": "Niko 니코",
     "note": "댄싱 남매 중 오빠, <span class=\"timestamp\">정주행 2019.12.24 06:02</span>",
-    "image": "Niko.jpg"
+    "image": "Niko.jpg",
+    "gallery": []
   },
   {
     "no": 212,
@@ -1695,7 +1908,8 @@ const people = [
     "ko": "올리브",
     "displayName": "Olive 올리브",
     "note": "지프니 터미널의 대표, <span class=\"timestamp\">정주행 2019.12.17 0:47</span>",
-    "image": "Olive.jpg"
+    "image": "Olive.jpg",
+    "gallery": []
   },
   {
     "no": 213,
@@ -1703,7 +1917,8 @@ const people = [
     "ko": "파트리샤",
     "displayName": "Patricia 파트리샤",
     "note": "릴리의 바나나마을 친구, <span class=\"timestamp\"> 2025.02.01 21:08</span>, 2026년 7세, <span class=\"timestamp\"> 2026.03.01 38:09</span>",
-    "image": "Patricia.jpg"
+    "image": "Patricia.jpg",
+    "gallery": []
   },
   {
     "no": 214,
@@ -1711,7 +1926,8 @@ const people = [
     "ko": "파울로",
     "displayName": "Paulo 파울로",
     "note": "락다운 초기에 꾸야 작과 함께 제리님의 보디가드였으나 마약 조직 간의 관할 다툼에 휘말려 목숨을 잃었다. <span class=\"timestamp\">정주행 2021.07.15 01:19</span>",
-    "image": "Paulo.jpg"
+    "image": "Paulo.jpg",
+    "gallery": []
   },
   {
     "no": 215,
@@ -1719,7 +1935,8 @@ const people = [
     "ko": "펄리토 J. 루비스",
     "displayName": "Perlito J. Rubis 펄리토 J. 루비스",
     "note": "라이사의 친할아버지, 1944년 5월 23일생이며 2020년 5월 3일 사망, <span class=\"timestamp\">정주행 2020.05.07 03:49</span>",
-    "image": "Perlito J. Rubis.jpg"
+    "image": "Perlito J. Rubis.jpg",
+    "gallery": []
   },
   {
     "no": 216,
@@ -1727,7 +1944,8 @@ const people = [
     "ko": "피아",
     "displayName": "Pia 피아",
     "note": "링고의 전 아내, 이혼한 후 재혼, 2019년 17세, <span class=\"timestamp\">정주행 2019.11.23 03:48</span>",
-    "image": "Pia.jpg"
+    "image": "Pia.jpg",
+    "gallery": []
   },
   {
     "no": 217,
@@ -1735,7 +1953,8 @@ const people = [
     "ko": "폴마크",
     "displayName": "Polmarc 폴마크",
     "note": "샬메인의 남편, 2019년 20세, <span class=\"timestamp\">정주행 2019.12.22 01:20</span>",
-    "image": "Polmarc.jpg"
+    "image": "Polmarc.jpg",
+    "gallery": []
   },
   {
     "no": 218,
@@ -1743,7 +1962,8 @@ const people = [
     "ko": "뻔뻔이",
     "displayName": "Ppeonppeoni 뻔뻔이",
     "note": "코리아 빌딩에서 무전취식하는 수컷 고양이로 나이가 많다, <span class=\"timestamp\"> 2020.11.08 1:13:00</span>",
-    "image": "Ppeonppeoni.jpg"
+    "image": "Ppeonppeoni.jpg",
+    "gallery": []
   },
   {
     "no": 219,
@@ -1751,7 +1971,8 @@ const people = [
     "ko": "뻔순이",
     "displayName": "Ppeonsuni 뻔순이",
     "note": "뻔뻔이의 짝꿍 암컷 고양이로 코리아 빌딩에 거주하며 새끼까지 낳았다, 뻔순이라는 이름은 구독자 박세진님이 지어주었다, <span class=\"timestamp\"> 2021.11.20 채팅 1:18:09</span>",
-    "image": "Ppeonsuni.jpg"
+    "image": "Ppeonsuni.jpg",
+    "gallery": []
   },
   {
     "no": 220,
@@ -1759,7 +1980,8 @@ const people = [
     "ko": "프리셔스 알티아 V. 로포스",
     "displayName": "Precious Althea V. Lopos 프리셔스 알티아 V. 로포스",
     "note": "일명 'Adana' 아다나로 불리는 알리야의 여동생, <span class=\"timestamp\">정주행 2020.06.18 11:13</span>",
-    "image": "Precious Althea V. Lopos.jpg"
+    "image": "Precious Althea V. Lopos.jpg",
+    "gallery": []
   },
   {
     "no": 221,
@@ -1767,7 +1989,8 @@ const people = [
     "ko": "프린스 아서 O. 칼사",
     "displayName": "Prince Arthur O. Calsa 프린스 아서 O. 칼사",
     "note": "프린이의 남동생, 2025년 5월 18일생이지만 2026년 1월 29일 사망, <span class=\"timestamp\"> 2026.02.01 19:10</span>",
-    "image": "Prince Arthur O. Calsa.jpg"
+    "image": "Prince Arthur O. Calsa.jpg",
+    "gallery": []
   },
   {
     "no": 222,
@@ -1775,7 +1998,8 @@ const people = [
     "ko": "프린스 애쉴리 멜마 J. 보비스",
     "displayName": "Prince Ashly Melmar J. Bobis 프린스 애쉴리 멜마 J. 보비스",
     "note": "코리아 빌딩 공부방 소속의 남학생, <span class=\"timestamp\">정주행 2021.11.10 가정방문 2부 23:42</span>",
-    "image": "Prince Ashly Melmar J. Bobis.jpg"
+    "image": "Prince Ashly Melmar J. Bobis.jpg",
+    "gallery": []
   },
   {
     "no": 223,
@@ -1783,7 +2007,8 @@ const people = [
     "ko": "프린스 노이지 G. 키돌",
     "displayName": "Prince Noegie G. Quidol 프린스 노이지 G. 키돌",
     "note": "'Niknok' 닉녹의 본명, 아떼 루시의 외손자, <span class=\"timestamp\">정주행 2021.04.06 11:13</span>",
-    "image": "Prince Noegie G. Quidol.jpg"
+    "image": "Prince Noegie G. Quidol.jpg",
+    "gallery": []
   },
   {
     "no": 224,
@@ -1791,7 +2016,8 @@ const people = [
     "ko": "프린세스",
     "displayName": "Princess 프린세스",
     "note": "겡겡의 사촌 여동생, 2023년 크리스마스 댄스 경연대회에서 1등 수상, <span class=\"timestamp\"> 2023.12.16 1:34:15</span>, 2024년 크리스마스 댄스 경연대회에서 1등 수상, <span class=\"timestamp\"> 2024.12.14 1:37:24</span>",
-    "image": "Princess.jpg"
+    "image": "Princess.jpg",
+    "gallery": []
   },
   {
     "no": 225,
@@ -1799,7 +2025,8 @@ const people = [
     "ko": "프린세스 알리야 V. 로포스",
     "displayName": "Princess Alliah V. Lopos 프린세스 알리야 V. 로포스",
     "note": "일명 'Alliah' 알리야로 불리는 아다나의 친언니, <span class=\"timestamp\">정주행 2021.11.10 가정방문 2부 10:53</span>",
-    "image": "Princess Alliah V. Lopos.jpg"
+    "image": "Princess Alliah V. Lopos.jpg",
+    "gallery": []
   },
   {
     "no": 226,
@@ -1807,7 +2034,8 @@ const people = [
     "ko": "프린세스 리안 O. 칼사",
     "displayName": "Princess Rhian O. Calsa 프린세스 리안 O. 칼사",
     "note": "어릴 때부터 동생들을 돌보느라 힘들었던 코리아 빌딩 공부방 소속의 여학생이며 줄여서 '프린이'라고 부른다, <span class=\"timestamp\">정주행 2021.11.10 가정방문 2부 23:42</span>, 2024년 크리스마스 댄스 경연대회에서 1등 수상, <span class=\"timestamp\"> 2024.12.14 1:37:24</span>",
-    "image": "Princess Rhian O. Calsa.jpg"
+    "image": "Princess Rhian O. Calsa.jpg",
+    "gallery": []
   },
   {
     "no": 227,
@@ -1815,7 +2043,8 @@ const people = [
     "ko": "프린세스",
     "displayName": "Princess 프린세스",
     "note": "릴리의 바나나마을 친구, <span class=\"timestamp\"> 2025.02.01 21:08</span>",
-    "image": "Princess-2.jpg"
+    "image": "Princess-2.jpg",
+    "gallery": []
   },
   {
     "no": 228,
@@ -1823,7 +2052,8 @@ const people = [
     "ko": "프린세스",
     "displayName": "Princess 프린세스",
     "note": "릴리의 바랑가이 157 친구, <span class=\"timestamp\"> 2025.12.27 29:07</span>",
-    "image": "Princess-3.jpg"
+    "image": "Princess-3.jpg",
+    "gallery": []
   },
   {
     "no": 229,
@@ -1831,7 +2061,8 @@ const people = [
     "ko": "프린세스",
     "displayName": "Princess 프린세스",
     "note": "표정이 재미있는 여자아이, <span class=\"timestamp\">정주행 2020.06.27 21:21</span>, <span class=\"timestamp\"> 2025.11.22 1:25:58</span>",
-    "image": "Princess-4.jpg"
+    "image": "Princess-4.jpg",
+    "gallery": []
   },
   {
     "no": 230,
@@ -1839,7 +2070,8 @@ const people = [
     "ko": "레이첼 안 M. 테게레로",
     "displayName": "Rachel Ann M. Tegerero 레이첼 안 M. 테게레로",
     "note": "Natnat 낫낫, <span class=\"timestamp\"> 2020.11.21 공부방 시험 2부 16:33</span>, 라이브 방송에 채팅 메시지를 남긴 적이 있다, @rachelTegerero: ​​Maraming maraming salamat po sa lahat po ng Korean❤❤❤ 많이 많이 감사합니다, 한국인 여러분 모두에게, <span class=\"timestamp\"> 2023.12.23 채팅 21:48</span>",
-    "image": "Rachel Ann M. Tegerero.jpg"
+    "image": "Rachel Ann M. Tegerero.jpg",
+    "gallery": []
   },
   {
     "no": 231,
@@ -1847,7 +2079,8 @@ const people = [
     "ko": "레인마크",
     "displayName": "Rainmark 레인마크",
     "note": "척추결핵을 앓았던 소년, <span class=\"timestamp\"> 2025.02.01 52:43</span>",
-    "image": "Rainmark.jpg"
+    "image": "Rainmark.jpg",
+    "gallery": []
   },
   {
     "no": 232,
@@ -1855,7 +2088,8 @@ const people = [
     "ko": "라넬",
     "displayName": "Ranell 라넬",
     "note": "실라미의 사촌 여동생, <span class=\"timestamp\">정주행 2020.08.22 09:58</span>",
-    "image": "Ranell.jpg"
+    "image": "Ranell.jpg",
+    "gallery": []
   },
   {
     "no": 233,
@@ -1863,7 +2097,8 @@ const people = [
     "ko": "레이몬드 살룻",
     "displayName": "Raymond Salut 레이몬드 살룻",
     "note": "일명 우또이, 2020년 32세, <span class=\"timestamp\">정주행 2020.05.03 03:56</span>",
-    "image": "Raymond Salut.jpg"
+    "image": "Raymond Salut.jpg",
+    "gallery": []
   },
   {
     "no": 234,
@@ -1871,7 +2106,8 @@ const people = [
     "ko": "리카 카지포",
     "displayName": "Recca Cajipo 리카 카지포",
     "note": "코리아 빌딩의 막내, 2023년 크리스마스 댄스 경연대회에서 2등 수상, <span class=\"timestamp\"> 2023.12.16 1:35:00</span>, 생일은 12월 30일, <span class=\"timestamp\"> 2026.06.21 36:06</span>",
-    "image": "Recca Cajipo.jpg"
+    "image": "Recca Cajipo.jpg",
+    "gallery": []
   },
   {
     "no": 235,
@@ -1879,7 +2115,8 @@ const people = [
     "ko": "레이나",
     "displayName": "Reina 레이나",
     "note": "'Reina'는 스페인어로 '여왕', 2020년 8세, <span class=\"timestamp\">정주행 2020.01.06 0:11</span>",
-    "image": "Reina.jpg"
+    "image": "Reina.jpg",
+    "gallery": []
   },
   {
     "no": 236,
@@ -1887,7 +2124,8 @@ const people = [
     "ko": "레닐린 카빈토이",
     "displayName": "Renelyn Cabintoy 레닐린 카빈토이",
     "note": "자키루의 친언니, <span class=\"timestamp\"> 2021.04.24 2부_졸리비 1:04:20</span>, 2023년 5월에 딸을 출산했다, <span class=\"timestamp\">정주행 2023.03.21 07:04</span>",
-    "image": "Renelyn Cabintoy.jpg"
+    "image": "Renelyn Cabintoy.jpg",
+    "gallery": []
   },
   {
     "no": 237,
@@ -1895,7 +2133,8 @@ const people = [
     "ko": "레이날도 P. 플로레스",
     "displayName": "Reynaldo P. Flores 레이날도 P. 플로레스",
     "note": "바랑가이 157의 캡틴, 별명은' Rene' 레네, <span class=\"timestamp\">정주행 2023.11.01 05:12</span>, 생일은 2월 1일, <span class=\"timestamp\"> 2025.02.01 08:39</span>",
-    "image": "Reynaldo P. Flores.jpg"
+    "image": "Reynaldo P. Flores.jpg",
+    "gallery": []
   },
   {
     "no": 238,
@@ -1903,7 +2142,8 @@ const people = [
     "ko": "리안 베사나",
     "displayName": "Rhian Besana 리안 베사나",
     "note": "예전에 사용한 이름은 Rhian Ricohermoso 리안 리코헤르모소, 'Rhian'은 Welsh 웨일스어로 '소녀, 아가씨, 젊은 처녀', 'Rico'는 스페인어로 '부유한, 풍요로운, 멋진', 'Hermoso'는 스페인어로 '아름다운'이라는 뜻, 줄곧 아버지의 성을 따르다가 현재는 어머니의 성을 따라 Rhian Besana를 사용한다, <span class=\"timestamp\"> 2026.03.21 채팅 52:35</span>",
-    "image": "Rhian Besana.jpg"
+    "image": "Rhian Besana.jpg",
+    "gallery": []
   },
   {
     "no": 239,
@@ -1911,7 +2151,8 @@ const people = [
     "ko": "리안 무르시아 레이",
     "displayName": "Rhian Murcia Rey 리안 무르시아 레이",
     "note": "일명 'GengGeng' 겡겡, 'Rhian'은 웨일스어로 '처녀', 'Murcia'는 스페인어로 '과수원', 'Rey'는 스페인어로 '왕'을 의미, <span class=\"timestamp\">정주행 2023.01.24 02:18</span>, 생일은 5월 18일, <span class=\"timestamp\"> 2025.05.18 슈퍼챗 28:56</span>",
-    "image": "Rhian Murcia Rey.jpg"
+    "image": "Rhian Murcia Rey.jpg",
+    "gallery": []
   },
   {
     "no": 240,
@@ -1919,7 +2160,8 @@ const people = [
     "ko": "리카 린",
     "displayName": "Rica Lyn 리카 린",
     "note": "바나나마을에 사는 여자아이로 제리님이 만날 때마다 하이파이브를 하는 편이다, <span class=\"timestamp\"> 2024.10.13 2부 채팅 30:07</span>",
-    "image": "Rica Lyn.jpg"
+    "image": "Rica Lyn.jpg",
+    "gallery": []
   },
   {
     "no": 241,
@@ -1927,7 +2169,8 @@ const people = [
     "ko": "리아나",
     "displayName": "Rihanna 리아나",
     "note": "니콜의 사촌 작은언니, <span class=\"timestamp\"> 2026.03.14 58:43</span>",
-    "image": "Rihanna.jpg"
+    "image": "Rihanna.jpg",
+    "gallery": []
   },
   {
     "no": 242,
@@ -1935,7 +2178,8 @@ const people = [
     "ko": "리날린 P. 카존토이, Licensed Professional Teacher",
     "displayName": "Rinalyn P. Cajontoy, LPT 리날린 P. 카존토이, Licensed Professional Teacher",
     "note": "꾸야 이징의 딸로, 정식 교사 자격증을 취득함, <span class=\"timestamp\"> 2023.01.21 41:37</span>",
-    "image": "Rinalyn P. Cajontoy, LPT.jpg"
+    "image": "Rinalyn P. Cajontoy, LPT.jpg",
+    "gallery": []
   },
   {
     "no": 243,
@@ -1943,7 +2187,8 @@ const people = [
     "ko": "링고",
     "displayName": "Ringo 링고",
     "note": "피아의 전 남편, 2019년 20세, <span class=\"timestamp\">정주행 2019.11.25 0:19</span>",
-    "image": "Ringo.jpg"
+    "image": "Ringo.jpg",
+    "gallery": []
   },
   {
     "no": 244,
@@ -1951,7 +2196,8 @@ const people = [
     "ko": "알제이",
     "displayName": "RJ 알제이",
     "note": "제리님이 '노엘'이라고 부르는 남자아이, <span class=\"timestamp\"> 2023.03.04 20:15</span>",
-    "image": "RJ.jpg"
+    "image": "RJ.jpg",
+    "gallery": []
   },
   {
     "no": 245,
@@ -1959,7 +2205,8 @@ const people = [
     "ko": "로베르토 파벨라",
     "displayName": "Roberto Fabella 로베르토 파벨라",
     "note": "넘버원 까가왓 Diosdado F. Fabella와 성이 같은 것으로 보아 친형이나 사촌형으로 추정된다, <span class=\"timestamp\">정주행 2019.12.20 06:38</span>",
-    "image": "Roberto Fabella.jpg"
+    "image": "Roberto Fabella.jpg",
+    "gallery": []
   },
   {
     "no": 246,
@@ -1967,7 +2214,8 @@ const people = [
     "ko": "로쉘",
     "displayName": "Rochelle 로쉘",
     "note": "샐러드를 파는 소녀, <span class=\"timestamp\"> 2026.02.07 38:16</span>, 2026년 12세, <span class=\"timestamp\"> 2026.03.28 25:07</span>",
-    "image": "Rochelle.jpg"
+    "image": "Rochelle.jpg",
+    "gallery": []
   },
   {
     "no": 247,
@@ -1975,7 +2223,8 @@ const people = [
     "ko": "로데스",
     "displayName": "Rodes 로데스",
     "note": "제트릴의 여동생, 2024년 만 15세 중3, <span class=\"timestamp\">정주행 2024.03.15 0:34</span>",
-    "image": "Rodes.jpg"
+    "image": "Rodes.jpg",
+    "gallery": []
   },
   {
     "no": 248,
@@ -1983,7 +2232,8 @@ const people = [
     "ko": "로헤리오 크루즈 림",
     "displayName": "Rogelio Cruz Lim 로헤리오 크루즈 림",
     "note": "아떼 유닐라의 남편이자 메리 제인 타뇨테 림의 아버지, <span class=\"timestamp\">정주행 2020.07.07 03:20</span>",
-    "image": "Rogelio Cruz Lim.jpg"
+    "image": "Rogelio Cruz Lim.jpg",
+    "gallery": []
   },
   {
     "no": 249,
@@ -1991,7 +2241,8 @@ const people = [
     "ko": "로나 알라피데",
     "displayName": "Rona Alapide 로나 알라피데",
     "note": "아야샤의 엄마, 킴벌리의 엄마와 자매지간, <span class=\"timestamp\">정주행 2020.09.15 11:40</span>",
-    "image": "Rona Alapide.jpg"
+    "image": "Rona Alapide.jpg",
+    "gallery": []
   },
   {
     "no": 250,
@@ -1999,7 +2250,8 @@ const people = [
     "ko": "로날린 아카타",
     "displayName": "Ronalyn Acata 로날린 아카타",
     "note": "2023년에는 성적 우수상도 탄 적이 있으나 그 이후에는 공부와 거리가 멀어졌다, 쌀 25kg을 안고 가는 소녀 장사, <span class=\"timestamp\"> 2023.08.26 09:02</span>",
-    "image": "Ronalyn Acata.jpg"
+    "image": "Ronalyn Acata.jpg",
+    "gallery": []
   },
   {
     "no": 251,
@@ -2007,7 +2259,8 @@ const people = [
     "ko": "로살리",
     "displayName": "Rosaly 로살리",
     "note": "싱글맘, 2020년 28세, <span class=\"timestamp\">정주행 2021.08.16 06:29</span>",
-    "image": "Rosaly.jpg"
+    "image": "Rosaly.jpg",
+    "gallery": []
   },
   {
     "no": 252,
@@ -2015,7 +2268,8 @@ const people = [
     "ko": "로즈벳",
     "displayName": "Rosbeth 로즈벳",
     "note": "피아의 시누이이자 링고의 누나, <span class=\"timestamp\">정주행 2019.11.23 08:50</span>",
-    "image": "Rosbeth.jpg"
+    "image": "Rosbeth.jpg",
+    "gallery": []
   },
   {
     "no": 253,
@@ -2023,7 +2277,8 @@ const people = [
     "ko": "로지 L. 알바레스",
     "displayName": "Rosie L. Alvares 로지 L. 알바레스",
     "note": "딴시의 엄마, <span class=\"timestamp\">정주행 2021.11.10 15:48</span>, 1982년 11월 29일생이며 2026년 4월 23일 심장마비로 사망, <span class=\"timestamp\"> 2026.04.25 51:24</span>",
-    "image": "Rosie L. Alvares.jpg"
+    "image": "Rosie L. Alvares.jpg",
+    "gallery": []
   },
   {
     "no": 254,
@@ -2031,7 +2286,8 @@ const people = [
     "ko": "라이사 메이 D. 루비스",
     "displayName": "Ryzza May D. Rubis 라이사 메이 D. 루비스",
     "note": "아빠와 엄마가 없이 할머니 손에 자란 코리아 빌딩 공부방 소속의 여학생, <span class=\"timestamp\">정주행 2020.07.02 09:59</span>",
-    "image": "Ryzza May D. Rubis.jpg"
+    "image": "Ryzza May D. Rubis.jpg",
+    "gallery": []
   },
   {
     "no": 255,
@@ -2039,7 +2295,8 @@ const people = [
     "ko": "사브리나",
     "displayName": "Sabrina 사브리나",
     "note": "자키루네 집에서 함께 사는 자키루의 오빠의 여자친구의 조카, 2023년 크리스마스 댄스 경연대회에서 2등 수상, <span class=\"timestamp\"> 2023.12.16 1:35:00</span>",
-    "image": "Sabrina.jpg"
+    "image": "Sabrina.jpg",
+    "gallery": []
   },
   {
     "no": 256,
@@ -2047,7 +2304,8 @@ const people = [
     "ko": "사라 선생님",
     "displayName": "Sarah 사라 선생님",
     "note": "까가왓 지나의 손녀, <span class=\"timestamp\"> 2021.05.17 00:32</span>",
-    "image": "Sarah.jpg"
+    "image": "Sarah.jpg",
+    "gallery": []
   },
   {
     "no": 257,
@@ -2055,7 +2313,8 @@ const people = [
     "ko": "시니어 회장님",
     "displayName": "Senior President 시니어 회장님",
     "note": "만 60세 이상의 바랑가이 157 노인분들에게 피딩 프로그램 행사 때마다 제리님을 대신하여 밥과 치킨을 나눠 주신다, <span class=\"timestamp\">정주행 2021.09.08 18:11</span>",
-    "image": "Senior President.jpg"
+    "image": "Senior President.jpg",
+    "gallery": []
   },
   {
     "no": 258,
@@ -2063,7 +2322,8 @@ const people = [
     "ko": "섹시",
     "displayName": "Sexy 섹시",
     "note": "댄싱킹이자 시니어 부회장님인 토니의 반려견으로 제리님이 문 앞에서 부르면 나와서 반겨준다, <span class=\"timestamp\"> 2023.01.21 44:46</span>",
-    "image": "Sexy.jpg"
+    "image": "Sexy.jpg",
+    "gallery": []
   },
   {
     "no": 259,
@@ -2071,7 +2331,8 @@ const people = [
     "ko": "샤이카 모랄레스 키라오",
     "displayName": "Shaika Morales Quirao 샤이카 모랄레스 키라오",
     "note": "실라미와는 고종사촌지간, <span class=\"timestamp\"> 2022.06.18 08:51</span>, 샤이카의 엄마의 여동생이 낫낫의 엄마인 마지 모랄레스, 아떼 페의 친손녀, <span class=\"timestamp\">정주행 2022.02.18 02:58</span>",
-    "image": "Shaika Morales Quirao.jpg"
+    "image": "Shaika Morales Quirao.jpg",
+    "gallery": []
   },
   {
     "no": 260,
@@ -2079,7 +2340,8 @@ const people = [
     "ko": "샤이나 미 키라오 오르디스타",
     "displayName": "Shaina Mae Quirao Ordista 샤이나 미 키라오 오르디스타",
     "note": "'Shaina'는 히브리어로 '아름답다'는 뜻, <span class=\"timestamp\">정주행 2020.07.11 09:57</span>",
-    "image": "Shaina Mae Quirao Ordista.jpg"
+    "image": "Shaina Mae Quirao Ordista.jpg",
+    "gallery": []
   },
   {
     "no": 261,
@@ -2087,7 +2349,8 @@ const people = [
     "ko": "쉐인 메이븐 A. 에스테베스",
     "displayName": "Shane Maven A. Esteves 쉐인 메이븐 A. 에스테베스",
     "note": "샨텔의 친언니, <span class=\"timestamp\">정주행 2023.03.14 07:09</span>",
-    "image": "Shane Maven A. Esteves.jpg"
+    "image": "Shane Maven A. Esteves.jpg",
+    "gallery": []
   },
   {
     "no": 262,
@@ -2095,7 +2358,8 @@ const people = [
     "ko": "샨텔 A. 에스테베스",
     "displayName": "Shantel A. Esteves 샨텔 A. 에스테베스",
     "note": "제리님이 자주 '넘버원 마간다 샨텔'이라 말하고 바랑가이 157 방문자들이 뽑은 가장 예쁜 아이, <span class=\"timestamp\"> 2025.12.13 42:31</span>",
-    "image": "Shantel A. Esteves.jpg"
+    "image": "Shantel A. Esteves.jpg",
+    "gallery": []
   },
   {
     "no": 263,
@@ -2103,7 +2367,8 @@ const people = [
     "ko": "셰렐린 타구단",
     "displayName": "Sherelyn Tagudan 셰렐린 타구단",
     "note": "손제이의 엄마, 가끔 라이브 채팅에 글을 남긴다, @sherelyntagudan: ​​thank you always sir Jerry Godbless 🙏 watching always❤ 항상 감사해요, 제리 선생님. 하나님께서 축복하시길.. 늘 시청하고 있어요.<span class=\"timestamp\"> 2023.03.04 18:13</span>, 다른 아이디는 SonjayvinaGeruela, @SonjayvinaGeruela: ​​hello sir jery and korean friends always watching godbless🤗 안녕하세요. 제리님과 한국 친구들, 늘 시청하고 있어요. 하나님의 축복이 함께하시길 바랍니다.<span class=\"timestamp\"> 2024.09.21 채팅 07:50</span>",
-    "image": "Sherelyn Tagudan.jpg"
+    "image": "Sherelyn Tagudan.jpg",
+    "gallery": []
   },
   {
     "no": 264,
@@ -2111,7 +2376,8 @@ const people = [
     "ko": "셜린 선생님",
     "displayName": "Sherlyn 셜린 선생님",
     "note": "샤이카의 여동생이자 코리아 빌딩 공부방의 선생님, <span class=\"timestamp\"> 2024.03.16 채팅 1:17:15</span>",
-    "image": "Sherlyn.jpg"
+    "image": "Sherlyn.jpg",
+    "gallery": []
   },
   {
     "no": 265,
@@ -2119,7 +2385,8 @@ const people = [
     "ko": "실라 미 키라오 오르디스타",
     "displayName": "Shiela Mae Quirao Ordista 실라 미 키라오 오르디스타",
     "note": "제리님이 코리아 빌딩의 여신 'Goddess', 아프로디테 오브 코리아 빌딩 'Aphrodite of Korea Building'이라고 말한 적이 있다, <span class=\"timestamp\"> 2024.05.04 03:30</span>, 생일은 5월 12일, <span class=\"timestamp\"> 2024.05.11 11:14</span>",
-    "image": "Shiela Mae Quirao Ordista.jpg"
+    "image": "Shiela Mae Quirao Ordista.jpg",
+    "gallery": []
   },
   {
     "no": 266,
@@ -2127,7 +2394,8 @@ const people = [
     "ko": "실라 마리 아카드",
     "displayName": "Shiela Marie Accad 실라 마리 아카드",
     "note": "코리아 빌딩의 제1호 선생님이고 조이와 릴리의 친언니이면서 대학교 회계학과 성적 평균 99점의 엘리트 학생이었으나 임신과 아들 출산으로 대학교를 중도에 포기하였다, <span class=\"timestamp\">정주행 2020.05.26 13:53</span>",
-    "image": "Shiela Marie Accad.jpg"
+    "image": "Shiela Marie Accad.jpg",
+    "gallery": []
   },
   {
     "no": 267,
@@ -2135,7 +2403,8 @@ const people = [
     "ko": "신애",
     "displayName": "Sinae 신애",
     "note": "바랑가이 157의 유일한 코피노 여자아이, 2025년 5세, 생일은 3월 1일, <span class=\"timestamp\">정주행 2025.11.14 12:16</span>",
-    "image": "Sinae.jpg"
+    "image": "Sinae.jpg",
+    "gallery": []
   },
   {
     "no": 268,
@@ -2143,7 +2412,8 @@ const people = [
     "ko": "싱잉 콘테스트 챔피언",
     "displayName": "Singing Contest Champion 싱잉 콘테스트 챔피언",
     "note": "2019년 15세의 여자아이, 상금은 2등이 79.67점 500페소, 1등이 82점 1000페소, 챔피언이 87.33점 1500페소, <span class=\"timestamp\">정주행 2019.11.26 20:20</span>",
-    "image": "Singing Contest Champion.jpg"
+    "image": "Singing Contest Champion.jpg",
+    "gallery": []
   },
   {
     "no": 269,
@@ -2151,7 +2421,8 @@ const people = [
     "ko": "남준현",
     "displayName": "Sir. Jerry 남준현",
     "note": "채널 운영자님, 라이브 방송 도중에 음소거가 되어 채팅 메시지를 남기신 적이 있다, @jerryinmanila8609: ​​소리 나게 하려면 다시 시작해야 해요, <span class=\"timestamp\"> 2025.03.22 채팅 1:29:34</span>",
-    "image": "Sir. Jerry.jpg"
+    "image": "Sir. Jerry.jpg",
+    "gallery": []
   },
   {
     "no": 270,
@@ -2159,7 +2430,8 @@ const people = [
     "ko": "시티 아이나",
     "displayName": "Sitti Aina 시티 아이나",
     "note": "'Sitti'는 아랍어로 '귀부인 / 여성 / 존경받는 여자'라는 뜻이고 'Aina'는 아랍어로 '은혜 / 보호'라는 뜻, 연한 하늘색 원피스를 입은 무슬림 여자아이, 2025년 12세, <span class=\"timestamp\"> 2025.12.13 27:30</span>",
-    "image": "Sitti Aina.jpg"
+    "image": "Sitti Aina.jpg",
+    "gallery": []
   },
   {
     "no": 271,
@@ -2167,7 +2439,8 @@ const people = [
     "ko": "청년의회 의장 엠제이",
     "displayName": "SK Chairman - MJ 청년의회 의장 엠제이",
     "note": "꾸야 작이 대부, 2023년 크리스마스 댄스 경연대회 심사위원, <span class=\"timestamp\"> 2023.12.16 12:27</span>",
-    "image": "SK Chairman - MJ.jpg"
+    "image": "SK Chairman - MJ.jpg",
+    "gallery": []
   },
   {
     "no": 272,
@@ -2175,7 +2448,8 @@ const people = [
     "ko": "여성 청년의회 의장 애플",
     "displayName": "SK Chairwoman - Apple 여성 청년의회 의장 애플",
     "note": "코리아 빌딩 댄스 페스티벌 심사위원, <span class=\"timestamp\"> 2020.12.19 02:00</span>, 본명은 'Apple Pelus' 애플 페루스, <span class=\"timestamp\">정주행 2023.11.01 04:48</span>",
-    "image": "SK Chairwoman - Apple.jpg"
+    "image": "SK Chairwoman - Apple.jpg",
+    "gallery": []
   },
   {
     "no": 273,
@@ -2183,7 +2457,8 @@ const people = [
     "ko": "청년의회 의원 체일",
     "displayName": "SK Kagawad - Chael 청년의회 의원 체일",
     "note": "2023년 크리스마스 파티 사회자, <span class=\"timestamp\"> 2023.12.16 13:26</span>",
-    "image": "SK Kagawad - Chael.jpg"
+    "image": "SK Kagawad - Chael.jpg",
+    "gallery": []
   },
   {
     "no": 274,
@@ -2191,7 +2466,8 @@ const people = [
     "ko": "청년의회 의원 J. 알레고라",
     "displayName": "SK Kagawad - J. Alegora 청년의회 의원 J. 알레고라",
     "note": "2021년 코리아 빌딩 창립행사에서 뽑기로 아이폰이 당첨되었고 남편은 선풍기가 당첨되었다, 별명은 'Kulot' 쿠롯인데 따갈로그어로 '곱슬머리'라는 뜻, <span class=\"timestamp\"> 2021.10.10 1:21:21</span>",
-    "image": "SK Kagawad - J. Alegora.jpg"
+    "image": "SK Kagawad - J. Alegora.jpg",
+    "gallery": []
   },
   {
     "no": 275,
@@ -2199,7 +2475,8 @@ const people = [
     "ko": "청년의회 의원 마르동",
     "displayName": "SK Kagawad - Mardong 청년의회 의원 마르동",
     "note": "이보이의 친형, <span class=\"timestamp\"> 2023.12.16 13:42</span>",
-    "image": "SK Kagawad - Mardong.jpg"
+    "image": "SK Kagawad - Mardong.jpg",
+    "gallery": []
   },
   {
     "no": 276,
@@ -2207,7 +2484,8 @@ const people = [
     "ko": "손제이",
     "displayName": "Sonjay 손제이",
     "note": "생후 한달쯤에 자다가 침대에서 떨어져 머리에 금이 가고 안에 피가 고여 그 후유증으로 시력을 잃어 앞을 볼 수 없고 뇌가 더 이상 성장하지 않아 지능이 아기 수준에서 멈추었으며 스스로 몸을 가눌 수 없는 상태가 되었다, 누나의 이름은 자스비나, 2022년 7세, <span class=\"timestamp\">정주행 2022.09.20 04:28</span>",
-    "image": "Sonjay.jpg"
+    "image": "Sonjay.jpg",
+    "gallery": []
   },
   {
     "no": 277,
@@ -2215,7 +2493,8 @@ const people = [
     "ko": "스탄",
     "displayName": "Stan 스탄",
     "note": "네이탄의 친형, 댄싱보이, 2026년 15세, <span class=\"timestamp\"> 2026.03.01 48:16</span>",
-    "image": "Stan.jpg"
+    "image": "Stan.jpg",
+    "gallery": []
   },
   {
     "no": 278,
@@ -2223,7 +2502,8 @@ const people = [
     "ko": "딴띤",
     "displayName": "Tantin 딴띤",
     "note": "코리아 빌딩 앞의 간이식당 kantin 깐띤의 주인, <span class=\"timestamp\"> 2024.11.17 01:19</span>",
-    "image": "Tantin.jpg"
+    "image": "Tantin.jpg",
+    "gallery": []
   },
   {
     "no": 279,
@@ -2231,7 +2511,8 @@ const people = [
     "ko": "타잔",
     "displayName": "Tarzan 타잔",
     "note": "돈맛을 알아버린 멍멍이 2호로 돈을 따라가면 먹을 것이 나온다는 것을 아는 영리한 멍멍이, 주인은 아떼 로데와 손녀 엠빠이, 나이가 많고 타이거와 형제인 듯하다, <span class=\"timestamp\"> 2026.05.02 18:42</span>",
-    "image": "Tarzan.jpg"
+    "image": "Tarzan.jpg",
+    "gallery": []
   },
   {
     "no": 280,
@@ -2239,7 +2520,8 @@ const people = [
     "ko": "딴시 알바레스",
     "displayName": "Thansie Alvares 딴시 알바레스",
     "note": "농구에 미친 남자, 아떼 머시의 외손자, <span class=\"timestamp\"> 2025.05.24 채팅 31:05</span>",
-    "image": "Thansie Alvares.jpg"
+    "image": "Thansie Alvares.jpg",
+    "gallery": []
   },
   {
     "no": 281,
@@ -2247,7 +2529,8 @@ const people = [
     "ko": "테아",
     "displayName": "Thea 테아",
     "note": "마리안의 여동생, <span class=\"timestamp\"> 2025.07.05 10:34</span>",
-    "image": "Thea.jpg"
+    "image": "Thea.jpg",
+    "gallery": []
   },
   {
     "no": 282,
@@ -2255,7 +2538,8 @@ const people = [
     "ko": "타이거",
     "displayName": "Tiger 타이거",
     "note": "바랑가이 157 사무소 앞에서 기다렸다가 제리님이 오면 통행료 20페소를 받아 닭대가리를 사먹는 '돈맛을 알아버린 멍멍이 1호'지만 2022년 12월 15일 노환으로 사망, <span class=\"timestamp\"> 2022.12.17 3부 29:33</span>",
-    "image": "Tiger.jpg"
+    "image": "Tiger.jpg",
+    "gallery": []
   },
   {
     "no": 283,
@@ -2263,7 +2547,8 @@ const people = [
     "ko": "통통",
     "displayName": "Tongtong 통통",
     "note": "제리님의 반려견으로 한국말만 알아듣는다, Shih Tzu mix 시츄 믹스로 귀여운 외모의 멍멍이, <span class=\"timestamp\">정주행 2019.11.17 08:44</span>, 2025년 11살, <span class=\"timestamp\"> 2025.11.29 14:23</span>",
-    "image": "Tongtong.jpg"
+    "image": "Tongtong.jpg",
+    "gallery": []
   },
   {
     "no": 284,
@@ -2271,7 +2556,8 @@ const people = [
     "ko": "토니",
     "displayName": "Tony 토니",
     "note": "일명 댄싱킹, <span class=\"timestamp\">정주행 2019.12.20 12:15</span>, 시니어 부회장님, <span class=\"timestamp\">정주행 2021.12.30 17:12</span>",
-    "image": "Tony.jpg"
+    "image": "Tony.jpg",
+    "gallery": []
   },
   {
     "no": 285,
@@ -2279,7 +2565,8 @@ const people = [
     "ko": "트리샤",
     "displayName": "Trisha 트리샤",
     "note": "존 다렐의 여동생, 별명은 'Arm Breaker' 암 브레이커, 놀다가 크리스탈 미를 깔고 앉았는데 크리스탈 미의 팔이 부러졌다, 2023년 크리스마스 댄스 경연대회에서 2등 수상, <span class=\"timestamp\"> 2023.12.16 1:35:00</span>",
-    "image": "Trisha.jpg"
+    "image": "Trisha.jpg",
+    "gallery": []
   },
   {
     "no": 286,
@@ -2287,7 +2574,8 @@ const people = [
     "ko": "타이런",
     "displayName": "Tyron 타이런",
     "note": "바랑가이 157에 사는 남자아이, <span class=\"timestamp\">정주행 2024.12.28 03:21</span>",
-    "image": "Tyron.jpg"
+    "image": "Tyron.jpg",
+    "gallery": []
   },
   {
     "no": 287,
@@ -2295,7 +2583,8 @@ const people = [
     "ko": "이름모를 바클라",
     "displayName": "Unknown Bakla 이름모를 바클라",
     "note": "태어날 땐 남동생이었지만 현재는 까가왓 지나의 여동생으로 살고 있다, <span class=\"timestamp\">정주행 2021.08.03 02:23</span>",
-    "image": "Unknown Bakla.jpg"
+    "image": "Unknown Bakla.jpg",
+    "gallery": []
   },
   {
     "no": 288,
@@ -2303,7 +2592,8 @@ const people = [
     "ko": "베니스",
     "displayName": "Veniese 베니스",
     "note": "베나의 여동생, 2023년 7세, <span class=\"timestamp\">정주행 2023.02.21 03:57</span>",
-    "image": "Veniese.jpg"
+    "image": "Veniese.jpg",
+    "gallery": []
   },
   {
     "no": 289,
@@ -2311,7 +2601,8 @@ const people = [
     "ko": "베나",
     "displayName": "Viena 베나",
     "note": "자라의 사촌 여동생, 하얀 피부에 예쁜 외모로 농구대회의 유년부 '모스키토' 팀에서 가라와 마리아와 함께 각 팀의 여성 마스코트 '뮤즈' 역할을 맡았다, <span class=\"timestamp\">정주행 2022.05.17 03:41</span>, 2023년 13세, <span class=\"timestamp\">정주행 2023.02.21 04:15</span>, 생일은 3월 24일, <span class=\"timestamp\"> 2024.03.16 28:00</span>",
-    "image": "Viena.jpg"
+    "image": "Viena.jpg",
+    "gallery": []
   },
   {
     "no": 290,
@@ -2319,7 +2610,8 @@ const people = [
     "ko": "얀얀",
     "displayName": "Yan Yan 얀얀",
     "note": "김세훈 씨가 사진을 붙여 선물 박스를 보내준 여자아이로 리아의 사촌, <span class=\"timestamp\"> 2024.11.02 1:03:39</span>",
-    "image": "Yan Yan.jpg"
+    "image": "Yan Yan.jpg",
+    "gallery": []
   },
   {
     "no": 291,
@@ -2327,7 +2619,8 @@ const people = [
     "ko": "윤주웅",
     "displayName": "Yoonjoowoong 윤주웅",
     "note": "메리안이 길에서 주워온 흰색의 암컷 고양이로 제이 후원자의 이름을 붙였다, <span class=\"timestamp\">정주행 2025.10.28 11:51</span>",
-    "image": "Yoonjoowoong.jpg"
+    "image": "Yoonjoowoong.jpg",
+    "gallery": []
   },
   {
     "no": 292,
@@ -2335,7 +2628,8 @@ const people = [
     "ko": "요요이",
     "displayName": "Yoyoy 요요이",
     "note": "체격이 건장한 남자로 쌀을 옮기는 데 도움을 많이 줬다, <span class=\"timestamp\">정주행 2021.12.30 17:16</span>",
-    "image": "Yoyoy.jpg"
+    "image": "Yoyoy.jpg",
+    "gallery": []
   },
   {
     "no": 293,
@@ -2343,7 +2637,8 @@ const people = [
     "ko": "싹",
     "displayName": "Zack 싹",
     "note": "낫낫의 첫째 남동생, <span class=\"timestamp\"> 2025.01.05 20:12</span>, 2026년 7세, <span class=\"timestamp\"> 2026.03.01 46:06</span>",
-    "image": "Zack.jpg"
+    "image": "Zack.jpg",
+    "gallery": []
   },
   {
     "no": 294,
@@ -2351,7 +2646,8 @@ const people = [
     "ko": "자이라",
     "displayName": "Zaira 자이라",
     "note": "형부가 메리안의 친척이라 소개를 받아 제리님의 숙식 제공 가사도우미로 채용되었으나 의처증이 심한 남편 때문에 일을 그만두게 되었다, 2023년 23세, <span class=\"timestamp\">정주행 2023.06.28 00:39</span>",
-    "image": "Zaira.jpg"
+    "image": "Zaira.jpg",
+    "gallery": []
   },
   {
     "no": 295,
@@ -2359,7 +2655,8 @@ const people = [
     "ko": "자이라 미",
     "displayName": "Zaira Mae 자이라 미",
     "note": "산체스배 댄스 콘테스트에 엠빠이와 함께 팀을 이뤄 참가한 여자아이, <span class=\"timestamp\"> 2026.06.05 16:59</span>",
-    "image": "Zaira Mae.jpg"
+    "image": "Zaira Mae.jpg",
+    "gallery": []
   },
   {
     "no": 296,
@@ -2367,7 +2664,8 @@ const people = [
     "ko": "자일라 미",
     "displayName": "Zyra Mae 자일라 미",
     "note": "리안의 베스트 프렌드, <span class=\"timestamp\"> 2025.01.18 1:07:32</span>",
-    "image": "Zyra Mae.jpg"
+    "image": "Zyra Mae.jpg",
+    "gallery": []
   }
 ];
 

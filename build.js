@@ -75,12 +75,41 @@ console.log("📂 images:", imageFiles.length);
 /* =========================
    image map
 ========================= */
+
 const imageMap = new Map();
+const galleryMap = new Map();
 
 for (const file of imageFiles) {
-  const key = normalize(file);
-  if (key === "no image") continue;
-  imageMap.set(key, file);
+
+  if (/^no-image\./i.test(file)) continue;
+
+  const galleryMatch = file.match(/^(.*)_(\d+)\.(jpg|jpeg|png|webp)$/i);
+
+  if (galleryMatch) {
+
+    const baseName = galleryMatch[1];
+    const key = normalize(baseName);
+
+    if (!galleryMap.has(key))
+      galleryMap.set(key, []);
+
+    galleryMap.get(key).push(file);
+
+  } else {
+
+    const key = normalize(file);
+    imageMap.set(key, file);
+
+  }
+}
+
+// gallery 번호순 정렬
+for (const files of galleryMap.values()) {
+  files.sort((a, b) => {
+    const na = parseInt(a.match(/_(\d+)\./)?.[1] || 0, 10);
+    const nb = parseInt(b.match(/_(\d+)\./)?.[1] || 0, 10);
+    return na - nb;
+  });
 }
 
 /* =========================
@@ -116,6 +145,7 @@ let people = lines.map((line, index) => {
   const key = normalize(name);
 
   const matchedImage = imageMap.get(key) || "no-image.jpg";
+  const gallery = galleryMap.get(key) || [];
 
   return {
     no: index + 1,
@@ -123,7 +153,8 @@ let people = lines.map((line, index) => {
     ko,
     displayName,
     note: formatNote(note),
-    image: matchedImage
+    image: matchedImage,
+    gallery
   };
 });
 
