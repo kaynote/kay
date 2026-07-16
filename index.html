@@ -320,6 +320,20 @@ async function openModal(p){
     }
     
     const photo = modalBody.querySelector(".modal-photo");
+    const hint = modalBody.querySelector(".galleryHint");
+
+    function openPhotoGallery(){
+
+        if(photos.length<=1) return;
+
+        openGallery(photos);
+
+    }
+
+    photo.onclick = openPhotoGallery;
+
+    if(hint)
+        hint.onclick = openPhotoGallery;
 
     photo.onclick = () => {
 
