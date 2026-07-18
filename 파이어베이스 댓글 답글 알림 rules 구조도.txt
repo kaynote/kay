@@ -1,12 +1,28 @@
-people (컬렉션)
- └ {postId} (문서)
-     ├ comments
-     │   └ {commentId}
-     │        ├ replies
-     │        └ (댓글 데이터)
-     │
-     ├ notifications        ← 사용자 알림
-     │   └ {notificationId}
-     │
-     └ adminNotifications   ← 관리자 알림
-         └ {notificationId}
+* kay-gallery
+
+├── users (사이트에 로그인한 모든 사용자와 관리자)
+│     └── {uid}
+│            uid
+│            name
+│            photo
+│            email
+│            notifyAdminComment
+│            updatedAt
+│
+├── people (컬렉션)
+│     └── {postId} (문서)
+│            ├── comments
+│            │      └── {commentId}
+│            │
+│            └── likes
+│                   └── {uid}
+│
+└── notifications (사용자 알림)
+       └── {notificationId}
+              targetUid
+              senderUid
+              senderName
+              commentId
+              type
+              read
+              createdAt
