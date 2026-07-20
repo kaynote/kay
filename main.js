@@ -326,14 +326,20 @@ function renderNotifications(list){
   box.innerHTML = "";
 
   list
-    .filter(n => n.targetUid === currentUser.uid && !n.read)
+    .filter(n => n.targetUid === currentUser.uid)
     .forEach(n => {
 
       const div = document.createElement("div");
       div.className = "notification-item";
+      
+      div.classList.add(n.read ? "read" : "unread");
 
-      div.textContent =
-        `🔔 ${n.senderName} 님이 ${n.type === "reply" ? "답글" : "댓글"}을 남겼습니다`;
+      div.innerHTML = `
+          <span class="${n.read ? "read-dot" : "unread-dot"}"></span>
+          ${n.senderName} 님이 ${
+            n.type === "reply" ? "답글" : "댓글"
+          }을 남겼습니다
+      `;
 
       const delBtn = document.createElement("button");
       delBtn.textContent = "✕";
