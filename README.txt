@@ -1,4 +1,4 @@
-Kay Notes Archive
+Kay Notes Archive 
 
 1. Put images into the images folder.
 2. Add all 286 people into people.js.
