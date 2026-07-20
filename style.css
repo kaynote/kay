@@ -702,3 +702,29 @@ box-sizing:border-box;
 .galleryClose:hover{
 background:rgba(0,0,0,.8);
 }
+
+.notification-item.unread{
+    font-weight:bold;
+}
+
+.notification-item.read{
+    color:#888;
+}
+
+.unread-dot{
+    display:inline-block;
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:#1a73e8;
+    margin-right:8px;
+}
+
+.read-dot{
+    display:inline-block;
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:#bbb;
+    margin-right:8px;
+}
