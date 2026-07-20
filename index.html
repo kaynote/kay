@@ -1335,12 +1335,6 @@ watchAuth(user => {
                 const div = document.createElement("div");
                 div.className = "notification-item";
 
-                if (n.read) {
-                    div.classList.add("read");
-                } else {
-                    div.classList.add("unread");
-                }
-
                 // ★ 추가
                 div.classList.add(n.read ? "read" : "unread");
 
