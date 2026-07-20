@@ -1,8 +1,10 @@
 kaynote/
  ├─ build.js
+ ├─ gallery
  ├─ index.html
- ├─ firebase.js      ← ⭐ 추가
- ├─ main.js ← ⭐ 댓글, 답글 시스템 전부
+ ├─ firebase.js     ← ⭐ 추가
+ ├─ index.html
+ ├─ main.js     ← ⭐ 댓글, 답글 시스템 전부
  ├─ names.txt
  ├─ people.js
  ├─ style.css
@@ -10,7 +12,7 @@ kaynote/
       ├─ Adeline.jpg
       ├─ Alex.jpg
       ├─ ...
-      └─ no-image.jpg ← ⭐ 이거 추가
+      └─ no-image.jpg     ← ⭐ 이거 추가
 
 * 사용법: PowerShell을 열고 node build.js 입력하면,
 people.js가 생성된다. (또는, build.bat 더블클릭으로 people.js가 자동으로 생긴다). 사진이 추가될 때마다 반복 업로드.

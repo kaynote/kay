@@ -1306,6 +1306,9 @@ watchAuth(user => {
         const unread = list.filter(n => !n.read).length;
         badge.textContent = unread;
 
+        // ⭐ 여기 추가
+        badge.style.display = unread ? "inline-block" : "none";
+
         const box = document.getElementById("notificationList");
 
         box.innerHTML = `
@@ -1332,6 +1335,12 @@ watchAuth(user => {
                 const div = document.createElement("div");
                 div.className = "notification-item";
 
+                if (n.read) {
+                    div.classList.add("read");
+                } else {
+                    div.classList.add("unread");
+                }
+
                 div.onclick = async () => {
                     await openNotification(n);
                 };
@@ -1340,15 +1349,19 @@ watchAuth(user => {
                 const text = document.createElement("span");
                 if (n.type === "comment") {
 
-                    text.textContent =
-                        `🔔 ${n.senderName} 님이 "${n.postId}" 게시글에 댓글을 남겼습니다`;
+                    const mark = n.read ? "⚪" : "🔵";
 
-                } else {
+                    if (n.type === "comment") {
 
-                    text.textContent =
-                        `🔔 ${n.senderName} 님이 "${n.postId}" 게시글에 답글을 남겼습니다`;
+                        text.textContent =
+                            `${mark} ${n.senderName} 님이 "${n.postId}" 게시글에 댓글을 남겼습니다`;
 
-                }
+                    } else {
+
+                        text.textContent =
+                            `${mark} ${n.senderName} 님이 "${n.postId}" 게시글에 답글을 남겼습니다`;
+
+                    }
 
                 // X 버튼
                 const delBtn = document.createElement("button");
