@@ -1349,22 +1349,22 @@ watchAuth(user => {
                 };
 
                 // 알림 내용
+                // 알림 내용
                 const text = document.createElement("span");
+
+                const mark = n.read ? "⚪" : "🔵";
+
                 if (n.type === "comment") {
 
-                    const mark = n.read ? "⚪" : "🔵";
+                    text.textContent =
+                        `${mark} ${n.senderName} 님이 "${n.postId}" 게시글에 댓글을 남겼습니다`;
 
-                    if (n.type === "comment") {
+                } else {
 
-                        text.textContent =
-                            `${mark} ${n.senderName} 님이 "${n.postId}" 게시글에 댓글을 남겼습니다`;
+                    text.textContent =
+                        `${mark} ${n.senderName} 님이 "${n.postId}" 게시글에 답글을 남겼습니다`;
 
-                    } else {
-
-                        text.textContent =
-                            `${mark} ${n.senderName} 님이 "${n.postId}" 게시글에 답글을 남겼습니다`;
-
-                    }
+                }
 
                 // X 버튼
                 const delBtn = document.createElement("button");
