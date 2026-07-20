@@ -1341,6 +1341,9 @@ watchAuth(user => {
                     div.classList.add("unread");
                 }
 
+                // ★ 추가
+                div.classList.add(n.read ? "read" : "unread");
+
                 div.onclick = async () => {
                     await openNotification(n);
                 };
