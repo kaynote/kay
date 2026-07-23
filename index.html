@@ -618,33 +618,44 @@ async function openModal(p){
 
         if (user.uid === ADMIN_UID) {
 
-            // 관리자는 모든 users 컬렉션 사용자에게 알림
-            const usersSnap = await getDocs(collection(db, "users"));
-
-            usersSnap.forEach(docSnap => {
-                if (docSnap.id !== user.uid) {
-                    targets.set(docSnap.id, true);
-                }
-            });
-
-        } else {
-
-            // 일반 사용자는 관리자 + 참여자
-            targets.set(ADMIN_UID, true);
-
             const commentsSnap = await getDocs(
                 collection(db, "people", p.name, "comments")
             );
 
-            commentsSnap.forEach(docSnap => {
-                const data = docSnap.data();
+            const targets = new Set();
 
-                if (data.uid && data.uid !== user.uid) {
-                    targets.set(data.uid, true);
-                }
+            commentsSnap.forEach(docItem => {
+                const data = docItem.data();
+                if (data.uid) targets.add(data.uid);
             });
 
-        }
+            // 관리자는 항상 알림
+            targets.add(ADMIN_UID);
+
+            // 자기 자신 제외
+            targets.delete(user.uid);
+
+            for (const uid of targets) {
+
+                await addDoc(collection(db, "notifications"), {
+
+                    targetUid: uid,
+                    senderUid: user.uid,
+                    senderName:
+                        user.providerData?.[0]?.displayName ||
+                        user.displayName ||
+                        user.email ||
+                        "익명",
+
+                    postId: p.name,
+                    commentId: commentRef.id,
+                    type: "comment",
+                    read: false,
+                    createdAt: serverTimestamp()
+
+                });
+
+            }
 
         // 알림 생성
         for (const targetUid of targets.keys()) {
@@ -930,45 +941,48 @@ async function openModal(p){
     );
 
                 // ★ 답글 알림 생성
-                if (user.uid === ADMIN_UID) {
+                const commentsSnap = await getDocs(
+                    collection(db, "people", p.name, "comments")
+                );
 
-                    const usersSnap = await getDocs(collection(db, "users"));
+                const targets = new Set();
 
-                    for (const u of usersSnap.docs) {
+                commentsSnap.forEach(docItem => {
 
-                        if (u.id === user.uid) continue;
+                    const data = docItem.data();
 
-                        await addDoc(collection(db, "notifications"), {
-                            targetUid: u.id,
-                            senderUid: user.uid,
-                            senderName:
-                                user.providerData?.[0]?.displayName ||
-                                user.displayName ||
-                                user.email ||
-                                "익명",
-                            postId: p.name,
-                            commentId: replyRef.id,
-                            type: "reply",
-                            read: false,
-                            createdAt: serverTimestamp()
-                        });
-                    }
+                    if (data.uid)
+                        targets.add(data.uid);
 
-                } else if (c.uid !== user.uid) {
+                });
+
+                // 부모 댓글 작성자는 반드시 알림
+                targets.add(c.uid);
+
+                // 관리자는 항상 알림
+                targets.add(ADMIN_UID);
+
+                // 자기 자신 제외
+                targets.delete(user.uid);
+
+                for (const uid of targets) {
 
                     await addDoc(collection(db, "notifications"), {
-                        targetUid: c.uid,
+
+                        targetUid: uid,
                         senderUid: user.uid,
                         senderName:
                             user.providerData?.[0]?.displayName ||
                             user.displayName ||
                             user.email ||
                             "익명",
+
                         postId: p.name,
                         commentId: replyRef.id,
                         type: "reply",
                         read: false,
                         createdAt: serverTimestamp()
+
                     });
 
                 }
