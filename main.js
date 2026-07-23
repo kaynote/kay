@@ -10,7 +10,6 @@ import {
   watchComments,
   watchNotifications,
   getParticipants,
-  getAllUsers,
   addNotifications,
   markNotificationRead
 } from "./firebase.js";
@@ -119,7 +118,7 @@ function renderComment(c) {
   `;
 
   div.querySelector(".reply-btn").onclick = () => openReplyForm(c, div);
-  div.querySelector(".edit-btn").onclick = () => openEditForm(c, div);
+  div.querySelector(".edit-btn").onclick = () => openEditForm(c, div, c.text);
 
   const child = div.querySelector(".child");
 
@@ -149,23 +148,18 @@ async function sendComment() {
 
   const ADMIN_UID = "eEltgLaV6oN7MHUXTfQONc2wGAk1";
 
-  let targets;
+  const participants = await getParticipants(postId);
 
-  if (currentUser.uid === ADMIN_UID) {
+  const targets = new Set(participants);
 
-      targets = await getAllUsers();
+  // 관리자는 항상 알림 대상
+  targets.add(ADMIN_UID);
 
-  } else {
-
-      targets = await getParticipants(postId);
-
-  }
-
-  targets = [...new Set(targets)]
-      .filter(uid => uid !== currentUser.uid);
+  // 자기 자신은 제외
+  targets.delete(currentUser.uid);
 
   await addNotifications(
-      targets,
+      [...targets],
       currentUser.uid,
       currentUser.name,
       postId,
@@ -223,23 +217,21 @@ function openReplyForm(c, commentEl) {
 
     const ADMIN_UID = "eEltgLaV6oN7MHUXTfQONc2wGAk1";
 
-    let targets;
+    const participants = await getParticipants(postId);
 
-    if (currentUser.uid === ADMIN_UID) {
+    const targets = new Set(participants);
 
-        targets = await getAllUsers();
+    // 부모 댓글 작성자는 반드시 알림
+    targets.add(c.uid);
 
-    } else {
+    // 관리자도 항상 알림
+    targets.add(ADMIN_UID);
 
-        targets = [c.uid];
-
-    }
-
-    targets = [...new Set(targets)]
-        .filter(uid => uid !== currentUser.uid);
+    // 자기 자신 제외
+    targets.delete(currentUser.uid);
 
     await addNotifications(
-        targets,
+        [...targets],
         currentUser.uid,
         currentUser.name,
         postId,
@@ -273,7 +265,7 @@ function openEditForm(c, commentEl, oldText) {
     </div>
   `;
 
-  const zone = commentEl.querySelector(".reply-zone");
+  const zone = commentEl.querySelector(".reply-slot");
   zone.innerHTML = "";
   zone.appendChild(form);
 
