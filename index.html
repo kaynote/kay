@@ -1015,11 +1015,12 @@ async function openModal(p){
                 textarea.focus();
 
                 form.querySelector(".save").onclick = async () => {
-                    const text = textarea.value.trim();
 
-                    if (!text) return;
+                    const newText = textarea.value.trim();
 
-                    if (text.length > 1000) {
+                    if (!newText) return;
+
+                    if (newText.length > 1000) {
                         alert("댓글은 1000자 이하만 가능합니다.");
                         return;
                     }
