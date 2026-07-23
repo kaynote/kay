@@ -611,54 +611,35 @@ async function openModal(p){
             }
         );
 
-        // 2. 댓글 알림 생성 (관리자 + 기존 참여자)
+        // ==========================
+        // 알림 대상 계산
+        // ==========================
 
-        // 관리자 추가
-        const targets = new Map();
+        const commentsSnap = await getDocs(
+            collection(db, "people", p.name, "comments")
+        );
 
-        if (user.uid === ADMIN_UID) {
+        const targets = new Set();
 
-            const commentsSnap = await getDocs(
-                collection(db, "people", p.name, "comments")
-            );
+        commentsSnap.forEach(docItem => {
+            const data = docItem.data();
 
-            const targets = new Set();
-
-            commentsSnap.forEach(docItem => {
-                const data = docItem.data();
-                if (data.uid) targets.add(data.uid);
-            });
-
-            // 관리자는 항상 알림
-            targets.add(ADMIN_UID);
-
-            // 자기 자신 제외
-            targets.delete(user.uid);
-
-            for (const uid of targets) {
-
-                await addDoc(collection(db, "notifications"), {
-
-                    targetUid: uid,
-                    senderUid: user.uid,
-                    senderName:
-                        user.providerData?.[0]?.displayName ||
-                        user.displayName ||
-                        user.email ||
-                        "익명",
-
-                    postId: p.name,
-                    commentId: commentRef.id,
-                    type: "comment",
-                    read: false,
-                    createdAt: serverTimestamp()
-
-                });
-
+            if (data.uid) {
+                targets.add(data.uid);
             }
+        });
 
+        // 관리자는 항상 알림
+        targets.add(ADMIN_UID);
+
+        // 자기 자신 제외
+        targets.delete(user.uid);
+
+        // ==========================
         // 알림 생성
-        for (const targetUid of targets.keys()) {
+        // ==========================
+
+        for (const targetUid of targets) {
 
             await addDoc(
                 collection(db, "notifications"),
@@ -688,7 +669,9 @@ async function openModal(p){
         }
 
         commentInput.value = "";
+
         loadComments();
+
     });
 
     /* =====================
@@ -919,7 +902,13 @@ async function openModal(p){
             form.querySelector(".send").onclick = async () => {
 
                 const text = textarea.value.trim();
+
                 if (!text) return;
+
+                if (text.length > 1000) {
+                    alert("댓글은 1000자 이하만 가능합니다.");
+                    return;
+                }
 
                 const user = auth.currentUser || await login();
 
@@ -986,7 +975,7 @@ async function openModal(p){
                     });
 
                 }
-
+                form.remove();
                 loadComments();
             };
 
@@ -1026,8 +1015,14 @@ async function openModal(p){
                 textarea.focus();
 
                 form.querySelector(".save").onclick = async () => {
-                    const newText = textarea.value.trim();
-                    if (!newText) return;
+                    const text = textarea.value.trim();
+
+                    if (!text) return;
+
+                    if (text.length > 1000) {
+                        alert("댓글은 1000자 이하만 가능합니다.");
+                        return;
+                    }
 
                     await updateDoc(
                         doc(db, "people", p.name, "comments", c.id),
