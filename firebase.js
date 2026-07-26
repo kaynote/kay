@@ -117,6 +117,13 @@ export async function login() {
     return normalizeUser(user);
 }
 
+const result = await signInWithPopup(auth, provider);
+
+const user = result.user;
+
+console.log(user.displayName);
+console.log(user.providerData);
+
 export async function logout() {
   await signOut(auth);
 }
