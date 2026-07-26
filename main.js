@@ -146,7 +146,7 @@ async function sendComment() {
 
   const comment = await addComment(postId, text, currentUser);
 
-  const ADMIN_UID = "eEltgLaV6oN7MHUXTfQONc2wGAk1";
+  const ADMIN_UID = "8OEFOiQCXDdIodCjbyXP0ZNints1";
 
   const participants = await getParticipants(postId);
 
@@ -215,7 +215,7 @@ function openReplyForm(c, commentEl) {
       c.id
     );
 
-    const ADMIN_UID = "eEltgLaV6oN7MHUXTfQONc2wGAk1";
+    const ADMIN_UID = "8OEFOiQCXDdIodCjbyXP0ZNints1";
 
     const participants = await getParticipants(postId);
 
