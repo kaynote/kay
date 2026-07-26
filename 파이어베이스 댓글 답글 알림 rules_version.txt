@@ -9,7 +9,7 @@ service cloud.firestore {
 
     function isAdmin() {
       return isSignedIn() &&
-        request.auth.uid == "eEltgLaV6oN7MHUXTfQONc2wGAk1";
+        request.auth.uid == "8OEFOiQCXDdIodCjbyXP0ZNints1";
     }
 
     /* =====================
