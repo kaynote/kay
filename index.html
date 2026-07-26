@@ -277,39 +277,11 @@ async function openModal(p){
     ];
 
     modalBody.innerHTML = `
-    <div class="photoViewer">
-
-        <button class="photoPrev">◀</button>
-
         <img
             class="modal-photo"
             src="images/${photos[0].image}"
+            data-index="0"
         >
-
-        <button class="photoNext">▶</button>
-
-    </div>
-
-    <div class="photoCount">
-    1 / ${photos.length}
-    </div>
-    
-    let current = 0;
-
-    const prevBtn = modalBody.querySelector(".photoPrev");
-    const nextBtn = modalBody.querySelector(".photoNext");
-    const counter = modalBody.querySelector(".photoCount");
-    
-    function showPhoto(index){
-
-        current = index;
-
-        photo.src = "images/" + photos[index].image;
-
-        counter.textContent =
-            `${index+1} / ${photos.length}`;
-
-    }
 
         ${
             photos.length > 1
@@ -361,27 +333,10 @@ async function openModal(p){
 
     }
 
-    prevBtn.onclick = ()=>{
+    photo.onclick = openPhotoGallery;
 
-        current--;
-
-        if(current<0)
-            current = photos.length-1;
-
-        showPhoto(current);
-
-    };
-
-    nextBtn.onclick = ()=>{
-
-        current++;
-
-        if(current>=photos.length)
-            current=0;
-
-        showPhoto(current);
-
-    };
+    if(hint)
+        hint.onclick = openPhotoGallery;
 
     const commentBtn = modalBody.querySelector(".commentBtn");
     const commentInput = modalBody.querySelector(".commentInput");
@@ -389,6 +344,177 @@ async function openModal(p){
     
     let replyTarget = null;
     
+    function openGallery(photos){
+
+        let index=0;
+        let touchX=0;
+
+        const bg=document.createElement("div");
+        bg.className="galleryOverlay";
+
+        bg.innerHTML=`
+        <div class="galleryBox">
+
+        <button class="galleryClose">✕</button>
+
+        <button class="galleryPrev">◀</button>
+
+        <img class="galleryImg">
+
+        <button class="galleryNext">▶</button>
+
+        <div class="galleryCount"></div>
+
+        <div class="galleryCaption"></div>
+
+        </div>
+        `;
+
+        document.body.appendChild(bg);
+
+        const img=bg.querySelector(".galleryImg");
+        const count=bg.querySelector(".galleryCount");
+        const caption=bg.querySelector(".galleryCaption");
+        const prevBtn=bg.querySelector(".galleryPrev");
+        const nextBtn=bg.querySelector(".galleryNext");
+        const closeBtn=bg.querySelector(".galleryClose");
+
+        function show(){
+
+        img.src="images/"+photos[index].image;
+
+        count.textContent=`${index+1} / ${photos.length}`;
+
+        caption.innerHTML =
+            index === 0 ? "" : (photos[index].caption || "");
+
+        const preload=new Image();
+        preload.src="images/"+photos[(index+1)%photos.length].image;
+
+        }
+
+        show();
+
+        function next(){
+
+        index++;
+
+        if(index>=photos.length)
+        index=0;
+
+        show();
+
+        }
+
+        function prev(){
+
+        index--;
+
+        if(index<0)
+        index=photos.length-1;
+
+        show();
+
+        }
+
+        prevBtn.onclick=prev;
+
+        nextBtn.onclick=next;
+
+        img.onclick=next;
+
+        img.ontouchstart=e=>{
+
+        touchX=e.touches[0].clientX;
+
+        };
+
+        img.ontouchend=e=>{
+
+        const dx=e.changedTouches[0].clientX-touchX;
+
+        if(Math.abs(dx)<50)
+        return;
+
+        if(dx<0)
+        next();
+        else
+        prev();
+
+        };
+
+        bg.onwheel=e=>{
+
+        e.preventDefault();
+
+        if(e.deltaY>0)
+        next();
+        else
+        prev();
+
+        };
+
+        function closeGallery(){
+
+        document.removeEventListener("keydown",keyHandler);
+
+        bg.remove();
+
+        }
+
+        closeBtn.onclick=closeGallery;
+
+        img.onclick=e=>{
+
+            e.stopPropagation();
+            next();
+
+        };
+
+        prevBtn.onclick=e=>{
+
+            e.stopPropagation();
+            prev();
+
+        };
+
+        nextBtn.onclick=e=>{
+
+            e.stopPropagation();
+            next();
+
+        };
+
+        closeBtn.onclick=e=>{
+
+            e.stopPropagation();
+            closeGallery();
+
+        };
+
+        bg.onclick=()=>{
+
+            closeGallery();
+
+        };
+
+        function keyHandler(e){
+
+        if(e.key==="Escape")
+        closeGallery();
+
+        else if(e.key==="ArrowLeft")
+        prev();
+
+        else if(e.key==="ArrowRight")
+        next();
+
+        }
+
+        document.addEventListener("keydown",keyHandler);
+
+        }
+
     /* =====================
        SHOW LIKES (한 번만 등록)
     ===================== */
@@ -1049,18 +1175,12 @@ modal.addEventListener("click", e=>{
 
 document.addEventListener("keydown", (e)=>{
 
-    if (modal.classList.contains("hidden")) return;
+    if(e.key === "Escape"){
 
-    if (e.key === "Escape") {
-        modal.classList.add("hidden");
-    }
+        if(!modal.classList.contains("hidden")){
+            modal.classList.add("hidden");
+        }
 
-    if (e.key === "ArrowLeft") {
-        prevBtn.click();
-    }
-
-    if (e.key === "ArrowRight") {
-        nextBtn.click();
     }
 
 });
