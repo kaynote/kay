@@ -92,28 +92,29 @@ AUTH
 
 export async function login() {
 
-  if (auth.currentUser) {
-    return normalizeUser(auth.currentUser);
-  }
+    let user;
 
-  const result = await signInWithPopup(auth, provider);
+    if (auth.currentUser) {
+        user = auth.currentUser;
+    } else {
+        const result = await signInWithPopup(auth, provider);
+        user = result.user;
+    }
 
-  const user = result.user;
+    await setDoc(
+        doc(db, "users", user.uid),
+        {
+            uid: user.uid,
+            name: user.displayName || "",
+            email: user.email || "",
+            photo: user.photoURL || "",
+            notifyAdminComment: true,
+            updatedAt: serverTimestamp()
+        },
+        { merge: true }
+    );
 
-  await setDoc(
-    doc(db, "users", user.uid),
-    {
-      uid: user.uid,
-      name: user.displayName || "",
-      email: user.email || "",
-      photo: user.photoURL || "",
-      notifyAdminComment: true,
-      updatedAt: serverTimestamp()
-    },
-    { merge: true }
-  );
-
-  return normalizeUser(user);
+    return normalizeUser(user);
 }
 
 export async function logout() {
