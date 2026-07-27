@@ -67,6 +67,8 @@ import {
     deleteReadNotifications
 } from "./firebase.js";
 
+let currentUser = null;
+
 import {
     collection,
     getDocs,
@@ -1121,6 +1123,8 @@ logoutBtn.addEventListener("click", logout);
 let notifUnsub = null;
 
 watchAuth(user => {
+
+    currentUser = user;
 
     const userInfo = document.getElementById("userInfo");
 
