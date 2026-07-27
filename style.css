@@ -590,16 +590,18 @@ COMMENT SYSTEM
     flex: 1;
 }
 
-#deleteAllNotificationsBtn {
-  font-size: 11px;
-  padding: 4px 8px;
+#deleteAllNotificationsBtn,
+#deleteReadNotificationsBtn {
+  font-size: 12px;
+  padding: 6px 10px;
   border: none;
   background: #eee;
   border-radius: 6px;
   cursor: pointer;
 }
 
-#deleteAllNotificationsBtn:hover {
+#deleteAllNotificationsBtn:hover,
+#deleteReadNotificationsBtn:hover {
   background: #ddd;
 }
 
