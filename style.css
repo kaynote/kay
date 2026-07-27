@@ -201,12 +201,17 @@ MODAL CONTENT
 .modal-name {
   font-size: 24px;
   font-weight: 700;
+  margin-bottom: 16px;
 }
 
 .modal-desc {
-  line-height: 1.8;
+  line-height: 1.85;
   white-space: pre-line;
+
+  margin-bottom: 28px;   /* ← 설명과 좋아요 사이 간격 */
 }
+
+
 
 /* =========================
 LIKE / LOGIN
@@ -214,8 +219,9 @@ LIKE / LOGIN
 
 .likeArea {
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 14px;             /* 버튼끼리도 조금 여유 있게 */
+  margin-bottom: 24px;
+  align-items: center;
 }
 
 .likeBtn {
