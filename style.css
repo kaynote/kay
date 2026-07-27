@@ -728,3 +728,44 @@ background:rgba(0,0,0,.8);
     background:#bbb;
     margin-right:8px;
 }
+
+.modalPhotoWrap{
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+
+}
+
+.photoPrev,
+.photoNext{
+
+    width:42px;
+    height:42px;
+
+    border:none;
+    border-radius:50%;
+
+    font-size:22px;
+    cursor:pointer;
+
+}
+
+.photoPrev:hover,
+.photoNext:hover{
+
+    background:#eee;
+
+}
+
+.photoCount{
+
+    margin-top:8px;
+    text-align:center;
+
+    color:#666;
+
+    font-size:14px;
+
+}

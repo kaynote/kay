@@ -277,15 +277,30 @@ async function openModal(p){
     ];
 
     modalBody.innerHTML = `
-        <img
-            class="modal-photo"
-            src="images/${photos[0].image}"
-            data-index="0"
-        >
+        <div class="modalPhotoWrap">
+
+            ${
+                photos.length > 1
+                ? `<button class="photoPrev">◀</button>`
+                : ""
+            }
+
+            <img
+                class="modal-photo"
+                src="images/${photos[0].image}"
+            >
+
+            ${
+                photos.length > 1
+                ? `<button class="photoNext">▶</button>`
+                : ""
+            }
+
+        </div>
 
         ${
             photos.length > 1
-            ? `<div class="galleryHint">📷 사진 ${photos.length}장</div>`
+            ? `<div class="photoCount">1 / ${photos.length}</div>`
             : ""
         }
 
@@ -323,20 +338,103 @@ async function openModal(p){
     }
     
     const photo = modalBody.querySelector(".modal-photo");
-    const hint = modalBody.querySelector(".galleryHint");
 
-    function openPhotoGallery(){
+const prevBtn = modalBody.querySelector(".photoPrev");
+const nextBtn = modalBody.querySelector(".photoNext");
+const count = modalBody.querySelector(".photoCount");
 
-        if(photos.length<=1) return;
+let currentPhoto = 0;
 
-        openGallery(photos);
+function showPhoto(){
+
+    photo.src = "images/" + photos[currentPhoto].image;
+
+    if(count){
+
+        count.textContent =
+            `${currentPhoto+1} / ${photos.length}`;
 
     }
 
-    photo.onclick = openPhotoGallery;
+}
 
-    if(hint)
-        hint.onclick = openPhotoGallery;
+if(prevBtn){
+
+    prevBtn.onclick = e=>{
+
+        e.stopPropagation();
+
+        currentPhoto--;
+
+        if(currentPhoto<0)
+            currentPhoto=photos.length-1;
+
+        showPhoto();
+
+    };
+
+}
+
+if(nextBtn){
+
+    nextBtn.onclick = e=>{
+
+        e.stopPropagation();
+
+        currentPhoto++;
+
+        if(currentPhoto>=photos.length)
+            currentPhoto=0;
+
+        showPhoto();
+
+    };
+
+}
+
+photo.onclick=e=>{
+
+    e.stopPropagation();
+
+    if(photos.length<=1) return;
+
+    currentPhoto++;
+
+    if(currentPhoto>=photos.length)
+        currentPhoto=0;
+
+    showPhoto();
+
+};
+
+document.onkeydown=e=>{
+
+    if(modal.classList.contains("hidden"))
+        return;
+
+    if(e.key==="ArrowLeft" && prevBtn){
+
+        currentPhoto--;
+
+        if(currentPhoto<0)
+            currentPhoto=photos.length-1;
+
+        showPhoto();
+
+    }
+
+    if(e.key==="ArrowRight" && nextBtn){
+
+        currentPhoto++;
+
+        if(currentPhoto>=photos.length)
+            currentPhoto=0;
+
+        showPhoto();
+
+    }
+
+};
 
     const commentBtn = modalBody.querySelector(".commentBtn");
     const commentInput = modalBody.querySelector(".commentInput");
@@ -344,177 +442,6 @@ async function openModal(p){
     
     let replyTarget = null;
     
-    function openGallery(photos){
-
-        let index=0;
-        let touchX=0;
-
-        const bg=document.createElement("div");
-        bg.className="galleryOverlay";
-
-        bg.innerHTML=`
-        <div class="galleryBox">
-
-        <button class="galleryClose">✕</button>
-
-        <button class="galleryPrev">◀</button>
-
-        <img class="galleryImg">
-
-        <button class="galleryNext">▶</button>
-
-        <div class="galleryCount"></div>
-
-        <div class="galleryCaption"></div>
-
-        </div>
-        `;
-
-        document.body.appendChild(bg);
-
-        const img=bg.querySelector(".galleryImg");
-        const count=bg.querySelector(".galleryCount");
-        const caption=bg.querySelector(".galleryCaption");
-        const prevBtn=bg.querySelector(".galleryPrev");
-        const nextBtn=bg.querySelector(".galleryNext");
-        const closeBtn=bg.querySelector(".galleryClose");
-
-        function show(){
-
-        img.src="images/"+photos[index].image;
-
-        count.textContent=`${index+1} / ${photos.length}`;
-
-        caption.innerHTML =
-            index === 0 ? "" : (photos[index].caption || "");
-
-        const preload=new Image();
-        preload.src="images/"+photos[(index+1)%photos.length].image;
-
-        }
-
-        show();
-
-        function next(){
-
-        index++;
-
-        if(index>=photos.length)
-        index=0;
-
-        show();
-
-        }
-
-        function prev(){
-
-        index--;
-
-        if(index<0)
-        index=photos.length-1;
-
-        show();
-
-        }
-
-        prevBtn.onclick=prev;
-
-        nextBtn.onclick=next;
-
-        img.onclick=next;
-
-        img.ontouchstart=e=>{
-
-        touchX=e.touches[0].clientX;
-
-        };
-
-        img.ontouchend=e=>{
-
-        const dx=e.changedTouches[0].clientX-touchX;
-
-        if(Math.abs(dx)<50)
-        return;
-
-        if(dx<0)
-        next();
-        else
-        prev();
-
-        };
-
-        bg.onwheel=e=>{
-
-        e.preventDefault();
-
-        if(e.deltaY>0)
-        next();
-        else
-        prev();
-
-        };
-
-        function closeGallery(){
-
-        document.removeEventListener("keydown",keyHandler);
-
-        bg.remove();
-
-        }
-
-        closeBtn.onclick=closeGallery;
-
-        img.onclick=e=>{
-
-            e.stopPropagation();
-            next();
-
-        };
-
-        prevBtn.onclick=e=>{
-
-            e.stopPropagation();
-            prev();
-
-        };
-
-        nextBtn.onclick=e=>{
-
-            e.stopPropagation();
-            next();
-
-        };
-
-        closeBtn.onclick=e=>{
-
-            e.stopPropagation();
-            closeGallery();
-
-        };
-
-        bg.onclick=()=>{
-
-            closeGallery();
-
-        };
-
-        function keyHandler(e){
-
-        if(e.key==="Escape")
-        closeGallery();
-
-        else if(e.key==="ArrowLeft")
-        prev();
-
-        else if(e.key==="ArrowRight")
-        next();
-
-        }
-
-        document.addEventListener("keydown",keyHandler);
-
-        }
-
     /* =====================
        SHOW LIKES (한 번만 등록)
     ===================== */
