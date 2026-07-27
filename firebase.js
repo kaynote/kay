@@ -13,7 +13,8 @@ import {
   setDoc,
   onSnapshot,
   query,
-  where
+  where,
+  writeBatch
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 import {
@@ -24,11 +25,12 @@ import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
-export async function deleteAllNotifications(uid) {
+export async function deleteReadNotifications(uid) {
 
     const q = query(
         collection(db, "notifications"),
-        where("targetUid", "==", uid)
+        where("targetUid", "==", uid),
+        where("read", "==", true)
     );
 
     const snap = await getDocs(q);

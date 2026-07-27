@@ -581,10 +581,13 @@ COMMENT SYSTEM
   gap: 6px;
 }
 
-.notification-header {
-  display: flex;
-  justify-content: flex-end;
-  padding: 6px 8px;
+.notification-header{
+    display: flex;
+    gap: 8px;
+}
+
+.notification-header button{
+    flex: 1;
 }
 
 #deleteAllNotificationsBtn {

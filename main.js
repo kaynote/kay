@@ -59,11 +59,20 @@ window.addEventListener("load", async () => {
 
   document.getElementById("deleteAllNotificationsBtn").onclick = async () => {
 
-    if (!currentUser) return;
+      if (!currentUser) return;
 
-    if (!confirm("모든 알림을 삭제하시겠습니까?")) return;
+      if (!confirm("모든 알림을 삭제하시겠습니까?")) return;
 
-    await deleteAllNotifications(currentUser.uid);
+      await deleteAllNotifications(currentUser.uid);
+  };
+
+  document.getElementById("deleteReadNotificationsBtn").onclick = async () => {
+
+      if (!currentUser) return;
+
+      if (!confirm("읽은 알림만 삭제하시겠습니까?")) return;
+
+      await deleteReadNotifications(currentUser.uid);
   };
 
 });

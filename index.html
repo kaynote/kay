@@ -46,10 +46,14 @@
 <div id="notificationList">
 
     <div class="notification-header">
-        <button id="deleteAllNotificationsBtn">
-            전체 삭제
-        </button>
-    </div>
+    <button id="deleteAllNotificationsBtn">
+        전체 삭제
+    </button>
+
+    <button id="deleteReadNotificationsBtn">
+        읽은 알림 삭제
+    </button>
+</div>
 
 </div>
 
@@ -71,7 +75,8 @@ import {
     login,
     logout,
     watchAuth,
-    deleteAllNotifications
+    deleteAllNotifications,
+    deleteReadNotifications
 } from "./firebase.js";
 
 import {
@@ -86,8 +91,8 @@ import {
     query,
     orderBy,
     serverTimestamp,
-    onSnapshot,   // ★ 추가
-    where         // ★ 추가
+    onSnapshot,
+    where    
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 /* =========================
@@ -1259,16 +1264,29 @@ watchAuth(user => {
             <button id="deleteAllNotificationsBtn">
                 전체 삭제
             </button>
+
+            <button id="deleteReadNotificationsBtn">
+                읽은 알림 삭제
+            </button>
         </div>
         `;
         
         document.getElementById("deleteAllNotificationsBtn").onclick = async () => {
 
-            if (!auth.currentUser) return;
+            if (!currentUser) return;
 
             if (!confirm("모든 알림을 삭제하시겠습니까?")) return;
 
-            await deleteAllNotifications(auth.currentUser.uid);
+            await deleteAllNotifications(currentUser.uid);
+        };
+
+        document.getElementById("deleteReadNotificationsBtn").onclick = async () => {
+
+            if (!currentUser) return;
+
+            if (!confirm("읽은 알림만 삭제하시겠습니까?")) return;
+
+            await deleteReadNotifications(currentUser.uid);
         };
 
         list
