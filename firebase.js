@@ -176,7 +176,7 @@ export async function updateComment(postId, commentId, text) {
   );
 }
 
-Comment(postId, commentId) {
+export async function deleteComment(postId, commentId) {
   await deleteDoc(
     doc(db, "people", postId, "comments", commentId)
   );
