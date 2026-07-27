@@ -853,13 +853,13 @@ background:rgba(0,0,0,.8);
     white-space: nowrap;
 }
 
+.name {
+    font-weight: bold;
+    white-space: nowrap;
+}
+
 .time {
     font-size: 12px;
     color: #aaa;
     white-space: nowrap;
-    margin-left: 8px;
-}
-
-.name {
-    font-weight: bold;
 }
