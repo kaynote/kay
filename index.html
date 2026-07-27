@@ -339,47 +339,64 @@ async function openModal(p){
     
     const photo = modalBody.querySelector(".modal-photo");
 
-const prevBtn = modalBody.querySelector(".photoPrev");
-const nextBtn = modalBody.querySelector(".photoNext");
-const count = modalBody.querySelector(".photoCount");
+    const prevBtn = modalBody.querySelector(".photoPrev");
+    const nextBtn = modalBody.querySelector(".photoNext");
+    const count = modalBody.querySelector(".photoCount");
 
-let currentPhoto = 0;
+    let currentPhoto = 0;
 
-function showPhoto(){
+    function showPhoto(){
 
-    photo.src = "images/" + photos[currentPhoto].image;
+        photo.src = "images/" + photos[currentPhoto].image;
 
-    if(count){
+        if(count){
 
-        count.textContent =
-            `${currentPhoto+1} / ${photos.length}`;
+            count.textContent =
+                `${currentPhoto+1} / ${photos.length}`;
+
+        }
 
     }
 
-}
+    if(prevBtn){
 
-if(prevBtn){
+        prevBtn.onclick = e=>{
 
-    prevBtn.onclick = e=>{
+            e.stopPropagation();
+
+            currentPhoto--;
+
+            if(currentPhoto<0)
+                currentPhoto=photos.length-1;
+
+            showPhoto();
+
+        };
+
+    }
+
+    if(nextBtn){
+
+        nextBtn.onclick = e=>{
+
+            e.stopPropagation();
+
+            currentPhoto++;
+
+            if(currentPhoto>=photos.length)
+                currentPhoto=0;
+
+            showPhoto();
+
+        };
+
+    }
+
+    photo.onclick=e=>{
 
         e.stopPropagation();
 
-        currentPhoto--;
-
-        if(currentPhoto<0)
-            currentPhoto=photos.length-1;
-
-        showPhoto();
-
-    };
-
-}
-
-if(nextBtn){
-
-    nextBtn.onclick = e=>{
-
-        e.stopPropagation();
+        if(photos.length<=1) return;
 
         currentPhoto++;
 
@@ -390,51 +407,34 @@ if(nextBtn){
 
     };
 
-}
+    document.onkeydown=e=>{
 
-photo.onclick=e=>{
+        if(modal.classList.contains("hidden"))
+            return;
 
-    e.stopPropagation();
+        if(e.key==="ArrowLeft" && prevBtn){
 
-    if(photos.length<=1) return;
+            currentPhoto--;
 
-    currentPhoto++;
+            if(currentPhoto<0)
+                currentPhoto=photos.length-1;
 
-    if(currentPhoto>=photos.length)
-        currentPhoto=0;
+            showPhoto();
 
-    showPhoto();
+        }
 
-};
+        if(e.key==="ArrowRight" && nextBtn){
 
-document.onkeydown=e=>{
+            currentPhoto++;
 
-    if(modal.classList.contains("hidden"))
-        return;
+            if(currentPhoto>=photos.length)
+                currentPhoto=0;
 
-    if(e.key==="ArrowLeft" && prevBtn){
+            showPhoto();
 
-        currentPhoto--;
+        }
 
-        if(currentPhoto<0)
-            currentPhoto=photos.length-1;
-
-        showPhoto();
-
-    }
-
-    if(e.key==="ArrowRight" && nextBtn){
-
-        currentPhoto++;
-
-        if(currentPhoto>=photos.length)
-            currentPhoto=0;
-
-        showPhoto();
-
-    }
-
-};
+    };
 
     const commentBtn = modalBody.querySelector(".commentBtn");
     const commentInput = modalBody.querySelector(".commentInput");
