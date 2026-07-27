@@ -842,6 +842,7 @@ background:rgba(0,0,0,.8);
 .left {
     display: flex;
     align-items: center;
+    margin-right: 10px;
 }
 
 .text {
@@ -855,6 +856,7 @@ background:rgba(0,0,0,.8);
 .name {
     font-weight: bold;
     white-space: nowrap;
+    line-height: 1.5;
 }
 
 .time {
