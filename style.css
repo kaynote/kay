@@ -729,43 +729,92 @@ background:rgba(0,0,0,.8);
     margin-right:8px;
 }
 
+/* =========================
+   PHOTO GALLERY
+========================= */
+
 .modalPhotoWrap{
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:12px;
+    position:relative;
+    display:inline-block;
+    margin:auto;
+
+}
+
+.modal-photo{
+
+    display:block;
+    max-width:100%;
+    height:auto;
 
 }
 
 .photoPrev,
 .photoNext{
 
-    width:42px;
-    height:42px;
+    position:absolute;
+
+    top:50%;
+    transform:translateY(-50%);
+
+    width:44px;
+    height:44px;
 
     border:none;
     border-radius:50%;
 
+    background:rgba(0,0,0,.45);
+    color:#fff;
+
     font-size:22px;
+    font-weight:bold;
+
     cursor:pointer;
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:
+        opacity .25s ease,
+        background .2s ease,
+        transform .2s ease;
+
+}
+
+.photoPrev{
+
+    left:12px;
+
+}
+
+.photoNext{
+
+    right:12px;
+
+}
+
+.modalPhotoWrap:hover .photoPrev,
+.modalPhotoWrap:hover .photoNext{
+
+    opacity:1;
+    visibility:visible;
 
 }
 
 .photoPrev:hover,
 .photoNext:hover{
 
-    background:#eee;
+    background:rgba(0,0,0,.75);
+    transform:translateY(-50%) scale(1.08);
 
 }
 
 .photoCount{
 
-    margin-top:8px;
+    margin-top:10px;
     text-align:center;
 
     color:#666;
-
     font-size:14px;
 
 }
