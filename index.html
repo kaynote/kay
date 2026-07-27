@@ -338,10 +338,10 @@ async function openModal(p){
     }
     
     const photo = modalBody.querySelector(".modal-photo");
-
     const prevBtn = modalBody.querySelector(".photoPrev");
     const nextBtn = modalBody.querySelector(".photoNext");
     const count = modalBody.querySelector(".photoCount");
+    const desc = modalBody.querySelector(".modal-desc");
 
     let currentPhoto = 0;
 
@@ -350,12 +350,16 @@ async function openModal(p){
         photo.src = "images/" + photos[currentPhoto].image;
 
         if(count){
-
             count.textContent =
                 `${currentPhoto+1} / ${photos.length}`;
-
         }
 
+        if(desc){
+            desc.innerHTML =
+                currentPhoto === 0
+                ? (p.note || "")
+                : (photos[currentPhoto].caption || "");
+        }
     }
 
     if(prevBtn){
@@ -407,7 +411,7 @@ async function openModal(p){
 
     };
 
-    document.onkeydown=e=>{
+    function photoKeyHandler(e){
 
         if(modal.classList.contains("hidden"))
             return;
@@ -434,7 +438,9 @@ async function openModal(p){
 
         }
 
-    };
+    }
+
+    document.addEventListener("keydown", photoKeyHandler);
 
     const commentBtn = modalBody.querySelector(".commentBtn");
     const commentInput = modalBody.querySelector(".commentInput");
