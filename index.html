@@ -43,19 +43,7 @@
   <span id="badge">0</span>
 </button>
 
-<div id="notificationList">
-
-    <div class="notification-header">
-        <button id="deleteAllNotificationsBtn">
-            전체 삭제
-        </button>
-
-        <button id="deleteReadNotificationsBtn">
-            읽은 알림 삭제
-        </button>
-    </div>
-
-</div>
+<div id="notificationList"></div>
 
 <!-- MODAL -->
 <div id="modal" class="modal hidden">
@@ -1259,18 +1247,36 @@ watchAuth(user => {
 
         const box = document.getElementById("notificationList");
 
-        box.innerHTML = "";
+        box.innerHTML = `
+        <div class="notification-header">
+
+            <button id="deleteAllNotificationsBtn">
+                전체 삭제
+            </button>
+
+            <button id="deleteReadNotificationsBtn">
+                읽은 알림 삭제
+            </button>
+
+        </div>
+        `;
         
         document.getElementById("deleteAllNotificationsBtn").onclick = async () => {
 
-            alert("전체 삭제 버튼 작동");
+            if (!currentUser) return;
 
+            if (!confirm("모든 알림을 삭제하시겠습니까?")) return;
+
+            await deleteAllNotifications(currentUser.uid);
         };
 
         document.getElementById("deleteReadNotificationsBtn").onclick = async () => {
 
-            alert("읽은 알림 삭제 버튼 작동");
+            if (!currentUser) return;
 
+            if (!confirm("읽은 알림만 삭제하시겠습니까?")) return;
+
+            await deleteReadNotifications(currentUser.uid);
         };
 
         list
