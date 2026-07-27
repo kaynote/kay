@@ -842,7 +842,6 @@ background:rgba(0,0,0,.8);
 .left {
     display: flex;
     align-items: center;
-    margin-right: 10px;
 }
 
 .text {
