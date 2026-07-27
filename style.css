@@ -852,3 +852,9 @@ background:rgba(0,0,0,.8);
 .right {
     white-space: nowrap;
 }
+
+.time {
+    font-size: 11px;
+    color: #aaa;
+    white-space: nowrap;
+}
