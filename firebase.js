@@ -44,6 +44,24 @@ export async function deleteReadNotifications(uid) {
     await Promise.all(jobs);
 }
 
+export async function deleteAllNotifications(uid) {
+
+    const q = query(
+        collection(db, "notifications"),
+        where("targetUid", "==", uid)
+    );
+
+    const snap = await getDocs(q);
+
+    const jobs = [];
+
+    snap.forEach((d) => {
+        jobs.push(deleteDoc(d.ref));
+    });
+
+    await Promise.all(jobs);
+}
+
 /* =========================
 CONFIG
 ========================= */
@@ -158,7 +176,7 @@ export async function updateComment(postId, commentId, text) {
   );
 }
 
-export async function deleteComment(postId, commentId) {
+Comment(postId, commentId) {
   await deleteDoc(
     doc(db, "people", postId, "comments", commentId)
   );
