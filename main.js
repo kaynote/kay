@@ -1,5 +1,3 @@
-alert("main.js");
-
 import people from "./people.js";
 
 import {
