@@ -101,25 +101,28 @@ export async function login() {
         user = result.user;
     }
 
-await setDoc(
-    doc(db, "users", user.uid),
-    {
-        uid: user.uid,
-        name:
-            user.providerData?.[0]?.displayName ||
-            user.displayName ||
-            user.email ||
-            "익명 사용자",
-        email: user.email || "",
-        photo: user.photoURL || "",
-        notifyAdminComment: true,
-        updatedAt: serverTimestamp()
-    },
-    { merge: true }
-);
+    await setDoc(
+        doc(db, "users", user.uid),
+        {
+            uid: user.uid,
+            name:
+                user.providerData?.[0]?.displayName ||
+                user.displayName ||
+                user.email ||
+                "익명 사용자",
+            email: user.email || "",
+            photo: user.photoURL || "",
+            notifyAdminComment: true,
+            updatedAt: serverTimestamp()
+        },
+        { merge: true }
+    );
+
+    return normalizeUser(user);
+}
 
 export async function logout() {
-  await signOut(auth);
+    await signOut(auth);
 }
 
 export function watchAuth(callback) {
