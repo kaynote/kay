@@ -87,6 +87,10 @@ export const auth = getAuth(app);
 
 const provider = new GoogleAuthProvider();
 
+provider.setCustomParameters({
+    prompt: "select_account"
+});
+
 /* =========================
 USER
 ========================= */
@@ -112,14 +116,8 @@ AUTH
 
 export async function login() {
 
-    let user;
-
-    if (auth.currentUser) {
-        user = auth.currentUser;
-    } else {
-        const result = await signInWithPopup(auth, provider);
-        user = result.user;
-    }
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
 
     await setDoc(
         doc(db, "users", user.uid),
