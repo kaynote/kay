@@ -1754,6 +1754,15 @@ const people = [
   },
   {
     "no": 195,
+    "name": "Maurice",
+    "ko": "모리스",
+    "displayName": "Maurice 모리스",
+    "note": "겡겡의 조카, 발음을 천천히 하면 '마우리스'로 들리고 발음을 빨리 하면 '모리스'로 들린다.<span class=\"timestamp\"> 2026.05.09 채팅 39:16</span>",
+    "image": "Maurice.jpg",
+    "gallery": []
+  },
+  {
+    "no": 196,
     "name": "Melissa",
     "ko": "멜리사",
     "displayName": "Melissa 멜리사",
@@ -1762,7 +1771,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 196,
+    "no": 197,
     "name": "Melria Mhae Q. Mahusay",
     "ko": "멜리아 미 Q. 마우사이",
     "displayName": "Melria Mhae Q. Mahusay 멜리아 미 Q. 마우사이",
@@ -1771,7 +1780,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 197,
+    "no": 198,
     "name": "Merie Ann Cauba",
     "ko": "메리 안 카우바",
     "displayName": "Merie Ann Cauba 메리 안 카우바",
@@ -1780,7 +1789,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 198,
+    "no": 199,
     "name": "Meyamesi",
     "ko": "메야메시",
     "displayName": "Meyamesi 메야메시",
@@ -1789,7 +1798,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 199,
+    "no": 200,
     "name": "Michaela Quintera Montes",
     "ko": "미카엘라 퀸테라 몬테스",
     "displayName": "Michaela Quintera Montes 미카엘라 퀸테라 몬테스",
@@ -1798,7 +1807,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 200,
+    "no": 201,
     "name": "Migi",
     "ko": "미기",
     "displayName": "Migi 미기",
@@ -1807,7 +1816,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 201,
+    "no": 202,
     "name": "Miguel",
     "ko": "미구엘",
     "displayName": "Miguel 미구엘",
@@ -1816,7 +1825,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 202,
+    "no": 203,
     "name": "Miguela",
     "ko": "미겔라",
     "displayName": "Miguela 미겔라",
@@ -1825,7 +1834,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 203,
+    "no": 204,
     "name": "Mikay",
     "ko": "미까이",
     "displayName": "Mikay 미까이",
@@ -1834,7 +1843,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 204,
+    "no": 205,
     "name": "Mikha Q. Ruñez",
     "ko": "미카 Q. 루녜스",
     "displayName": "Mikha Q. Ruñez 미카 Q. 루녜스",
@@ -1843,7 +1852,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 205,
+    "no": 206,
     "name": "Milagros Rubis",
     "ko": "밀라그로스 루비스",
     "displayName": "Milagros Rubis 밀라그로스 루비스",
@@ -1852,7 +1861,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 206,
+    "no": 207,
     "name": "MJ",
     "ko": "엠제이",
     "displayName": "MJ 엠제이",
@@ -1861,21 +1870,12 @@ const people = [
     "gallery": []
   },
   {
-    "no": 207,
+    "no": 208,
     "name": "Mona",
     "ko": "모나",
     "displayName": "Mona 모나",
     "note": "제리님 동네에 사는 꼬마 여자아이, <span class=\"timestamp\"> 2026.06.20 49:02</span>",
     "image": "Mona.jpg",
-    "gallery": []
-  },
-  {
-    "no": 208,
-    "name": "Moris",
-    "ko": "모리스",
-    "displayName": "Moris 모리스",
-    "note": "겡겡의 조카, <span class=\"timestamp\"> 2026.05.09 채팅 39:16</span>",
-    "image": "Moris.jpg",
     "gallery": []
   },
   {
