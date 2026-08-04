@@ -262,11 +262,14 @@ async function openModal(p){
 
     history.pushState({ modal: true }, "");
 
-    const user = auth.currentUser || await login();
-
-    await addView(p.name, user.uid);
-
+    // 먼저 모달을 연다.
     modal.classList.remove("hidden");
+
+    // 조회수는 뒤에서 처리한다.
+    const user = auth.currentUser;
+    if (user) {
+        addView(p.name, user.uid).catch(console.error);
+    }
 
     const photos=[
         {
