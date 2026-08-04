@@ -375,46 +375,68 @@ VIEW COUNT
 
 export async function addView(postId, uid) {
 
-    if (!uid) return;
+    console.log("조회수 시작:", postId, uid);
+
+    if (!uid) {
+        console.log("uid 없음");
+        return;
+    }
 
     const postRef = doc(db, "people", postId);
     const viewRef = doc(db, "people", postId, "views", uid);
 
-    await runTransaction(db, async (transaction) => {
+    try {
 
-        const viewSnap = await transaction.get(viewRef);
+        await runTransaction(db, async (transaction) => {
 
-        // 이미 방문한 사람
-        if (viewSnap.exists()) {
-            return;
-        }
+            const viewSnap = await transaction.get(viewRef);
 
-        const postSnap = await transaction.get(postRef);
-
-        let views = 0;
-
-        if (postSnap.exists()) {
-            views = postSnap.data().views || 0;
-        }
+            console.log("기존 조회 기록:", viewSnap.exists());
 
 
-        // 방문 기록 저장
-        transaction.set(viewRef, {
-            viewedAt: serverTimestamp()
+            if (viewSnap.exists()) {
+                console.log("이미 본 게시물");
+                return;
+            }
+
+
+            const postSnap = await transaction.get(postRef);
+
+            console.log("게시물 존재:", postSnap.exists());
+
+
+            let views = 0;
+
+            if (postSnap.exists()) {
+                views = postSnap.data().views || 0;
+            }
+
+
+            transaction.set(viewRef, {
+                viewedAt: serverTimestamp()
+            });
+
+
+            transaction.set(
+                postRef,
+                {
+                    views: views + 1
+                },
+                {
+                    merge:true
+                }
+            );
+
         });
 
 
-        // 조회수 필드 자동 생성 또는 증가
-        transaction.set(
-            postRef,
-            {
-                views: views + 1
-            },
-            {
-                merge: true
-            }
-        );
+        console.log("조회수 증가 성공");
 
-    });
+
+    } catch(e) {
+
+        console.error("조회수 오류:", e);
+
+    }
 
 }
