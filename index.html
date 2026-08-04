@@ -64,7 +64,8 @@ import {
     logout,
     watchAuth,
     deleteAllNotifications,
-    deleteReadNotifications
+    deleteReadNotifications,
+    addView
 } from "./firebase.js";
 
 let currentUser = null;
@@ -260,6 +261,10 @@ function formatDate(ts){
 async function openModal(p){
 
     history.pushState({ modal: true }, "");
+
+    const user = auth.currentUser || await login();
+
+    await addView(p.name, user.uid);
 
     modal.classList.remove("hidden");
 
