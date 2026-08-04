@@ -374,25 +374,35 @@ VIEW COUNT
 
 export async function addView(postId, uid) {
 
+    console.log("addView 시작", postId, uid);
+
     if (!uid) return;
 
-    // 이 사용자가 이미 조회했는지 확인
-    const viewRef = doc(db, "people", postId, "views", uid);
+    try {
+        const viewRef = doc(db, "people", postId, "views", uid);
 
-    const snap = await getDoc(viewRef);
+        const snap = await getDoc(viewRef);
 
-    if (snap.exists()) return;
+        console.log("이미 조회?", snap.exists());
 
-    // 처음 조회
-    await setDoc(viewRef, {
-        viewedAt: serverTimestamp()
-    });
+        if (snap.exists()) return;
 
-    // 조회수 +1
-    await updateDoc(
-        doc(db, "people", postId),
-        {
-            views: increment(1)
-        }
-    );
+        await setDoc(viewRef, {
+            viewedAt: serverTimestamp()
+        });
+
+        console.log("views 문서 생성");
+
+        await updateDoc(
+            doc(db, "people", postId),
+            {
+                views: increment(1)
+            }
+        );
+
+        console.log("조회수 증가 완료");
+
+    } catch (e) {
+        console.error("addView 오류:", e);
+    }
 }
