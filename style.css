@@ -218,10 +218,10 @@ LIKE / LOGIN
 ========================= */
 
 .likeArea {
-  display: flex;
-  gap: 14px;             /* 버튼끼리도 조금 여유 있게 */
-  margin-bottom: 24px;
-  align-items: center;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-top:15px;
 }
 
 .likeBtn {

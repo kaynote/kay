@@ -11,6 +11,7 @@
 │
 ├── people (컬렉션)
 │     └── {postId} (문서)
+│            ├── views
 │            ├── comments
 │            │      └── {commentId}
 │            │
