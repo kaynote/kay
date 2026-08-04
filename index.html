@@ -268,17 +268,17 @@ async function openModal(p){
     const user = auth.currentUser;
 
     console.log("현재 게시물:", p);
-    console.log("조회수 문서ID:", p.name);
+    console.log("조회수 문서ID:", p.displayName || p.name);
 
     if (user) {
+
         console.log("조회 사용자:", user.uid);
-        addView(p.name, user.uid).catch(console.error);
-    }
 
-    // 조회수는 뒤에서 처리한다.
-    const user = auth.currentUser;
-    if (user) {
-        addView(p.name, user.uid).catch(console.error);
+        addView(
+            p.name,
+            user.uid
+        ).catch(console.error);
+
     }
 
     const photos=[
