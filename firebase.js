@@ -384,26 +384,32 @@ export async function addView(postId, uid) {
 
         const viewSnap = await transaction.get(viewRef);
 
-        // 이미 조회한 사람은 종료
-        if (viewSnap.exists()) return;
+        // 이미 본 사람은 증가하지 않음
+        if (viewSnap.exists()) {
+            return;
+        }
+
+        const postSnap = await transaction.get(postRef);
+
+        let currentViews = 0;
+
+        if (postSnap.exists()) {
+            currentViews = postSnap.data().views || 0;
+        }
 
         // 조회 기록 저장
         transaction.set(viewRef, {
             viewedAt: serverTimestamp()
         });
 
-        // 게시글 읽기
-        const postSnap = await transaction.get(postRef);
-
-        const currentViews =
-            postSnap.exists()
-                ? (postSnap.data().views || 0)
-                : 0;
-
-        // 조회수 증가
-        transaction.update(postRef, {
-            views: currentViews + 1
-        });
+        // views 필드가 없으면 자동 생성
+        transaction.set(
+            postRef,
+            {
+                views: currentViews + 1
+            },
+            { merge: true }
+        );
 
     });
 
