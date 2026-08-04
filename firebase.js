@@ -14,7 +14,8 @@ import {
   onSnapshot,
   query,
   where,
-  writeBatch
+  writeBatch,
+  increment
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 import {
@@ -365,4 +366,33 @@ export async function getCommentById(postId, commentId) {
     id: snap.id,
     ...snap.data()
   };
+}
+
+/* =========================
+VIEW COUNT
+========================= */
+
+export async function addView(postId, uid) {
+
+    if (!uid) return;
+
+    // 이 사용자가 이미 조회했는지 확인
+    const viewRef = doc(db, "people", postId, "views", uid);
+
+    const snap = await getDoc(viewRef);
+
+    if (snap.exists()) return;
+
+    // 처음 조회
+    await setDoc(viewRef, {
+        viewedAt: serverTimestamp()
+    });
+
+    // 조회수 +1
+    await updateDoc(
+        doc(db, "people", postId),
+        {
+            views: increment(1)
+        }
+    );
 }
