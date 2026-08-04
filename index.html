@@ -332,6 +332,14 @@ async function openModal(p){
         </div>
     `;
 
+    const viewCountEl = modalBody.querySelector(".viewCount");
+
+    const snap = await getDoc(doc(db, "people", p.name));
+
+    if (snap.exists()) {
+        viewCountEl.textContent = snap.data().views || 0;
+    }
+
     const likeBtn = modalBody.querySelector(".likeBtn");
     const likeCountEl = modalBody.querySelector(".likeCount");
     const commentCountEl = modalBody.querySelector(".commentCount");
