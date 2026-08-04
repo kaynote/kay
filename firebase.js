@@ -15,7 +15,8 @@ import {
   query,
   where,
   writeBatch,
-  increment
+  increment,
+  runTransaction
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 import {
@@ -374,35 +375,36 @@ VIEW COUNT
 
 export async function addView(postId, uid) {
 
-    console.log("addView 시작", postId, uid);
-
     if (!uid) return;
 
-    try {
-        const viewRef = doc(db, "people", postId, "views", uid);
+    const postRef = doc(db, "people", postId);
+    const viewRef = doc(db, "people", postId, "views", uid);
 
-        const snap = await getDoc(viewRef);
+    await runTransaction(db, async (transaction) => {
 
-        console.log("이미 조회?", snap.exists());
+        const viewSnap = await transaction.get(viewRef);
 
-        if (snap.exists()) return;
+        // 이미 조회한 사람은 종료
+        if (viewSnap.exists()) return;
 
-        await setDoc(viewRef, {
+        // 조회 기록 저장
+        transaction.set(viewRef, {
             viewedAt: serverTimestamp()
         });
 
-        console.log("views 문서 생성");
+        // 게시글 읽기
+        const postSnap = await transaction.get(postRef);
 
-        await updateDoc(
-            doc(db, "people", postId),
-            {
-                views: increment(1)
-            }
-        );
+        const currentViews =
+            postSnap.exists()
+                ? (postSnap.data().views || 0)
+                : 0;
 
-        console.log("조회수 증가 완료");
+        // 조회수 증가
+        transaction.update(postRef, {
+            views: currentViews + 1
+        });
 
-    } catch (e) {
-        console.error("addView 오류:", e);
-    }
+    });
+
 }
