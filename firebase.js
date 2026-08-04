@@ -384,31 +384,35 @@ export async function addView(postId, uid) {
 
         const viewSnap = await transaction.get(viewRef);
 
-        // 이미 본 사람은 증가하지 않음
+        // 이미 방문한 사람
         if (viewSnap.exists()) {
             return;
         }
 
         const postSnap = await transaction.get(postRef);
 
-        let currentViews = 0;
+        let views = 0;
 
         if (postSnap.exists()) {
-            currentViews = postSnap.data().views || 0;
+            views = postSnap.data().views || 0;
         }
 
-        // 조회 기록 저장
+
+        // 방문 기록 저장
         transaction.set(viewRef, {
             viewedAt: serverTimestamp()
         });
 
-        // views 필드가 없으면 자동 생성
+
+        // 조회수 필드 자동 생성 또는 증가
         transaction.set(
             postRef,
             {
-                views: currentViews + 1
+                views: views + 1
             },
-            { merge: true }
+            {
+                merge: true
+            }
         );
 
     });
