@@ -319,20 +319,24 @@ async function openModal(p){
 
         <div class="modal-name">${p.displayName || p.name}</div>
 
-        <div class="modal-views">
-        👁 조회수 <span class="viewCount">0</span>
-        </div>
-
         <div class="modal-desc">${p.note || ""}</div>
 
         <div class="likeArea">
+
+            <span class="viewArea">
+                👁 조회수 <span class="viewCount">0</span>
+            </span>
+
             <button class="likeBtn">👍 좋아요</button>
             <span class="likeCount">0</span>
 
             <span class="commentLabel">💬 댓글</span>
             <span class="commentCount">0</span>
 
-            <button class="showLikesBtn" style="display:none;">추천자 보기</button>
+            <button class="showLikesBtn" style="display:none;">
+                👥 추천자 보기
+            </button>
+
         </div>
 
         <div class="commentArea">
