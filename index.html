@@ -333,9 +333,9 @@ async function openModal(p){
                     👁 조회자 보기
                 </button>
 
-                <span>
+                <button class="likeBtn">
                     👍 좋아요 <span class="likeCount">0</span>
-                </span>
+                </button>
 
                 <span>
                     💬 댓글 <span class="commentCount">0</span>
@@ -377,6 +377,50 @@ async function openModal(p){
     const likeCountEl = modalBody.querySelector(".likeCount");
     const commentCountEl = modalBody.querySelector(".commentCount");
     const showLikesBtn = modalBody.querySelector(".showLikesBtn");
+
+
+    /* =====================
+       LIKE BUTTON
+    ===================== */
+
+    if(likeBtn){
+
+        likeBtn.onclick = async ()=>{
+
+            const user = auth.currentUser || await login();
+
+            const ref = doc(
+                db,
+                "people",
+                p.name,
+                "likes",
+                user.uid
+            );
+
+            const liked = await getDoc(ref);
+
+
+            if(liked.exists()){
+
+                await deleteDoc(ref);
+
+            } else {
+
+                await setDoc(ref,{
+                    uid:user.uid,
+                    name:user.name,
+                    photo:user.photo,
+                    createdAt:serverTimestamp()
+                });
+
+            }
+
+
+            loadLikes();
+
+        };
+
+    }
     
     const showViewsBtn = modalBody.querySelector(".showViewsBtn");
     const viewsList = document.querySelector(".viewsList");
@@ -559,9 +603,6 @@ async function openModal(p){
     const commentsDiv = modalBody.querySelector(".comments");
 
     let replyTarget = null;
-
-
-    /* 여기에 넣기 */
 
     async function loadLikes(){
 
