@@ -9,15 +9,6 @@ body {
   font-family: "Malgun Gothic", sans-serif;
 }
 
-#searchBox {
-  width: 100%;
-  padding: 14px;
-  font-size: 17px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  box-sizing: border-box;
-}
-
 /* =========================
 GRID / CARD
 ========================= */
@@ -324,23 +315,6 @@ COMMENTS
 .inline-reply textarea {
   width: 100%;
   min-height: 80px;
-}
-
-/* =========================
-AUTH
-========================= */
-
-.authArea {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-  overflow: hidden;
-}
-
-.authArea span {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 /* =========================
@@ -931,27 +905,32 @@ background:rgba(0,0,0,.8);
 }
 
 header {
-  background: #fff;
-  padding: 20px 50px;
-  border-radius: 12px;
-  margin-bottom: 20px;
+    background: #fff;
+    padding: 20px 50px;
+    border-radius: 12px;
+    margin-bottom: 20px;
 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
-.loginBtn {
-  background: #4285F4;
-  color: white;
-  border: none;
-  padding: 11px 22px;
-  border-radius: 20px;
-  font-size: 15px;
-  cursor: pointer;
-  transition: 0.2s;
+.authArea {
+    margin-left: auto;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
-.loginBtn:hover {
-  background: #3367d6;
+#searchBox {
+    width: 250px;
+}
+
+#loginBtn {
+    background: #4285F4;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 10px;
 }
