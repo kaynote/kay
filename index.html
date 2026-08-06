@@ -382,30 +382,7 @@ async function openModal(p){
     const viewsList = document.getElementById("viewsList");
     const viewsModal = document.getElementById("viewsModal");
     const closeViewsBtn = document.getElementById("closeViewsBtn");
-    
-    // X 버튼 닫기
-    if(closeViewsBtn){
-
-        closeViewsBtn.onclick = closeViewsModal;
-
-    }
-
-
-    // 팝업 바깥 클릭 닫기
-    if(viewsModal){
-
-        viewsModal.onclick = (e)=>{
-
-            if(e.target === viewsModal){
-
-                closeViewsModal();
-
-            }
-
-        };
-
-    }
-    
+      
     // 추천자 X 버튼 닫기
     if(closeLikesBtn){
 
@@ -472,10 +449,6 @@ async function openModal(p){
     document.addEventListener("keydown",(e)=>{
 
         if(e.key !== "Escape") return;
-
-
-        const likesModal = document.getElementById("likesModal");
-        const viewsModal = document.getElementById("viewsModal");
 
 
         if(likesModal && !likesModal.classList.contains("hidden")){
