@@ -751,25 +751,8 @@ async function openModal(p){
             const v = docItem.data();
 
             let name = v.name || "이름 없음";
-            let photo = v.photo || "";
-
-            if(v.uid){
-
-                const userSnap = await getDoc(
-                    doc(db,"users",v.uid)
-                );
-
-                if(userSnap.exists()){
-
-                    const userData = userSnap.data();
-
-                    name = userData.name || name;
-                    photo = userData.photo || photo;
-
-                }
-
-            }
-
+            let photo = v.photo || "images/no-image.jpg";
+         
             html += `
             <div class="viewer">
 
