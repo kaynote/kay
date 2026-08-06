@@ -323,29 +323,30 @@ async function openModal(p){
 
         <div class="viewArea">
 
-            👁 조회수 <span class="viewCount">0</span>
+            <div class="likeArea">
 
-            <button id="showViewsBtn" style="display:none">
-                👁 조회자 보기
-            </button>
+    <span class="viewArea">
+        👁 조회수 <span class="viewCount">0</span>
+      </span>
 
-        </div>
+      <button id="showViewsBtn" style="display:none">
+          👁 조회자 보기
+      </button>
 
-        <div id="viewsList" class="hidden"></div>
-                
-            </span>
 
-            <button class="likeBtn">👍 좋아요</button>
-            <span class="likeCount">0</span>
+      <span>
+          👍 좋아요 <span class="likeCount">0</span>
+      </span>
 
-            <span class="commentLabel">💬 댓글</span>
-            <span class="commentCount">0</span>
+      <span>
+          💬 댓글 <span class="commentCount">0</span>
+      </span>
 
-            <button class="showLikesBtn" style="display:none;">
-                👥 추천자 보기
-            </button>
+      <button class="showLikesBtn" style="display:none">
+          👥 추천자 보기
+      </button>
 
-        </div>
+  </div>
 
         <div class="commentArea">
             <textarea class="commentInput" placeholder="댓글 입력 (최대 1000자)"></textarea>
