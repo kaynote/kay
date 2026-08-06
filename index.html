@@ -368,8 +368,8 @@ async function openModal(p){
     const commentCountEl = modalBody.querySelector(".commentCount");
     const showLikesBtn = modalBody.querySelector(".showLikesBtn");
     
-    const showViewsBtn = modalBody.querySelector("#showViewsBtn");
-    const viewsList = modalBody.querySelector("#viewsList");
+    const showViewsBtn = document.getElementById("showViewsBtn");
+    const viewsList = document.getElementById("viewsList");
 
     /* 🔥 여기 */
     if(auth.currentUser?.email === ADMIN_EMAIL){
@@ -519,19 +519,6 @@ async function openModal(p){
        LOAD LIKES
     ===================== */
 
-    async function loadLikes(){
-
-        console.log("좋아요 확인 postId:", p.name);
-
-        const snap = await getDocs(
-            collection(db, "people", p.name, "likes")
-        );
-
-        console.log("좋아요 개수:", snap.size);
-
-        likeCountEl.textContent = snap.size;
-    }
-    
     async function loadViewers(){
 
         const snap = await getDocs(
@@ -548,16 +535,21 @@ async function openModal(p){
 
             html += `
             <div class="viewer">
-                <img 
-                  src="${v.photo || 'images/no-image.jpg'}"
-                  width="40"
-                  height="40"
-                >
+                <img src="${v.photo || 'images/no-image.jpg'}"
+                     width="40"
+                     height="40">
 
-                <span>${v.name}</span>
+                <span>${v.name || "이름 없음"}</span>
             </div>
             `;
         });
+
+
+        // ⭐ 여기에 추가
+        if(!viewsList){
+            console.log("viewsList 없음");
+            return;
+        }
 
 
         viewsList.innerHTML = html;
