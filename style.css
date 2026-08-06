@@ -928,11 +928,9 @@ header h1 {
 }
 
 #searchBox {
-    width: 100%;
-    padding: 12px;
-    box-sizing: border-box;
-
-    margin-bottom: 30px;
+    width:350px;
+    padding:12px;
+    box-sizing:border-box;
 }
 
 #loginBtn {
