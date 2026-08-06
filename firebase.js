@@ -386,15 +386,28 @@ export async function addView(postId, user) {
     const userRef = doc(db, "users", user.uid);
     const userSnap = await getDoc(userRef);
 
-    let name =
-        user.name ||
-        user.displayName ||
-        user.email ||
-        "익명";
+    let name = "익명";
+    let photo = "";
 
-    let photo =
-        user.photo ||
-        "";
+    const userRef = doc(db,"users",user.uid);
+
+    const userSnap = await getDoc(userRef);
+
+
+    if(userSnap.exists()){
+
+        const data = userSnap.data();
+
+        name =
+            data.name ||
+            data.email ||
+            "익명";
+
+        photo =
+            data.photo ||
+            "";
+
+    }
 
     if(userSnap.exists()){
 
