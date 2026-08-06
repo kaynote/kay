@@ -514,9 +514,14 @@ async function openModal(p){
     ===================== */
 
     async function loadLikes(){
+
+        console.log("좋아요 확인 postId:", p.name);
+
         const snap = await getDocs(
             collection(db, "people", p.name, "likes")
         );
+
+        console.log("좋아요 개수:", snap.size);
 
         likeCountEl.textContent = snap.size;
     }
