@@ -589,37 +589,21 @@ async function openModal(p){
             <h3>👁 조회한 회원 (${snap.size}명)</h3>
         `;
 
-
         for(const docItem of snap.docs){
 
             const v = docItem.data();
-            
-            if(!v.uid){
 
+            if(!v.uid){
                 console.log("uid 없는 조회 기록:", v);
                 continue;
-
             }
-            
+
             let name = "이름 없음";
             let photo = "";
 
-            if(v.uid){
-
-                const userSnap = await getDoc(
-                    doc(db, "users", v.uid)
-                );
-
-                if(userSnap.exists()){
-
-                    const userData = userSnap.data();
-
-                    name = userData.name || "이름 없음";
-                    photo = userData.photo || "";
-
-                }
-
-            }
+            const userSnap = await getDoc(
+                doc(db, "users", v.uid)
+            );
 
             if(userSnap.exists()){
 
@@ -630,28 +614,29 @@ async function openModal(p){
 
             }
 
-
             html += `
             <div class="viewer">
 
-                <img src="${photo || 'images/no-image.jpg'}">
+                <img src="${photo || 'images/no-image.jpg'}"
+                     width="40"
+                     height="40">
 
                 <span>${name}</span>
 
             </div>
             `;
+
         }
 
-                if(!viewsList || !viewsModal){
+        if(!viewsList || !viewsModal){
+            console.log("조회자 팝업 요소 없음");
+            return;
+        }
 
-                    console.log("조회자 팝업 요소 없음");
-                    return;
+        viewsList.innerHTML = html;
 
-                }
+        viewsModal.classList.remove("hidden");
 
-                viewsList.innerHTML = html;
-
-                viewsModal.classList.remove("hidden");
     }
     
     if(showViewsBtn){
