@@ -515,22 +515,36 @@ async function openModal(p){
         if(e.key !== "Escape") return;
 
 
-        if(likesModal && !likesModal.classList.contains("hidden")){
+        // 추천자 팝업이 열려 있으면 추천자만 닫기
+        if(
+            likesModal &&
+            !likesModal.classList.contains("hidden")
+        ){
+
+            e.stopPropagation();
 
             likesModal.classList.add("hidden");
+
             return;
 
         }
 
 
-        if(viewsModal && !viewsModal.classList.contains("hidden")){
+        // 조회자 팝업이 열려 있으면 조회자만 닫기
+        if(
+            viewsModal &&
+            !viewsModal.classList.contains("hidden")
+        ){
+
+            e.stopPropagation();
 
             viewsModal.classList.add("hidden");
+
             return;
 
         }
 
-    });
+    }, true);
     
     if(auth.currentUser?.email === ADMIN_EMAIL){
 
@@ -626,6 +640,9 @@ async function openModal(p){
     };
 
     function photoKeyHandler(e){
+
+        if(e.key === "Escape")
+            return;
 
         if(modal.classList.contains("hidden"))
             return;
