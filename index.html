@@ -348,21 +348,17 @@ async function openModal(p){
             </div>
 
 
-            <div class="viewerBox hidden" id="viewsModal">
+            <div class="commentArea">
 
-                <button id="closeViewsBtn">
-                    ✕
+                <textarea class="commentInput" placeholder="댓글 입력 (최대 1000자)"></textarea>
+
+                <button class="commentBtn">
+                    등록
                 </button>
 
-                <div class="viewsList"></div>
+                <div class="comments"></div>
 
             </div>
-
-        <div class="commentArea">
-            <textarea class="commentInput" placeholder="댓글 입력 (최대 1000자)"></textarea>
-            <button class="commentBtn">등록</button>
-            <div class="comments"></div>
-        </div>
     `;
 
     const viewCountEl = modalBody.querySelector(".viewCount");
@@ -1668,18 +1664,22 @@ bellBtn.addEventListener("click", () => {
     console.log(notificationList.className);
 });
 
-document.addEventListener("keydown", (e)=>{
+document.addEventListener("keydown",(e)=>{
 
     if(e.key === "Escape"){
 
         const viewsModal = document.getElementById("viewsModal");
+        const likesModal = document.getElementById("likesModal");
 
-        if(
-            viewsModal &&
-            !viewsModal.classList.contains("hidden")
-        ){
+        if(viewsModal){
 
             viewsModal.classList.add("hidden");
+
+        }
+
+        if(likesModal){
+
+            likesModal.classList.add("hidden");
 
         }
 
@@ -1688,6 +1688,37 @@ document.addEventListener("keydown", (e)=>{
 });
 
 </script>
+
+<!-- 조회자 팝업 -->
+<div class="viewerBox hidden" id="viewsModal">
+
+    <div class="viewerPopup">
+
+        <button id="closeViewsBtn">
+            ✕
+        </button>
+
+        <div id="viewsList"></div>
+
+    </div>
+
+</div>
+
+
+<!-- 추천자 팝업 -->
+<div class="viewerBox hidden" id="likesModal">
+
+    <div class="viewerPopup">
+
+        <button id="closeLikesBtn">
+            ✕
+        </button>
+
+        <div id="likesList"></div>
+
+    </div>
+
+</div>
 
 </body>
 </html>
