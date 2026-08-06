@@ -386,8 +386,15 @@ export async function addView(postId, user) {
     const userRef = doc(db, "users", user.uid);
     const userSnap = await getDoc(userRef);
 
-    let name = "익명";
-    let photo = "";
+    let name =
+        user.displayName ||
+        user.email ||
+        "익명 사용자";
+
+    let photo =
+        user.photoURL ||
+        "";
+
 
     if(userSnap.exists()){
 
@@ -395,21 +402,11 @@ export async function addView(postId, user) {
 
         name =
             data.name ||
-            data.email ||
-            "익명";
+            name;
 
         photo =
             data.photo ||
-            "";
-
-    }
-
-    if(userSnap.exists()){
-
-        const data = userSnap.data();
-
-        name = data.name || name;
-        photo = data.photo || photo;
+            photo;
 
     }
 
@@ -452,11 +449,21 @@ export async function addView(postId, user) {
                 views = postSnap.data().views || 0;
             }
 
-            transaction.set(viewRef, {
-                uid: user.uid,
-                name,
-                photo,
-                viewedAt: serverTimestamp()
+            transaction.set(viewRef,{
+                uid:user.uid,
+
+                name:
+                    user.name ||
+                    user.displayName ||
+                    user.email ||
+                    "익명 사용자",
+
+                photo:
+                    user.photo ||
+                    user.photoURL ||
+                    "",
+
+                viewedAt:serverTimestamp()
             });
 
             transaction.set(
