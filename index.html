@@ -371,6 +371,70 @@ async function openModal(p){
 
     const likeBtn = modalBody.querySelector(".likeBtn");
     const likeCountEl = modalBody.querySelector(".likeCount");
+    
+    if(likeBtn){
+
+        likeBtn.onclick = async ()=>{
+
+            console.log("좋아요 버튼 클릭");
+
+
+            const authUser = auth.currentUser || await login();
+
+
+            const user = {
+                uid: authUser.uid,
+                name:
+                    authUser.displayName ||
+                    authUser.email ||
+                    "이름 없음",
+                photo:
+                    authUser.photoURL ||
+                    ""
+            };
+
+
+            const likeRef = doc(
+                db,
+                "people",
+                p.name,
+                "likes",
+                user.uid
+            );
+
+
+            const snap = await getDoc(likeRef);
+
+
+            if(snap.exists()){
+
+                await deleteDoc(likeRef);
+
+                console.log("좋아요 취소");
+
+            }
+            else{
+
+                await setDoc(likeRef,{
+
+                    uid:user.uid,
+                    name:user.name,
+                    photo:user.photo,
+                    createdAt:serverTimestamp()
+
+                });
+
+                console.log("좋아요 추가");
+
+            }
+
+
+            await loadLikes();
+
+        };
+
+    }
+    
     const commentCountEl = modalBody.querySelector(".commentCount");
     const showLikesBtn = modalBody.querySelector(".showLikesBtn");
 
