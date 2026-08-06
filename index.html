@@ -575,58 +575,59 @@ async function openModal(p){
         alert(result || "추천 없음");
     });
 
-    /* =====================
-       LOAD VIEWERS
-    ===================== */
+/* =====================
+   LOAD VIEWERS
+===================== */
 
-    async function loadViewers(){
+async function loadViewers(){
 
-        const snap = await getDocs(
-            collection(db, "people", p.name, "views")
+    const snap = await getDocs(
+        collection(db, "people", p.name, "views")
+    );
+
+    let html = `
+        <h3>👁 조회한 회원 (${snap.size}명)</h3>
+    `;
+
+    for(const docItem of snap.docs){
+
+        const v = docItem.data();
+
+        if(!v.uid){
+            console.log("uid 없는 조회 기록:", v);
+            continue;
+        }
+
+        let name = v.name || "이름 없음";
+        let photo = v.photo || "";
+
+        const userSnap = await getDoc(
+            doc(db, "users", v.uid)
         );
 
-        let html = `
-            <h3>👁 조회한 회원 (${snap.size}명)</h3>
-        `;
+        if(userSnap.exists()){
 
-        for(const docItem of snap.docs){
+            const userData = userSnap.data();
 
-            const v = docItem.data();
-
-            if(!v.uid){
-                console.log("uid 없는 조회 기록:", v);
-                continue;
-            }
-
-            let name = "이름 없음";
-            let photo = "";
-
-            const userSnap = await getDoc(
-                doc(db, "users", v.uid)
-            );
-
-            if(userSnap.exists()){
-
-                const userData = userSnap.data();
-
-                name = userData.name || "이름 없음";
-                photo = userData.photo || "";
-
-            }
-
-            html += `
-            <div class="viewer">
-
-                <img src="${photo || 'images/no-image.jpg'}"
-                     width="40"
-                     height="40">
-
-                <span>${name}</span>
-
-            </div>
-            `;
+            name = userData.name || name;
+            photo = userData.photo || photo;
 
         }
+
+        html += `
+        <div class="viewer">
+
+            <img src="${photo || 'images/no-image.jpg'}"
+                 width="40"
+                 height="40">
+
+            <span>${name}</span>
+
+        </div>
+        `;
+
+    }
+}
 
         if(!viewsList || !viewsModal){
             console.log("조회자 팝업 요소 없음");
