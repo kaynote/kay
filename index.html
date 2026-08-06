@@ -751,43 +751,6 @@ async function openModal(p){
     }
    
     /* =====================
-       LIKE TOGGLE
-    ===================== */
-
-    if(likeBtn){
-
-    likeBtn.addEventListener("click", async ()=>{
-
-        const user = auth.currentUser || await login();
-
-        const ref = doc(
-            db,
-            "people",
-            p.name,
-            "likes",
-            user.uid
-        );
-
-        const liked = await getDoc(ref);
-
-        if(liked.exists()){
-            await deleteDoc(ref);
-        }else{
-            await setDoc(ref,{
-                uid:user.uid,
-                name:user.name,
-                photo:user.photo,
-                createdAt:Date.now()
-            });
-        }
-
-        loadLikes();
-
-    });
-
-    }
-
-    /* =====================
        COMMENTS
     ===================== */
 
