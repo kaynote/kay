@@ -385,8 +385,39 @@ async function openModal(p){
     const viewsModal = document.getElementById("viewsModal");
     const viewsList = document.getElementById("viewsList");
     const closeViewsBtn = document.getElementById("closeViewsBtn");
+    
+    function closeViewsModal(){
 
-    /* 🔥 여기 */
+        if(viewsModal){
+
+            viewsModal.classList.add("hidden");
+
+        }
+
+    }
+
+
+    if(closeViewsBtn){
+
+        closeViewsBtn.onclick = closeViewsModal;
+
+    }
+
+
+    if(viewsModal){
+
+        viewsModal.onclick = (e)=>{
+
+            if(e.target === viewsModal){
+
+                closeViewsModal();
+
+            }
+
+        };
+
+    }
+    
     if(auth.currentUser?.email === ADMIN_EMAIL){
 
         if(showLikesBtn)
@@ -1361,12 +1392,41 @@ watchAuth(user => {
 
             const list = [];
 
-            snap.forEach(docItem => {
-                list.push({
-                    id: docItem.id,
-                    ...docItem.data()
-                });
-            });
+            for(const docItem of snap.docs){
+
+                const v = docItem.data();
+
+                let name = "이름 없음";
+                let photo = "";
+
+                const userSnap = await getDoc(
+                    doc(db, "users", v.uid)
+                );
+
+                if(userSnap.exists()){
+
+                    const userData = userSnap.data();
+
+                    name = userData.name || "이름 없음";
+                    photo = userData.photo || "";
+
+                }
+
+
+                html += `
+                <div class="viewer">
+
+                    <img 
+                      src="${photo || 'images/no-image.jpg'}"
+                      width="40"
+                      height="40"
+                    >
+
+                    <span>${name}</span>
+
+                </div>
+                `;
+            }
             
             renderNotifications(list);
         }
@@ -1536,6 +1596,25 @@ bellBtn.addEventListener("click", () => {
     notificationList.classList.toggle("show");
 
     console.log(notificationList.className);
+});
+
+document.addEventListener("keydown", (e)=>{
+
+    if(e.key === "Escape"){
+
+        const viewsModal = document.getElementById("viewsModal");
+
+        if(
+            viewsModal &&
+            !viewsModal.classList.contains("hidden")
+        ){
+
+            viewsModal.classList.add("hidden");
+
+        }
+
+    }
+
 });
 
 </script>
