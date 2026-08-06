@@ -321,16 +321,17 @@ async function openModal(p){
 
         <div class="modal-desc">${p.note || ""}</div>
 
-        <div class="likeArea">
+        <div class="viewArea">
 
-            <span class="viewArea">
-                👁 조회수 <span class="viewCount">0</span>
-                
-                <button id="showViewsBtn" style="display:none">
-                    👁 조회자 보기
-                </button>
+            👁 조회수 <span class="viewCount">0</span>
 
-                <div id="viewsList" class="hidden"></div>
+            <button id="showViewsBtn" style="display:none">
+                👁 조회자 보기
+            </button>
+
+        </div>
+
+        <div id="viewsList" class="hidden"></div>
                 
             </span>
 
@@ -366,16 +367,20 @@ async function openModal(p){
     const commentCountEl = modalBody.querySelector(".commentCount");
     const showLikesBtn = modalBody.querySelector(".showLikesBtn");
     
-    const showViewsBtn = modalBody.querySelector(".showViewsBtn");
-    const viewsList = modalBody.querySelector(".viewsList");
+    const showViewsBtn = modalBody.querySelector("#showViewsBtn");
+    const viewsList = modalBody.querySelector("#viewsList");
 
     /* 🔥 여기 */
     if(auth.currentUser?.email === ADMIN_EMAIL){
 
-        showLikesBtn.style.display = "inline-block";
-        showViewsBtn.style.display = "inline-block";
+        if(showLikesBtn)
+            showLikesBtn.style.display = "inline-block";
 
-    } else {
+        if(showViewsBtn)
+            showViewsBtn.style.display = "inline-block";
+
+    }
+      else {
 
         showLikesBtn.style.display = "none";
         showViewsBtn.style.display = "none";
