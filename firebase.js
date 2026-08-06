@@ -383,17 +383,26 @@ export async function addView(postId, user) {
     const viewRef = doc(db, "people", postId, "views", user.uid);
 
 
-    // ⭐ 추가
     const userRef = doc(db, "users", user.uid);
     const userSnap = await getDoc(userRef);
 
-    let name = "익명";
-    let photo = "";
+    let name =
+        user.name ||
+        user.displayName ||
+        user.email ||
+        "익명";
 
-    if (userSnap.exists()) {
+    let photo =
+        user.photo ||
+        "";
+
+    if(userSnap.exists()){
+
         const data = userSnap.data();
-        name = data.name || "익명";
-        photo = data.photo || "";
+
+        name = data.name || name;
+        photo = data.photo || photo;
+
     }
 
     try {
@@ -405,15 +414,20 @@ export async function addView(postId, user) {
             console.log("기존 조회 기록:", viewSnap.exists());
 
 
-            if (viewSnap.exists()) {
+            if(viewSnap.exists()){
 
-                // 기존 조회 기록에 이름/사진 보완
-                transaction.update(viewRef, {
-                    uid:user.uid,
-                    name,
-                    photo,
-                    viewedAt: serverTimestamp()
-                });
+                transaction.set(
+                    viewRef,
+                    {
+                        uid:user.uid,
+                        name,
+                        photo,
+                        viewedAt:serverTimestamp()
+                    },
+                    {
+                        merge:true
+                    }
+                );
 
                 console.log("기존 조회자 정보 업데이트");
                 return;
