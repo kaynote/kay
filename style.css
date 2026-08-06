@@ -943,9 +943,15 @@ header {
 
 .loginBtn {
   background: #4285F4;
-  color: #fff;
+  color: white;
   border: none;
-  padding: 10px 16px;
-  border-radius: 10px;
+  padding: 11px 22px;
+  border-radius: 20px;
+  font-size: 15px;
   cursor: pointer;
+  transition: 0.2s;
+}
+
+.loginBtn:hover {
+  background: #3367d6;
 }
