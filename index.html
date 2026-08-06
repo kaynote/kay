@@ -471,9 +471,25 @@ async function openModal(p){
     // ESC 닫기
     document.addEventListener("keydown",(e)=>{
 
-        if(e.key==="Escape"){
+        if(e.key !== "Escape") return;
 
-            closeViewsModal();
+
+        const likesModal = document.getElementById("likesModal");
+        const viewsModal = document.getElementById("viewsModal");
+
+
+        if(likesModal && !likesModal.classList.contains("hidden")){
+
+            likesModal.classList.add("hidden");
+            return;
+
+        }
+
+
+        if(viewsModal && !viewsModal.classList.contains("hidden")){
+
+            viewsModal.classList.add("hidden");
+            return;
 
         }
 
