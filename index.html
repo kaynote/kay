@@ -382,7 +382,8 @@ async function openModal(p){
     const viewsList = document.querySelector(".viewsList");
     const viewsModal = document.querySelector("#viewsModal");
     const closeViewsBtn = document.querySelector("#closeViewsBtn");
-    
+
+
     function closeViewsModal(){
 
         if(viewsModal){
@@ -394,6 +395,7 @@ async function openModal(p){
     }
 
 
+    // X 버튼 닫기
     if(closeViewsBtn){
 
         closeViewsBtn.onclick = closeViewsModal;
@@ -401,6 +403,7 @@ async function openModal(p){
     }
 
 
+    // 팝업 바깥 클릭 닫기
     if(viewsModal){
 
         viewsModal.onclick = (e)=>{
@@ -414,6 +417,18 @@ async function openModal(p){
         };
 
     }
+
+
+    // ESC 닫기
+    document.addEventListener("keydown",(e)=>{
+
+        if(e.key==="Escape"){
+
+            closeViewsModal();
+
+        }
+
+    });
     
     if(auth.currentUser?.email === ADMIN_EMAIL){
 
