@@ -895,56 +895,44 @@ background:rgba(0,0,0,.8);
 }
 
 
-.viewerBox {
-
-    background:white;
-
+.viewerBox{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
     width:300px;
     max-height:400px;
-
-    overflow:auto;
-
-    padding:20px;
-
+    overflow-y:auto;
+    background:white;
     border-radius:12px;
-
+    padding:20px;
+    box-shadow:0 5px 25px rgba(0,0,0,0.3);
+    z-index:9999;
 }
 
-.viewerBox.hidden {
+.viewerBox.hidden{
     display:none;
 }
 
-#closeViewsBtn {
-
-    float:right;
-
+#closeViewsBtn{
+    position:absolute;
+    top:10px;
+    right:10px;
     border:none;
     background:none;
-
     font-size:20px;
-
     cursor:pointer;
 }
 
-
-.viewer {
-
+.viewer{
     display:flex;
-
     align-items:center;
-
     gap:10px;
-
     margin:10px 0;
-
 }
 
-
-.viewer img {
-
+.viewer img{
     width:40px;
     height:40px;
-
     border-radius:50%;
-
 }
