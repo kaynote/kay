@@ -577,24 +577,20 @@ async function openModal(p){
 
             const v = docItem.data();
 
-            if(!v.uid){
-                console.log("uid 없는 조회 기록:", v);
-                continue;
-            }
+            if(v.uid){
 
-            let name = v.name || "이름 없음";
-            let photo = v.photo || "";
+                const userSnap = await getDoc(
+                    doc(db,"users",v.uid)
+                );
 
-            const userSnap = await getDoc(
-                doc(db, "users", v.uid)
-            );
+                if(userSnap.exists()){
 
-            if(userSnap.exists()){
+                    const userData=userSnap.data();
 
-                const userData = userSnap.data();
+                    name=userData.name || name;
+                    photo=userData.photo || photo;
 
-                name = userData.name || name;
-                photo = userData.photo || photo;
+                }
 
             }
 
