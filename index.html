@@ -374,6 +374,9 @@ async function openModal(p){
     const commentCountEl = modalBody.querySelector(".commentCount");
     const showLikesBtn = modalBody.querySelector(".showLikesBtn");
 
+    const likesModal = document.getElementById("likesModal");
+    const likesList = document.getElementById("likesList");
+    const closeLikesBtn = document.getElementById("closeLikesBtn");
 
     /* =====================
        LIKE BUTTON
@@ -437,7 +440,60 @@ async function openModal(p){
     const viewsList = document.getElementById("viewsList");
     const viewsModal = document.getElementById("viewsModal");
     const closeViewsBtn = document.getElementById("closeViewsBtn");
+    
+    const likesModal = document.getElementById("likesModal");
+    const likesList = document.getElementById("likesList");
+    const closeLikesBtn = document.getElementById("closeLikesBtn");
+    
+    // X 버튼 닫기
+    if(closeViewsBtn){
 
+        closeViewsBtn.onclick = closeViewsModal;
+
+    }
+
+
+    // 팝업 바깥 클릭 닫기
+    if(viewsModal){
+
+        viewsModal.onclick = (e)=>{
+
+            if(e.target === viewsModal){
+
+                closeViewsModal();
+
+            }
+
+        };
+
+    }
+    
+    // 추천자 X 버튼 닫기
+    if(closeLikesBtn){
+
+        closeLikesBtn.onclick = ()=>{
+
+            likesModal.classList.add("hidden");
+
+        };
+
+    }
+
+
+    // 추천자 팝업 바깥 클릭 닫기
+    if(likesModal){
+
+        likesModal.onclick = (e)=>{
+
+            if(e.target === likesModal){
+
+                likesModal.classList.add("hidden");
+
+            }
+
+        };
+
+    }
 
     function closeViewsModal(){
 
@@ -626,25 +682,47 @@ async function openModal(p){
     
     loadLikes();
     
-    showLikesBtn.onclick = async ()=>{
+    if(showLikesBtn){
 
-    const snap = await getDocs(
-        collection(db,"people",p.name,"likes")
-    );
+        showLikesBtn.onclick = async ()=>{
 
-    let result="";
+            const snap = await getDocs(
+                collection(db,"people",p.name,"likes")
+            );
 
-    snap.forEach(docItem=>{
 
-        const v = docItem.data();
+            let html = `
+                <h3>👍 추천한 회원 (${snap.size}명)</h3>
+            `;
 
-        result += (v.name || "이름 없음") + "\n";
 
-    });
+            snap.forEach(docItem=>{
 
-    alert(result || "추천 없음");
+                const v = docItem.data();
 
-};
+
+                html += `
+                <div class="viewer">
+
+                    <img src="${v.photo || 'images/no-image.jpg'}"
+                         width="40"
+                         height="40">
+
+                    <span>${v.name || "이름 없음"}</span>
+
+                </div>
+                `;
+
+            });
+
+
+            likesList.innerHTML = html;
+
+            likesModal.classList.remove("hidden");
+
+        };
+
+    }
     
     /* =====================
        LOAD VIEWERS
