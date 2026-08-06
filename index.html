@@ -576,7 +576,7 @@ async function openModal(p){
     });
 
     /* =====================
-       LOAD LIKES
+       LOAD VIEWERS
     ===================== */
 
     async function loadViewers(){
@@ -589,32 +589,49 @@ async function openModal(p){
             <h3>👁 조회한 회원 (${snap.size}명)</h3>
         `;
 
-        snap.forEach(doc => {
 
-            const v = doc.data();
+        for(const docItem of snap.docs){
+
+            const v = docItem.data();
+
+            let name = "이름 없음";
+            let photo = "";
+
+            const userSnap = await getDoc(
+                doc(db, "users", v.uid)
+            );
+
+            if(userSnap.exists()){
+
+                const userData = userSnap.data();
+
+                name = userData.name || "이름 없음";
+                photo = userData.photo || "";
+
+            }
+
 
             html += `
             <div class="viewer">
-                <img src="${v.photo || 'images/no-image.jpg'}"
-                     width="40"
-                     height="40">
 
-                <span>${v.name || "이름 없음"}</span>
+                <img src="${photo || 'images/no-image.jpg'}">
+
+                <span>${name}</span>
+
             </div>
             `;
-        });
-
-
-        // ⭐ 여기에 추가
-        if(!viewsList){
-            console.log("viewsList 없음");
-            return;
         }
 
+                if(!viewsList || !viewsModal){
 
-        viewsList.innerHTML = html;
+                    console.log("조회자 팝업 요소 없음");
+                    return;
 
-        viewsModal.classList.remove("hidden");
+                }
+
+                viewsList.innerHTML = html;
+
+                viewsModal.classList.remove("hidden");
     }
     
     if(showViewsBtn){
@@ -1392,42 +1409,15 @@ watchAuth(user => {
 
             const list = [];
 
-            for(const docItem of snap.docs){
+            snap.forEach(docItem => {
 
-                const v = docItem.data();
+                list.push({
+                    id: docItem.id,
+                    ...docItem.data()
+                });
 
-                let name = "이름 없음";
-                let photo = "";
+            });
 
-                const userSnap = await getDoc(
-                    doc(db, "users", v.uid)
-                );
-
-                if(userSnap.exists()){
-
-                    const userData = userSnap.data();
-
-                    name = userData.name || "이름 없음";
-                    photo = userData.photo || "";
-
-                }
-
-
-                html += `
-                <div class="viewer">
-
-                    <img 
-                      src="${photo || 'images/no-image.jpg'}"
-                      width="40"
-                      height="40"
-                    >
-
-                    <span>${name}</span>
-
-                </div>
-                `;
-            }
-            
             renderNotifications(list);
         }
     );
