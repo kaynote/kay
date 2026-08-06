@@ -373,17 +373,29 @@ export async function getCommentById(postId, commentId) {
 VIEW COUNT
 ========================= */
 
-export async function addView(postId, uid) {
+export async function addView(postId, user) {
 
-    console.log("조회수 시작:", postId, uid);
+    console.log("조회수 시작:", postId, user.uid);
 
-    if (!uid) {
-        console.log("uid 없음");
-        return;
-    }
+    if (!user?.uid) return;
 
     const postRef = doc(db, "people", postId);
-    const viewRef = doc(db, "people", postId, "views", uid);
+    const viewRef = doc(db, "people", postId, "views", user.uid);
+
+
+    // ⭐ 추가
+    const userRef = doc(db, "users", user.uid);
+    const userSnap = await getDoc(userRef);
+
+    let name = "익명";
+    let photo = "";
+
+    if (userSnap.exists()) {
+        const data = userSnap.data();
+        name = data.name || "익명";
+        photo = data.photo || "";
+    }
+
 
     try {
 
@@ -413,9 +425,11 @@ export async function addView(postId, uid) {
 
 
             transaction.set(viewRef, {
+                uid: user.uid,
+                name,
+                photo,
                 viewedAt: serverTimestamp()
             });
-
 
             transaction.set(
                 postRef,
