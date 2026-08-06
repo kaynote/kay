@@ -325,28 +325,29 @@ async function openModal(p){
 
             <div class="likeArea">
 
-    <span class="viewArea">
-        👁 조회수 <span class="viewCount">0</span>
-      </span>
+                <span>
+                    👁 조회수 <span class="viewCount">0</span>
+                </span>
 
-      <button id="showViewsBtn" style="display:none">
-          👁 조회자 보기
-      </button>
+                <button id="showViewsBtn" style="display:none">
+                    👁 조회자 보기
+                </button>
 
+                <div id="viewsList" class="hidden"></div>
 
-      <span>
-          👍 좋아요 <span class="likeCount">0</span>
-      </span>
+                <span>
+                    👍 좋아요 <span class="likeCount">0</span>
+                </span>
 
-      <span>
-          💬 댓글 <span class="commentCount">0</span>
-      </span>
+                <span>
+                    💬 댓글 <span class="commentCount">0</span>
+                </span>
 
-      <button class="showLikesBtn" style="display:none">
-          👥 추천자 보기
-      </button>
+                <button class="showLikesBtn" style="display:none">
+                    👥 추천자 보기
+                </button>
 
-  </div>
+            </div>
 
         <div class="commentArea">
             <textarea class="commentInput" placeholder="댓글 입력 (최대 1000자)"></textarea>
@@ -496,8 +497,22 @@ async function openModal(p){
     const commentBtn = modalBody.querySelector(".commentBtn");
     const commentInput = modalBody.querySelector(".commentInput");
     const commentsDiv = modalBody.querySelector(".comments");
-    
+
     let replyTarget = null;
+
+
+    /* 여기에 넣기 */
+
+    async function loadLikes(){
+
+        const snap = await getDocs(
+            collection(db, "people", p.name, "likes")
+        );
+
+        likeCountEl.textContent = snap.size;
+    }
+    
+    loadLikes();
     
     /* =====================
        SHOW LIKES (한 번만 등록)
@@ -565,7 +580,7 @@ async function openModal(p){
         );
 
     }
-
+    
     /* =====================
        LIKE TOGGLE
     ===================== */
