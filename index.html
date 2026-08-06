@@ -387,7 +387,21 @@ async function openModal(p){
 
         likeBtn.onclick = async ()=>{
 
-            const user = auth.currentUser || await login();
+            const authUser = auth.currentUser || await login();
+
+            const user = {
+                uid: authUser.uid,
+                name:
+                    authUser.name ||
+                    authUser.displayName ||
+                    authUser.email ||
+                    "이름 없음",
+                photo:
+                    authUser.photo ||
+                    authUser.photoURL ||
+                    ""
+            };
+
 
             const ref = doc(
                 db,
@@ -396,6 +410,7 @@ async function openModal(p){
                 "likes",
                 user.uid
             );
+
 
             const liked = await getDoc(ref);
 
@@ -408,8 +423,8 @@ async function openModal(p){
 
                 await setDoc(ref,{
                     uid:user.uid,
-                    name:user.name || user.displayName || user.email || "이름 없음",
-                    photo:user.photo || "",
+                    name:user.name,
+                    photo:user.photo,
                     createdAt:serverTimestamp()
                 });
 
