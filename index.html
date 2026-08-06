@@ -408,8 +408,8 @@ async function openModal(p){
 
                 await setDoc(ref,{
                     uid:user.uid,
-                    name:user.name,
-                    photo:user.photo,
+                    name:user.name || user.displayName || user.email || "이름 없음",
+                    photo:user.photo || "",
                     createdAt:serverTimestamp()
                 });
 
