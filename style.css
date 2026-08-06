@@ -221,7 +221,11 @@ LIKE / LOGIN
     display:flex;
     align-items:center;
     gap:12px;
-    margin-top:15px;
+    flex-wrap:wrap;
+}
+
+.likeArea button {
+    display:inline-block;
 }
 
 .likeBtn {

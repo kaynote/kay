@@ -1,1 +1,4 @@
 https://kaynote.github.io/kay/
+
+
+Firebase 데이터베이스: https://console.firebase.google.com/u/0/project/kay-gallery/firestore/databases/-default-/data/~2Fusers~2F8OEFOiQCXDdIodCjbyXP0ZNints1?utm_source=chatgpt.com

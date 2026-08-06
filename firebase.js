@@ -407,10 +407,18 @@ export async function addView(postId, user) {
 
 
             if (viewSnap.exists()) {
-                console.log("이미 본 게시물");
+
+                // 기존 조회 기록에 이름/사진 보완
+                transaction.update(viewRef, {
+                    uid:user.uid,
+                    name,
+                    photo,
+                    viewedAt: serverTimestamp()
+                });
+
+                console.log("기존 조회자 정보 업데이트");
                 return;
             }
-
 
             const postSnap = await transaction.get(postRef);
 
