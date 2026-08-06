@@ -593,13 +593,33 @@ async function openModal(p){
         for(const docItem of snap.docs){
 
             const v = docItem.data();
+            
+            if(!v.uid){
 
+                console.log("uid 없는 조회 기록:", v);
+                continue;
+
+            }
+            
             let name = "이름 없음";
             let photo = "";
 
-            const userSnap = await getDoc(
-                doc(db, "users", v.uid)
-            );
+            if(v.uid){
+
+                const userSnap = await getDoc(
+                    doc(db, "users", v.uid)
+                );
+
+                if(userSnap.exists()){
+
+                    const userData = userSnap.data();
+
+                    name = userData.name || "이름 없음";
+                    photo = userData.photo || "";
+
+                }
+
+            }
 
             if(userSnap.exists()){
 

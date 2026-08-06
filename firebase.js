@@ -430,7 +430,6 @@ export async function addView(postId, user) {
                 views = postSnap.data().views || 0;
             }
 
-
             transaction.set(viewRef, {
                 uid: user.uid,
                 name,
@@ -450,9 +449,7 @@ export async function addView(postId, user) {
 
         });
 
-
         console.log("조회수 증가 성공");
-
 
     } catch(e) {
 
