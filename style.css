@@ -217,15 +217,19 @@ MODAL CONTENT
 LIKE / LOGIN
 ========================= */
 
-.likeArea {
+.likeArea{
     display:flex;
     align-items:center;
-    gap:12px;
-    flex-wrap:wrap;
+    gap:10px;
+    flex-wrap:nowrap;
 }
 
-.likeArea button {
-    display:inline-block;
+.likeArea span{
+    white-space:nowrap;
+}
+
+.likeArea button{
+    white-space:nowrap;
 }
 
 .likeBtn {
