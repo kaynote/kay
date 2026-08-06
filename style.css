@@ -220,8 +220,8 @@ LIKE / LOGIN
 .likeArea{
     display:flex;
     align-items:center;
-    gap:10px;
-    flex-wrap:nowrap;
+    gap:8px;
+    white-space:nowrap;
 }
 
 .likeArea span{

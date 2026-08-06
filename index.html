@@ -347,6 +347,17 @@ async function openModal(p){
 
             </div>
 
+
+            <div class="viewerBox hidden" id="viewsModal">
+
+                <button id="closeViewsBtn">
+                    ✕
+                </button>
+
+                <div class="viewsList"></div>
+
+            </div>
+
         <div class="commentArea">
             <textarea class="commentInput" placeholder="댓글 입력 (최대 1000자)"></textarea>
             <button class="commentBtn">등록</button>
@@ -415,10 +426,13 @@ async function openModal(p){
     }
       else {
 
-        showLikesBtn.style.display = "none";
-        showViewsBtn.style.display = "none";
+          if(showLikesBtn)
+              showLikesBtn.style.display = "none";
 
-    }
+          if(showViewsBtn)
+              showViewsBtn.style.display = "none";
+
+      }
     
     const photo = modalBody.querySelector(".modal-photo");
     const prevBtn = modalBody.querySelector(".photoPrev");
@@ -544,6 +558,26 @@ async function openModal(p){
     }
     
     loadLikes();
+    
+    showLikesBtn.onclick = async ()=>{
+
+    const snap = await getDocs(
+        collection(db,"people",p.name,"likes")
+    );
+
+    let result="";
+
+    snap.forEach(docItem=>{
+
+        const v = docItem.data();
+
+        result += (v.name || "이름 없음") + "\n";
+
+    });
+
+    alert(result || "추천 없음");
+
+};
     
     /* =====================
        LOAD VIEWERS
