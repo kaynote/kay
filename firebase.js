@@ -387,11 +387,13 @@ export async function addView(postId, user) {
     const userSnap = await getDoc(userRef);
 
     let name =
+        user.name ||
         user.displayName ||
         user.email ||
         "익명 사용자";
 
     let photo =
+        user.photo ||
         user.photoURL ||
         "";
 
@@ -451,18 +453,8 @@ export async function addView(postId, user) {
 
             transaction.set(viewRef,{
                 uid:user.uid,
-
-                name:
-                    user.name ||
-                    user.displayName ||
-                    user.email ||
-                    "익명 사용자",
-
-                photo:
-                    user.photo ||
-                    user.photoURL ||
-                    "",
-
+                name:name,
+                photo:photo,
                 viewedAt:serverTimestamp()
             });
 
