@@ -915,8 +915,8 @@ header {
     align-items:flex-start;
 }
 
-h1 {
-    margin:0 0 25px 0;
+header h1 {
+    margin: 0 0 30px 0;
 }
 
 .authArea {
@@ -924,13 +924,15 @@ h1 {
     align-items:center;
     gap:12px;
 
-    margin-bottom:25px;
+    margin-bottom:30px;
 }
 
 #searchBox {
-    width:100%;
-    padding:12px;
-    box-sizing:border-box;
+    width: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+
+    margin-bottom: 30px;
 }
 
 #loginBtn {
