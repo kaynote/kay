@@ -870,3 +870,74 @@ background:rgba(0,0,0,.8);
     color: #aaa;
     white-space: nowrap;
 }
+
+.viewerModal {
+
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,0.5);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    z-index:9999;
+}
+
+
+.viewerModal.hidden {
+    display:none;
+}
+
+
+.viewerBox {
+
+    background:white;
+
+    width:300px;
+    max-height:400px;
+
+    overflow:auto;
+
+    padding:20px;
+
+    border-radius:12px;
+
+}
+
+
+#closeViewsBtn {
+
+    float:right;
+
+    border:none;
+    background:none;
+
+    font-size:20px;
+
+    cursor:pointer;
+}
+
+
+.viewer {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin:10px 0;
+
+}
+
+
+.viewer img {
+
+    width:40px;
+    height:40px;
+
+    border-radius:50%;
+
+}

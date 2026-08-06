@@ -396,7 +396,6 @@ export async function addView(postId, user) {
         photo = data.photo || "";
     }
 
-
     try {
 
         await runTransaction(db, async (transaction) => {
