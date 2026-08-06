@@ -9,13 +9,6 @@ body {
   font-family: "Malgun Gothic", sans-serif;
 }
 
-header {
-  background: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  margin-bottom: 20px;
-}
-
 #searchBox {
   width: 100%;
   padding: 14px;
@@ -243,14 +236,6 @@ LIKE / LOGIN
 
 .likeCount {
   font-weight: bold;
-}
-
-.loginBtn {
-  background: #4285F4;
-  color: #fff;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 10px;
 }
 
 /* =========================
@@ -943,4 +928,24 @@ background:rgba(0,0,0,.8);
 
 #likesModal.hidden{
     display:none;
+}
+
+header {
+  background: #fff;
+  padding: 20px 50px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.loginBtn {
+  background: #4285F4;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
 }
