@@ -905,26 +905,32 @@ background:rgba(0,0,0,.8);
 }
 
 header {
-    background: #fff;
-    padding: 20px 50px;
-    border-radius: 12px;
-    margin-bottom: 20px;
+    background:#fff;
+    padding:30px;
+    border-radius:12px;
+    margin-bottom:20px;
 
-    display: flex;
-    align-items: center;
-    gap: 20px;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+}
+
+h1 {
+    margin:0 0 25px 0;
 }
 
 .authArea {
-    margin-left: auto;
+    display:flex;
+    align-items:center;
+    gap:12px;
 
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    margin-bottom:25px;
 }
 
 #searchBox {
-    width: 250px;
+    width:100%;
+    padding:12px;
+    box-sizing:border-box;
 }
 
 #loginBtn {
