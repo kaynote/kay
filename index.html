@@ -1606,6 +1606,15 @@ watchAuth(user => {
 
         }
 
+
+        const screen =
+            document.getElementById("maintenanceScreen");
+
+        if(screen){
+            screen.classList.add("hidden");
+        }
+
+
         userInfo.textContent = "로그인 안 됨";
 
         document.getElementById("badge").textContent = "0";
