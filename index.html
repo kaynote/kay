@@ -1554,7 +1554,7 @@ function watchMaintenance(user) {
 
                 adminMaintenanceArea.style.display = "block";
 
-                renderPeople();
+                awaitRenderPeople();
 
                 return;
 
@@ -1632,9 +1632,15 @@ watchAuth(user => {
         loginBtn.style.display = "inline-block";
         logoutBtn.style.display = "none";
 
-        container.innerHTML = "";
-
-        return;
+        container.innerHTML = `
+        <div style="
+            width:100%;
+            text-align:center;
+            padding:40px;
+        ">
+            🔒 로그인 후 이용 가능합니다.
+        </div>
+        `;
 
     }
 
@@ -1644,6 +1650,14 @@ watchAuth(user => {
     logoutBtn.style.display = "inline-block";
 
     watchMaintenance(user);
+
+
+    // 로그인 상태 반영 후 렌더 지연
+    setTimeout(() => {
+
+        renderPeople();
+
+    }, 300);
     
     if(notifUnsub){   // 여기부터 알림 구독 코드
 
