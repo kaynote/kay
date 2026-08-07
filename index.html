@@ -1632,17 +1632,15 @@ watchAuth(user => {
         loginBtn.style.display = "inline-block";
         logoutBtn.style.display = "none";
 
-        container.innerHTML = `
-        <div style="
-            width:100%;
-            text-align:center;
-            padding:40px;
-        ">
-            🔒 로그인 후 이용 가능합니다.
-        </div>
-        `;
+            container.innerHTML = `
+            <div class="login-required">
+                🔒 로그인 후 이용 가능합니다.
+            </div>
+            `;
 
-    }
+            return;   // ⭐ 반드시 추가
+
+        }
 
     userInfo.textContent = user.email;
 
