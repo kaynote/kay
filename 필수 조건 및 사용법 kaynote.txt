@@ -4,9 +4,9 @@ kaynote/
  ├─ build.js
  ├─ gallery
  ├─ index.html
- ├─ firebase.js     ← ⭐ 추가
+ ├─ firebase.js
  ├─ index.html
- ├─ main.js     ← ⭐ 댓글, 답글 시스템 전부
+ ├─ main.js     ← ⭐ 예전 코드 / 거의 사용 안 함
  ├─ names.txt
  ├─ people.js
  ├─ style.css
