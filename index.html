@@ -1591,7 +1591,8 @@ function watchMaintenance(user) {
 watchAuth(user => {
 
     currentUser = user;
-
+    
+    watchMaintenance(user);
 
     const adminArea =
         document.getElementById("adminMaintenanceArea");
@@ -1615,15 +1616,7 @@ watchAuth(user => {
         document.getElementById("userInfo");
 
     if(!user){
-
-        if(maintenanceUnsub){
-
-            maintenanceUnsub();
-            maintenanceUnsub = null;
-
-        }
-
-
+    
         const screen =
             document.getElementById("maintenanceScreen");
 
@@ -1655,8 +1648,6 @@ watchAuth(user => {
 
     loginBtn.style.display = "none";
     logoutBtn.style.display = "inline-block";
-
-    watchMaintenance(user);
 
     if(notifUnsub){   // 여기부터 알림 구독 코드
 
