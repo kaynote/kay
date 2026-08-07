@@ -1464,7 +1464,23 @@ document.addEventListener("keydown", (e)=>{
 loginBtn.addEventListener("click", login);
 logoutBtn.addEventListener("click", logout);
 
+
+// ⭐ 관리자 점검 화면 로그인 버튼
+const maintenanceLoginBtn =
+document.getElementById("maintenanceLoginBtn");
+
+if (maintenanceLoginBtn) {
+
+    maintenanceLoginBtn.onclick = async () => {
+        await login();
+    };
+
+}
+
+// 알림 구독 해제용
 let notifUnsub = null;
+
+// 점검 상태 구독 해제용
 let maintenanceUnsub = null;
 
 const ADMIN_UID = "8OEFOiQCXDdIodCjbyXP0ZNints1";
@@ -1544,10 +1560,19 @@ function watchMaintenance(user) {
             message.innerHTML =
                 (site.message || "").replace(/\n/g, "<br>");
 
+            // 관리자 통과
             if (user?.uid === ADMIN_UID) {
+
                 screen.classList.add("hidden");
+
+                adminMaintenanceArea.style.display = "block";
+
                 return;
+
             }
+
+            // 일반 사용자
+            adminMaintenanceArea.style.display = "none"; 
 
             if (site.maintenance) {
                 screen.classList.remove("hidden");
@@ -1995,9 +2020,13 @@ document.addEventListener("keydown",(e)=>{
             현재 업데이트를 진행하고 있습니다.
         </p>
 
-    </div>
-    
-</div>
+        <button id="maintenanceLoginBtn">
+                    관리자 로그인
+                </button>
+
+            </div>
+
+        </div>
 
 </body>
 </html>
