@@ -1571,10 +1571,6 @@ watchAuth(user => {
 
     if(!user){
 
-        userInfo.textContent = "로그인 안 됨";
-        
-    if(!user){
-
         if(maintenanceUnsub){
 
             maintenanceUnsub();
@@ -1582,7 +1578,7 @@ watchAuth(user => {
 
         }
 
-        userInfo.textContent = "로그인 안 됨";    
+        userInfo.textContent = "로그인 안 됨";   
         
         document.getElementById("badge").textContent = "0";
         document.getElementById("notificationList").innerHTML = "";
@@ -1838,9 +1834,10 @@ watchAuth(user => {
     /* =========================
        BELL
     ========================= */
+    
+});   // watchAuth 닫기
 
-    init();
-});   // 여기서 닫음
+init();
 
 const bellBtn = document.getElementById("bellBtn");
 const notificationList = document.getElementById("notificationList");
