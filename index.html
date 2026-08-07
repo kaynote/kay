@@ -1554,7 +1554,7 @@ function watchMaintenance(user) {
 
                 adminMaintenanceArea.style.display = "block";
 
-                awaitRenderPeople();
+                render(data);
 
                 return;
 
@@ -1571,7 +1571,7 @@ function watchMaintenance(user) {
 
                 screen.classList.add("hidden");
 
-                renderPeople();
+                render(data);
 
             }
 
@@ -1652,7 +1652,7 @@ watchAuth(user => {
     // 로그인 상태 반영 후 렌더 지연
     setTimeout(() => {
 
-        renderPeople();
+        render(data);
 
     }, 300);
     
