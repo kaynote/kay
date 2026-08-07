@@ -64,37 +64,6 @@ export async function deleteAllNotifications(uid) {
     await Promise.all(jobs);
 }
 
-export function watchMaintenance(callback) {
-
-    const ref = doc(db, "settings", "site");
-
-    return onSnapshot(ref, (snap) => {
-
-        if (!snap.exists()) {
-            callback({
-                maintenance: false,
-                title: "Kay 기록 보관소",
-                message: ""
-            });
-            return;
-        }
-
-        callback(snap.data());
-
-    }, (error) => {
-
-        console.error("Maintenance listener:", error);
-
-        callback({
-            maintenance: false,
-            title: "Kay 기록 보관소",
-            message: ""
-        });
-
-    });
-
-}
-
 /* =========================
 CONFIG
 ========================= */
@@ -117,6 +86,8 @@ const app = initializeApp(firebaseConfig);
 
 export const db = getFirestore(app);
 export const auth = getAuth(app);
+
+auth.languageCode = "ko";
 
 const provider = new GoogleAuthProvider();
 
