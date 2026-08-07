@@ -29,7 +29,6 @@
         <button id="logoutBtn">로그아웃</button>
     </div>
     
-    # 관리자 버튼 켜기:
     await setDoc(
         doc(db,"settings","site"),
         {
@@ -38,7 +37,6 @@
         {merge:true}
     );
     
-    # 관리자 버튼 끄기:
     await setDoc(
         doc(db,"settings","site"),
         {
