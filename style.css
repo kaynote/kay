@@ -253,6 +253,14 @@ LIKE / LOGIN
   border-radius: 10px;
 }
 
+/* 로그인 필요 안내 */
+.login-required {
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+  padding: 30px 10px;
+}
+
 /* =========================
 COMMENTS
 ========================= */
