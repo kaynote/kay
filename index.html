@@ -1683,42 +1683,11 @@ watchAuth(user => {
             renderNotifications(list);
 
         }
-    );
+    );   // ← onSnapshot 닫기
 
 
-}); 
+});   // ← watchAuth 닫기 
         
-    /* =========================
-       🔥 알림 구독 (중복 방지 핵심)
-    ========================= */
-
-    if (notifUnsub) {
-        notifUnsub();
-        notifUnsub = null;
-    }
-
-    notifUnsub = onSnapshot(
-        query(
-            collection(db, "notifications"),
-            where("targetUid", "==", user.uid)
-        ),
-        (snap) => {
-
-            const list = [];
-
-            snap.forEach(docItem => {
-
-                list.push({
-                    id: docItem.id,
-                    ...docItem.data()
-                });
-
-            });
-
-            renderNotifications(list);
-        }
-    );
-
     /* =========================
        렌더
     ========================= */
@@ -1864,12 +1833,10 @@ watchAuth(user => {
 
         }, 300); // 모달 렌더 기다림
     }
-
+    
     /* =========================
        BELL
     ========================= */
-    
-});   // watchAuth 닫기
 
 init();
 
