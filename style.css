@@ -1011,3 +1011,7 @@ background:rgba(0,0,0,.8);
         transform:rotate(360deg);
     }
 }
+
+.hidden {
+    display:none !important;
+}
