@@ -132,7 +132,7 @@ let renderedMap = new Map();
 function init(){
     if(!Array.isArray(people)) return;
     data = people;
-    render(data);
+
 }
 
 /* =========================
@@ -1470,6 +1470,9 @@ let notifUnsub = null;
 // 점검 상태 구독 해제용
 let maintenanceUnsub = null;
 
+// 점검 확인 완료 여부
+let maintenanceChecked = false;
+
 const ADMIN_UID = "8OEFOiQCXDdIodCjbyXP0ZNints1";
 
 const adminMaintenanceArea =
@@ -1540,6 +1543,8 @@ function watchMaintenance(user) {
             }
 
             const site = snap.data();
+
+            maintenanceChecked = true;
 
             title.textContent =
                 site.title || "Kay 기록 보관소";
