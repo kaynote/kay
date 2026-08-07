@@ -1451,8 +1451,6 @@ document.addEventListener("keydown", (e)=>{
 loginBtn.addEventListener("click", login);
 logoutBtn.addEventListener("click", logout);
 
-let notifUnsub = null;
-
 let maintenanceUnsub = null;
 
 const ADMIN_UID = "8OEFOiQCXDdIodCjbyXP0ZNints1";
@@ -1460,10 +1458,8 @@ const ADMIN_UID = "8OEFOiQCXDdIodCjbyXP0ZNints1";
 function watchMaintenance(user) {
 
     if (maintenanceUnsub) {
-
         maintenanceUnsub();
         maintenanceUnsub = null;
-
     }
 
     const screen = document.getElementById("maintenanceScreen");
@@ -1475,10 +1471,8 @@ function watchMaintenance(user) {
         (snap) => {
 
             if (!snap.exists()) {
-
                 screen.classList.add("hidden");
                 return;
-
             }
 
             const site = snap.data();
@@ -1487,31 +1481,21 @@ function watchMaintenance(user) {
                 site.title || "Kay 기록 보관소";
 
             message.innerHTML =
-                (site.message || "")
-                .replace(/\n/g, "<br>");
+                (site.message || "").replace(/\n/g, "<br>");
 
-            // 관리자 통과
             if (user?.uid === ADMIN_UID) {
-
                 screen.classList.add("hidden");
                 return;
-
             }
 
-            // 일반 사용자
             if (site.maintenance) {
-
                 screen.classList.remove("hidden");
-
             } else {
-
                 screen.classList.add("hidden");
-
             }
 
         }
     );
-
 }
 
 function startMaintenanceWatch(user){
