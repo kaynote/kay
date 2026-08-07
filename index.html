@@ -1584,87 +1584,19 @@ function watchMaintenance(user) {
     );
 }
 
-function startMaintenanceWatch(user){
-
-    // 기존 감시 제거
-    if(maintenanceUnsub){
-
-        maintenanceUnsub();
-        maintenanceUnsub = null;
-
-    }
-
-    const screen =
-        document.getElementById("maintenanceScreen");
-
-    const title =
-        document.getElementById("maintenanceTitle");
-
-    const message =
-        document.getElementById("maintenanceMessage");
-
-    maintenanceUnsub = onSnapshot(
-        doc(db,"settings","site"),
-        (snap)=>{
-
-            if(!snap.exists()){
-
-                screen.classList.add("hidden");
-                return;
-
-            }
-
-            const site = snap.data();
-
-            title.textContent =
-                site.title || "Kay 기록 보관소";
-
-            message.innerHTML =
-                (site.message || "")
-                .replace(/\n/g,"<br>");
-
-            // 관리자 제외
-            if(user && user.uid === ADMIN_UID){
-
-                screen.classList.add("hidden");
-                return;
-
-            }
-
-            // 일반 사용자
-            if(site.maintenance === true){
-
-                screen.classList.remove("hidden");
-
-            }else{
-
-                screen.classList.add("hidden");
-
-            }
-
-        }
-    );
-
-}
-
 watchAuth(user => {
 
     currentUser = user;
-
 
     const adminArea =
         document.getElementById("adminMaintenanceArea");
 
     if (adminArea) {
 
-        if(user?.uid === ADMIN_UID){
-
+        if (user?.uid === ADMIN_UID) {
             adminArea.style.display = "block";
-
-        }else{
-
+        } else {
             adminArea.style.display = "none";
-
         }
 
     }
@@ -1674,9 +1606,9 @@ watchAuth(user => {
         document.getElementById("userInfo");
 
 
-    if(!user){
+    if (!user) {
 
-        if(maintenanceUnsub){
+        if (maintenanceUnsub) {
 
             maintenanceUnsub();
             maintenanceUnsub = null;
@@ -1686,6 +1618,7 @@ watchAuth(user => {
         userInfo.textContent = "로그인 안 됨";
 
         return;
+
     }
 
 
@@ -1693,6 +1626,7 @@ watchAuth(user => {
 
 
     watchMaintenance(user);
+
 
 });  
         
