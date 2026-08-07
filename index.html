@@ -1588,15 +1588,21 @@ watchAuth(user => {
 
     currentUser = user;
 
+
     const adminArea =
         document.getElementById("adminMaintenanceArea");
 
-    if (adminArea) {
 
-        if (user?.uid === ADMIN_UID) {
+    if(adminArea){
+
+        if(user?.uid === ADMIN_UID){
+
             adminArea.style.display = "block";
-        } else {
+
+        }else{
+
             adminArea.style.display = "none";
+
         }
 
     }
@@ -1606,16 +1612,30 @@ watchAuth(user => {
         document.getElementById("userInfo");
 
 
-    if (!user) {
+    if(!user){
 
-        if (maintenanceUnsub) {
+        if(maintenanceUnsub){
 
             maintenanceUnsub();
             maintenanceUnsub = null;
 
         }
 
+
         userInfo.textContent = "로그인 안 됨";
+
+
+        document.getElementById("badge").textContent = "0";
+        document.getElementById("notificationList").innerHTML = "";
+
+        loginBtn.style.display = "inline-block";
+        logoutBtn.style.display = "none";
+
+
+        container.innerHTML = `
+            로그인 필요 화면
+        `;
+
 
         return;
 
@@ -1625,10 +1645,48 @@ watchAuth(user => {
     userInfo.textContent = user.email;
 
 
+    loginBtn.style.display = "none";
+    logoutBtn.style.display = "inline-block";
+
+
     watchMaintenance(user);
 
 
-});  
+    // 여기부터 알림 구독 코드
+    if(notifUnsub){
+
+        notifUnsub();
+        notifUnsub = null;
+
+    }
+
+
+    notifUnsub = onSnapshot(
+        query(
+            collection(db,"notifications"),
+            where("targetUid","==",user.uid)
+        ),
+        snap=>{
+
+            const list=[];
+
+            snap.forEach(docItem=>{
+
+                list.push({
+                    id:docItem.id,
+                    ...docItem.data()
+                });
+
+            });
+
+
+            renderNotifications(list);
+
+        }
+    );
+
+
+}); 
         
         document.getElementById("badge").textContent = "0";
         document.getElementById("notificationList").innerHTML = "";
