@@ -29,6 +29,19 @@
         <button id="logoutBtn">로그아웃</button>
     </div>
     
+    <!-- 관리자 전용 -->
+    <div id="adminMaintenanceArea" style="display:none;">
+
+        <button id="maintenanceOnBtn">
+            🚧 사이트 점검 ON
+        </button>
+
+        <button id="maintenanceOffBtn">
+            ✅ 사이트 점검 OFF
+        </button>
+
+    </div>
+    
     <input type="text" id="searchBox" placeholder="검색...">
 </header>
 
@@ -1451,6 +1464,7 @@ document.addEventListener("keydown", (e)=>{
 loginBtn.addEventListener("click", login);
 logoutBtn.addEventListener("click", logout);
 
+let notifUnsub = null;
 let maintenanceUnsub = null;
 
 const ADMIN_UID = "8OEFOiQCXDdIodCjbyXP0ZNints1";
@@ -1615,17 +1629,19 @@ watchAuth(user => {
     watchMaintenance(user);
 
 
+    const adminArea =
+    document.getElementById("adminMaintenanceArea");
+
+
     if(user?.uid === ADMIN_UID){
-
-        adminMaintenanceArea.style.display = "block";
-
+        adminArea.style.display = "block";
     }else{
-
-        adminMaintenanceArea.style.display = "none";
-
+        adminArea.style.display = "none";
     }
 
-    const userInfo = document.getElementById("userInfo");
+
+    const userInfo =
+    document.getElementById("userInfo");
 
     if(!user){
 
@@ -1981,18 +1997,6 @@ document.addEventListener("keydown",(e)=>{
 
     </div>
     
-<div id="adminMaintenanceArea" style="display:none;">
-
-    <button id="maintenanceOnBtn">
-        🚧 사이트 점검 ON
-    </button>
-
-    <button id="maintenanceOffBtn">
-        ✅ 사이트 점검 OFF
-    </button>
-
-</div>
-
 </div>
 
 </body>
