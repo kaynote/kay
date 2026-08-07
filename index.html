@@ -1567,6 +1567,10 @@ function watchMaintenance(user) {
 
                 screen.classList.remove("hidden");
 
+                container.innerHTML = "";
+
+                return;
+
             } else {
 
                 screen.classList.add("hidden");
@@ -1649,13 +1653,6 @@ watchAuth(user => {
 
     watchMaintenance(user);
 
-    // 로그인 상태 반영 후 렌더 지연
-    setTimeout(() => {
-
-        render(data);
-
-    }, 300);
-    
     if(notifUnsub){   // 여기부터 알림 구독 코드
 
         notifUnsub();
