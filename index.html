@@ -1594,10 +1594,8 @@ watchAuth(user => {
 
     }
 
-
     const userInfo =
         document.getElementById("userInfo");
-
 
     if(!user){
 
@@ -1608,36 +1606,29 @@ watchAuth(user => {
 
         }
 
-
         userInfo.textContent = "로그인 안 됨";
 
-
         document.getElementById("badge").textContent = "0";
+        
         document.getElementById("notificationList").innerHTML = "";
 
         loginBtn.style.display = "inline-block";
         logoutBtn.style.display = "none";
 
-
-        container.innerHTML = `
-            로그인 필요 화면
-        `;
-
+        container.innerHTML = "";
 
         return;
 
     }
 
-
     userInfo.textContent = user.email;
-
 
     loginBtn.style.display = "none";
     logoutBtn.style.display = "inline-block";
 
-
     watchMaintenance(user);
 
+    loadPeople();   // 기존 사진 불러오는 함수
 
     // 여기부터 알림 구독 코드
     if(notifUnsub){
@@ -1646,7 +1637,6 @@ watchAuth(user => {
         notifUnsub = null;
 
     }
-
 
     notifUnsub = onSnapshot(
         query(
