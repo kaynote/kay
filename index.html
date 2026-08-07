@@ -1651,22 +1651,28 @@ watchAuth(user => {
 
     currentUser = user;
 
-    watchMaintenance(user);
-
 
     const adminArea =
-    document.getElementById("adminMaintenanceArea");
+        document.getElementById("adminMaintenanceArea");
 
+    if (adminArea) {
 
-    if(user?.uid === ADMIN_UID){
-        adminArea.style.display = "block";
-    }else{
-        adminArea.style.display = "none";
+        if(user?.uid === ADMIN_UID){
+
+            adminArea.style.display = "block";
+
+        }else{
+
+            adminArea.style.display = "none";
+
+        }
+
     }
 
 
     const userInfo =
-    document.getElementById("userInfo");
+        document.getElementById("userInfo");
+
 
     if(!user){
 
@@ -1677,7 +1683,18 @@ watchAuth(user => {
 
         }
 
-        userInfo.textContent = "로그인 안 됨";   
+        userInfo.textContent = "로그인 안 됨";
+
+        return;
+    }
+
+
+    userInfo.textContent = user.email;
+
+
+    watchMaintenance(user);
+
+});  
         
         document.getElementById("badge").textContent = "0";
         document.getElementById("notificationList").innerHTML = "";
