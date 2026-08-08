@@ -1537,40 +1537,6 @@ if (maintenanceOffBtn) {
 
 }
 
-
-// 점검 상태 실시간 확인
-if (maintenanceStatus) {
-
-    maintenanceUnsub = onSnapshot(
-        doc(db, "settings", "site"),
-        (snap) => {
-
-            const maintenanceEnabled =
-                snap.exists() &&
-                snap.data().maintenance === true;
-
-
-            if (maintenanceEnabled) {
-
-                maintenanceStatus.textContent =
-                    "🔴 현재 사이트 점검 중";
-
-                maintenanceStatus.style.color = "red";
-
-            } else {
-
-                maintenanceStatus.textContent =
-                    "🟢 현재 정상 운영 중";
-
-                maintenanceStatus.style.color = "green";
-
-            }
-
-        }
-    );
-
-}
-    
 function watchMaintenance(user) {
 
     if (maintenanceUnsub) {
@@ -1587,13 +1553,90 @@ function watchMaintenance(user) {
         (snap) => {
 
             if (!snap.exists()) {
+
                 screen.classList.add("hidden");
+
+                if (maintenanceStatus) {
+                    maintenanceStatus.textContent =
+                        "⚪ 상태 확인 중...";
+                    maintenanceStatus.style.color = "gray";
+                }
+
                 return;
             }
 
             const site = snap.data();
 
             maintenanceChecked = true;
+
+
+            // 관리자에게 현재 상태 표시
+            if (maintenanceStatus && user?.uid === ADMIN_UID) {
+
+                if (site.maintenance === true) {
+
+                    maintenanceStatus.textContent =
+                        "🔴 현재 사이트 점검 중";
+
+                    maintenanceStatus.style.color =
+                        "red";
+
+                } else {
+
+                    maintenanceStatus.textContent =
+                        "🟢 현재 정상 운영 중";
+
+                    maintenanceStatus.style.color =
+                        "green";
+                }
+
+            }
+
+
+            title.textContent =
+                site.title || "Kay 기록 보관소";
+
+            message.innerHTML =
+                (site.message || "").replace(/\n/g, "<br>");
+
+
+            // 관리자 통과
+            if (user?.uid === ADMIN_UID) {
+
+                screen.classList.add("hidden");
+
+                adminMaintenanceArea.style.display =
+                    "block";
+
+                render(data);
+
+                return;
+            }
+
+
+            // 일반 사용자
+            adminMaintenanceArea.style.display =
+                "none";
+
+
+            if (site.maintenance) {
+
+                screen.classList.remove("hidden");
+
+                container.innerHTML = "";
+
+                return;
+
+            } else {
+
+                screen.classList.add("hidden");
+
+                render(data);
+
+            }
+
+        }
+    );
 
             title.textContent =
                 site.title || "Kay 기록 보관소";
@@ -1645,19 +1688,21 @@ watchAuth(user => {
         document.getElementById("adminMaintenanceArea");
 
 
-    if(adminArea){
+    if (adminArea) {
 
-        if(user?.uid === ADMIN_UID){
+        if (user?.uid === ADMIN_UID) {
 
             adminArea.style.display = "block";
 
-        }else{
+        } else {
 
             adminArea.style.display = "none";
 
         }
 
     }
+
+});
 
     const userInfo =
         document.getElementById("userInfo");
