@@ -32,6 +32,10 @@
     <!-- 관리자 전용 -->
     <div id="adminMaintenanceArea" style="display:none;">
 
+        <div id="maintenanceStatus">
+            ⚪ 상태 확인 중...
+        </div>
+
         <button id="maintenanceOnBtn">
             🚧 사이트 점검 ON
         </button>
@@ -41,8 +45,9 @@
         </button>
 
     </div>
-    
+
     <input type="text" id="searchBox" placeholder="검색...">
+
 </header>
 
 <div id="peopleContainer"></div>
@@ -1458,11 +1463,12 @@ document.addEventListener("keydown", (e)=>{
 });
 
 /* =========================
-   AUTH
+AUTH
 ========================= */
 
 loginBtn.addEventListener("click", login);
 logoutBtn.addEventListener("click", logout);
+
 
 // 알림 구독 해제용
 let notifUnsub = null;
@@ -1473,7 +1479,9 @@ let maintenanceUnsub = null;
 // 점검 확인 완료 여부
 let maintenanceChecked = false;
 
+
 const ADMIN_UID = "8OEFOiQCXDdIodCjbyXP0ZNints1";
+
 
 const adminMaintenanceArea =
     document.getElementById("adminMaintenanceArea");
@@ -1484,17 +1492,22 @@ const maintenanceOnBtn =
 const maintenanceOffBtn =
     document.getElementById("maintenanceOffBtn");
 
+const maintenanceStatus =
+    document.getElementById("maintenanceStatus");
+
+
+// 점검 ON
 if (maintenanceOnBtn) {
 
     maintenanceOnBtn.onclick = async () => {
 
         await setDoc(
-            doc(db,"settings","site"),
+            doc(db, "settings", "site"),
             {
-                maintenance:true
+                maintenance: true
             },
             {
-                merge:true
+                merge: true
             }
         );
 
@@ -1503,22 +1516,58 @@ if (maintenanceOnBtn) {
 
 }
 
+
+// 점검 OFF
 if (maintenanceOffBtn) {
 
     maintenanceOffBtn.onclick = async () => {
 
         await setDoc(
-            doc(db,"settings","site"),
+            doc(db, "settings", "site"),
             {
-                maintenance:false
+                maintenance: false
             },
             {
-                merge:true
+                merge: true
             }
         );
 
         alert("사이트 점검 OFF");
     };
+
+}
+
+
+// 점검 상태 실시간 확인
+if (maintenanceStatus) {
+
+    maintenanceUnsub = onSnapshot(
+        doc(db, "settings", "site"),
+        (snap) => {
+
+            const maintenanceEnabled =
+                snap.exists() &&
+                snap.data().maintenance === true;
+
+
+            if (maintenanceEnabled) {
+
+                maintenanceStatus.textContent =
+                    "🔴 현재 사이트 점검 중";
+
+                maintenanceStatus.style.color = "red";
+
+            } else {
+
+                maintenanceStatus.textContent =
+                    "🟢 현재 정상 운영 중";
+
+                maintenanceStatus.style.color = "green";
+
+            }
+
+        }
+    );
 
 }
     
