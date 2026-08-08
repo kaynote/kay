@@ -1667,48 +1667,7 @@ function watchMaintenance(user) {
         }
     );
 }
-            title.textContent =
-                site.title || "Kay 기록 보관소";
-
-            message.innerHTML =
-                (site.message || "").replace(/\n/g, "<br>");
-
-            // 관리자 통과
-            if (user?.uid === ADMIN_UID) {
-
-                screen.classList.add("hidden");
-
-                adminMaintenanceArea.style.display = "block";
-
-                render(data);
-
-                return;
-
-            }
-
-            // 일반 사용자
-            adminMaintenanceArea.style.display = "none"; 
-
-            if (site.maintenance) {
-
-                screen.classList.remove("hidden");
-
-                container.innerHTML = "";
-
-                return;
-
-            } else {
-
-                screen.classList.add("hidden");
-
-                render(data);
-
-            }
-
-        }
-    );
-}
-
+            
 watchAuth(user => {
 
     currentUser = user;
