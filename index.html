@@ -1544,12 +1544,19 @@ function watchMaintenance(user) {
         maintenanceUnsub = null;
     }
 
-    const screen = document.getElementById("maintenanceScreen");
-    const title = document.getElementById("maintenanceTitle");
-    const message = document.getElementById("maintenanceMessage");
+    const screen =
+        document.getElementById("maintenanceScreen");
+
+    const title =
+        document.getElementById("maintenanceTitle");
+
+    const message =
+        document.getElementById("maintenanceMessage");
+
 
     maintenanceUnsub = onSnapshot(
         doc(db, "settings", "site"),
+
         (snap) => {
 
             if (!snap.exists()) {
@@ -1557,21 +1564,26 @@ function watchMaintenance(user) {
                 screen.classList.add("hidden");
 
                 if (maintenanceStatus) {
+
                     maintenanceStatus.textContent =
                         "⚪ 상태 확인 중...";
-                    maintenanceStatus.style.color = "gray";
+
+                    maintenanceStatus.style.color =
+                        "gray";
                 }
 
                 return;
             }
+
 
             const site = snap.data();
 
             maintenanceChecked = true;
 
 
-            // 관리자에게 현재 상태 표시
-            if (maintenanceStatus && user?.uid === ADMIN_UID) {
+            // 관리자에게 현재 점검 상태 표시
+            if (maintenanceStatus &&
+                user?.uid === ADMIN_UID) {
 
                 if (site.maintenance === true) {
 
@@ -1589,7 +1601,6 @@ function watchMaintenance(user) {
                     maintenanceStatus.style.color =
                         "green";
                 }
-
             }
 
 
@@ -1600,7 +1611,7 @@ function watchMaintenance(user) {
                 (site.message || "").replace(/\n/g, "<br>");
 
 
-            // 관리자 통과
+            // 관리자
             if (user?.uid === ADMIN_UID) {
 
                 screen.classList.add("hidden");
@@ -1635,9 +1646,27 @@ function watchMaintenance(user) {
 
             }
 
+        },
+
+        (error) => {
+
+            console.error(
+                "점검 상태 확인 오류:",
+                error
+            );
+
+            if (maintenanceStatus &&
+                user?.uid === ADMIN_UID) {
+
+                maintenanceStatus.textContent =
+                    "⚠️ 점검 상태 확인 실패";
+
+                maintenanceStatus.style.color =
+                    "orange";
+            }
         }
     );
-
+}
             title.textContent =
                 site.title || "Kay 기록 보관소";
 
@@ -1687,69 +1716,110 @@ watchAuth(user => {
     const adminArea =
         document.getElementById("adminMaintenanceArea");
 
-
-    if (adminArea) {
-
-        if (user?.uid === ADMIN_UID) {
-
-            adminArea.style.display = "block";
-
-        } else {
-
-            adminArea.style.display = "none";
-
-        }
-
-    }
-
-});
-
     const userInfo =
         document.getElementById("userInfo");
 
-    if(!user){
+    // =========================
+    // 로그아웃 상태
+    // =========================
 
-    if(maintenanceUnsub){
+    if (!user) {
 
-        maintenanceUnsub();
-        maintenanceUnsub = null;
+        if (maintenanceUnsub) {
 
-    }
+            maintenanceUnsub();
+            maintenanceUnsub = null;
+
+        }
+
+        if (notifUnsub) {
+
+            notifUnsub();
+            notifUnsub = null;
+
+        }
+
         const screen =
             document.getElementById("maintenanceScreen");
 
-        if(screen){
+        if (screen) {
             screen.classList.add("hidden");
         }
 
 
-        userInfo.textContent = "로그인 안 됨";
+        if (adminArea) {
+            adminArea.style.display = "none";
+        }
 
-        document.getElementById("badge").textContent = "0";
-        
-        document.getElementById("notificationList").innerHTML = "";
+        userInfo.textContent =
+            "로그인 안 됨";
 
-        loginBtn.style.display = "inline-block";
-        logoutBtn.style.display = "none";
+        document.getElementById("badge").textContent =
+            "0";
 
-            container.innerHTML = `
+        document.getElementById("notificationList").innerHTML =
+            "";
+
+        loginBtn.style.display =
+            "inline-block";
+
+        logoutBtn.style.display =
+            "none";
+
+        container.innerHTML = `
             <div class="login-required">
                 🔒 로그인 후 이용 가능합니다.
             </div>
-            `;
+        `;
 
-            return;   // ⭐ 반드시 추가
+        return;
+    }
+
+    // =========================
+    // 로그인 상태
+    // =========================
+
+    userInfo.textContent =
+        user.email;
+
+    loginBtn.style.display =
+        "none";
+
+    logoutBtn.style.display =
+        "inline-block";
+
+    // =========================
+    // 관리자 여부
+    // =========================
+
+    if (adminArea) {
+
+        if (user.uid === ADMIN_UID) {
+
+            adminArea.style.display =
+                "block";
+
+        } else {
+
+            adminArea.style.display =
+                "none";
 
         }
 
-    userInfo.textContent = user.email;
+    }
 
-    loginBtn.style.display = "none";
-    logoutBtn.style.display = "inline-block";
+    // =========================
+    // 사이트 점검 상태 감시
+    // =========================
 
     watchMaintenance(user);
 
-    if(notifUnsub){   // 여기부터 알림 구독 코드
+
+    // =========================
+    // 알림 구독
+    // =========================
+
+    if (notifUnsub) {
 
         notifUnsub();
         notifUnsub = null;
@@ -1757,31 +1827,33 @@ watchAuth(user => {
     }
 
     notifUnsub = onSnapshot(
+
         query(
-            collection(db,"notifications"),
-            where("targetUid","==",user.uid)
+            collection(db, "notifications"),
+            where("targetUid", "==", user.uid)
         ),
-        snap=>{
 
-            const list=[];
+        snap => {
 
-            snap.forEach(docItem=>{
+            const list = [];
+
+            snap.forEach(docItem => {
 
                 list.push({
-                    id:docItem.id,
+                    id: docItem.id,
                     ...docItem.data()
                 });
 
             });
 
-
             renderNotifications(list);
 
         }
-    );   // ← onSnapshot 닫기
 
+    );   // onSnapshot 닫기
 
-});   // ← watchAuth 닫기 
+});   // watchAuth 닫기 
+ 
         
     /* =========================
        렌더
