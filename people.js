@@ -1469,7 +1469,7 @@ const people = [
     "name": "Krisel Samson",
     "ko": "크리셀 삼손",
     "displayName": "Krisel Samson 크리셀 삼손",
-    "note": "예명은 'Kekay' 께까이, <span class=\"timestamp\"> 2026.04.18 14:55</span>",
+    "note": "어릴 적부터 불린 애칭은 'Kekay' 께까이, 'kekay'는 따갈로그어 'makulit' 마꿀릿과 비슷한 의미로 말괄량이, 장난꾸러기, 개구쟁이, 말을 잘 안 듣는, 까불까불한, 귀찮게 구는 등의 뜻으로 쓰인다, <span class=\"timestamp\"> 2026.04.18 14:55</span>, <span class=\"timestamp\"> 2026.08.08 55:20</span>",
     "image": "Krisel Samson.jpg",
     "gallery": []
   },
