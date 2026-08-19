@@ -1838,7 +1838,7 @@ const people = [
     "name": "Mikay",
     "ko": "미까이",
     "displayName": "Mikay 미까이",
-    "note": "제리님 동네에 사는 여자아이, <span class=\"timestamp\"> 2026.03.14 04:14</span>",
+    "note": "제리님 동네에 사는 여자아이, 생일은 2016년 2월 11일, <span class=\"timestamp\"> 2026.03.14 04:14</span>",
     "image": "Mikay.jpg",
     "gallery": []
   },
