@@ -269,6 +269,36 @@ function openEditModal(person, no) {
   }, 50);
 }
 
+function openEditFromUrl() {
+  const params = new URLSearchParams(
+    window.location.search
+  );
+
+  const editNo = params.get("edit");
+
+  if (!editNo) return;
+
+  const index = currentPeople.findIndex(
+    (person, index) =>
+      String(getPersonNo(person, index)) === String(editNo)
+  );
+
+  if (index === -1) {
+    status(
+      `${editNo}번 사람을 찾을 수 없습니다.`,
+      "error"
+    );
+    return;
+  }
+
+  const person = currentPeople[index];
+
+  openEditModal(
+    person,
+    getPersonNo(person, index)
+  );
+}
+
 function closeEdit() {
   editingNo = null;
   editModal.classList.add("hidden");
@@ -442,6 +472,8 @@ watchAuth(async user => {
       currentPeople,
       currentDraftIds
     );
+    
+    openEditFromUrl();
 
     const registered =
       currentPeople.filter((person, index) =>
