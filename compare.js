@@ -326,12 +326,30 @@ function renderComparison(
         Draft 미리보기
       </a>
 
+      <button
+        type="button"
+        class="publish-btn"
+        id="publishBtn"
+      >
+        게시하기
+      </button>
+
     </div>
 
   `;
 
+const publishBtn =
+  document.getElementById("publishBtn");
+
+if (publishBtn) {
+  publishBtn.addEventListener("click", () => {
+    alert(
+      `${no}번 게시 기능은 다음 단계에서 연결됩니다.`
+    );
+  });
 }
 
+}
 
 /* =========================
    비교 실행
