@@ -32,8 +32,21 @@ const postList = $("postList");
 const postCount = $("postCount");
 const statusMessage = $("statusMessage");
 
+const editModal = $("editModal");
+const editForm = $("editForm");
+const editNo = $("editNo");
+const editName = $("editName");
+const editKo = $("editKo");
+const editDisplayName = $("editDisplayName");
+const editNote = $("editNote");
+const editImage = $("editImage");
+const closeEditModal = $("closeEditModal");
+const cancelEditBtn = $("cancelEditBtn");
+const saveEditBtn = $("saveEditBtn");
+
 let currentPeople = [];
 let currentDraftIds = new Set();
+let editingNo = null;
 
 function hidePanels() {
   [loadingPanel, loginPanel, deniedPanel, adminPanel]
@@ -86,7 +99,7 @@ function renderPosts(list, draftIds = new Set()) {
 
     if (done) {
       button.addEventListener("click", () =>
-        editDraft(person, no)
+        openEditModal(person, no)
       );
     }
 
@@ -110,7 +123,10 @@ async function copyToDraft(person, button) {
     if (existing.exists()) {
       button.textContent = "수정";
       button.disabled = false;
-      status(`"${person.name}"은(는) 이미 Draft에 등록되어 있습니다.`, "info");
+      status(
+        `"${person.name}"은(는) 이미 Draft에 등록되어 있습니다.`,
+        "info"
+      );
       return;
     }
 
@@ -205,7 +221,10 @@ async function copyAllToDraft() {
 
     currentDraftIds = await loadDraftIds();
 
-    renderPosts(currentPeople, currentDraftIds);
+    renderPosts(
+      currentPeople,
+      currentDraftIds
+    );
 
     status(
       `전체 Draft 등록 완료: ${targets.length}명 등록 / ${currentPeople.length - targets.length}명 건너뜀`,
@@ -230,68 +249,91 @@ async function copyAllToDraft() {
 }
 
 /* =========================
-   Draft 수정
+   수정 모달
 ========================= */
 
-async function editDraft(person, no) {
+function openEditModal(person, no) {
+  editingNo = no;
+
+  editNo.value = no;
+  editName.value = person.name || "";
+  editKo.value = person.ko || "";
+  editDisplayName.value = person.displayName || "";
+  editNote.value = person.note || "";
+  editImage.value = person.image || "no-image.jpg";
+
+  editModal.classList.remove("hidden");
+
+  setTimeout(() => {
+    editName.focus();
+  }, 50);
+}
+
+function closeEdit() {
+  editingNo = null;
+  editModal.classList.add("hidden");
+}
+
+async function saveEdit(event) {
+  event.preventDefault();
+
+  if (editingNo === null) return;
+
+  const name = editName.value.trim();
+  const ko = editKo.value.trim();
+  const displayName = editDisplayName.value.trim();
+  const note = editNote.value.trim();
+  const image = editImage.value.trim();
+
+  saveEditBtn.disabled = true;
+  saveEditBtn.textContent = "저장 중...";
+
   try {
-    const ref = doc(db, "drafts", String(no));
-    const snap = await getDoc(ref);
-
-    if (!snap.exists()) {
-      status(`Draft ${no}번을 찾을 수 없습니다.`, "error");
-      return;
-    }
-
-    const data = snap.data();
-
-    const name = prompt(
-      "이름",
-      data.name || ""
+    const ref = doc(
+      db,
+      "drafts",
+      String(editingNo)
     );
-
-    if (name === null) return;
-
-    const ko = prompt(
-      "한국 이름",
-      data.ko || ""
-    );
-
-    if (ko === null) return;
-
-    const displayName = prompt(
-      "표시 이름",
-      data.displayName || ""
-    );
-
-    if (displayName === null) return;
-
-    const note = prompt(
-      "메모 / 설명",
-      data.note || ""
-    );
-
-    if (note === null) return;
-
-    const image = prompt(
-      "이미지 파일명",
-      data.image || "no-image.jpg"
-    );
-
-    if (image === null) return;
 
     await updateDoc(ref, {
       name,
       ko,
       displayName,
       note,
-      image,
+      image: image || "no-image.jpg",
       updatedAt: new Date().toISOString()
     });
 
     status(
-      `"${name}"의 Draft가 저장되었습니다.`,
+      `${editingNo}번 "${name}"의 Draft가 저장되었습니다.`,
       "success"
+    );
+
+    closeEdit();
+
+    /*
+      화면의 이름/한국 이름/표시 이름/메모/이미지도
+      바로 갱신
+    */
+    const index = currentPeople.findIndex(
+      person =>
+        Number(getPersonNo(person, 0)) === Number(editingNo)
+    );
+
+    if (index !== -1) {
+      currentPeople[index] = {
+        ...currentPeople[index],
+        name,
+        ko,
+        displayName,
+        note,
+        image
+      };
+    }
+
+    renderPosts(
+      currentPeople,
+      currentDraftIds
     );
 
   } catch (e) {
@@ -303,8 +345,16 @@ async function editDraft(person, no) {
         : `Draft 수정 실패: ${e.message}`,
       "error"
     );
+
+  } finally {
+    saveEditBtn.disabled = false;
+    saveEditBtn.textContent = "저장";
   }
 }
+
+/* =========================
+   로그인
+========================= */
 
 loginBtn.addEventListener("click", async () => {
   loginError.classList.add("hidden");
@@ -338,6 +388,26 @@ logoutBtn.addEventListener("click", doLogout);
 deniedLogoutBtn.addEventListener("click", doLogout);
 copyAllDraftBtn.addEventListener("click", copyAllToDraft);
 
+closeEditModal.addEventListener("click", closeEdit);
+cancelEditBtn.addEventListener("click", closeEdit);
+editForm.addEventListener("submit", saveEdit);
+
+editModal.addEventListener("click", event => {
+  if (event.target === editModal) {
+    closeEdit();
+  }
+});
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") {
+    closeEdit();
+  }
+});
+
+/* =========================
+   인증
+========================= */
+
 watchAuth(async user => {
   hidePanels();
 
@@ -350,8 +420,10 @@ watchAuth(async user => {
 
   if (email !== ADMIN_EMAIL.toLowerCase()) {
     deniedPanel.classList.remove("hidden");
+
     deniedUser.textContent =
       `현재 로그인 계정: ${user.email || "알 수 없음"}`;
+
     return;
   }
 
