@@ -8,7 +8,7 @@ import { login, logout, watchAuth } from "./firebase.js";
  * 이 값은 관리자 화면을 보여줄지 결정하는 용도입니다.
  * 실제 Firebase 데이터 쓰기 권한은 나중에 Security Rules에서도 반드시 제한합니다.
  */
-const ADMIN_UID = "8OEfoiQCXDdIodCjbyXP0ZNints1";
+const ADMIN_EMAIL = "ektjttnfp5@gmail.com";
 
 const loadingPanel = document.getElementById("loadingPanel");
 const loginPanel = document.getElementById("loginPanel");
@@ -80,7 +80,7 @@ watchAuth((user) => {
         return;
     }
 
-    if (user.uid !== ADMIN_UID) {
+    if (user.email !== ADMIN_EMAIL) {
         deniedPanel.classList.remove("hidden");
 
         deniedUser.textContent =
