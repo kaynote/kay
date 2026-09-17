@@ -4,44 +4,121 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kay 기록 보관소 - 관리자 모드</title>
-  <link rel="stylesheet" href="./admin.css?v=302">
+  <link rel="stylesheet" href="./admin.css?v=303">
 </head>
+
 <body>
+
   <header class="admin-header">
-    <div><h1>Kay 기록 보관소</h1><p>관리자 모드</p></div>
-    <a class="site-link" href="./index.html">일반 사이트로</a>
+    <div>
+      <h1>Kay 기록 보관소</h1>
+      <p>관리자 모드</p>
+    </div>
+
+    <a class="site-link" href="./index.html">
+      일반 사이트로
+    </a>
   </header>
+
   <main class="admin-main">
-    <section id="loadingPanel" class="panel"><p>인증 상태를 확인하는 중...</p></section>
+
+    <section id="loadingPanel" class="panel">
+      <p>인증 상태를 확인하는 중...</p>
+    </section>
+
     <section id="loginPanel" class="panel hidden">
-      <h2>관리자 로그인</h2><p>관리자 계정으로 로그인해 주세요.</p>
-      <button id="loginBtn" class="primary">Google 계정으로 로그인</button>
+      <h2>관리자 로그인</h2>
+      <p>관리자 계정으로 로그인해 주세요.</p>
+
+      <button id="loginBtn" class="primary">
+        Google 계정으로 로그인
+      </button>
+
       <p id="loginError" class="error hidden"></p>
     </section>
+
     <section id="deniedPanel" class="panel hidden">
-      <h2>접근할 수 없습니다.</h2><p>현재 로그인한 계정에는 관리자 권한이 없습니다.</p>
-      <p id="deniedUser" class="account"></p><button id="deniedLogoutBtn">로그아웃</button>
+      <h2>접근할 수 없습니다.</h2>
+      <p>현재 로그인한 계정에는 관리자 권한이 없습니다.</p>
+
+      <p id="deniedUser" class="account"></p>
+
+      <button id="deniedLogoutBtn">
+        로그아웃
+      </button>
     </section>
+
     <section id="adminPanel" class="hidden">
+
       <div class="admin-title-row">
-        <div><h2>관리자 모드</h2><p id="adminUser" class="account"></p></div>
-        <button id="logoutBtn">로그아웃</button>
+        <div>
+          <h2>관리자 모드</h2>
+          <p id="adminUser" class="account"></p>
+        </div>
+
+        <button id="logoutBtn">
+          로그아웃
+        </button>
       </div>
+
       <section class="panel">
+
         <div class="section-title-row">
-          <div><h3>인물 목록</h3><p class="muted"><strong>people.js</strong>의 전체 데이터를 읽습니다. 원본은 변경하지 않습니다.</p></div>
-          <span id="postCount" class="count-badge">0개</span>
+
+          <div>
+            <h3>인물 목록</h3>
+            <p class="muted">
+              <strong>people.js</strong>의 전체 데이터를 읽습니다.
+              원본은 변경하지 않습니다.
+            </p>
+          </div>
+
+          <div>
+            <button id="copyAllDraftBtn" class="primary">
+              전체 Draft 등록
+            </button>
+
+            <span id="postCount" class="count-badge">
+              0개
+            </span>
+          </div>
+
         </div>
+
         <div id="statusMessage" class="status hidden"></div>
+
         <div class="table-wrap">
+
           <table>
-            <thead><tr><th>No.</th><th>이름</th><th>한국어</th><th>표시 이름</th><th>설명</th><th>이미지</th><th>관리</th></tr></thead>
+
+            <thead>
+              <tr>
+                <th>No.</th>
+                <th>이름</th>
+                <th>한국어</th>
+                <th>표시 이름</th>
+                <th>설명</th>
+                <th>이미지</th>
+                <th>관리</th>
+              </tr>
+            </thead>
+
             <tbody id="postList"></tbody>
+
           </table>
+
         </div>
+
       </section>
+
     </section>
+
   </main>
-  <script type="module" src="./admin.js?v=302"></script>
+
+  <script
+    type="module"
+    src="./admin.js?v=303"
+  ></script>
+
 </body>
 </html>
