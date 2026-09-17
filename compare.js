@@ -337,28 +337,36 @@ function renderComparison(
 
   `;
 
-const publishBtn =
-  document.getElementById("publishBtn");
+  const publishBtn =
+    document.getElementById("publishBtn");
 
-if (publishBtn) {
-  publishBtn.addEventListener("click", () => {
+  if (publishBtn) {
+    publishBtn.addEventListener("click", () => {
 
-    const confirmed = confirm(
-      `${no}번 Draft를 게시하시겠습니까?\n\n` +
-      `GitHub Actions에서 게시를 실행합니다.`
-    );
+      const confirmed = confirm(
+        `${no}번 Draft를 게시하시겠습니까?\n\n` +
+        `GitHub Actions에서 게시를 실행합니다.`
+      );
 
-    if (!confirmed) {
-      return;
-    }
+      if (!confirmed) {
+        return;
+      }
 
-    window.open(
-      "https://github.com/kaynote/kay/actions/workflows/publish-drafts.yml",
-      "_blank"
-    );
+      window.open(
+        "https://github.com/kaynote/kay/actions/workflows/publish-drafts.yml",
+        "_blank"
+      );
 
-  });
-}
+    });
+  }
+
+}  // ← 이게 renderComparison()을 닫는 괄호입니다.
+
+/* =========================
+   비교 실행
+========================= */
+
+async function loadComparison() {
 
 /* =========================
    비교 실행
@@ -533,12 +541,10 @@ watchAuth(async user => {
 
   }
 
-
   const email =
     (user.email || "")
       .trim()
       .toLowerCase();
-
 
   if (
     email !==
@@ -558,7 +564,6 @@ watchAuth(async user => {
     return;
 
   }
-
 
   await loadComparison();
 
