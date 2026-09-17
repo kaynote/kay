@@ -420,3 +420,25 @@ tbody tr:hover {
     padding: 18px;
   }
 }
+
+.preview-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 16px;
+
+  border-radius: 8px;
+
+  background: #555;
+  color: #fff;
+
+  text-decoration: none;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.preview-btn:hover {
+  opacity: 0.85;
+}
