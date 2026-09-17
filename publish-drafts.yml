@@ -1,0 +1,48 @@
+name: Publish Drafts
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: 저장소 가져오기
+        uses: actions/checkout@v4
+
+      - name: Node.js 설정
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Firebase Admin SDK 설치
+        run: npm install firebase-admin
+
+      - name: Draft에서 people.js 생성
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: node scripts/publish-drafts.js
+
+      - name: 변경사항 확인
+        run: git diff -- people.js
+
+      - name: people.js 커밋
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add people.js
+
+          if git diff --cached --quiet; then
+            echo "변경된 내용이 없습니다."
+            exit 0
+          fi
+
+          git commit -m "Publish Firestore Drafts"
+
+          git push
