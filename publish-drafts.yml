@@ -1,7 +1,12 @@
-name: Publish Drafts
+name: Publish Draft
 
 on:
   workflow_dispatch:
+    inputs:
+      source_no:
+        description: "게시할 사람 번호"
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -23,9 +28,10 @@ jobs:
       - name: Firebase Admin SDK 설치
         run: npm install firebase-admin
 
-      - name: Draft에서 people.js 생성
+      - name: Draft 한 명 게시
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          SOURCE_NO: ${{ inputs.source_no }}
         run: node scripts/publish-drafts.js
 
       - name: 변경사항 확인
@@ -43,6 +49,6 @@ jobs:
             exit 0
           fi
 
-          git commit -m "Publish Firestore Drafts"
+          git commit -m "Publish Draft ${{ inputs.source_no }}"
 
           git push
