@@ -4,7 +4,7 @@ import people from "./people.js?v=302";
 
 import {
   doc,
-  getDoc
+  getDoc,
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 
@@ -342,12 +342,22 @@ const publishBtn =
 
 if (publishBtn) {
   publishBtn.addEventListener("click", () => {
-    alert(
-      `${no}번 게시 기능은 다음 단계에서 연결됩니다.`
-    );
-  });
-}
 
+    const confirmed = confirm(
+      `${no}번 Draft를 게시하시겠습니까?\n\n` +
+      `GitHub Actions에서 게시를 실행합니다.`
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    window.open(
+      "https://github.com/kaynote/kay/actions/workflows/publish-drafts.yml",
+      "_blank"
+    );
+
+  });
 }
 
 /* =========================
