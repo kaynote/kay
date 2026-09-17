@@ -122,11 +122,17 @@ function renderDrafts(drafts) {
             수정
           </a>
 
+          <a
+            href="compare.html?no=${encodeURIComponent(draft.sourceNo)}"
+            class="preview-edit-btn"
+          >
+            변경사항 비교
+          </a>
+
         </div>
 
       </div>
     `;
-
 
     previewGrid.appendChild(card);
 
