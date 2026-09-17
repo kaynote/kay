@@ -158,5 +158,27 @@ service cloud.firestore {
           && request.auth.uid == uid;
       }
     }
+
+    /*
+    =========================
+    DRAFTS
+    관리자 전용 임시 저장 데이터
+    =========================
+    */
+
+    match /drafts/{draftId} {
+
+      // 관리자만 Draft 읽기 가능
+      allow read: if isAdmin();
+
+      // 관리자만 Draft 생성 가능
+      allow create: if isAdmin();
+
+      // 관리자만 Draft 수정 가능
+      allow update: if isAdmin();
+
+      // 관리자만 Draft 삭제 가능
+      allow delete: if isAdmin();
+    }
   }
 }
