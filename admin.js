@@ -1,103 +1,273 @@
-import { login, logout, watchAuth } from "./firebase.js";
-
-/*
- * 관리자 UID
- * 현재 index.html에서 사용 중인 관리자 계정과 동일하게 사용합니다.
- *
- * 중요:
- * 이 값은 관리자 화면을 보여줄지 결정하는 용도입니다.
- * 실제 Firebase 데이터 쓰기 권한은 나중에 Security Rules에서도 반드시 제한합니다.
- */
-const ADMIN_EMAIL = "ektjttnfp5@gmail.com";
-
-const loadingPanel = document.getElementById("loadingPanel");
-const loginPanel = document.getElementById("loginPanel");
-const deniedPanel = document.getElementById("deniedPanel");
-const adminPanel = document.getElementById("adminPanel");
-
-const loginBtn = document.getElementById("loginBtn");
-const logoutBtn = document.getElementById("logoutBtn");
-const deniedLogoutBtn = document.getElementById("deniedLogoutBtn");
-
-const loginError = document.getElementById("loginError");
-const adminUser = document.getElementById("adminUser");
-const deniedUser = document.getElementById("deniedUser");
-
-function hideAllPanels() {
-    loadingPanel.classList.add("hidden");
-    loginPanel.classList.add("hidden");
-    deniedPanel.classList.add("hidden");
-    adminPanel.classList.add("hidden");
+* {
+  box-sizing: border-box;
 }
 
-function showLoginError(message) {
-    loginError.textContent = message;
-    loginError.classList.remove("hidden");
+body {
+  margin: 0;
+  background: #f5f6f8;
+  color: #222;
+  font-family: Arial, "Noto Sans KR", sans-serif;
 }
 
-loginBtn.addEventListener("click", async () => {
-    loginError.classList.add("hidden");
-    loginBtn.disabled = true;
-    loginBtn.textContent = "로그인 중...";
-
-    try {
-        await login();
-    } catch (error) {
-        console.error("관리자 로그인 오류:", error);
-
-        let message = "로그인에 실패했습니다.";
-
-        if (error?.code === "auth/popup-closed-by-user") {
-            message = "로그인 창이 닫혔습니다.";
-        } else if (error?.code === "auth/popup-blocked") {
-            message = "브라우저에서 팝업이 차단되었습니다. 팝업을 허용한 뒤 다시 시도하세요.";
-        }
-
-        showLoginError(message);
-    } finally {
-        loginBtn.disabled = false;
-        loginBtn.textContent = "Google 계정으로 로그인";
-    }
-});
-
-async function doLogout() {
-    try {
-        await logout();
-    } catch (error) {
-        console.error("로그아웃 오류:", error);
-        alert("로그아웃 중 문제가 발생했습니다.");
-    }
+/* 공통 */
+.hidden {
+  display: none !important;
 }
 
-logoutBtn.addEventListener("click", doLogout);
-deniedLogoutBtn.addEventListener("click", doLogout);
+/* 상단 헤더 */
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
 
-watchAuth((user) => {
-    hideAllPanels();
+  padding: 24px 32px;
 
-    if (!user) {
-        loginPanel.classList.remove("hidden");
-        return;
-    }
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+}
 
-    if (user.email !== ADMIN_EMAIL) {
-        deniedPanel.classList.remove("hidden");
+.admin-header h1 {
+  margin: 0 0 5px;
+  font-size: 24px;
+}
 
-        deniedUser.textContent =
-            user.email
-                ? `현재 로그인 계정: ${user.email}`
-                : "현재 로그인한 계정에는 관리자 권한이 없습니다.";
+.admin-header p {
+  margin: 0;
+  color: #777;
+}
 
-        return;
-    }
+/* 일반 사이트로 이동 */
+.site-link {
+  color: #333;
+  text-decoration: none;
 
-    adminPanel.classList.remove("hidden");
+  padding: 10px 14px;
 
-    const displayName = user.name || user.email || "관리자";
-    adminUser.textContent =
-        `${displayName}님, 관리자 계정으로 로그인되어 있습니다.`;
+  border: 1px solid #ccc;
+  border-radius: 8px;
 
-    console.log("관리자 인증 성공:", user.uid);
-});
+  background: #fff;
+}
 
-loadingPanel.classList.remove("hidden");
+.site-link:hover {
+  background: #f0f0f0;
+}
+
+/* 관리자 메인 영역 */
+.admin-main {
+  width: min(1600px, calc(100% - 32px));
+  margin: 24px auto 60px;
+}
+
+/* 카드 / 패널 */
+.panel {
+  margin-bottom: 20px;
+  padding: 24px;
+
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+}
+
+/* 제목 영역 */
+.admin-title-row,
+.section-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+h2,
+h3 {
+  margin-top: 0;
+}
+
+/* 계정 정보 */
+.account {
+  color: #666;
+}
+
+/* 설명 문구 */
+.muted {
+  margin-bottom: 0;
+  color: #777;
+  line-height: 1.5;
+}
+
+/* 버튼 기본 */
+button {
+  padding: 9px 13px;
+
+  border: 1px solid #ccc;
+  border-radius: 7px;
+
+  background: #fff;
+  color: #222;
+
+  cursor: pointer;
+}
+
+/* 버튼 마우스 오버 */
+button:hover:not(:disabled) {
+  background: #f0f0f0;
+}
+
+/* 비활성화 버튼 */
+button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+/* 로그인 등 주요 버튼 */
+button.primary {
+  background: #222;
+  color: #fff;
+  border-color: #222;
+}
+
+button.primary:hover:not(:disabled) {
+  background: #000;
+}
+
+/* 로그인 오류 */
+.error {
+  margin-top: 15px;
+  color: #c62828;
+}
+
+/* 인원 수 표시 */
+.count-badge {
+  padding: 7px 12px;
+
+  border-radius: 20px;
+
+  background: #eee;
+
+  white-space: nowrap;
+}
+
+/* 상태 메시지 */
+.status {
+  margin: 18px 0;
+  padding: 12px 14px;
+
+  border-radius: 8px;
+
+  line-height: 1.5;
+}
+
+/* 상태 - 기본 */
+.status.info {
+  background: #f0f0f0;
+}
+
+/* 상태 - 성공 */
+.status.success {
+  background: #e8f5e9;
+}
+
+/* 상태 - 오류 */
+.status.error {
+  background: #ffebee;
+  color: #b71c1c;
+}
+
+/* 테이블 바깥 영역 */
+.table-wrap {
+  overflow-x: auto;
+
+  margin-top: 20px;
+
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+/* 인물 목록 테이블 */
+table {
+  width: 100%;
+  min-width: 1200px;
+
+  border-collapse: collapse;
+}
+
+/* 테이블 셀 */
+th,
+td {
+  padding: 12px 10px;
+
+  text-align: left;
+  vertical-align: top;
+
+  border-bottom: 1px solid #eee;
+}
+
+/* 테이블 제목 */
+th {
+  background: #f7f7f7;
+  white-space: nowrap;
+}
+
+/* 행에 마우스를 올렸을 때 */
+tbody tr:hover {
+  background: #fafafa;
+}
+
+/* 인물 이름 */
+.name-cell {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* 설명 */
+.note-cell {
+  min-width: 380px;
+  max-width: 600px;
+
+  line-height: 1.5;
+}
+
+/* 관리 버튼 영역 */
+.action-cell {
+  white-space: nowrap;
+}
+
+/* Draft 버튼 */
+.draft-btn {
+  font-size: 13px;
+}
+
+
+/* ========================================
+   모바일 화면
+   ======================================== */
+
+@media (max-width: 700px) {
+
+  /* 상단 헤더 */
+  .admin-header {
+    padding: 18px;
+
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  /* 메인 영역 */
+  .admin-main {
+    width: calc(100% - 20px);
+    margin-top: 10px;
+  }
+
+  /* 패널 */
+  .panel {
+    padding: 16px;
+  }
+
+  /* 제목 영역 */
+  .admin-title-row,
+  .section-title-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
