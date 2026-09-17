@@ -1,0 +1,22 @@
+kay/
+│
+├── people.js
+│
+├── admin.html
+├── admin.js
+├── admin.css
+│
+├── draft-preview.html
+├── draft-preview.js
+├── draft-preview.css
+│
+├── compare.html
+├── compare.js
+├── compare.css
+│
+├── scripts/
+│   └── publish-drafts.js
+│
+└── .github/
+    └── workflows/
+        └── publish-drafts.yml
