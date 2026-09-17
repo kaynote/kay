@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kay 기록 보관소 - 관리자</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <main class="admin-shell">
+        <header class="admin-header">
+            <div>
+                <h1>Kay 기록 보관소</h1>
+                <p class="subtitle">관리자 모드</p>
+            </div>
+            <a class="back-link" href="./">일반 사이트로</a>
+        </header>
+
+        <section id="loadingPanel" class="panel">
+            <p>로그인 상태를 확인하는 중입니다...</p>
+        </section>
+
+        <section id="loginPanel" class="panel hidden">
+            <h2>관리자 로그인</h2>
+            <p>관리자 계정으로 로그인하면 관리자 모드를 사용할 수 있습니다.</p>
+            <button id="loginBtn" class="primary-btn">Google 계정으로 로그인</button>
+            <p id="loginError" class="error-text hidden"></p>
+        </section>
+
+        <section id="deniedPanel" class="panel hidden">
+            <h2>접근할 수 없습니다.</h2>
+            <p>현재 로그인한 계정에는 관리자 권한이 없습니다.</p>
+            <div class="user-info">
+                <span id="deniedUser"></span>
+            </div>
+            <button id="deniedLogoutBtn" class="secondary-btn">로그아웃</button>
+        </section>
+
+        <section id="adminPanel" class="hidden">
+            <div class="panel welcome-panel">
+                <div>
+                    <h2>관리자 모드</h2>
+                    <p id="adminUser"></p>
+                </div>
+                <button id="logoutBtn" class="secondary-btn">로그아웃</button>
+            </div>
+
+            <div class="panel">
+                <h2>현재 단계</h2>
+                <p>
+                    관리자 전용 페이지가 정상적으로 연결되었습니다.
+                    아직 기존 게시물 데이터나 공개 사이트의 내용은 변경하지 않습니다.
+                </p>
+
+                <div class="status-box">
+                    <div><span>관리자 인증</span><strong class="ok">정상</strong></div>
+                    <div><span>공개 사이트</span><strong>변경 없음</strong></div>
+                    <div><span>Draft</span><strong>아직 사용하지 않음</strong></div>
+                    <div><span>Publish</span><strong>아직 사용하지 않음</strong></div>
+                </div>
+            </div>
+
+            <div class="panel next-panel">
+                <h2>다음 단계</h2>
+                <ol>
+                    <li>관리자 전용 게시물 목록 만들기</li>
+                    <li>기존 게시물을 Draft로 복사하기</li>
+                    <li>Draft 수정 및 미리보기</li>
+                    <li>Publish 기능 추가</li>
+                    <li>Firebase Security Rules로 관리자 쓰기 권한 보호</li>
+                </ol>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="./admin.js"></script>
+</body>
+</html>
