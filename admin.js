@@ -7,7 +7,8 @@ import {
   getDocs,
   setDoc,
   collection,
-  writeBatch
+  writeBatch,
+  updateDoc
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 const ADMIN_EMAIL = "ektjttnfp5@gmail.com";
@@ -75,17 +76,17 @@ function renderPosts(list, draftIds = new Set()) {
       <td class="note-cell">${escapeHtml(person.note || "")}</td>
       <td>${escapeHtml(person.image || "no-image.jpg")}</td>
       <td class="action-cell">
-        <button class="draft-btn" ${done ? "disabled" : ""}>
-          ${done ? "Draft 완료" : "Draft로 복사"}
+        <button class="draft-btn" ${done ? "" : "disabled"}>
+          ${done ? "수정" : "Draft 등록"}
         </button>
       </td>
     `;
 
     const button = tr.querySelector("button");
 
-    if (!done) {
+    if (done) {
       button.addEventListener("click", () =>
-        copyToDraft(person, button)
+        editDraft(person, no)
       );
     }
 
@@ -107,7 +108,8 @@ async function copyToDraft(person, button) {
     const existing = await getDoc(ref);
 
     if (existing.exists()) {
-      button.textContent = "Draft 완료";
+      button.textContent = "수정";
+      button.disabled = false;
       status(`"${person.name}"은(는) 이미 Draft에 등록되어 있습니다.`, "info");
       return;
     }
@@ -125,10 +127,11 @@ async function copyToDraft(person, button) {
 
     currentDraftIds.add(String(person.no));
 
-    button.textContent = "Draft 완료";
+    button.textContent = "수정";
+    button.disabled = false;
 
     status(
-      `"${person.name}"을(를) Draft로 복사했습니다. people.js 원본은 변경되지 않았습니다.`,
+      `"${person.name}"을(를) Draft로 복사했습니다.`,
       "success"
     );
 
@@ -143,7 +146,7 @@ async function copyToDraft(person, button) {
     );
 
     button.disabled = false;
-    button.textContent = "Draft로 복사";
+    button.textContent = "Draft 등록";
   }
 }
 
@@ -202,10 +205,7 @@ async function copyAllToDraft() {
 
     currentDraftIds = await loadDraftIds();
 
-    renderPosts(
-      currentPeople,
-      currentDraftIds
-    );
+    renderPosts(currentPeople, currentDraftIds);
 
     status(
       `전체 Draft 등록 완료: ${targets.length}명 등록 / ${currentPeople.length - targets.length}명 건너뜀`,
@@ -226,6 +226,83 @@ async function copyAllToDraft() {
 
     copyAllDraftBtn.disabled = false;
     copyAllDraftBtn.textContent = "전체 Draft 등록";
+  }
+}
+
+/* =========================
+   Draft 수정
+========================= */
+
+async function editDraft(person, no) {
+  try {
+    const ref = doc(db, "drafts", String(no));
+    const snap = await getDoc(ref);
+
+    if (!snap.exists()) {
+      status(`Draft ${no}번을 찾을 수 없습니다.`, "error");
+      return;
+    }
+
+    const data = snap.data();
+
+    const name = prompt(
+      "이름",
+      data.name || ""
+    );
+
+    if (name === null) return;
+
+    const ko = prompt(
+      "한국 이름",
+      data.ko || ""
+    );
+
+    if (ko === null) return;
+
+    const displayName = prompt(
+      "표시 이름",
+      data.displayName || ""
+    );
+
+    if (displayName === null) return;
+
+    const note = prompt(
+      "메모 / 설명",
+      data.note || ""
+    );
+
+    if (note === null) return;
+
+    const image = prompt(
+      "이미지 파일명",
+      data.image || "no-image.jpg"
+    );
+
+    if (image === null) return;
+
+    await updateDoc(ref, {
+      name,
+      ko,
+      displayName,
+      note,
+      image,
+      updatedAt: new Date().toISOString()
+    });
+
+    status(
+      `"${name}"의 Draft가 저장되었습니다.`,
+      "success"
+    );
+
+  } catch (e) {
+    console.error(e);
+
+    status(
+      e?.code === "permission-denied"
+        ? "Draft 수정 권한이 거부되었습니다."
+        : `Draft 수정 실패: ${e.message}`,
+      "error"
+    );
   }
 }
 
