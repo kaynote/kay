@@ -4,6 +4,17 @@ const { initializeApp, cert } =
 const { getFirestore } =
   require("firebase-admin/firestore");
 
+const fs =
+  require("fs");
+
+const vm =
+  require("vm");
+
+
+/* =========================
+   Firebase Admin
+========================= */
+
 const serviceAccount =
   JSON.parse(
     process.env.FIREBASE_SERVICE_ACCOUNT
@@ -13,102 +24,287 @@ initializeApp({
   credential: cert(serviceAccount)
 });
 
-const db = getFirestore();
+const db =
+  getFirestore();
+
+
+/* =========================
+   게시할 번호
+========================= */
+
+const sourceNo =
+  Number(
+    process.env.SOURCE_NO
+  );
+
+
+if (!Number.isInteger(sourceNo)) {
+
+  throw new Error(
+    "게시할 번호(SOURCE_NO)가 지정되지 않았습니다."
+  );
+
+}
+
+
+/* =========================
+   값 정리
+========================= */
 
 function cleanValue(value) {
-  if (value === undefined || value === null) {
+
+  if (
+    value === undefined ||
+    value === null
+  ) {
     return "";
   }
 
   return value;
+
 }
 
+
 function normalizeGallery(gallery) {
+
   if (!Array.isArray(gallery)) {
     return [];
   }
 
   return gallery.map(item => ({
-    image: cleanValue(item.image),
-    caption: cleanValue(item.caption)
+
+    image:
+      cleanValue(item.image),
+
+    caption:
+      cleanValue(item.caption)
+
   }));
+
 }
+
+
+/* =========================
+   현재 people.js 읽기
+========================= */
+
+function loadPeople() {
+
+  console.log(
+    "현재 people.js를 불러오는 중..."
+  );
+
+
+  let source =
+    fs.readFileSync(
+      "people.js",
+      "utf8"
+    );
+
+
+  /*
+    export default people;
+    부분을 제거한 뒤
+    Node.js VM에서 people 배열을 읽습니다.
+  */
+
+  source =
+    source.replace(
+      /export\s+default\s+people\s*;?\s*$/,
+      ""
+    );
+
+
+  const context = {};
+
+
+  vm.runInNewContext(
+    `${source}\nresult = people;`,
+    context
+  );
+
+
+  if (
+    !Array.isArray(context.result)
+  ) {
+
+    throw new Error(
+      "people.js에서 people 배열을 읽을 수 없습니다."
+    );
+
+  }
+
+
+  return context.result;
+
+}
+
+
+/* =========================
+   Draft에서 한 사람 가져오기
+========================= */
+
+async function loadDraft(no) {
+
+  console.log(
+    `Firestore Draft ${no}번을 불러오는 중...`
+  );
+
+
+  const draftRef =
+    db
+      .collection("drafts")
+      .doc(String(no));
+
+
+  const snapshot =
+    await draftRef.get();
+
+
+  if (!snapshot.exists) {
+
+    throw new Error(
+      `${no}번 Draft가 존재하지 않습니다.`
+    );
+
+  }
+
+
+  const data =
+    snapshot.data();
+
+
+  const draft = {
+
+    no:
+      Number(data.sourceNo),
+
+    name:
+      cleanValue(data.name),
+
+    ko:
+      cleanValue(data.ko),
+
+    displayName:
+      cleanValue(data.displayName),
+
+    note:
+      cleanValue(data.note),
+
+    image:
+      cleanValue(data.image),
+
+    gallery:
+      normalizeGallery(data.gallery)
+
+  };
+
+
+  if (
+    draft.no !== no
+  ) {
+
+    throw new Error(
+      `Draft ${no}번의 sourceNo가 올바르지 않습니다.`
+    );
+
+  }
+
+
+  return draft;
+
+}
+
+
+/* =========================
+   실행
+========================= */
 
 async function main() {
 
-  console.log("Firestore Draft를 불러오는 중...");
-
-  const snapshot =
-    await db
-      .collection("drafts")
-      .get();
-
   console.log(
-    `Draft ${snapshot.size}개를 불러왔습니다.`
+    `========== ${sourceNo}번 게시 시작 ==========`
   );
+
+
+  /* 현재 공개 데이터 */
 
   const people =
-    snapshot.docs
-      .map(doc => {
+    loadPeople();
 
-        const data =
-          doc.data();
-
-        return {
-          no: Number(data.sourceNo),
-          name: cleanValue(data.name),
-          ko: cleanValue(data.ko),
-          displayName:
-            cleanValue(data.displayName),
-          note: cleanValue(data.note),
-          image: cleanValue(data.image),
-          gallery:
-            normalizeGallery(data.gallery)
-        };
-
-      })
-      .filter(person =>
-        Number.isFinite(person.no)
-      )
-      .sort((a, b) =>
-        a.no - b.no
-      );
 
   console.log(
-    `정렬 완료: ${people.length}명`
+    `현재 공개 데이터: ${people.length}명`
   );
 
-  if (people.length === 0) {
-    throw new Error(
-      "Draft 데이터가 없습니다."
+
+  /* 게시할 Draft */
+
+  const draft =
+    await loadDraft(
+      sourceNo
     );
+
+
+  /* 해당 번호 찾기 */
+
+  const index =
+    people.findIndex(
+      (person, index) => {
+
+        const no =
+          Number(
+            person.no ??
+            index + 1
+          );
+
+        return no === sourceNo;
+
+      }
+    );
+
+
+  if (index === -1) {
+
+    throw new Error(
+      `${sourceNo}번 데이터를 people.js에서 찾을 수 없습니다.`
+    );
+
   }
 
-  const expectedCount = 302;
 
-  if (people.length !== expectedCount) {
-    throw new Error(
-      `예상 인원 ${expectedCount}명과 실제 Draft ${people.length}명이 다릅니다. 게시를 중단합니다.`
-    );
-  }
+  /* 기존 데이터 백업 */
 
-  const numbers =
-    people.map(person => person.no);
+  const oldPerson =
+    people[index];
 
-  const uniqueNumbers =
-    new Set(numbers);
 
-  if (
-    uniqueNumbers.size !==
-    people.length
-  ) {
-    throw new Error(
-      "중복된 번호가 발견되었습니다. 게시를 중단합니다."
-    );
-  }
+  console.log(
+    `${sourceNo}번 데이터를 교체합니다.`
+  );
+
+
+  /* 해당 번호만 교체 */
+
+  people[index] =
+    draft;
+
+
+  /* 다시 번호순 정렬 */
+
+  people.sort(
+    (a, b) =>
+      Number(a.no) -
+      Number(b.no)
+  );
+
+
+  /* people.js 생성 */
 
   const peopleJs =
-`const people = ${JSON.stringify(
+`// Auto-generated from Firestore Drafts
+
+const people = ${JSON.stringify(
   people,
   null,
   2
@@ -117,8 +313,6 @@ async function main() {
 export default people;
 `;
 
-  const fs =
-    require("fs");
 
   fs.writeFileSync(
     "people.js",
@@ -126,14 +320,31 @@ export default people;
     "utf8"
   );
 
+
   console.log(
-    "people.js 생성 완료"
+    `${sourceNo}번 게시 완료`
+  );
+
+
+  console.log(
+    "변경된 데이터:"
   );
 
   console.log(
-    `총 ${people.length}명`
+    JSON.stringify(
+      draft,
+      null,
+      2
+    )
   );
+
+
+  console.log(
+    `========== ${sourceNo}번 게시 완료 ==========`
+  );
+
 }
+
 
 main().catch(error => {
 
@@ -144,4 +355,5 @@ main().catch(error => {
   console.error(error);
 
   process.exit(1);
+
 });
