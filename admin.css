@@ -271,3 +271,152 @@ tbody tr:hover {
     flex-direction: column;
   }
 }
+
+/* =========================
+   Draft 수정 모달
+========================= */
+
+.edit-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.edit-modal.hidden {
+  display: none;
+}
+
+.edit-modal-content {
+  width: min(560px, 100%);
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+
+  background: #fff;
+  border-radius: 14px;
+
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+
+  padding: 24px;
+}
+
+.edit-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 20px;
+}
+
+.edit-modal-header h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.edit-close {
+  border: 0;
+  background: transparent;
+
+  font-size: 30px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  padding: 2px 8px;
+}
+
+.edit-field {
+  margin-bottom: 16px;
+}
+
+.edit-field label {
+  display: block;
+
+  margin-bottom: 6px;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.edit-field input,
+.edit-field textarea {
+  box-sizing: border-box;
+
+  width: 100%;
+
+  border: 1px solid #ccc;
+  border-radius: 8px;
+
+  padding: 10px 12px;
+
+  font-size: 15px;
+  font-family: inherit;
+
+  background: #fff;
+}
+
+.edit-field input:focus,
+.edit-field textarea:focus {
+  outline: none;
+  border-color: #666;
+}
+
+.edit-field input[readonly] {
+  background: #f3f3f3;
+  color: #666;
+}
+
+.edit-field textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+.edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+
+  margin-top: 22px;
+}
+
+.edit-actions button {
+  border: 0;
+  border-radius: 8px;
+
+  padding: 10px 18px;
+
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.edit-cancel {
+  background: #e5e5e5;
+}
+
+.edit-save {
+  background: #222;
+  color: #fff;
+}
+
+.edit-save:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+@media (max-width: 600px) {
+  .edit-modal {
+    padding: 10px;
+  }
+
+  .edit-modal-content {
+    max-height: calc(100vh - 20px);
+    padding: 18px;
+  }
+}
