@@ -113,6 +113,17 @@ function renderDrafts(drafts) {
             : ""
         }
 
+        <div class="preview-actions">
+
+          <a
+            href="admin.html?edit=${encodeURIComponent(draft.sourceNo)}"
+            class="preview-edit-btn"
+          >
+            수정
+          </a>
+
+        </div>
+
       </div>
     `;
 
