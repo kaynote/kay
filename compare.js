@@ -367,13 +367,6 @@ function renderComparison(
 ========================= */
 
 async function loadComparison() {
-
-/* =========================
-   비교 실행
-========================= */
-
-async function loadComparison() {
-
   const no =
     getNoFromUrl();
 
