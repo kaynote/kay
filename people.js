@@ -1,10 +1,12 @@
+// Auto-generated from Firestore Drafts
+
 const people = [
   {
     "no": 1,
     "name": "Adeline Orabao",
     "ko": "아델린 오라바오",
     "displayName": "Adeline Orabao 아델린 오라바오",
-    "note": "프린세스의 엄마, 'Adeline'은 ‘고귀한’이라는 의미를 가진 이름, 서 있는 상태로 부모님 동의서에 이름을 적을 때 프린세스가 허리에 매달려 흔들었는데도 글씨체가 가독성 높고 예쁘고 바르다, <span class=\"timestamp\">정주행 2021.11.10 가정방문 2부 23:42</span>",
+    "note": "프린세스의 엄마, 'Adeline'은 ‘고귀한’이라는 의미를 가진 이름, 서 있는 상태로 부모님 동의서에 이름을 적을 때 프린세스가 허리에 매달려 흔들었는데도 글씨체의 가독성이 높고 예쁘고 바르다, <span class=\"timestamp\">정주행 2021.11.10 가정방문 2부 23:42</span>",
     "image": "Adeline Orabao.jpg",
     "gallery": []
   },
