@@ -360,7 +360,7 @@ function renderComparison(
     });
   }
 
-}  // ← 이게 renderComparison()을 닫는 괄호입니다.
+}  // ← 이게 renderComparison()을 닫는 괄호
 
 /* =========================
    비교 실행
