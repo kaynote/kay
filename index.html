@@ -312,11 +312,11 @@ async function loadCardStats(
                 "likes"
             );
 
-        const likesCount =
-            await getCountFromServer(likesRef);
+        const likesSnap =
+            await getDocs(likesRef);
 
         likeEl.textContent =
-            likesCount.data().count;
+            likesSnap.size;
 
 
         /* =========================
