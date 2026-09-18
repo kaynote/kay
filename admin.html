@@ -4,24 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kay 기록 보관소 - 관리자 모드</title>
-  <link rel="stylesheet" href="./admin.css?v=303">
+  <link rel="stylesheet" href="./admin.css?v=305">
 </head>
-
 <body>
-
   <header class="admin-header">
     <div>
       <h1>Kay 기록 보관소</h1>
       <p>관리자 모드</p>
     </div>
-
-    <a class="site-link" href="./index.html">
-      일반 사이트로
-    </a>
+    <a class="site-link" href="./index.html">일반 사이트로</a>
   </header>
 
   <main class="admin-main">
-
     <section id="loadingPanel" class="panel">
       <p>인증 상태를 확인하는 중...</p>
     </section>
@@ -29,75 +23,44 @@
     <section id="loginPanel" class="panel hidden">
       <h2>관리자 로그인</h2>
       <p>관리자 계정으로 로그인해 주세요.</p>
-
-      <button id="loginBtn" class="primary">
-        Google 계정으로 로그인
-      </button>
-
+      <button id="loginBtn" class="primary">Google 계정으로 로그인</button>
       <p id="loginError" class="error hidden"></p>
     </section>
 
     <section id="deniedPanel" class="panel hidden">
       <h2>접근할 수 없습니다.</h2>
       <p>현재 로그인한 계정에는 관리자 권한이 없습니다.</p>
-
       <p id="deniedUser" class="account"></p>
-
-      <button id="deniedLogoutBtn">
-        로그아웃
-      </button>
+      <button id="deniedLogoutBtn">로그아웃</button>
     </section>
 
     <section id="adminPanel" class="hidden">
-
       <div class="admin-title-row">
         <div>
           <h2>관리자 모드</h2>
           <p id="adminUser" class="account"></p>
         </div>
-
-        <button id="logoutBtn">
-          로그아웃
-        </button>
+        <button id="logoutBtn">로그아웃</button>
       </div>
 
       <section class="panel">
-
         <div class="section-title-row">
-
           <div>
             <h3>인물 목록</h3>
             <p class="muted">
-              <strong>people.js</strong>의 전체 데이터를 읽습니다.
-              원본은 변경하지 않습니다.
+              <strong>people.js</strong>의 전체 데이터를 읽습니다. 원본은 변경하지 않습니다.
             </p>
           </div>
-
-          <div>
-            <button id="copyAllDraftBtn" class="primary">
-              전체 Draft 등록
-            </button>
-            
-            <a
-              href="draft-preview.html"
-              class="preview-btn"
-            >
-              Draft 미리보기
-            </a>
-
-            <span id="postCount" class="count-badge">
-              0개
-            </span>
+          <div class="admin-actions">
+            <button id="copyAllDraftBtn" class="primary">전체 Draft 등록</button>
+            <span id="postCount" class="count-badge">0개</span>
           </div>
-
         </div>
 
         <div id="statusMessage" class="status hidden"></div>
 
         <div class="table-wrap">
-
           <table>
-
             <thead>
               <tr>
                 <th>No.</th>
@@ -105,119 +68,39 @@
                 <th>한국어</th>
                 <th>표시 이름</th>
                 <th>설명</th>
-                <th>이미지</th>
+                <th>사진</th>
                 <th>좋아요</th>
                 <th>댓글</th>
                 <th>답글</th>
                 <th>관리</th>
               </tr>
             </thead>
-
             <tbody id="postList"></tbody>
-
           </table>
-
         </div>
-
       </section>
-
     </section>
-
   </main>
 
-  <script
-    type="module"
-    src="./admin.js?v=303"
-  ></script>
-
-<!-- Draft 수정 모달 -->
-<div id="editModal" class="edit-modal hidden">
-  <div class="edit-modal-content">
-
-    <div class="edit-modal-header">
+  <div id="editModal" class="edit-modal hidden">
+    <div class="edit-modal-content">
+      <button id="closeEditModal" type="button" class="edit-close">✕</button>
       <h2>Draft 수정</h2>
-      <button type="button" id="closeEditModal" class="edit-close">
-        ×
-      </button>
+      <form id="editForm">
+        <label>No.<input id="editNo" type="text" readonly></label>
+        <label>이름<input id="editName" type="text" required></label>
+        <label>한국어<input id="editKo" type="text"></label>
+        <label>표시 이름<input id="editDisplayName" type="text"></label>
+        <label>설명<textarea id="editNote" rows="4"></textarea></label>
+        <label>이미지 파일명<input id="editImage" type="text"></label>
+        <div class="edit-actions">
+          <button id="cancelEditBtn" type="button">취소</button>
+          <button id="saveEditBtn" type="submit" class="primary">저장</button>
+        </div>
+      </form>
     </div>
-
-    <form id="editForm">
-
-      <div class="edit-field">
-        <label for="editNo">번호</label>
-        <input
-          type="text"
-          id="editNo"
-          readonly
-        >
-      </div>
-
-      <div class="edit-field">
-        <label for="editName">이름</label>
-        <input
-          type="text"
-          id="editName"
-          autocomplete="off"
-        >
-      </div>
-
-      <div class="edit-field">
-        <label for="editKo">한국 이름</label>
-        <input
-          type="text"
-          id="editKo"
-          autocomplete="off"
-        >
-      </div>
-
-      <div class="edit-field">
-        <label for="editDisplayName">표시 이름</label>
-        <input
-          type="text"
-          id="editDisplayName"
-          autocomplete="off"
-        >
-      </div>
-
-      <div class="edit-field">
-        <label for="editNote">메모 / 설명</label>
-        <textarea
-          id="editNote"
-          rows="5"
-        ></textarea>
-      </div>
-
-      <div class="edit-field">
-        <label for="editImage">이미지 파일명</label>
-        <input
-          type="text"
-          id="editImage"
-          autocomplete="off"
-          placeholder="예: example.jpg"
-        >
-      </div>
-
-      <div class="edit-actions">
-        <button
-          type="button"
-          id="cancelEditBtn"
-          class="edit-cancel"
-        >
-          취소
-        </button>
-
-        <button
-          type="submit"
-          id="saveEditBtn"
-          class="edit-save"
-        >
-          저장
-        </button>
-      </div>
-
-    </form>
   </div>
-</div>
 
+  <script type="module" src="./admin.js?v=305"></script>
 </body>
 </html>
