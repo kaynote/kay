@@ -162,11 +162,11 @@ async function loadReactionCounts(
 ) {
   const postId = String(person.name || "");
 
-  try {
+  /* =========================
+     조회수
+  ========================= */
 
-    /* =========================
-       조회수
-    ========================= */
+  try {
 
     const postRef =
       doc(
@@ -178,25 +178,28 @@ async function loadReactionCounts(
     const postSnap =
       await getDoc(postRef);
 
-    if (postSnap.exists()) {
+    viewEl.textContent =
+      postSnap.exists()
+        ? (postSnap.data().views ?? 0)
+        : 0;
 
-      const data =
-        postSnap.data();
+  } catch (error) {
 
-      viewEl.textContent =
-        data.views ?? 0;
+    console.error(
+      "조회수 불러오기 실패:",
+      postId,
+      error
+    );
 
-    } else {
-
-      viewEl.textContent =
-        "0";
-
-    }
+    viewEl.textContent = "-";
+  }
 
 
-    /* =========================
-       좋아요
-    ========================= */
+  /* =========================
+     좋아요
+  ========================= */
+
+  try {
 
     const likesRef =
       collection(
@@ -206,18 +209,29 @@ async function loadReactionCounts(
         "likes"
       );
 
-    const likesCount =
-      await getCountFromServer(
-        likesRef
-      );
+    const likesSnap =
+      await getDocs(likesRef);
 
     likeEl.textContent =
-      likesCount.data().count;
+      likesSnap.size;
+
+  } catch (error) {
+
+    console.error(
+      "좋아요 불러오기 실패:",
+      postId,
+      error
+    );
+
+    likeEl.textContent = "-";
+  }
 
 
-    /* =========================
-       댓글 / 답글
-    ========================= */
+  /* =========================
+     댓글 / 답글
+  ========================= */
+
+  try {
 
     const commentsRef =
       collection(
@@ -258,36 +272,16 @@ async function loadReactionCounts(
     replyEl.textContent =
       replyCount;
 
-
   } catch (error) {
 
     console.error(
-      "반응 통계 불러오기 실패:",
+      "댓글/답글 불러오기 실패:",
       postId,
       error
     );
 
-    /*
-      어느 항목에서 실패했는지
-      화면에서도 확인할 수 있게 표시
-    */
-
-    if (viewEl.textContent === "불러오는 중...") {
-      viewEl.textContent = "-";
-    }
-
-    if (likeEl.textContent === "불러오는 중...") {
-      likeEl.textContent = "-";
-    }
-
-    if (commentEl.textContent === "불러오는 중...") {
-      commentEl.textContent = "-";
-    }
-
-    if (replyEl.textContent === "불러오는 중...") {
-      replyEl.textContent = "-";
-    }
-
+    commentEl.textContent = "-";
+    replyEl.textContent = "-";
   }
 }
 
