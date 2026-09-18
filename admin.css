@@ -442,3 +442,27 @@ tbody tr:hover {
 .preview-btn:hover {
   opacity: 0.85;
 }
+
+/* =========================
+   좋아요 / 댓글 / 답글 통계
+========================= */
+
+.reaction-count {
+  text-align: center;
+  white-space: nowrap;
+  font-size: 13px;
+  color: #555;
+  font-variant-numeric: tabular-nums;
+}
+
+.like-count {
+  color: #555;
+}
+
+.comment-count {
+  color: #555;
+}
+
+.reply-count {
+  color: #555;
+}
