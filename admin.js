@@ -105,15 +105,39 @@ function renderPosts(list, draftIds = new Set()) {
       <td class="reaction-count comment-count">불러오는 중...</td>
       <td class="reaction-count reply-count">불러오는 중...</td>
       <td class="action-cell">
-        <button class="draft-btn" ${done ? "" : "disabled"}>
-          ${done ? "수정" : "Draft 등록"}
-        </button>
+        <div class="admin-row-actions">
+          <button class="draft-btn">
+            ${done ? "수정" : "Draft 등록"}
+          </button>
+          <button class="preview-btn" ${done ? "" : "disabled"}>미리 보기</button>
+          <button class="compare-btn" ${done ? "" : "disabled"}>변경사항 비교</button>
+          <button class="publish-btn" ${done ? "" : "disabled"}>게시하기</button>
+        </div>
       </td>
     `;
 
-    const button = tr.querySelector("button");
+    const draftButton = tr.querySelector(".draft-btn");
+    const previewButton = tr.querySelector(".preview-btn");
+    const compareButton = tr.querySelector(".compare-btn");
+    const publishButton = tr.querySelector(".publish-btn");
+
     if (done) {
-      button.addEventListener("click", () => openEditModal(person, no));
+      draftButton.addEventListener("click", () => openEditModal(person, no));
+
+      previewButton.addEventListener("click", () => {
+        window.open(`draft-preview.html?no=${encodeURIComponent(no)}`, "_blank");
+      });
+
+      compareButton.addEventListener("click", () => {
+        window.open(
+          `compare.html?no=${encodeURIComponent(no)}&source_no=${encodeURIComponent(no)}`,
+          "_blank"
+        );
+      });
+
+      publishButton.addEventListener("click", () => openPublishPage(no));
+    } else {
+      draftButton.addEventListener("click", () => copyToDraft(person, draftButton));
     }
 
     postList.appendChild(tr);
@@ -161,6 +185,23 @@ async function loadReactionCounts(person, likeEl, commentEl, replyEl) {
 async function loadDraftIds() {
   const snap = await getDocs(collection(db, "drafts"));
   return new Set(snap.docs.map(doc => String(doc.id)));
+}
+
+function openPublishPage(no) {
+  const workflowUrl = "https://github.com/kaynote/kay/actions/workflows/publish-drafts.yml";
+
+  try {
+    navigator.clipboard?.writeText(String(no));
+  } catch (e) {
+    console.warn("source_no 복사 실패:", e);
+  }
+
+  window.open(workflowUrl, "_blank");
+
+  status(
+    `${no}번 게시를 위해 GitHub Actions 게시 화면을 열었습니다. Workflow의 source_no에 ${no}을 입력하세요.`,
+    "info"
+  );
 }
 
 async function copyToDraft(person, button) {
