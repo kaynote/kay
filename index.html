@@ -933,59 +933,7 @@ async function openModal(p){
             alert("댓글은 1000자 이하만 가능합니다.");
             return;
         }
-
-        if(likeBtn){
-
-            likeBtn.addEventListener("click", async ()=>{
-
-                const authUser = auth.currentUser || await login();
-
-                const user = {
-                    uid: authUser.uid,
-                    name:
-                        authUser.displayName ||
-                        authUser.email ||
-                        "이름 없음",
-                    photo:
-                        authUser.photoURL ||
-                        ""
-                };
-
-
-                const ref = doc(
-                    db,
-                    "people",
-                    p.name,
-                    "likes",
-                    user.uid
-                );
-
-
-                const liked = await getDoc(ref);
-
-
-                if(liked.exists()){
-
-                    await deleteDoc(ref);
-
-                }else{
-
-                    await setDoc(ref,{
-                        uid:user.uid,
-                        name:user.name,
-                        photo:user.photo,
-                        createdAt:serverTimestamp()
-                    });
-
-                }
-
-
-                loadLikes();
-
-            });
-
-        }
-
+        
         // 1. 댓글 저장
         const commentRef = await addDoc(
             collection(db, "people", p.name, "comments"),
