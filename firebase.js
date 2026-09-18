@@ -376,57 +376,89 @@ VIEW COUNT
 ========================= */
 
 export async function addView(postId, user) {
-  if (!postId || !user?.uid) return false;
 
-  const postRef = doc(db, "people", String(postId));
-  const viewRef = doc(
-    db,
-    "people",
-    String(postId),
-    "views",
-    user.uid
-  );
+    if (!postId || !user?.uid) return false;
 
-  try {
-    let counted = false;
+    // 같은 브라우저에서 이미 처리한 조회인지 먼저 확인
+    const storageKey = `kay_viewed_${user.uid}_${postId}`;
 
-    await runTransaction(db, async transaction => {
-      // 이 회원이 이 게시물을 이미 본 적이 있는지 확인
-      const viewSnap = await transaction.get(viewRef);
+    try {
+        if (localStorage.getItem(storageKey) === "1") {
+            console.log(`이미 조회 처리됨: ${postId} / ${user.uid}`);
+            return false;
+        }
+    } catch (e) {
+        console.warn("localStorage 조회 확인 실패:", e);
+    }
 
-      if (viewSnap.exists()) {
-        // 이미 조회한 회원이면 아무것도 하지 않음
-        return;
-      }
+    const postRef = doc(db, "people", String(postId));
 
-      // 회원 × 게시물 조합을 영구적으로 기록
-      transaction.set(viewRef, {
-        uid: user.uid,
-        createdAt: serverTimestamp()
-      });
-
-      // 게시물 전체 조회수 +1
-      transaction.set(
-        postRef,
-        {
-          views: increment(1)
-        },
-        { merge: true }
-      );
-
-      counted = true;
-    });
-
-    console.log(
-      counted
-        ? `조회수 +1: ${postId} / ${user.uid}`
-        : `이미 조회함: ${postId} / ${user.uid}`
+    const viewRef = doc(
+        db,
+        "people",
+        String(postId),
+        "views",
+        user.uid
     );
 
-    return counted;
+    try {
 
-  } catch (error) {
-    console.error("조회수 처리 실패:", postId, error);
-    return false;
-  }
+        let counted = false;
+
+        await runTransaction(db, async (transaction) => {
+
+            // 실제 DB에서 최종적으로 중복 여부 확인
+            const viewSnap = await transaction.get(viewRef);
+
+            if (viewSnap.exists()) {
+                return;
+            }
+
+            // 이 회원이 이 게시물을 본 기록
+            transaction.set(viewRef, {
+                uid: user.uid,
+                createdAt: serverTimestamp()
+            });
+
+            // 조회수 +1
+            transaction.set(
+                postRef,
+                {
+                    views: increment(1)
+                },
+                { merge: true }
+            );
+
+            counted = true;
+        });
+
+        // DB 처리 성공 후 브라우저에도 기록
+        if (counted) {
+            try {
+                localStorage.setItem(storageKey, "1");
+            } catch (e) {
+                console.warn("localStorage 저장 실패:", e);
+            }
+
+            console.log(`조회수 +1: ${postId} / ${user.uid}`);
+        } else {
+            // 이미 DB에 존재하는 경우에도
+            // 다음부터 불필요한 transaction 자체를 막음
+            try {
+                localStorage.setItem(storageKey, "1");
+            } catch (e) {
+                console.warn("localStorage 저장 실패:", e);
+            }
+
+            console.log(`이미 조회함: ${postId} / ${user.uid}`);
+        }
+
+        return counted;
+
+    } catch (error) {
+
+        console.error("조회수 처리 실패:", postId, error);
+
+        return false;
+    }
 }
