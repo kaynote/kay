@@ -5,7 +5,6 @@ import {
   doc,
   getDoc,
   getDocs,
-  getCountFromServer,
   setDoc,
   collection,
   writeBatch,
