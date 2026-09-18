@@ -211,6 +211,10 @@ function createCard(p, index){
 
     statsEl.innerHTML = `
         <span class="card-stat">
+            👁 <span class="view-stat">0</span>
+        </span>
+
+        <span class="card-stat">
             👍 <span class="like-stat">0</span>
         </span>
 
@@ -240,6 +244,7 @@ function createCard(p, index){
 
     loadCardStats(
         p,
+        statsEl.querySelector(".view-stat"),
         statsEl.querySelector(".like-stat"),
         statsEl.querySelector(".comment-stat"),
         statsEl.querySelector(".reply-stat")
@@ -254,6 +259,7 @@ function createCard(p, index){
 
 async function loadCardStats(
     p,
+    viewEl,
     likeEl,
     commentEl,
     replyEl
@@ -263,7 +269,39 @@ async function loadCardStats(
 
         const postId = p.name;
 
-        /* 좋아요 */
+        /* =========================
+           조회수
+        ========================= */
+
+        const postRef =
+            doc(
+                db,
+                "people",
+                postId
+            );
+
+        const postSnap =
+            await getDoc(postRef);
+
+        if (postSnap.exists()) {
+
+            const data =
+                postSnap.data();
+
+            viewEl.textContent =
+                data.views || 0;
+
+        } else {
+
+            viewEl.textContent =
+                "0";
+
+        }
+
+
+        /* =========================
+           좋아요
+        ========================= */
 
         const likesRef =
             collection(
@@ -280,7 +318,9 @@ async function loadCardStats(
             likesCount.data().count;
 
 
-        /* 댓글 */
+        /* =========================
+           댓글 / 답글
+        ========================= */
 
         const commentsRef =
             collection(
@@ -302,9 +342,13 @@ async function loadCardStats(
                 docSnap.data();
 
             if (data.parentId) {
+
                 replyCount++;
+
             } else {
+
                 commentCount++;
+
             }
 
         });
@@ -314,6 +358,7 @@ async function loadCardStats(
 
         replyEl.textContent =
             replyCount;
+
 
     } catch (error) {
 
