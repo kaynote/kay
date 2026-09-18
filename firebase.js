@@ -376,108 +376,57 @@ VIEW COUNT
 ========================= */
 
 export async function addView(postId, user) {
+  if (!postId || !user?.uid) return false;
 
-    console.log("조회수 시작:", postId, user.uid);
+  const postRef = doc(db, "people", String(postId));
+  const viewRef = doc(
+    db,
+    "people",
+    String(postId),
+    "views",
+    user.uid
+  );
 
-    if (!user?.uid) return;
+  try {
+    let counted = false;
 
-    const postRef = doc(db, "people", postId);
-    const viewRef = doc(db, "people", postId, "views", user.uid);
+    await runTransaction(db, async transaction => {
+      // 이 회원이 이 게시물을 이미 본 적이 있는지 확인
+      const viewSnap = await transaction.get(viewRef);
 
+      if (viewSnap.exists()) {
+        // 이미 조회한 회원이면 아무것도 하지 않음
+        return;
+      }
 
-    const userRef = doc(db, "users", user.uid);
-    const userSnap = await getDoc(userRef);
+      // 회원 × 게시물 조합을 영구적으로 기록
+      transaction.set(viewRef, {
+        uid: user.uid,
+        createdAt: serverTimestamp()
+      });
 
-    let name =
-        user.name ||
-        user.displayName ||
-        user.email ||
-        "익명 사용자";
+      // 게시물 전체 조회수 +1
+      transaction.set(
+        postRef,
+        {
+          views: increment(1)
+        },
+        { merge: true }
+      );
 
-    let photo =
-        user.photo ||
-        user.photoURL ||
-        "";
+      counted = true;
+    });
 
+    console.log(
+      counted
+        ? `조회수 +1: ${postId} / ${user.uid}`
+        : `이미 조회함: ${postId} / ${user.uid}`
+    );
 
-    if(userSnap.exists()){
+    return counted;
 
-        const data = userSnap.data();
-
-        name =
-            data.name ||
-            name;
-
-        photo =
-            data.photo ||
-            photo;
-
-    }
-
-    try {
-
-        await runTransaction(db, async (transaction) => {
-
-            const viewSnap = await transaction.get(viewRef);
-
-            console.log("기존 조회 기록:", viewSnap.exists());
-
-
-            if(viewSnap.exists()){
-
-                transaction.set(
-                    viewRef,
-                    {
-                        uid:user.uid,
-                        name,
-                        photo,
-                        viewedAt:serverTimestamp()
-                    },
-                    {
-                        merge:true
-                    }
-                );
-
-                console.log("기존 조회자 정보 업데이트");
-                return;
-            }
-
-            const postSnap = await transaction.get(postRef);
-
-            console.log("게시물 존재:", postSnap.exists());
-
-
-            let views = 0;
-
-            if (postSnap.exists()) {
-                views = postSnap.data().views || 0;
-            }
-
-            transaction.set(viewRef,{
-                uid:user.uid,
-                name:name,
-                photo:photo,
-                viewedAt:serverTimestamp()
-            });
-
-            transaction.set(
-                postRef,
-                {
-                    views: views + 1
-                },
-                {
-                    merge:true
-                }
-            );
-
-        });
-
-        console.log("조회수 증가 성공");
-
-    } catch(e) {
-
-        console.error("조회수 오류:", e);
-
-    }
-
+  } catch (error) {
+    console.error("조회수 처리 실패:", postId, error);
+    return false;
+  }
 }
