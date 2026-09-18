@@ -5,10 +5,9 @@ import {
   doc,
   getDoc,
   getDocs,
-  setDoc,
   collection,
   writeBatch,
-  updateDoc
+  getCountFromServer,
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 const ADMIN_EMAIL = "ektjttnfp5@gmail.com";
@@ -81,19 +80,49 @@ function renderPosts(list, draftIds = new Set()) {
     const tr = document.createElement("tr");
     const done = draftIds.has(String(no));
 
-    tr.innerHTML = `
-      <td>${escapeHtml(no)}</td>
-      <td class="name-cell">${escapeHtml(person.name || "")}</td>
-      <td>${escapeHtml(person.ko || "")}</td>
-      <td>${escapeHtml(person.displayName || "")}</td>
-      <td class="note-cell">${escapeHtml(person.note || "")}</td>
-      <td>${escapeHtml(person.image || "no-image.jpg")}</td>
-      <td class="action-cell">
-        <button class="draft-btn" ${done ? "" : "disabled"}>
-          ${done ? "수정" : "Draft 등록"}
-        </button>
-      </td>
-    `;
+        tr.innerHTML = `
+          <td>${escapeHtml(no)}</td>
+
+          <td class="name-cell">
+            ${escapeHtml(name)}
+          </td>
+
+          <td>
+            ${escapeHtml(ko)}
+          </td>
+
+          <td>
+            ${escapeHtml(displayName)}
+          </td>
+
+          <td class="note-cell">
+            ${escapeHtml(note)}
+          </td>
+
+          <td>
+            ${escapeHtml(image)}
+          </td>
+
+          <td class="reaction-count like-count">
+            불러오는 중...
+          </td>
+
+          <td class="reaction-count comment-count">
+            불러오는 중...
+          </td>
+
+          <td class="reaction-count reply-count">
+            불러오는 중...
+          </td>
+
+          <td class="action-cell">
+            <button
+              class="draft-btn"
+              data-no="${escapeHtml(no)}"
+              ${isDraft ? "disabled" : ""}
+            >${isDraft ? "Draft 완료" : "Draft로 복사"}</button>
+          </td>
+        `;
 
     const button = tr.querySelector("button");
 
@@ -105,6 +134,140 @@ function renderPosts(list, draftIds = new Set()) {
 
     postList.appendChild(tr);
   });
+  
+    /* =========================
+       좋아요 / 댓글 / 답글 숫자
+    ========================= */
+
+    list.forEach((person, index) => {
+
+      const no = getPersonNo(person, index);
+
+      const row =
+        [...postList.querySelectorAll("tr")]
+          .find(tr =>
+            tr.querySelector(".draft-btn")?.dataset.no === String(no)
+          );
+
+      if (!row) return;
+
+      const likeEl =
+        row.querySelector(".like-count");
+
+      const commentEl =
+        row.querySelector(".comment-count");
+
+      const replyEl =
+        row.querySelector(".reply-count");
+
+      loadReactionCounts(
+        person,
+        likeEl,
+        commentEl,
+        replyEl
+      );
+
+    });
+  }
+
+/* =========================
+   좋아요 / 댓글 / 답글 통계
+========================= */
+
+async function loadReactionCounts(
+  person,
+  likeEl,
+  commentEl,
+  replyEl
+) {
+
+  try {
+
+    /*
+     * 현재 일반 사이트에서 사용하는
+     * Firestore 경로 기준
+     *
+     * people/{사람이름}/likes
+     * people/{사람이름}/comments
+     */
+
+    const postId = person.name;
+
+    /* =========================
+       좋아요
+    ========================= */
+
+    const likesRef =
+      collection(
+        db,
+        "people",
+        postId,
+        "likes"
+      );
+
+    const likesCount =
+      await getCountFromServer(likesRef);
+
+    likeEl.textContent =
+      likesCount.data().count;
+
+
+    /* =========================
+       댓글 + 답글
+    ========================= */
+
+    const commentsRef =
+      collection(
+        db,
+        "people",
+        postId,
+        "comments"
+      );
+
+    const commentsSnap =
+      await getDocs(commentsRef);
+
+    let commentCount = 0;
+    let replyCount = 0;
+
+    commentsSnap.forEach(docSnap => {
+
+      const data =
+        docSnap.data();
+
+      /*
+       * parentId가 있으면 답글
+       * 없으면 일반 댓글
+       */
+
+      if (data.parentId) {
+        replyCount++;
+      } else {
+        commentCount++;
+      }
+
+    });
+
+
+    commentEl.textContent =
+      commentCount;
+
+    replyEl.textContent =
+      replyCount;
+
+  } catch (error) {
+
+    console.error(
+      "반응 통계 불러오기 실패:",
+      person.name,
+      error
+    );
+
+    likeEl.textContent = "-";
+    commentEl.textContent = "-";
+    replyEl.textContent = "-";
+
+  }
 }
 
 async function loadDraftIds() {
