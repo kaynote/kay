@@ -874,6 +874,8 @@ async function openModal(p){
         likeCountEl.textContent = snap.size;
     }
      
+    loadLikes();
+    
     if(showLikesBtn){
 
         showLikesBtn.onclick = async ()=>{
