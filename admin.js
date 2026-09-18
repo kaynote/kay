@@ -160,48 +160,134 @@ async function loadReactionCounts(
   commentEl,
   replyEl
 ) {
+  const postId = String(person.name || "");
+
   try {
-    const postId = String(person.name || "");
+
+    /* =========================
+       조회수
+    ========================= */
 
     const postRef =
-      doc(db, "people", postId);
+      doc(
+        db,
+        "people",
+        postId
+      );
+
+    const postSnap =
+      await getDoc(postRef);
+
+    if (postSnap.exists()) {
+
+      const data =
+        postSnap.data();
+
+      viewEl.textContent =
+        data.views ?? 0;
+
+    } else {
+
+      viewEl.textContent =
+        "0";
+
+    }
+
+
+    /* =========================
+       좋아요
+    ========================= */
 
     const likesRef =
-      collection(db, "people", postId, "likes");
+      collection(
+        db,
+        "people",
+        postId,
+        "likes"
+      );
+
+    const likesCount =
+      await getCountFromServer(
+        likesRef
+      );
+
+    likeEl.textContent =
+      likesCount.data().count;
+
+
+    /* =========================
+       댓글 / 답글
+    ========================= */
 
     const commentsRef =
-      collection(db, "people", postId, "comments");
+      collection(
+        db,
+        "people",
+        postId,
+        "comments"
+      );
 
-    const [postSnap, likesCount, commentsSnap] =
-      await Promise.all([
-        getDoc(postRef),
-        getCountFromServer(likesRef),
-        getDocs(commentsRef)
-      ]);
-
-    const viewCount =
-      postSnap.exists()
-        ? (postSnap.data().views || 0)
-        : 0;
+    const commentsSnap =
+      await getDocs(
+        commentsRef
+      );
 
     let commentCount = 0;
     let replyCount = 0;
 
     commentsSnap.forEach(commentDoc => {
-      const data = commentDoc.data();
-      if (data.parentId) replyCount++;
-      else commentCount++;
+
+      const data =
+        commentDoc.data();
+
+      if (data.parentId) {
+
+        replyCount++;
+
+      } else {
+
+        commentCount++;
+
+      }
+
     });
 
-    viewEl.textContent = viewCount;
-    likeEl.textContent = likesCount.data().count;
-    commentEl.textContent = commentCount;
-    replyEl.textContent = replyCount;
+    commentEl.textContent =
+      commentCount;
+
+    replyEl.textContent =
+      replyCount;
+
+
   } catch (error) {
-    console.error("반응 통계 불러오기 실패:", person.name, error);
-    likeEl.textContent = "-";
-    commentEl.textContent = "-";
-    replyEl.textContent = "-";
+
+    console.error(
+      "반응 통계 불러오기 실패:",
+      postId,
+      error
+    );
+
+    /*
+      어느 항목에서 실패했는지
+      화면에서도 확인할 수 있게 표시
+    */
+
+    if (viewEl.textContent === "불러오는 중...") {
+      viewEl.textContent = "-";
+    }
+
+    if (likeEl.textContent === "불러오는 중...") {
+      likeEl.textContent = "-";
+    }
+
+    if (commentEl.textContent === "불러오는 중...") {
+      commentEl.textContent = "-";
+    }
+
+    if (replyEl.textContent === "불러오는 중...") {
+      replyEl.textContent = "-";
+    }
+
   }
 }
 
