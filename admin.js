@@ -101,6 +101,7 @@ function renderPosts(list, draftIds = new Set()) {
           onerror="this.onerror=null;this.src='images/no-image.jpg';"
         >
       </td>
+      <td class="reaction-count view-count">불러오는 중...</td>
       <td class="reaction-count like-count">불러오는 중...</td>
       <td class="reaction-count comment-count">불러오는 중...</td>
       <td class="reaction-count reply-count">불러오는 중...</td>
@@ -144,6 +145,7 @@ function renderPosts(list, draftIds = new Set()) {
 
     loadReactionCounts(
       person,
+      tr.querySelector(".view-count"),
       tr.querySelector(".like-count"),
       tr.querySelector(".comment-count"),
       tr.querySelector(".reply-count")
@@ -151,16 +153,36 @@ function renderPosts(list, draftIds = new Set()) {
   });
 }
 
-async function loadReactionCounts(person, likeEl, commentEl, replyEl) {
+async function loadReactionCounts(
+  person,
+  viewEl,
+  likeEl,
+  commentEl,
+  replyEl
+) {
   try {
     const postId = String(person.name || "");
-    const likesRef = collection(db, "people", postId, "likes");
-    const commentsRef = collection(db, "people", postId, "comments");
 
-    const [likesCount, commentsSnap] = await Promise.all([
-      getCountFromServer(likesRef),
-      getDocs(commentsRef)
-    ]);
+    const postRef =
+      doc(db, "people", postId);
+
+    const likesRef =
+      collection(db, "people", postId, "likes");
+
+    const commentsRef =
+      collection(db, "people", postId, "comments");
+
+    const [postSnap, likesCount, commentsSnap] =
+      await Promise.all([
+        getDoc(postRef),
+        getCountFromServer(likesRef),
+        getDocs(commentsRef)
+      ]);
+
+    const viewCount =
+      postSnap.exists()
+        ? (postSnap.data().views || 0)
+        : 0;
 
     let commentCount = 0;
     let replyCount = 0;
@@ -171,6 +193,7 @@ async function loadReactionCounts(person, likeEl, commentEl, replyEl) {
       else commentCount++;
     });
 
+    viewEl.textContent = viewCount;
     likeEl.textContent = likesCount.data().count;
     commentEl.textContent = commentCount;
     replyEl.textContent = replyCount;
