@@ -616,7 +616,6 @@ async function openModal(p){
 
             }
 
-
             await loadLikes();
 
         };
@@ -695,7 +694,6 @@ async function openModal(p){
         };
 
     }
-
 
     // ESC 닫기
     document.addEventListener("keydown",(e)=>{
@@ -875,9 +873,7 @@ async function openModal(p){
 
         likeCountEl.textContent = snap.size;
     }
-    
-    loadLikes();
-    
+     
     if(showLikesBtn){
 
         showLikesBtn.onclick = async ()=>{
@@ -1472,9 +1468,6 @@ async function openModal(p){
 
         return div;
     }
-
-    await loadLikes();
-    await loadComments();
 
 } // openModal 종료
 
