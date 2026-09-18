@@ -921,61 +921,6 @@ async function openModal(p){
     }
     
     /* =====================
-       LOAD VIEWERS
-    ===================== */
-
-    async function loadViewers(){
-
-        const snap = await getDocs(
-            collection(db, "people", p.name, "views")
-        );
-
-        let html = `
-            <h3>👁 조회한 회원 (${snap.size}명)</h3>
-        `;
-
-        for(const docItem of snap.docs){
-
-            const v = docItem.data();
-
-            let name = v.name || "이름 없음";
-            let photo = v.photo || "images/no-image.jpg";
-         
-            html += `
-            <div class="viewer">
-
-                <img src="${photo || 'images/no-image.jpg'}"
-                     width="40"
-                     height="40">
-
-                <span>${name}</span>
-
-            </div>
-            `;
-
-        }
-
-        if(!viewsList || !viewsModal){
-
-            console.log("조회자 팝업 요소 없음");
-            return;
-
-        }
-
-        viewsList.innerHTML = html;
-
-        viewsModal.classList.remove("hidden");
-
-    }
-
-
-    if(showViewsBtn){
-
-        showViewsBtn.onclick = loadViewers;
-
-    }
-   
-    /* =====================
        COMMENTS
     ===================== */
 
