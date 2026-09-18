@@ -298,3 +298,13 @@ button:disabled {
     gap: 8px;
     margin-top: 20px;
 }
+
+.action-buttons button,
+.action-buttons a {
+    margin-right: 6px;
+}
+
+.action-buttons button:last-child,
+.action-buttons a:last-child {
+    margin-right: 0;
+}
