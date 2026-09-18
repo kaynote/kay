@@ -1034,21 +1034,20 @@ background:rgba(0,0,0,.8);
 
 .card-stats {
     position: absolute;
-    left: 50%;
+    right: 8px;
     bottom: 8px;
-    transform: translateX(-50%);
 
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 7px;
 
-    padding: 6px 12px;
+    padding: 4px 8px;
 
     background: rgba(0, 0, 0, 0.5);
-    border-radius: 20px;
+    border-radius: 14px;
 
     color: white;
-    font-size: 14px;
+    font-size: 11px;
     line-height: 1;
 
     white-space: nowrap;
@@ -1058,35 +1057,12 @@ background:rgba(0,0,0,.8);
 .card-stat {
     display: inline-flex;
     align-items: center;
-    gap: 3px;
-
+    gap: 2px;
     white-space: nowrap;
 }
 
 .card-stat span {
     font-variant-numeric: tabular-nums;
-}
-
-.card-stats {
-    position: absolute;
-    left: 50%;
-    bottom: 8px;
-    transform: translateX(-50%);
-
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    padding: 6px 12px;
-
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 20px;
-
-    color: white;
-    font-size: 14px;
-
-    white-space: nowrap;
-    z-index: 2;
 }
 
 #adminModeBtn {
