@@ -28,6 +28,10 @@
         <button id="loginBtn">로그인</button>
         <button id="logoutBtn">로그아웃</button>
     </div>
+
+    <a id="adminModeBtn" href="./admin.html" style="display:none;">
+        관리자 모드
+    </a>
     
     <!-- 관리자 전용 -->
     <div id="adminMaintenanceArea" style="display:none;">
@@ -101,7 +105,8 @@ import {
     orderBy,
     serverTimestamp,
     onSnapshot,
-    where    
+    where,
+    getCountFromServer
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 /* =========================
@@ -109,6 +114,8 @@ import {
 ========================= */
 
 const ADMIN_EMAIL = "ektjttnfp5@gmail.com";
+
+const adminModeBtn = document.getElementById("adminModeBtn");
 
 /* =========================
    DOM
@@ -195,12 +202,128 @@ function createCard(p, index){
     info.appendChild(metaEl);
     info.appendChild(descEl);
 
+    /* =========================
+       좋아요 / 댓글 / 답글 통계
+    ========================= */
+
+    const statsEl = document.createElement("div");
+    statsEl.className = "card-stats";
+
+    statsEl.innerHTML = `
+        <span class="card-stat">
+            👍 <span class="like-stat">0</span>
+        </span>
+
+        <span class="card-stat">
+            💬 <span class="comment-stat">0</span>
+        </span>
+
+        <span class="card-stat">
+            ↩ <span class="reply-stat">0</span>
+        </span>
+    `;
+
+    info.appendChild(statsEl);
+
+    /* =========================
+       카드 완성
+    ========================= */
+
     card.appendChild(photo);
     card.appendChild(info);
 
     card.addEventListener("click", () => openModal(p));
 
+    /* =========================
+       Firestore 통계 불러오기
+    ========================= */
+
+    loadCardStats(
+        p,
+        statsEl.querySelector(".like-stat"),
+        statsEl.querySelector(".comment-stat"),
+        statsEl.querySelector(".reply-stat")
+    );
+
     return card;
+}
+
+/* =========================
+   카드 통계 불러오기
+========================= */
+
+async function loadCardStats(
+    p,
+    likeEl,
+    commentEl,
+    replyEl
+) {
+
+    try {
+
+        const postId = p.name;
+
+        /* 좋아요 */
+
+        const likesRef =
+            collection(
+                db,
+                "people",
+                postId,
+                "likes"
+            );
+
+        const likesCount =
+            await getCountFromServer(likesRef);
+
+        likeEl.textContent =
+            likesCount.data().count;
+
+
+        /* 댓글 */
+
+        const commentsRef =
+            collection(
+                db,
+                "people",
+                postId,
+                "comments"
+            );
+
+        const commentsSnap =
+            await getDocs(commentsRef);
+
+        let commentCount = 0;
+        let replyCount = 0;
+
+        commentsSnap.forEach(docSnap => {
+
+            const data =
+                docSnap.data();
+
+            if (data.parentId) {
+                replyCount++;
+            } else {
+                commentCount++;
+            }
+
+        });
+
+        commentEl.textContent =
+            commentCount;
+
+        replyEl.textContent =
+            replyCount;
+
+    } catch (error) {
+
+        console.error(
+            "카드 통계 불러오기 실패:",
+            p.name,
+            error
+        );
+
+    }
 }
 
 /* =========================
@@ -1705,9 +1828,13 @@ watchAuth(user => {
             screen.classList.add("hidden");
         }
 
-
         if (adminArea) {
             adminArea.style.display = "none";
+        }
+
+        // 관리자 모드 버튼 숨기기
+        if (adminModeBtn) {
+            adminModeBtn.style.display = "none";
         }
 
         userInfo.textContent =
@@ -1768,6 +1895,19 @@ watchAuth(user => {
     }
 
     // =========================
+    // 관리자 모드 버튼
+    // =========================
+
+    if (adminModeBtn) {
+
+        adminModeBtn.style.display =
+            user?.email === ADMIN_EMAIL
+                ? "inline-block"
+                : "none";
+
+    }
+
+    // =========================
     // 사이트 점검 상태 감시
     // =========================
 
@@ -1811,9 +1951,8 @@ watchAuth(user => {
 
     );   // onSnapshot 닫기
 
-});   // watchAuth 닫기 
- 
-        
+});   // watchAuth 닫기
+         
     /* =========================
        렌더
     ========================= */
