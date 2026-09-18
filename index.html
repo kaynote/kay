@@ -918,6 +918,136 @@ async function openModal(p){
 
     }
     
+        /* =====================
+       조회자 보기
+        ===================== */
+        if(showViewsBtn){
+
+            showViewsBtn.onclick = async ()=>{
+
+                try {
+
+                    const snap = await getDocs(
+                        collection(
+                            db,
+                            "people",
+                            p.name,
+                            "views"
+                        )
+                    );
+
+                    let html = `
+                        <h3>👁 조회한 회원 (${snap.size}명)</h3>
+                    `;
+
+                    if(snap.empty){
+
+                        html += `
+                            <div class="viewer">
+                                조회자가 없습니다.
+                            </div>
+                        `;
+
+                    } else {
+
+                        const users = [];
+
+                        snap.forEach(docItem => {
+
+                            const v = docItem.data();
+
+                            users.push({
+                                uid: v.uid || docItem.id,
+                                createdAt: v.createdAt || null
+                            });
+
+                        });
+
+                        /*
+                         * 조회 기록에는 현재 uid와 시간만 저장되어 있으므로
+                         * users/{uid}에서 이름과 사진을 가져옵니다.
+                         */
+                        for(const viewer of users){
+
+                            let name = "이름 없음";
+                            let photo = "images/no-image.jpg";
+
+                            try {
+
+                                const userSnap = await getDoc(
+                                    doc(
+                                        db,
+                                        "users",
+                                        viewer.uid
+                                    )
+                                );
+
+                                if(userSnap.exists()){
+
+                                    const userData =
+                                        userSnap.data();
+
+                                    name =
+                                        userData.name ||
+                                        userData.email ||
+                                        "이름 없음";
+
+                                    photo =
+                                        userData.photo ||
+                                        "images/no-image.jpg";
+
+                                }
+
+                            } catch(error){
+
+                                console.warn(
+                                    "조회자 사용자 정보 불러오기 실패:",
+                                    viewer.uid,
+                                    error
+                                );
+
+                            }
+
+                            html += `
+                                <div class="viewer">
+
+                                    <img
+                                        src="${photo}"
+                                        width="40"
+                                        height="40"
+                                        onerror="this.src='images/no-image.jpg'"
+                                    >
+
+                                    <span>${name}</span>
+
+                                </div>
+                            `;
+
+                        }
+
+                    }
+
+                    viewsList.innerHTML = html;
+
+                    viewsModal.classList.remove("hidden");
+
+                } catch(error){
+
+                    console.error(
+                        "조회자 목록 불러오기 실패:",
+                        error
+                    );
+
+                    alert(
+                        "조회자 목록을 불러오지 못했습니다."
+                    );
+
+                }
+
+            };
+
+        }
+    
     /* =====================
        COMMENTS
     ===================== */
