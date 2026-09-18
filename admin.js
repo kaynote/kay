@@ -143,6 +143,9 @@ function renderPosts(list, draftIds = new Set()) {
 
     postList.appendChild(tr);
 
+    postList.appendChild(tr);
+
+    /*
     loadReactionCounts(
       person,
       tr.querySelector(".view-count"),
@@ -150,6 +153,7 @@ function renderPosts(list, draftIds = new Set()) {
       tr.querySelector(".comment-count"),
       tr.querySelector(".reply-count")
     );
+    */
   });
 }
 
