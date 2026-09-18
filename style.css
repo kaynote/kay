@@ -1025,24 +1025,68 @@ background:rgba(0,0,0,.8);
 }
 
 /* =========================
-   카드 좋아요 / 댓글 / 답글 통계
+   카드 조회수 / 좋아요 / 댓글 / 답글 통계
 ========================= */
 
+.photo {
+    position: relative;
+}
+
 .card-stats {
+    position: absolute;
+    left: 50%;
+    bottom: 8px;
+    transform: translateX(-50%);
+
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-top: 10px;
-    font-size: 13px;
-    color: #777;
+
+    padding: 6px 12px;
+
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+
+    color: white;
+    font-size: 14px;
+    line-height: 1;
+
+    white-space: nowrap;
+    z-index: 2;
 }
 
 .card-stat {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+
     white-space: nowrap;
 }
 
 .card-stat span {
     font-variant-numeric: tabular-nums;
+}
+
+.card-stats {
+    position: absolute;
+    left: 50%;
+    bottom: 8px;
+    transform: translateX(-50%);
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 6px 12px;
+
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+
+    color: white;
+    font-size: 14px;
+
+    white-space: nowrap;
+    z-index: 2;
 }
 
 #adminModeBtn {
