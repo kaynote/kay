@@ -384,13 +384,6 @@ async function copyAllToDraft() {
     return;
   }
 
-async function initializeLikesCount() {
-
-    if (!currentPeople.length) {
-        status("people 데이터가 없습니다.", "error");
-        return;
-    }
-
     const ok = confirm(
         `전체 ${currentPeople.length}개의 사진에 대해 기존 좋아요 수를 계산하여 likesCount를 저장합니다.\n\n` +
         `기존 likes 데이터는 삭제하지 않습니다.\n\n` +
