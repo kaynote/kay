@@ -129,6 +129,9 @@ const closeModal = document.getElementById("closeModal");
 const loginBtn = document.getElementById("loginBtn");
 const logoutBtn = document.getElementById("logoutBtn");
 
+// 조회수 캐시
+const viewCountCache = new Map();
+
 /* =========================
    STATE
 ========================= */
@@ -462,11 +465,32 @@ async function openModal(p){
 
         console.log("조회 사용자:", user.uid);
 
-        addView(
-            p.name,
-            user
-        ).catch(console.error);
+        addView(p.name, user)
+            .then((counted) => {
 
+                if (counted) {
+
+                    const viewCountEl =
+                        modalBody.querySelector(".viewCount");
+
+                    if (viewCountEl) {
+
+                        const current =
+                            Number(viewCountEl.textContent) || 0;
+
+                        const newCount = current + 1;
+
+                        viewCountEl.textContent = newCount;
+
+                        viewCountCache.set(
+                            p.name,
+                            newCount
+                        );
+                    }
+                }
+
+            })
+            .catch(console.error);
     }
 
     const photos=[
@@ -551,11 +575,33 @@ async function openModal(p){
 
     const viewCountEl = modalBody.querySelector(".viewCount");
 
-    const snap = await getDoc(doc(db, "people", p.name));
+    let currentViews = viewCountCache.get(p.name);
 
-    if (snap.exists()) {
-        viewCountEl.textContent = snap.data().views || 0;
+    if (currentViews === undefined) {
+
+        try {
+
+            const snap = await getDoc(
+                doc(db, "people", p.name)
+            );
+
+            if (snap.exists()) {
+                currentViews = snap.data().views || 0;
+            } else {
+                currentViews = 0;
+            }
+
+            viewCountCache.set(p.name, currentViews);
+
+        } catch (error) {
+
+            console.error("조회수 불러오기 실패:", error);
+
+            currentViews = 0;
+        }
     }
+
+    viewCountEl.textContent = currentViews;
 
     const likeBtn = modalBody.querySelector(".likeBtn");
     const likeCountEl = modalBody.querySelector(".likeCount");
