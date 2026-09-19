@@ -1645,9 +1645,12 @@ async function openModal(p){
         });
 
         return div;
+        
     }
 
-} // openModal 종료
+    await loadComments();
+
+} // openModal 끝
 
 /* =========================
    CLOSE MODAL
