@@ -15,8 +15,8 @@ kay/
 ├── compare.css
 │
 ├── scripts/
-│   └── publish-drafts.js
+│      └── publish-drafts.js
 │
 └── .github/
-    └── workflows/
-        └── publish-drafts.yml
+         └── workflows/
+           └── publish-drafts.yml
