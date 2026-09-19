@@ -1,4 +1,19 @@
+*Kay 기록보관소:
 https://kaynote.github.io/kay/
 
+https://github.com/kaynote/kay/blob/main/style.css
 
-Firebase 데이터베이스: https://console.firebase.google.com/u/0/project/kay-gallery/firestore/databases/-default-/data/~2Fusers~2F8OEFOiQCXDdIodCjbyXP0ZNints1?utm_source=chatgpt.com
+https://github.com/kaynote/kay/blob/main/index.html
+
+https://github.com/kaynote/kay/blob/main/firebase.js
+
+https://github.com/kaynote/kay/blob/main/admin.js
+
+https://github.com/kaynote/kay/blob/main/admin.html
+
+https://github.com/kaynote/kay/blob/main/admin.css
+
+
+
+* Firebase 데이터베이스: 
+https://console.firebase.google.com/u/0/project/kay-gallery/firestore/databases/-default-/data/~2Fusers~2F8OEFOiQCXDdIodCjbyXP0ZNints1?utm_source=chatgpt.com

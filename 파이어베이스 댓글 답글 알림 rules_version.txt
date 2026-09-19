@@ -84,8 +84,7 @@ service cloud.firestore {
     */
 
     match /people/{postId} {
-
-      allow read: if true;
+        allow read: if isSignedIn();
 
       allow update: if isSignedIn()
         && request.resource.data.diff(resource.data)
