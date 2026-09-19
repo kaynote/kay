@@ -101,6 +101,8 @@ import {
     setDoc,
     getDoc,
     updateDoc,
+    increment,
+    writeBatch,
     query,
     orderBy,
     serverTimestamp,
@@ -131,6 +133,7 @@ const logoutBtn = document.getElementById("logoutBtn");
 
 // 조회수 캐시
 const viewCountCache = new Map();
+const likeCountCache = new Map();
 
 /* =========================
    STATE
@@ -573,100 +576,159 @@ async function openModal(p){
             </div>
     `;
 
-    const viewCountEl = modalBody.querySelector(".viewCount");
+        const viewCountEl = modalBody.querySelector(".viewCount");
+        const likeCountEl = modalBody.querySelector(".likeCount");
 
-    let currentViews = viewCountCache.get(p.name);
+        let currentViews = viewCountCache.get(p.name);
+        let currentLikes = likeCountCache.get(p.name);
 
-    if (currentViews === undefined) {
+        if (
+            currentViews === undefined ||
+            currentLikes === undefined
+        ) {
 
-        try {
+            try {
 
-            const snap = await getDoc(
-                doc(db, "people", p.name)
-            );
+                const snap = await getDoc(
+                    doc(db, "people", p.name)
+                );
 
-            if (snap.exists()) {
-                currentViews = snap.data().views || 0;
-            } else {
+                if (snap.exists()) {
+
+                    const postData = snap.data();
+
+                    currentViews =
+                        postData.views || 0;
+
+                    currentLikes =
+                        postData.likesCount || 0;
+
+                } else {
+
+                    currentViews = 0;
+                    currentLikes = 0;
+
+                }
+
+                viewCountCache.set(
+                    p.name,
+                    currentViews
+                );
+
+                likeCountCache.set(
+                    p.name,
+                    currentLikes
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "게시물 통계 불러오기 실패:",
+                    error
+                );
+
                 currentViews = 0;
+                currentLikes = 0;
             }
-
-            viewCountCache.set(p.name, currentViews);
-
-        } catch (error) {
-
-            console.error("조회수 불러오기 실패:", error);
-
-            currentViews = 0;
         }
-    }
 
-    viewCountEl.textContent = currentViews;
+        viewCountEl.textContent = currentViews;
+        likeCountEl.textContent = currentLikes;
 
     const likeBtn = modalBody.querySelector(".likeBtn");
     const likeCountEl = modalBody.querySelector(".likeCount");
     
-    if(likeBtn){
+        if(likeBtn){
 
-        likeBtn.onclick = async ()=>{
+            likeBtn.onclick = async ()=>{
 
-            console.log("좋아요 버튼 클릭");
+                console.log("좋아요 버튼 클릭");
 
+                const authUser =
+                    auth.currentUser || await login();
 
-            const authUser = auth.currentUser || await login();
+                const user = {
+                    uid: authUser.uid,
+                    name:
+                        authUser.displayName ||
+                        authUser.email ||
+                        "이름 없음",
+                    photo:
+                        authUser.photoURL ||
+                        ""
+                };
 
+                const likeRef = doc(
+                    db,
+                    "people",
+                    p.name,
+                    "likes",
+                    user.uid
+                );
 
-            const user = {
-                uid: authUser.uid,
-                name:
-                    authUser.displayName ||
-                    authUser.email ||
-                    "이름 없음",
-                photo:
-                    authUser.photoURL ||
-                    ""
+                const postRef = doc(
+                    db,
+                    "people",
+                    p.name
+                );
+
+                const snap = await getDoc(likeRef);
+
+                const batch = writeBatch(db);
+
+                let newLikeCount;
+
+                if(snap.exists()){
+
+                    batch.delete(likeRef);
+
+                    batch.update(postRef, {
+                        likesCount: increment(-1)
+                    });
+
+                    newLikeCount =
+                        Math.max(
+                            0,
+                            (Number(likeCountEl.textContent) || 0) - 1
+                        );
+
+                    console.log("좋아요 취소");
+
+                }
+                else{
+
+                    batch.set(likeRef, {
+
+                        uid: user.uid,
+                        name: user.name,
+                        photo: user.photo,
+
+                        createdAt: serverTimestamp()
+
+                    });
+
+                    batch.update(postRef, {
+                        likesCount: increment(1)
+                    });
+
+                    newLikeCount =
+                        (Number(likeCountEl.textContent) || 0) + 1;
+
+                    console.log("좋아요 추가");
+                }
+
+                await batch.commit();
+
+                likeCountEl.textContent =
+                    newLikeCount;
+
+                likeCountCache.set(
+                    p.name,
+                    newLikeCount
+                );
             };
 
-
-            const likeRef = doc(
-                db,
-                "people",
-                p.name,
-                "likes",
-                user.uid
-            );
-
-
-            const snap = await getDoc(likeRef);
-
-
-            if(snap.exists()){
-
-                await deleteDoc(likeRef);
-
-                console.log("좋아요 취소");
-
-            }
-            else{
-
-                await setDoc(likeRef,{
-
-                    uid:user.uid,
-                    name:user.name,
-                    photo:user.photo,
-                    createdAt:serverTimestamp()
-
-                });
-
-                console.log("좋아요 추가");
-
-            }
-
-            await loadLikes();
-
-        };
-
-    }
+        }
     
     const commentCountEl = modalBody.querySelector(".commentCount");
     const showLikesBtn = modalBody.querySelector(".showLikesBtn");
@@ -911,17 +973,6 @@ async function openModal(p){
 
     let replyTarget = null;
 
-    async function loadLikes(){
-
-        const snap = await getDocs(
-            collection(db, "people", p.name, "likes")
-        );
-
-        likeCountEl.textContent = snap.size;
-    }
-     
-    loadLikes();
-    
     if(showLikesBtn){
 
         showLikesBtn.onclick = async ()=>{
