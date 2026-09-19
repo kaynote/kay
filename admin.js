@@ -384,107 +384,6 @@ async function copyAllToDraft() {
     return;
   }
 
-    const ok = confirm(
-        `전체 ${currentPeople.length}개의 사진에 대해 기존 좋아요 수를 계산하여 likesCount를 저장합니다.\n\n` +
-        `기존 likes 데이터는 삭제하지 않습니다.\n\n` +
-        `처음 한 번만 실행하면 됩니다.\n\n` +
-        `계속할까요?`
-    );
-
-    if (!ok) return;
-
-    initLikesCountBtn.disabled = true;
-    initLikesCountBtn.textContent = "좋아요 수 계산 중...";
-
-    let success = 0;
-    let failed = 0;
-
-    try {
-
-        for (let i = 0; i < currentPeople.length; i++) {
-
-            const person = currentPeople[i];
-            const postId = String(person.name || "").trim();
-
-            if (!postId) {
-                failed++;
-                continue;
-            }
-
-            try {
-
-                const likesRef = collection(
-                    db,
-                    "people",
-                    postId,
-                    "likes"
-                );
-
-                const likesSnap = await getDocs(likesRef);
-
-                const personRef = doc(
-                    db,
-                    "people",
-                    postId
-                );
-
-                await updateDoc(personRef, {
-                    likesCount: likesSnap.size
-                });
-
-                success++;
-
-                status(
-                    `좋아요 수 초기화 중... ${i + 1} / ${currentPeople.length}  ` +
-                    `(${postId}: ${likesSnap.size}개)`,
-                    "info"
-                );
-
-            } catch (error) {
-
-                failed++;
-
-                console.error(
-                    "좋아요 수 초기화 실패:",
-                    postId,
-                    error
-                );
-
-            }
-        }
-
-        status(
-            `좋아요 수 초기화 완료: 성공 ${success}개 / 실패 ${failed}개`,
-            failed === 0 ? "success" : "error"
-        );
-
-        initLikesCountBtn.textContent =
-            failed === 0
-                ? "좋아요 수 초기화 완료"
-                : "좋아요 수 다시 초기화";
-
-    } catch (error) {
-
-        console.error(
-            "좋아요 수 초기화 전체 실패:",
-            error
-        );
-
-        status(
-            `좋아요 수 초기화 실패: ${error.message}`,
-            "error"
-        );
-
-        initLikesCountBtn.textContent =
-            "좋아요 수 초기화";
-
-    } finally {
-
-        initLikesCountBtn.disabled = false;
-
-    }
-}
-
   const ok = confirm(
     `전체 ${currentPeople.length}명 중 ${targets.length}명을 Draft로 등록합니다.\n\n` +
     `이미 등록된 ${currentPeople.length - targets.length}명은 건너뜁니다.\n\n` +
@@ -547,6 +446,7 @@ async function copyAllToDraft() {
     copyAllDraftBtn.textContent = "전체 Draft 등록";
   }
 }
+
 
 async function initializeLikesCount() {
 
