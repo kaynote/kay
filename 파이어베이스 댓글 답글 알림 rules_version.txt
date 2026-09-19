@@ -84,12 +84,32 @@ service cloud.firestore {
     */
 
     match /people/{postId} {
-        allow read: if isSignedIn();
+
+      allow read: if isSignedIn();
+
+      /*
+      일반 사용자:
+      조회수(views)만 변경 가능
+
+      관리자:
+      likesCount만 변경 가능
+      */
 
       allow update: if isSignedIn()
-        && request.resource.data.diff(resource.data)
-          .affectedKeys()
-          .hasOnly(["views"]);
+        && (
+          (
+            isAdmin()
+            && request.resource.data.diff(resource.data)
+              .affectedKeys()
+              .hasOnly(["likesCount"])
+          )
+          ||
+          (
+            request.resource.data.diff(resource.data)
+              .affectedKeys()
+              .hasOnly(["views"])
+          )
+        );
 
       allow create: if isSignedIn()
         && request.resource.data.keys()
