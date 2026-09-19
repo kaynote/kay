@@ -1,0 +1,21 @@
+Firestore → 사람 정보, 댓글, 좋아요, 조회수, Draft 등의 데이터
+
+Firebase Storage → 실제 이미지/파일
+
+GitHub Pages → people.js, HTML, CSS, 이미지 등을 GitHub에서 제공
+
+-------------------------------------------------
+
+현재 Firestore Standard의 무료 사용량은 프로젝트 기준으로 하루:
+
+읽기 50,000회
+
+쓰기 20,000회
+
+삭제 20,000회
+
+저장공간 1 GiB
+
+데이터 전송 10 GiB/월
+
+(예를 들어, 302명을 Draft로 한 번 등록하는 건 302 write. 무료 일일 20,000 write 안에 들어감.)
