@@ -515,7 +515,7 @@ async function initializeLikesCount() {
         failed++;
 
         console.error(
-          "좋아요 수 초기화 실패:",
+          "좋아요 수 재계산 실패:",
           postId,
           error
         );
@@ -523,29 +523,29 @@ async function initializeLikesCount() {
     }
 
     status(
-      `좋아요 수 초기화 완료: 성공 ${success}개 / 실패 ${failed}개`,
+      `좋아요 수 재계산 완료: 성공 ${success}개 / 실패 ${failed}개`,
       failed === 0 ? "success" : "error"
     );
 
     initLikesCountBtn.textContent =
       failed === 0
-        ? "좋아요 수 초기화 완료"
+        ? "좋아요 수 재계산 완료"
         : "좋아요 수 다시 초기화";
 
   } catch (error) {
 
     console.error(
-      "좋아요 수 초기화 전체 실패:",
+      "좋아요 수 재계산 전체 실패:",
       error
     );
 
     status(
-      `좋아요 수 초기화 실패: ${error.message}`,
+      `좋아요 수 재계산 실패: ${error.message}`,
       "error"
     );
 
     initLikesCountBtn.textContent =
-      "좋아요 수 초기화";
+      "좋아요 수 재계산";
 
   } finally {
 
