@@ -2456,6 +2456,15 @@ const people = [
   },
   {
     "no": 273,
+    "name": "Sia",
+    "ko": "시아 # 이름 추가",
+    "displayName": "Sia 시아 # 이름 추가",
+    "note": "샨텔의 사촌인 여자아이, <span class=\"timestamp\"> 2026.09.26 38:40</span>",
+    "image": "Sia.jpg",
+    "gallery": []
+  },
+  {
+    "no": 274,
     "name": "Sinae",
     "ko": "신애",
     "displayName": "Sinae 신애",
@@ -2464,7 +2473,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 274,
+    "no": 275,
     "name": "Singing Contest Champion",
     "ko": "싱잉 콘테스트 챔피언",
     "displayName": "Singing Contest Champion 싱잉 콘테스트 챔피언",
@@ -2473,7 +2482,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 275,
+    "no": 276,
     "name": "Sir. Jerry",
     "ko": "남준현",
     "displayName": "Sir. Jerry 남준현",
@@ -2482,7 +2491,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 276,
+    "no": 277,
     "name": "Sitti Aina",
     "ko": "시티 아이나",
     "displayName": "Sitti Aina 시티 아이나",
@@ -2491,7 +2500,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 277,
+    "no": 278,
     "name": "SK Chairman - MJ",
     "ko": "청년의회 의장 엠제이",
     "displayName": "SK Chairman - MJ 청년의회 의장 엠제이",
@@ -2500,7 +2509,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 278,
+    "no": 279,
     "name": "SK Chairwoman - Apple",
     "ko": "여성 청년의회 의장 애플",
     "displayName": "SK Chairwoman - Apple 여성 청년의회 의장 애플",
@@ -2509,7 +2518,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 279,
+    "no": 280,
     "name": "SK Kagawad - Chael",
     "ko": "청년의회 의원 체일",
     "displayName": "SK Kagawad - Chael 청년의회 의원 체일",
@@ -2518,7 +2527,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 280,
+    "no": 281,
     "name": "SK Kagawad - J. Alegora",
     "ko": "청년의회 의원 J. 알레고라",
     "displayName": "SK Kagawad - J. Alegora 청년의회 의원 J. 알레고라",
@@ -2527,7 +2536,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 281,
+    "no": 282,
     "name": "SK Kagawad - Mardong",
     "ko": "청년의회 의원 마르동",
     "displayName": "SK Kagawad - Mardong 청년의회 의원 마르동",
@@ -2536,7 +2545,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 282,
+    "no": 283,
     "name": "Sofia",
     "ko": "소피아",
     "displayName": "Sofia 소피아",
@@ -2545,7 +2554,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 283,
+    "no": 284,
     "name": "Sonjay",
     "ko": "손제이",
     "displayName": "Sonjay 손제이",
@@ -2554,7 +2563,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 284,
+    "no": 285,
     "name": "Stan",
     "ko": "스탄",
     "displayName": "Stan 스탄",
@@ -2563,7 +2572,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 285,
+    "no": 286,
     "name": "Tantin",
     "ko": "딴띤",
     "displayName": "Tantin 딴띤",
@@ -2572,7 +2581,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 286,
+    "no": 287,
     "name": "Tarzan",
     "ko": "타잔",
     "displayName": "Tarzan 타잔",
@@ -2581,7 +2590,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 287,
+    "no": 288,
     "name": "Thansie Alvares",
     "ko": "딴시 알바레스",
     "displayName": "Thansie Alvares 딴시 알바레스",
@@ -2590,7 +2599,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 288,
+    "no": 289,
     "name": "Thea",
     "ko": "테아",
     "displayName": "Thea 테아",
@@ -2599,7 +2608,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 289,
+    "no": 290,
     "name": "Tiger",
     "ko": "타이거",
     "displayName": "Tiger 타이거",
@@ -2608,7 +2617,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 290,
+    "no": 291,
     "name": "Tongtong",
     "ko": "통통",
     "displayName": "Tongtong 통통",
@@ -2617,7 +2626,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 291,
+    "no": 292,
     "name": "Tony",
     "ko": "토니",
     "displayName": "Tony 토니",
@@ -2626,7 +2635,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 292,
+    "no": 293,
     "name": "Trisha",
     "ko": "트리샤",
     "displayName": "Trisha 트리샤",
@@ -2635,7 +2644,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 293,
+    "no": 294,
     "name": "Tyron",
     "ko": "타이런",
     "displayName": "Tyron 타이런",
@@ -2644,7 +2653,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 294,
+    "no": 295,
     "name": "Unknown Bakla",
     "ko": "이름모를 바클라",
     "displayName": "Unknown Bakla 이름모를 바클라",
@@ -2653,7 +2662,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 295,
+    "no": 296,
     "name": "Veniese",
     "ko": "베니스",
     "displayName": "Veniese 베니스",
@@ -2662,7 +2671,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 296,
+    "no": 297,
     "name": "Viena",
     "ko": "베나",
     "displayName": "Viena 베나",
@@ -2671,7 +2680,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 297,
+    "no": 298,
     "name": "Yan Yan",
     "ko": "얀얀",
     "displayName": "Yan Yan 얀얀",
@@ -2680,7 +2689,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 298,
+    "no": 299,
     "name": "Yoonjoowoong",
     "ko": "윤주웅",
     "displayName": "Yoonjoowoong 윤주웅",
@@ -2689,7 +2698,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 299,
+    "no": 300,
     "name": "Yoyoy",
     "ko": "요요이",
     "displayName": "Yoyoy 요요이",
@@ -2698,7 +2707,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 300,
+    "no": 301,
     "name": "Zack",
     "ko": "싹",
     "displayName": "Zack 싹",
@@ -2707,7 +2716,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 301,
+    "no": 302,
     "name": "Zaira",
     "ko": "자이라",
     "displayName": "Zaira 자이라",
@@ -2716,7 +2725,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 302,
+    "no": 303,
     "name": "Zaira Mae",
     "ko": "자이라 미",
     "displayName": "Zaira Mae 자이라 미",
@@ -2725,7 +2734,7 @@ const people = [
     "gallery": []
   },
   {
-    "no": 303,
+    "no": 304,
     "name": "Zyra Mae",
     "ko": "자일라 미",
     "displayName": "Zyra Mae 자일라 미",
