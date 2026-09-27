@@ -821,7 +821,7 @@ const people = [
     "name": "Erlito D. Rubis",
     "ko": "얼리토 D. 루비스",
     "displayName": "Erlito D. Rubis 얼리토 D. 루비스",
-    "note": "라이사의 둘째 큰아버지, 1972년 1월 17일생으로 2023년 10월 31일 심장마비로 사망, <span class=\"timestamp\">정주행 2023.11.02 01:33</span>",
+    "note": "라이사의 작은아버지, 1972년 1월 17일생으로 2023년 10월 31일 심장마비로 사망, <span class=\"timestamp\">정주행 2023.11.02 01:33</span>",
     "image": "Erlito D. Rubis.jpg",
     "gallery": []
   },
