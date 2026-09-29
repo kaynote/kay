@@ -158,17 +158,34 @@ COMMENTS
 ========================= */
 
 export async function addComment(postId, text, user, parentId = null) {
-  return await addDoc(
-    collection(db, "people", postId, "comments"),
-    {
-      text,
-      parentId,
-      uid: user.uid,
-      name: user.name,
-      photo: user.photo,
-      createdAt: serverTimestamp()
-    }
+  const commentRef = doc(
+    collection(db, "people", postId, "comments")
   );
+
+  const postRef = doc(db, "people", postId);
+
+  const batch = writeBatch(db);
+
+  batch.set(commentRef, {
+    text,
+    parentId,
+    uid: user.uid,
+    name: user.name,
+    photo: user.photo,
+    createdAt: serverTimestamp()
+  });
+
+  batch.set(
+    postRef,
+    parentId
+      ? { repliesCount: increment(1) }
+      : { commentsCount: increment(1) },
+    { merge: true }
+  );
+
+  await batch.commit();
+
+  return commentRef;
 }
 
 export async function updateComment(postId, commentId, text) {
@@ -179,9 +196,35 @@ export async function updateComment(postId, commentId, text) {
 }
 
 export async function deleteComment(postId, commentId) {
-  await deleteDoc(
-    doc(db, "people", postId, "comments", commentId)
+  const commentRef = doc(
+    db,
+    "people",
+    postId,
+    "comments",
+    commentId
   );
+
+  const snap = await getDoc(commentRef);
+
+  if (!snap.exists()) return;
+
+  const data = snap.data();
+
+  const postRef = doc(db, "people", postId);
+
+  const batch = writeBatch(db);
+
+  batch.delete(commentRef);
+
+  batch.set(
+    postRef,
+    data.parentId
+      ? { repliesCount: increment(-1) }
+      : { commentsCount: increment(-1) },
+    { merge: true }
+  );
+
+  await batch.commit();
 }
 
 /* realtime comments */

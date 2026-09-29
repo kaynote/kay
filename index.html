@@ -581,6 +581,8 @@ async function openModal(p){
 
         let currentViews = viewCountCache.get(p.name);
         let currentLikes = likeCountCache.get(p.name);
+        let currentComments = 0;
+        let currentReplies = 0;
 
         if (
             currentViews === undefined ||
@@ -598,10 +600,16 @@ async function openModal(p){
                     const postData = snap.data();
 
                     currentViews =
-                        postData.views || 0;
+                      postData.views || 0;
 
                     currentLikes =
-                        postData.likesCount || 0;
+                      postData.likesCount || 0;
+
+                    currentComments =
+                      postData.commentsCount || 0;
+
+                    currentReplies =
+                      postData.repliesCount || 0;
 
                 } else {
 
@@ -634,6 +642,7 @@ async function openModal(p){
 
         viewCountEl.textContent = currentViews;
         likeCountEl.textContent = currentLikes;
+        commentCountEl.textContent = currentComments;
 
     const likeBtn = modalBody.querySelector(".likeBtn");
     
