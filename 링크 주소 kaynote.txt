@@ -7,11 +7,22 @@ https://github.com/kaynote/kay/blob/main/index.html
 
 https://github.com/kaynote/kay/blob/main/firebase.js
 
-https://github.com/kaynote/kay/blob/main/admin.js
-
 https://github.com/kaynote/kay/blob/main/admin.html
 
+https://github.com/kaynote/kay/blob/main/admin.js
+
 https://github.com/kaynote/kay/blob/main/admin.css
+
+https://github.com/kaynote/kay/blob/main/main.js
+
+https://github.com/kaynote/kay/blob/main/compare.html
+
+https://github.com/kaynote/kay/blob/main/compare.js
+
+https://github.com/kaynote/kay/blob/main/draft-preview.html
+
+https://github.com/kaynote/kay/blob/main/draft-preview.js
+
 
 
 
