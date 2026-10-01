@@ -308,7 +308,7 @@ const people = [
     "name": "Ate Lucy",
     "ko": "아떼 루시",
     "displayName": "Ate Lucy 아떼 루시",
-    "note": "본명은 'Lucia Gonzaga' 루시아 곤자가, <span class=\"timestamp\"> 2019.12.20, 아날루스의 엄마이자 닉녹의 외할머니, 정주행 2021.09.07 15:46</span>, 생일은 4월 13일, <span class=\"timestamp\"> 2025.04.12 채팅 09:07</span>",
+    "note": "본명은 'Lucia Gonzaga' 루시아 곤자가, <span class=\"timestamp\">정주행 2019.12.20 05:00</span>, 아날루스의 엄마이자 닉녹의 외할머니, <span class=\"timestamp\">정주행 2021.09.07 15:46</span>, 생일은 4월 13일, <span class=\"timestamp\"> 2025.04.12 채팅 09:07</span>",
     "image": "Ate Lucy.jpg",
     "gallery": []
   },
