@@ -578,6 +578,7 @@ async function openModal(p){
 
         const viewCountEl = modalBody.querySelector(".viewCount");
         const likeCountEl = modalBody.querySelector(".likeCount");
+        const commentCountEl = modalBody.querySelector(".commentCount");
 
         let currentViews = viewCountCache.get(p.name);
         let currentLikes = likeCountCache.get(p.name);
@@ -738,7 +739,6 @@ async function openModal(p){
 
         }
     
-    const commentCountEl = modalBody.querySelector(".commentCount");
     const showLikesBtn = modalBody.querySelector(".showLikesBtn");
 
     const likesModal = document.getElementById("likesModal");
