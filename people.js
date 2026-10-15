@@ -2126,7 +2126,7 @@ const people = [
     "name": "Princess-5",
     "ko": "프린세스",
     "displayName": "Princess 프린세스",
-    "note": "제리님 동네에 사는 여자아이, <span class=\"timestamp\"> 2026.08.15 30:58</span>",
+    "note": "제리님 동네에 사는 여자아이, 2026년 기준 중2, <span class=\"timestamp\"> 2026.08.15 30:58</span>",
     "image": "Princess-5.jpg",
     "gallery": []
   },
