@@ -1577,7 +1577,7 @@ const people = [
     "name": "Leanna Jean Casil",
     "ko": "리아나 진 카실",
     "displayName": "Leanna Jean Casil 리아나 진 카실",
-    "note": "유튜브 아이디는 ynachelle, 라이브 방송에서 채팅 메시지를 남겼다, @LEANNAJEANCASIL-m5o: ​​magandang hapon po, <span class=\"timestamp\"> 2026.11.14 채팅 04:59</span>",
+    "note": "예전 유튜브 아이디는 ynachelle, <span class=\"timestamp\"> 2025.03.08 09:09</span>, 라이브 방송에서 채팅 메시지를 남겼다, @LEANNAJEANCASIL-m5o: ​​magandang hapon po, <span class=\"timestamp\"> 2026.11.14 채팅 04:59</span>",
     "image": "Leanna Jean Casil.jpg",
     "gallery": []
   },
