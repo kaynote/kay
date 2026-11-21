@@ -2609,11 +2609,11 @@ const people = [
   },
   {
     "no": 290,
-    "name": "Sonjay R Tagudan",
-    "ko": "손제이 R 타구단",
-    "displayName": "Sonjay R Tagudan 손제이 R 타구단",
+    "name": "Sonjay R. Tagudan",
+    "ko": "손제이 R. 타구단",
+    "displayName": "Sonjay R. Tagudan 손제이 R. 타구단",
     "note": "생후 한달쯤에 자다가 침대에서 떨어져 머리에 금이 가고 안에 피가 고여 그 후유증으로 시력을 잃어 앞을 볼 수 없고 뇌가 더 이상 성장하지 않아 지능이 아기 수준에서 멈추었으며 스스로 몸을 가눌 수 없는 상태가 되었다, 누나의 이름은 자스비나, 2022년 7세, <span class=\"timestamp\">정주행 2022.09.20 04:28</span>",
-    "image": "no-image.jpg",
+    "image": "Sonjay R. Tagudan.jpg",
     "gallery": []
   },
   {
