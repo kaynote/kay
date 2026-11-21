@@ -731,7 +731,7 @@ const people = [
     "name": "Ebon",
     "ko": "에본",
     "displayName": "Ebon 에본",
-    "note": "제리님의 동네에 사는 여자아이, <span class=\"timestamp\"> 2026.11.21</span> 19.25",
+    "note": "제리님의 동네에 사는 여자아이, <span class=\"timestamp\"> 2026.11.21 19:25</span>",
     "image": "Ebon.jpg",
     "gallery": []
   },
