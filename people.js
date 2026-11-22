@@ -731,7 +731,7 @@ const people = [
     "name": "Ebon",
     "ko": "에본",
     "displayName": "Ebon 에본",
-    "note": "제리님의 동네에 사는 여자아이, <span class=\"timestamp\"> 2026.11.21 19:25</span>",
+    "note": "제리님 동네에 사는 여자아이, <span class=\"timestamp\"> 2026.11.21 19:25</span>",
     "image": "Ebon.jpg",
     "gallery": []
   },
@@ -2792,7 +2792,7 @@ const people = [
     "name": "Zia",
     "ko": "씨아",
     "displayName": "Zia 씨아",
-    "note": "샨텔의 사촌인 여자아이, <span class=\"timestamp\"> 2026.09.26 2부 38:40</span>, <span class=\"timestamp\"> 2026.10.04 01:05</span>",
+    "note": "에이시의 사촌 동생이자 샨텔의 베스트 프렌드, <span class=\"timestamp\"> 2026.09.26 2부 38:40</span>, <span class=\"timestamp\"> 2026.10.04 01:05</span>, <span class=\"timestamp\"> 2026.11.22 37:15</span>",
     "image": "Zia.jpg",
     "gallery": []
   },
